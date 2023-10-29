@@ -128,19 +128,19 @@ public class BinaryManager: BaseSingleton<BinaryManager>
     /// <summary>
     /// 读取二进制文件
     /// </summary>
-    /// <param name="fileName">文件名</param>
+    /// <param name="fileName">文件名要加后缀</param>
     /// <typeparam name="T">返回的类类型</typeparam>
     /// <returns></returns>
     public T Load<T>(string fileName) where T : class
     {
         // 不存在该类的二进制文件返回默认
-        if (!File.Exists(BINARYFILE_PATH + fileName + ".zy"))
+        if (!File.Exists(BINARYFILE_PATH + fileName))
         {
-            return default(T);
+            return default;
         }
 
         T obj;
-        using (FileStream fileStream = File.Open(BINARYFILE_PATH + fileName + ".zy", FileMode.Open, FileAccess.Read))
+        using (FileStream fileStream = File.Open(BINARYFILE_PATH + fileName, FileMode.Open, FileAccess.Read))
         {
             BinaryFormatter binaryFormatter = new BinaryFormatter(); // 序列化工具
             obj  = binaryFormatter.Deserialize(fileStream) as T;
@@ -153,12 +153,12 @@ public class BinaryManager: BaseSingleton<BinaryManager>
     public void Save(string fileName, object data)
     {
         // 不存在该类的二进制文件则创建
-        if (!File.Exists(BINARYFILE_PATH + fileName + ".zy"))
+        if (!File.Exists(BINARYFILE_PATH + fileName))
         {
-            File.Create(BINARYFILE_PATH + fileName + ".zy").Close();
+            File.Create(BINARYFILE_PATH + fileName).Close();
         }
 
-        using (FileStream fileStream = File.Open(BINARYFILE_PATH + fileName + ".zy", FileMode.Open, FileAccess.Write))
+        using (FileStream fileStream = File.Open(BINARYFILE_PATH + fileName, FileMode.Open, FileAccess.Write))
         {
             BinaryFormatter binaryFormatter = new BinaryFormatter();
             binaryFormatter.Serialize(fileStream, data);

@@ -296,8 +296,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -380,6 +380,41 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MapEditorPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 4325989237492407471, guid: 96ea2d6994dd35040b5eb4869aefb00f,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4325989237492407471, guid: 96ea2d6994dd35040b5eb4869aefb00f,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4325989237492407471, guid: 96ea2d6994dd35040b5eb4869aefb00f,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4325989237492407471, guid: 96ea2d6994dd35040b5eb4869aefb00f,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4325989237492407471, guid: 96ea2d6994dd35040b5eb4869aefb00f,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4325989237492407471, guid: 96ea2d6994dd35040b5eb4869aefb00f,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4325989237492407471, guid: 96ea2d6994dd35040b5eb4869aefb00f,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4610845447741464931, guid: 96ea2d6994dd35040b5eb4869aefb00f,
         type: 3}
@@ -494,3 +529,60 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 8702599139380997695}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8702599139380997697 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2826398587804271730, guid: 96ea2d6994dd35040b5eb4869aefb00f,
+    type: 3}
+  m_PrefabInstance: {fileID: 8702599139380997695}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8702599139380997698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8702599139380997697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df67da4778bdd54489fb61d519c84c72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cellsList: []
+  pathList: []
+  levelList:
+  - pathList: []
+    towerList: []
+  - pathList: []
+    towerList: []
+  - pathList: []
+    towerList: []
+  - pathList: []
+    towerList: []
+  - pathList: []
+    towerList: []
+  - pathList: []
+    towerList: []
+  - pathList: []
+    towerList: []
+  - pathList: []
+    towerList: []
+  - pathList: []
+    towerList: []
+  - pathList: []
+    towerList: []
+  - pathList: []
+    towerList: []
+  - pathList: []
+    towerList: []
+  - pathList: []
+    towerList: []
+  - pathList: []
+    towerList: []
+  levelInfo:
+    pathList: []
+    towerList: []
+  drawGizmos: 1
+  drawTowerPos: 1
+  drawPath: 0
+  towerPosIcon: {fileID: 0}
+  carrotIcon: {fileID: 0}

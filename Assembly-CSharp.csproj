@@ -77,6 +77,8 @@
      <Compile Include="Assets\Scripts\FrameWork\SceneManager\SceneManagerFrameWork.cs" />
      <Compile Include="Assets\Scripts\FrameWork\UIManager\BasePanel.cs" />
      <Compile Include="Assets\Scripts\FrameWork\UIManager\UIManager.cs" />
+     <Compile Include="Assets\Scripts\Game\Object\Cell.cs" />
+     <Compile Include="Assets\Scripts\Game\Object\Level.cs" />
      <Compile Include="Assets\Scripts\Game\Object\Map.cs" />
      <Compile Include="Assets\Scripts\PureMVC\Core\Controller.cs" />
      <Compile Include="Assets\Scripts\PureMVC\Core\Model.cs" />
