@@ -462,6 +462,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 329dbb930a65e1343ac67d0d295d389a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeSpeed: 3
+  btnBack: {fileID: 2760540241312755554}
+  btnHelp: {fileID: 2760540242171847468}
+  btnStart: {fileID: 2760540241928436524}
 --- !u!1 &2760540241312755552
 GameObject:
   m_ObjectHideFlags: 0

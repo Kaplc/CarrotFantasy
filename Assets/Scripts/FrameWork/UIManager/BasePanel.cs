@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using PureMVC.Patterns.Mediator;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.PlayerLoop;
@@ -13,6 +14,9 @@ public abstract class BasePanel : MonoBehaviour
     public float fadeSpeed = 3f;
     public UnityAction hideCallBack;
     public UnityAction showCallBack;
+
+    private Mediator mediator;
+    public Mediator PanelMediator => mediator;
     
     protected virtual void Awake()
     {
@@ -82,5 +86,10 @@ public abstract class BasePanel : MonoBehaviour
         hideFade = true;
         canvasGroup.alpha = 1;
         hideCallBack += callBack; // 淡出成功的回调
+    }
+
+    public void BindMediator(Mediator m)
+    {
+        this.mediator = m;
     }
 }

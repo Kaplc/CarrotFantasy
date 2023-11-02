@@ -1,18 +1,28 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class SelectPanel : MonoBehaviour
+public class SelectPanel : BasePanel
 {
-    // Start is called before the first frame update
-    void Start()
+    public Button btnBack;
+    public Button btnHelp;
+    public Button btnStart;
+    
+    protected override void Init()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        btnBack.onClick.AddListener(() =>
+        {
+            PanelMediator.SendNotification(NotificationName.PRESS_BACK);
+            UIManager.Instance.Hide<SelectPanel>();
+        });
+        btnHelp.onClick.AddListener(() =>
+        {
+            PanelMediator.SendNotification(NotificationName.PRESS_HELP);
+        });
+        btnStart.onClick.AddListener(() =>
+        {
+            PanelMediator.SendNotification(NotificationName.PRESS_START);
+        });
     }
 }

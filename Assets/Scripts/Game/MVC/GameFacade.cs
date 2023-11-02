@@ -30,6 +30,7 @@ public class GameFacade : Facade
         base.InitializeView();
         
         RegisterMediator(new BeginPanelMediator());
+        RegisterMediator(new SelectPanelMediator());
     }
 
     protected override void InitializeModel()
