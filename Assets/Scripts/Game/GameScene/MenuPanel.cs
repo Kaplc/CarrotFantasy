@@ -1,18 +1,28 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class MenuPanel : MonoBehaviour
+public class MenuPanel : BasePanel
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public Button btnContinue;
+    public Button btnReStart;
+    public Button btnSelect;
 
-    // Update is called once per frame
-    void Update()
+    protected override void Init()
     {
-        
+        btnContinue.onClick.AddListener(() =>
+        {
+            
+        });
+        btnContinue.onClick.AddListener(() =>
+        {
+            
+        });
+        btnContinue.onClick.AddListener(() =>
+        {
+            
+        });
     }
+    
 }

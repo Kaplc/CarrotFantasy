@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class SelectPanelMediator : Mediator
 {
-    public static string Name = "SelectPanelMediator";
+    public static new string NAME = "SelectPanelMediator";
 
     public SelectPanel Panel
     {
@@ -18,7 +18,7 @@ public class SelectPanelMediator : Mediator
         }
     }
 
-    public SelectPanelMediator() : base(Name)
+    public SelectPanelMediator() : base(NAME)
     {
     }
 
@@ -37,7 +37,7 @@ public class SelectPanelMediator : Mediator
         switch (notification.Name)
         {
             case NotificationName.PRESS_ADVENTURE:
-                Panel = UIManager.Instance.Show<SelectPanel>();
+                Panel = UIManager.Instance.Show<SelectPanel>(EUILayerType.Bottom, false);
                 break;
         }
     }

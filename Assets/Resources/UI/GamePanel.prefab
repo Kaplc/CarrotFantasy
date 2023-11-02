@@ -722,6 +722,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 924dfa266246f994895028bdee789805, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeSpeed: 3
+  btnSpeed1: {fileID: 8398780873095542158}
+  btnSpeed2: {fileID: 8398780873126414121}
+  btnPause: {fileID: 8398780872978748123}
+  btnContinue: {fileID: 8398780874555350731}
+  btnMenu: {fileID: 8398780874492849790}
+  txGem: {fileID: 8398780873417866733}
+  txNowWave: {fileID: 8398780873528331609}
+  txTotalWaves: {fileID: 8398780873107943186}
+  imgPause: {fileID: 8398780874740491164}
 --- !u!1 &8398780874492850048
 GameObject:
   m_ObjectHideFlags: 0

@@ -17,7 +17,7 @@ public class BeginPanel : BasePanel
         btnAdventure.onClick.AddListener(() =>
         {
             PanelMediator.SendNotification(NotificationName.PRESS_ADVENTURE);
-            UIManager.Instance.Hide<BeginPanel>();
+            UIManager.Instance.Hide<BeginPanel>(false);
         });
         btnBoss.onClick.AddListener(() =>
         {

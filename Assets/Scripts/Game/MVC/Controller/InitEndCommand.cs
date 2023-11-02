@@ -14,6 +14,6 @@ public class InitEndCommand : SimpleCommand
         // 初始化结束加载场景
         SceneManager.LoadScene("2.BeginScene");
         
-        SendNotification(NotificationName.ENTER_BEGIN_SCENE);
+        SendNotification(NotificationName.LOAD_SCENE, new LoadSceneBody(2));
     }
 }

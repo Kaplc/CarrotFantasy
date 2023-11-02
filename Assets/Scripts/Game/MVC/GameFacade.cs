@@ -23,6 +23,7 @@ public class GameFacade : Facade
         base.InitializeController();
         
         RegisterCommand(NotificationName.INIT_END, () => new InitEndCommand());
+        RegisterCommand(NotificationName.PRESS_START, () => new StartGameCommand());
     }
 
     protected override void InitializeView()
@@ -31,6 +32,7 @@ public class GameFacade : Facade
         
         RegisterMediator(new BeginPanelMediator());
         RegisterMediator(new SelectPanelMediator());
+        RegisterMediator(new GamePanelMediator());
     }
 
     protected override void InitializeModel()

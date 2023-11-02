@@ -14,7 +14,7 @@ public class SelectPanel : BasePanel
         btnBack.onClick.AddListener(() =>
         {
             PanelMediator.SendNotification(NotificationName.PRESS_BACK);
-            UIManager.Instance.Hide<SelectPanel>();
+            UIManager.Instance.Hide<SelectPanel>(false);
         });
         btnHelp.onClick.AddListener(() =>
         {
@@ -23,6 +23,7 @@ public class SelectPanel : BasePanel
         btnStart.onClick.AddListener(() =>
         {
             PanelMediator.SendNotification(NotificationName.PRESS_START);
+            UIManager.Instance.Hide<SelectPanel>(false);
         });
     }
 }
