@@ -15,5 +15,10 @@ public class GameManager : MonoBehaviour
         poolManager = PoolManager.Instance;
         binaryManager = BinaryManager.Instance;
         musicManger = MusicManger.Instance;
+        
+        DontDestroyOnLoad(gameObject);
+        
+        // 发送初始化完成的通知
+        GameFacade.Instance.SendNotification(NotificationName.INIT_END);
     }
 }

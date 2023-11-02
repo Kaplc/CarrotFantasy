@@ -1,18 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class BeginPanel : MonoBehaviour
+public class BeginPanel : BasePanel
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public Button btnAdventure;
+    public Button btnBoss;
+    public Button btnMonster;
 
-    // Update is called once per frame
-    void Update()
+    protected override void Init()
     {
-        
+        btnAdventure.onClick.AddListener(() =>
+        {
+            
+        });
+        btnBoss.onClick.AddListener(() =>
+        {
+            
+        });
+        btnMonster.onClick.AddListener(() =>
+        {
+            
+        });
     }
 }

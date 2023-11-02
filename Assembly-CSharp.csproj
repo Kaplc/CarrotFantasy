@@ -89,7 +89,10 @@
      <Compile Include="Assets\Scripts\Game\GameScene\LosePanel.cs" />
      <Compile Include="Assets\Scripts\Game\GameScene\MenuPanel.cs" />
      <Compile Include="Assets\Scripts\Game\GameScene\WinPanel.cs" />
-     <Compile Include="Assets\Scripts\Game\MVC\View\BeginPanelVIew.cs" />
+     <Compile Include="Assets\Scripts\Game\MVC\Controller\InitEndCommand.cs" />
+     <Compile Include="Assets\Scripts\Game\MVC\GameFacade.cs" />
+     <Compile Include="Assets\Scripts\Game\MVC\NotificationName.cs" />
+     <Compile Include="Assets\Scripts\Game\MVC\View\BeginPanelMediator.cs" />
      <Compile Include="Assets\Scripts\Game\Map\Cell.cs" />
      <Compile Include="Assets\Scripts\Game\Map\Level.cs" />
      <Compile Include="Assets\Scripts\Game\Map\Map.cs" />

@@ -63,8 +63,17 @@ public abstract class BasePanel : MonoBehaviour
 
     public virtual void Show(bool isFade = false, UnityAction callBack = null)
     {
-        showFade = isFade;
-        canvasGroup.alpha = 0;
+        if (isFade)
+        {
+            showFade = true;
+            canvasGroup.alpha = 0;
+        }
+        else
+        {
+            showFade = false;
+            canvasGroup.alpha = 1;
+        }
+        
         showCallBack += callBack;
     }
     
