@@ -30,13 +30,14 @@ public class GameFacade : Facade
     protected override void InitializeView()
     {
         base.InitializeView();
-        
+        // 注册View
         RegisterMediator(new InitPanelMediator());
         RegisterMediator(new BeginPanelMediator());
         RegisterMediator(new SelectBigLevelPanelMediator());
         RegisterMediator(new SelectLevelPanelMediator());
         RegisterMediator(new GamePanelMediator());
         RegisterMediator(new MenuPanelMediator());
+        RegisterMediator(new HelpPanelMediator());
     }
 
     protected override void InitializeModel()

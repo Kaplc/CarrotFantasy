@@ -3,12 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-/// <summary>
-/// BeginPanel的子Panel
-/// </summary>
-public class HelpPanel : BasePanel
+public class SettingPanel : BasePanel
 {
-
     public Button btnHome;
     
     protected override void Init()

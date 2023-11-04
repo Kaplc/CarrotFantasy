@@ -45,8 +45,5 @@ public class GamePanelMediator : Mediator
                 UIManager.Instance.Hide<GamePanel>(false);
                 break;
         }
-        
-        
-
     }
 }

@@ -13,6 +13,7 @@ public class BeginPanelMediator : Mediator
 {
     public static new string NAME = "BeginPanelVIew";
 
+    // 相互绑定的Panel
     public BeginPanel Panel
     {
         get => ViewComponent as BeginPanel;
@@ -26,8 +27,6 @@ public class BeginPanelMediator : Mediator
     // 命名
     public BeginPanelMediator() : base(NAME)
     {
-        // // 与view绑定
-        // ViewComponent = UIManager.Instance.GetPanel<BeginPanel>();
     }
 
     // view要监听的事件列表
@@ -36,7 +35,9 @@ public class BeginPanelMediator : Mediator
         // 返回事件名数组表示要监听的事件
         return new string[]
         {
-            NotificationName.SHOW_BEGINPANEL
+            NotificationName.SHOW_BEGINPANEL,
+            NotificationName.SHOW_HELPPANEL,
+            NotificationName.SHOW_SETTINGPANEL
         };
     }
 
@@ -48,6 +49,17 @@ public class BeginPanelMediator : Mediator
         {
             case NotificationName.SHOW_BEGINPANEL:
                 Panel = UIManager.Instance.Show<BeginPanel>(false);
+                // 每次显示时复原动画参数
+                Panel.animator.SetBool("ShowHelpPanel", false);
+                Panel.animator.SetBool("ShowSettingPanel", false);
+                break;
+            case NotificationName.SHOW_HELPPANEL:
+                // 播放显示HelpPanel的动画
+                Panel.animator.SetBool("ShowHelpPanel", true);
+                break;
+            case NotificationName.SHOW_SETTINGPANEL:
+                // 播放显示HelpPanel的动画
+                Panel.animator.SetBool("ShowSettingPanel", true);
                 break;
         }
     }

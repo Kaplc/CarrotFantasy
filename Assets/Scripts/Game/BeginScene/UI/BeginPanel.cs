@@ -12,6 +12,8 @@ public class BeginPanel : BasePanel
     public Button btnSetting;
     public Button btnHelp;
 
+    public Animator animator;
+
     protected override void Init()
     {
         btnAdventure.onClick.AddListener(() =>
