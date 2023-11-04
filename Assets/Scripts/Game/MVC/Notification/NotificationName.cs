@@ -16,6 +16,9 @@ public class NotificationName
     // SelectPanel
     public const string PRESS_BACK = "PressBack"; // 按下返回
     public const string PRESS_START = "PressStart"; // 按下开始
+    
+    // GamePanel
+    public const string PRESS_MENU = "PressMenu"; // 按下菜单
 
     #endregion
 }

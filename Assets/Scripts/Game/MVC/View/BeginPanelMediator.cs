@@ -20,7 +20,7 @@ public class BeginPanelMediator : Mediator
         {
             ViewComponent = value;
             (ViewComponent as BeginPanel)?.BindMediator(this);
-        } 
+        }
     }
 
     // 命名
@@ -29,7 +29,7 @@ public class BeginPanelMediator : Mediator
         // // 与view绑定
         // ViewComponent = UIManager.Instance.GetPanel<BeginPanel>();
     }
-    
+
     // view要监听的事件列表
     public override string[] ListNotificationInterests()
     {
@@ -40,7 +40,7 @@ public class BeginPanelMediator : Mediator
             NotificationName.PRESS_BACK
         };
     }
-    
+
     // 执行监听的事件
     public override void HandleNotification(INotification notification)
     {
@@ -51,11 +51,12 @@ public class BeginPanelMediator : Mediator
                 if ((notification.Body as LoadSceneBody)?.index == 2)
                 {
                     // 显示ui并双向绑定
-                    Panel = UIManager.Instance.Show<BeginPanel>(EUILayerType.Bottom, false);
+                    Panel = UIManager.Instance.Show<BeginPanel>(false);
                 }
+
                 break;
             case NotificationName.PRESS_BACK:
-                Panel = UIManager.Instance.Show<BeginPanel>(EUILayerType.Bottom, false);
+                Panel = UIManager.Instance.Show<BeginPanel>(false);
                 break;
         }
     }

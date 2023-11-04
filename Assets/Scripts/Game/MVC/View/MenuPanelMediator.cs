@@ -1,18 +1,38 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using PureMVC.Interfaces;
+using PureMVC.Patterns.Mediator;
 using UnityEngine;
 
-public class MenuPanelMediator : MonoBehaviour
+public class MenuPanelMediator : Mediator
 {
-    // Start is called before the first frame update
-    void Start()
+    public static new string NAME = "MenuPanelMediator";
+
+    public MenuPanel Panel
     {
-        
+        get=>ViewComponent as MenuPanel;
+        set
+        {
+            ViewComponent = value;
+            (ViewComponent as MenuPanel)?.BindMediator(this);
+        }
+    }
+    
+    public MenuPanelMediator() : base(NAME)
+    {
     }
 
-    // Update is called once per frame
-    void Update()
+    public override string[] ListNotificationInterests()
     {
-        
+        return new string[]
+        {
+            NotificationName.PRESS_MENU
+        };
+    }
+
+    public override void HandleNotification(INotification notification)
+    {
+        base.HandleNotification(notification);
+        Panel = UIManager.Instance.Show<MenuPanel>(false);
     }
 }

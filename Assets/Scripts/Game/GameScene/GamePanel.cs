@@ -39,7 +39,7 @@ public class GamePanel : BasePanel
         });
         btnMenu.onClick.AddListener(() =>
         {
-            
+            PanelMediator.SendNotification(NotificationName.PRESS_MENU);
         });
         
         btnContinue.gameObject.SetActive(false);

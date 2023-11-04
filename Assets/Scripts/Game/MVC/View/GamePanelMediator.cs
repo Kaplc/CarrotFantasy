@@ -35,7 +35,7 @@ public class GamePanelMediator : Mediator
     {
         base.HandleNotification(notification);
         
-        Panel = UIManager.Instance.Show<GamePanel>(EUILayerType.Bottom, false);
+        Panel = UIManager.Instance.Show<GamePanel>(false);
         
     }
 }

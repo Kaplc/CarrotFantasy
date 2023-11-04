@@ -31,8 +31,9 @@ public class GameFacade : Facade
         base.InitializeView();
         
         RegisterMediator(new BeginPanelMediator());
-        RegisterMediator(new SelectPanelMediator());
+        RegisterMediator(new SelectLevelPanelMediator());
         RegisterMediator(new GamePanelMediator());
+        RegisterMediator(new MenuPanelMediator());
     }
 
     protected override void InitializeModel()

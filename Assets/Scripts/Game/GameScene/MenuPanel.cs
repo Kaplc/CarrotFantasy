@@ -13,13 +13,14 @@ public class MenuPanel : BasePanel
     {
         btnContinue.onClick.AddListener(() =>
         {
-            
+            UIManager.Instance.Hide<MenuPanel>(false);
         });
-        btnContinue.onClick.AddListener(() =>
+        btnReStart.onClick.AddListener(() =>
         {
-            
+            PanelMediator.SendNotification(NotificationName.PRESS_START);
+            UIManager.Instance.Hide<MenuPanel>(false);
         });
-        btnContinue.onClick.AddListener(() =>
+        btnSelect.onClick.AddListener(() =>
         {
             
         });
