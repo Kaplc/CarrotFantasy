@@ -16,7 +16,9 @@ public class BeginPanel : BasePanel
     {
         btnAdventure.onClick.AddListener(() =>
         {
-            PanelMediator.SendNotification(NotificationName.PRESS_ADVENTURE);
+            // 发送打开选择大关卡的消息
+            PanelMediator.SendNotification(NotificationName.SHOW_SELECTBIGLEVELPANEL);
+            // 隐藏自己
             UIManager.Instance.Hide<BeginPanel>(false);
         });
         btnBoss.onClick.AddListener(() =>
@@ -29,11 +31,11 @@ public class BeginPanel : BasePanel
         });
         btnSetting.onClick.AddListener(() =>
         {
-            
+            PanelMediator.SendNotification(NotificationName.SHOW_SETTINGPANEL);
         });
         btnHelp.onClick.AddListener(() =>
         {
-            PanelMediator.SendNotification(NotificationName.PRESS_HELP);
+            PanelMediator.SendNotification(NotificationName.SHOW_HELPPANEL);
         });
     }
 }

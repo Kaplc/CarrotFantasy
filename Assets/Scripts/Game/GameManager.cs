@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        GameFacade.Instance.SendNotification(NotificationName.INIT);
+        
         poolManager = PoolManager.Instance;
         binaryManager = BinaryManager.Instance;
         musicManger = MusicManger.Instance;

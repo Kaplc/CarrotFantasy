@@ -4,21 +4,21 @@ using PureMVC.Interfaces;
 using PureMVC.Patterns.Mediator;
 using UnityEngine;
 
-public class MenuPanelMediator : Mediator
+public class SelectBigLevelPanelMediator : Mediator
 {
-    public static new string NAME = "MenuPanelMediator";
+    public static new string NAME = "SelectBigLevelPanelMediator";
 
-    public MenuPanel Panel
+    public SelectBigLevelPanel Panel
     {
-        get=>ViewComponent as MenuPanel;
+        get => ViewComponent as SelectBigLevelPanel;
         set
         {
             ViewComponent = value;
-            (ViewComponent as MenuPanel)?.BindMediator(this);
+            (ViewComponent as SelectBigLevelPanel)?.BindMediator(this);
         }
     }
-    
-    public MenuPanelMediator() : base(NAME)
+
+    public SelectBigLevelPanelMediator() : base(NAME)
     {
     }
 
@@ -26,13 +26,15 @@ public class MenuPanelMediator : Mediator
     {
         return new string[]
         {
-            NotificationName.SHOW_MENUPANEL
+            NotificationName.SHOW_SELECTBIGLEVELPANEL
         };
+
     }
 
     public override void HandleNotification(INotification notification)
     {
         base.HandleNotification(notification);
-        Panel = UIManager.Instance.Show<MenuPanel>(false);
+
+        Panel = UIManager.Instance.Show<SelectBigLevelPanel>(false);
     }
 }

@@ -26,7 +26,7 @@ public class SelectLevelPanelMediator : Mediator
     {
         return new string[]
         {
-            NotificationName.PRESS_ADVENTURE
+            NotificationName.SHOW_SELECTLEVELPANEL
         };
     }
 
@@ -36,7 +36,7 @@ public class SelectLevelPanelMediator : Mediator
 
         switch (notification.Name)
         {
-            case NotificationName.PRESS_ADVENTURE:
+            case NotificationName.SHOW_SELECTLEVELPANEL:
                 LevelPanel = UIManager.Instance.Show<SelectLevelPanel>(false);
                 break;
         }

@@ -766,8 +766,7 @@ MonoBehaviour:
   fadeSpeed: 3
   btnSpeed1: {fileID: 8398780873095542158}
   btnSpeed2: {fileID: 8398780873126414121}
-  btnPause: {fileID: 0}
-  btnContinue: {fileID: 0}
+  tgPause: {fileID: 7746747927809003786}
   btnMenu: {fileID: 8398780874492849790}
   txGem: {fileID: 8398780873417866733}
   txNowWave: {fileID: 8398780873528331609}

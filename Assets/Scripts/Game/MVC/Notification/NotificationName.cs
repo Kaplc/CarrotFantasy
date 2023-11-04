@@ -4,21 +4,27 @@ using UnityEngine;
 
 public class NotificationName
 {
+    public const string INIT = "Init"; // 游戏初始化
     public const string INIT_END = "InitEnd"; // 游戏初始化结束
     public const string LOAD_SCENE = "LoadScene"; // 进入场景
     public const string START_GAME = "StartGame"; // 开始游戏
 
-    #region UI控件事件
-    // BeginPanel
-    public const string PRESS_ADVENTURE = "PressAdventure"; // 选择冒险模式
-    public const string PRESS_HELP = "PressHelp"; // 按下帮助按钮
+    #region 打开面板事件
     
-    // SelectPanel
-    public const string PRESS_BACK = "PressBack"; // 按下返回
-    public const string PRESS_START = "PressStart"; // 按下开始
+    public const string SHOW_SELECTBIGLEVELPANEL = "ShowSelectBigLevelPanel"; // 选择大关卡
+    public const string SHOW_SELECTLEVELPANEL = "ShowSelectLevelPanel"; // 选择小关卡
+    public const string SHOW_HELPPANEL = "ShowHelpPanel"; // 帮助面板
+    public const string SHOW_BEGINPANEL = "ShowBeginPanel"; // 开始面板
+    public const string SHOW_MENUPANEL = "ShowMenuPanel"; // 菜单
+    public const string SHOW_SETTINGPANEL = "ShowSettingPanel"; // 设置
+    public const string SHOW_LOSEANEL = "ShowLosePanel"; // 失败
+    public const string SHOW_WINPANEL = "ShowWinPanel"; // 胜利
     
-    // GamePanel
-    public const string PRESS_MENU = "PressMenu"; // 按下菜单
+    #endregion
+
+    #region 控件事件
+
+    public const string SELECT_LEVEL = "SelectLevel"; // 重新选择关卡
 
     #endregion
 }

@@ -17,12 +17,13 @@ public class MenuPanel : BasePanel
         });
         btnReStart.onClick.AddListener(() =>
         {
-            PanelMediator.SendNotification(NotificationName.PRESS_START);
+            PanelMediator.SendNotification(NotificationName.START_GAME);
             UIManager.Instance.Hide<MenuPanel>(false);
         });
         btnSelect.onClick.AddListener(() =>
         {
-            
+            PanelMediator.SendNotification(NotificationName.SELECT_LEVEL);
+            UIManager.Instance.Hide<MenuPanel>(false);
         });
     }
     

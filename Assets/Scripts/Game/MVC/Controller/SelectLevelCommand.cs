@@ -5,15 +5,18 @@ using PureMVC.Patterns.Command;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class InitEndCommand : SimpleCommand
+
+/// <summary>
+/// 菜单点击选择关卡上执行的控制器
+/// </summary>
+public class SelectLevelCommand : SimpleCommand
 {
     public override void Execute(INotification notification)
     {
         base.Execute(notification);
-        
-        // 初始化结束加载场景
+
         SceneManager.LoadScene("2.BeginScene");
         
-        SendNotification(NotificationName.SHOW_BEGINPANEL);
+        SendNotification(NotificationName.SHOW_SELECTLEVELPANEL);
     }
 }

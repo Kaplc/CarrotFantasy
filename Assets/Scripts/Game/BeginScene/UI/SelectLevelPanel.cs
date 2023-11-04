@@ -13,16 +13,16 @@ public class SelectLevelPanel : BasePanel
     {
         btnBack.onClick.AddListener(() =>
         {
-            PanelMediator.SendNotification(NotificationName.PRESS_BACK);
+            PanelMediator.SendNotification(NotificationName.SHOW_SELECTBIGLEVELPANEL);
             UIManager.Instance.Hide<SelectLevelPanel>(false);
         });
         btnHelp.onClick.AddListener(() =>
         {
-            PanelMediator.SendNotification(NotificationName.PRESS_HELP);
+            PanelMediator.SendNotification(NotificationName.SHOW_HELPPANEL);
         });
         btnStart.onClick.AddListener(() =>
         {
-            PanelMediator.SendNotification(NotificationName.PRESS_START);
+            PanelMediator.SendNotification(NotificationName.START_GAME);
             UIManager.Instance.Hide<SelectLevelPanel>(false);
         });
     }

@@ -7,8 +7,7 @@ public class GamePanel : BasePanel
 {
     public Button btnSpeed1;
     public Button btnSpeed2;
-    public Button btnPause;
-    public Button btnContinue;
+    public Toggle tgPause;
     public Button btnMenu;
     public Text txGem;
     public Text txNowWave;
@@ -27,22 +26,14 @@ public class GamePanel : BasePanel
             btnSpeed1.gameObject.SetActive(true);
             btnSpeed2.gameObject.SetActive(false);
         });
-        btnPause.onClick.AddListener(() =>
+        tgPause.onValueChanged.AddListener(isOn =>
         {
-            btnContinue.gameObject.SetActive(true);
-            btnPause.gameObject.SetActive(false);
-        });
-        btnContinue.onClick.AddListener(() =>
-        {
-            btnPause.gameObject.SetActive(true);
-            btnContinue.gameObject.SetActive(false);
+            
         });
         btnMenu.onClick.AddListener(() =>
         {
-            PanelMediator.SendNotification(NotificationName.PRESS_MENU);
+            PanelMediator.SendNotification(NotificationName.SHOW_MENUPANEL);
         });
-        
-        btnContinue.gameObject.SetActive(false);
         btnSpeed2.gameObject.SetActive(false);
         imgPause.gameObject.SetActive(false);
     }

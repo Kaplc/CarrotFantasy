@@ -14,7 +14,8 @@ public abstract class BasePanel : MonoBehaviour
     public float fadeSpeed = 3f;
     public UnityAction hideCallBack;
     public UnityAction showCallBack;
-
+    
+    // 返回与自身绑定的Mediator
     private Mediator mediator;
     public Mediator PanelMediator => mediator;
     

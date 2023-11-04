@@ -23,14 +23,17 @@ public class GameFacade : Facade
         base.InitializeController();
         
         RegisterCommand(NotificationName.INIT_END, () => new InitEndCommand());
-        RegisterCommand(NotificationName.PRESS_START, () => new StartGameCommand());
+        RegisterCommand(NotificationName.START_GAME, () => new StartGameCommand());
+        RegisterCommand(NotificationName.SELECT_LEVEL, () => new SelectLevelCommand());
     }
 
     protected override void InitializeView()
     {
         base.InitializeView();
         
+        RegisterMediator(new InitPanelMediator());
         RegisterMediator(new BeginPanelMediator());
+        RegisterMediator(new SelectBigLevelPanelMediator());
         RegisterMediator(new SelectLevelPanelMediator());
         RegisterMediator(new GamePanelMediator());
         RegisterMediator(new MenuPanelMediator());

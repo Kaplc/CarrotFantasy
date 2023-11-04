@@ -36,8 +36,7 @@ public class BeginPanelMediator : Mediator
         // 返回事件名数组表示要监听的事件
         return new string[]
         {
-            NotificationName.LOAD_SCENE,
-            NotificationName.PRESS_BACK
+            NotificationName.SHOW_BEGINPANEL
         };
     }
 
@@ -47,15 +46,7 @@ public class BeginPanelMediator : Mediator
         // 根据不同的事件执行不同的逻辑
         switch (notification.Name)
         {
-            case NotificationName.LOAD_SCENE:
-                if ((notification.Body as LoadSceneBody)?.index == 2)
-                {
-                    // 显示ui并双向绑定
-                    Panel = UIManager.Instance.Show<BeginPanel>(false);
-                }
-
-                break;
-            case NotificationName.PRESS_BACK:
+            case NotificationName.SHOW_BEGINPANEL:
                 Panel = UIManager.Instance.Show<BeginPanel>(false);
                 break;
         }

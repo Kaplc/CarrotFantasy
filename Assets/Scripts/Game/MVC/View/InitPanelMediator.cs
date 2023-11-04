@@ -4,21 +4,21 @@ using PureMVC.Interfaces;
 using PureMVC.Patterns.Mediator;
 using UnityEngine;
 
-public class GamePanelMediator : Mediator
+public class InitPanelMediator : Mediator
 {
-    public static new string NAME = "GamePanelMediator";
-
-    public GamePanel Panel
+    public new static string NAME = "InitPanelMediator";
+    
+    public InitPanel Panel
     {
-        get=>ViewComponent as GamePanel;
+        get=>ViewComponent as InitPanel;
         set
         {
             ViewComponent = value;
-            (ViewComponent as GamePanel)?.BindMediator(this);
+            (ViewComponent as InitPanel)?.BindMediator(this);
         }
     }
     
-    public GamePanelMediator() : base(NAME)
+    public InitPanelMediator() : base(NAME)
     {
         
     }
@@ -27,8 +27,8 @@ public class GamePanelMediator : Mediator
     {
         return new string[]
         {
-            NotificationName.START_GAME,
-            NotificationName.SELECT_LEVEL
+            NotificationName.INIT,
+            NotificationName.INIT_END
         };
     }
 
@@ -38,15 +38,13 @@ public class GamePanelMediator : Mediator
 
         switch (notification.Name)
         {
-            case NotificationName.START_GAME:
-                Panel = UIManager.Instance.Show<GamePanel>(false);
+            case NotificationName.INIT:
+                Panel = UIManager.Instance.Show<InitPanel>(false);
                 break;
-            case NotificationName.SELECT_LEVEL:
-                UIManager.Instance.Hide<GamePanel>(false);
+            case NotificationName.INIT_END:
+                UIManager.Instance.Hide<InitPanel>(false);
                 break;
         }
         
-        
-
     }
 }
