@@ -33,5 +33,6 @@ public class CountDownPanel : MonoBehaviour
             index--;
         }
         gameObject.SetActive(false);
+        GameFacade.Instance.SendNotification(NotificationName.SHOW_LOSEPANEL);
     }
 }

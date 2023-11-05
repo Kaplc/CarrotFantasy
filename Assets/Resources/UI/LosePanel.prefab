@@ -859,3 +859,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8d0d5e8842f1d64a9128f3489fa7360, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeSpeed: 3
+  btnSelect: {fileID: 7628750547435223776}
+  btnReStart: {fileID: 7628750546890402413}

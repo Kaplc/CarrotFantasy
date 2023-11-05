@@ -17,7 +17,7 @@ public class NotificationName
     public const string SHOW_BEGINPANEL = "ShowBeginPanel"; // 开始面板
     public const string SHOW_MENUPANEL = "ShowMenuPanel"; // 菜单
     public const string SHOW_SETTINGPANEL = "ShowSettingPanel"; // 设置
-    public const string SHOW_LOSEANEL = "ShowLosePanel"; // 失败
+    public const string SHOW_LOSEPANEL = "ShowLosePanel"; // 失败
     public const string SHOW_WINPANEL = "ShowWinPanel"; // 胜利
     public const string SHOW_LOADINGPANEL = "ShowLoadingPanel"; // 加载面板
     public const string HIDE_LOADINGPANEL = "HideLoadingPanel"; // 隐藏加载面板

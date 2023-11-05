@@ -39,6 +39,8 @@ public class GameFacade : Facade
         RegisterMediator(new MenuPanelMediator());
         RegisterMediator(new HelpPanelMediator());
         RegisterMediator(new LoadingPanelMediator());
+        RegisterMediator(new WinPanelMediator());
+        RegisterMediator(new LosePanelMediator());
     }
 
     protected override void InitializeModel()

@@ -334,7 +334,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 145.15, y: 49.2}
+  m_AnchoredPosition: {x: 164.06, y: 49.2}
   m_SizeDelta: {x: 126.736694, y: 82.88019}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1423519957729393306
@@ -469,7 +469,7 @@ GameObject:
   - component: {fileID: 7628750546890402414}
   - component: {fileID: 7628750546890402413}
   m_Layer: 5
-  m_Name: ButtonReStart
+  m_Name: ButtonContinue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -560,7 +560,7 @@ MonoBehaviour:
     m_FadeDuration: 0.1
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 21300000, guid: 1e93afc4b2741894c86edc9da365ca32, type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: 02087ed4b4df05042b3c2d5a55b02a9e, type: 3}
     m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
@@ -782,7 +782,7 @@ GameObject:
   - component: {fileID: 7628750548206170561}
   - component: {fileID: 7628750548206170563}
   - component: {fileID: 7628750548206170562}
-  - component: {fileID: 4813113273499330265}
+  - component: {fileID: 1542256066479586408}
   m_Layer: 5
   m_Name: WinPanel
   m_TagString: Untagged
@@ -847,7 +847,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4813113273499330265
+--- !u!114 &1542256066479586408
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -856,6 +856,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 7628750548206170560}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8d0d5e8842f1d64a9128f3489fa7360, type: 3}
+  m_Script: {fileID: 11500000, guid: d6c869aff9afdf240a6c7cf20cae250d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeSpeed: 3
+  btnSelect: {fileID: 7628750547435223776}
+  btnContinue: {fileID: 7628750546890402413}

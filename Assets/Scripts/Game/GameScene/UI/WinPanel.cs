@@ -1,18 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class WinPanel : MonoBehaviour
+public class WinPanel : BasePanel
 {
-    // Start is called before the first frame update
-    void Start()
+    public Button btnSelect;
+    public Button btnContinue;
+    
+    protected override void Init()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        btnContinue.onClick.AddListener(() =>
+        {
+            UIManager.Instance.Hide<WinPanel>(false);
+        });
+        btnSelect.onClick.AddListener(() =>
+        {
+            PanelMediator.SendNotification(NotificationName.SHOW_SELECTLEVELPANEL);
+            UIManager.Instance.Hide<WinPanel>(false);
+        });
     }
 }

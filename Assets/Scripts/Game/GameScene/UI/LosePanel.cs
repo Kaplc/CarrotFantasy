@@ -1,18 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class LosePanel : MonoBehaviour
+public class LosePanel : BasePanel
 {
-    // Start is called before the first frame update
-    void Start()
+    public Button btnSelect;
+    public Button btnReStart;
+    
+    protected override void Init()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        btnReStart.onClick.AddListener(() =>
+        {
+            PanelMediator.SendNotification(NotificationName.START_GAME);
+            UIManager.Instance.Hide<LosePanel>(false);
+        });
+        btnSelect.onClick.AddListener(() =>
+        {
+            PanelMediator.SendNotification(NotificationName.SHOW_SELECTLEVELPANEL);
+            UIManager.Instance.Hide<LosePanel>(false);
+        });
     }
 }

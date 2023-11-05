@@ -4,21 +4,21 @@ using PureMVC.Interfaces;
 using PureMVC.Patterns.Mediator;
 using UnityEngine;
 
-public class SelectLevelPanelMediator : Mediator
+public class LosePanelMediator : Mediator
 {
-    public static new string NAME = "SelectLevelPanelMediator";
+    public static new string NAME = "LosePanelMediator";
 
-    public SelectLevelPanel Panel
+    public LosePanel Panel
     {
-        get => ViewComponent as SelectLevelPanel;
+        get => ViewComponent as LosePanel;
         set
         {
             ViewComponent = value;
-            (ViewComponent as SelectLevelPanel)?.BindMediator(this);
+            (ViewComponent as LosePanel)?.BindMediator(this);
         }
     }
 
-    public SelectLevelPanelMediator() : base(NAME)
+    public LosePanelMediator() : base(NAME)
     {
     }
 
@@ -26,7 +26,7 @@ public class SelectLevelPanelMediator : Mediator
     {
         return new string[]
         {
-            NotificationName.SHOW_SELECTLEVELPANEL
+            NotificationName.SHOW_LOSEPANEL
         };
     }
 
@@ -36,8 +36,8 @@ public class SelectLevelPanelMediator : Mediator
 
         switch (notification.Name)
         {
-            case NotificationName.SHOW_SELECTLEVELPANEL:
-                Panel = UIManager.Instance.Show<SelectLevelPanel>(false);
+            case NotificationName.SHOW_LOSEPANEL:
+                Panel = UIManager.Instance.Show<LosePanel>(false);
                 break;
         }
     }
