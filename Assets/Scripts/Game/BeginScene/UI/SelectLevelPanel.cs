@@ -23,6 +23,8 @@ public class SelectLevelPanel : BasePanel
         });
         btnStart.onClick.AddListener(() =>
         {
+            // 跳场景前显示LoadingPanel
+            PanelMediator.SendNotification(NotificationName.SHOW_LOADINGPANEL);
             PanelMediator.SendNotification(NotificationName.START_GAME);
             UIManager.Instance.Hide<SelectLevelPanel>(false);
         });

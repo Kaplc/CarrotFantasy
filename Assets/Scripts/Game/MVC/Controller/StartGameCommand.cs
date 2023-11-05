@@ -10,7 +10,20 @@ public class StartGameCommand : SimpleCommand
     public override void Execute(INotification notification)
     {
         base.Execute(notification);
-        
-        SceneManager.LoadScene("3.GameScene");
+
+        MonoManager.Instance.StartCoroutineFrameWork(LoadSceneAsync());
+    }
+
+    private IEnumerator LoadSceneAsync()
+    {
+        AsyncOperation ao = SceneManager.LoadSceneAsync("3.GameScene");
+
+        yield return ao;
+
+        if (ao.isDone)
+        {
+            // 异步加载场景完成隐藏LoadingPanel
+            SendNotification(NotificationName.HIDE_LOADINGPANEL);
+        }
     }
 }
