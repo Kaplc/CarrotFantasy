@@ -39,6 +39,11 @@ public class GamePanelMediator : Mediator
         switch (notification.Name)
         {
             case NotificationName.START_GAME:
+                // 判断是否重新开始, 清空面板并重新生成, 让倒计时面板重新显示
+                if (Panel!=null)
+                {
+                    UIManager.Instance.Hide<GamePanel>(false);
+                }
                 Panel = UIManager.Instance.Show<GamePanel>(false);
                 break;
             case NotificationName.SELECT_LEVEL:
