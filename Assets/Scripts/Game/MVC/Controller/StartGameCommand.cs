@@ -10,7 +10,7 @@ public class StartGameCommand : SimpleCommand
     public override void Execute(INotification notification)
     {
         base.Execute(notification);
-
+        
         SceneManager.LoadScene("3.GameScene");
     }
 }

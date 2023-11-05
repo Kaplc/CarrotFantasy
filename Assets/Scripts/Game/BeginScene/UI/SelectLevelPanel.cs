@@ -18,7 +18,8 @@ public class SelectLevelPanel : BasePanel
         });
         btnHelp.onClick.AddListener(() =>
         {
-            PanelMediator.SendNotification(NotificationName.SHOW_HELPPANEL);
+            PanelMediator.SendNotification(NotificationName.SHOW_BEGINPANEL);
+            PanelMediator.SendNotification(NotificationName.SHOW_HELPPANEL, false);
         });
         btnStart.onClick.AddListener(() =>
         {

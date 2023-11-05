@@ -51,11 +51,21 @@ public class BeginPanelMediator : Mediator
                 Panel = UIManager.Instance.Show<BeginPanel>(false);
                 // 每次显示时复原动画参数
                 Panel.animator.SetBool("ShowHelpPanel", false);
+                Panel.animator.SetBool("RawShowHelpPanel", false);
                 Panel.animator.SetBool("ShowSettingPanel", false);
                 break;
             case NotificationName.SHOW_HELPPANEL:
-                // 播放显示HelpPanel的动画
-                Panel.animator.SetBool("ShowHelpPanel", true);
+                // true为有动画过渡
+                if ((bool)notification.Body)
+                {
+                    // 播放显示HelpPanel的动画
+                    Panel.animator.SetBool("ShowHelpPanel", true);
+                }
+                else
+                {
+                    Panel.animator.SetBool("RawShowHelpPanel", true);
+                }
+
                 break;
             case NotificationName.SHOW_SETTINGPANEL:
                 // 播放显示HelpPanel的动画

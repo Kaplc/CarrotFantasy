@@ -37,7 +37,7 @@ public class BeginPanel : BasePanel
         });
         btnHelp.onClick.AddListener(() =>
         {
-            PanelMediator.SendNotification(NotificationName.SHOW_HELPPANEL);
+            PanelMediator.SendNotification(NotificationName.SHOW_HELPPANEL, true);
         });
     }
 }

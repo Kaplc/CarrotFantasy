@@ -37,7 +37,10 @@ public class SelectBigLevelPanel : BasePanel
         });
         btnHelp.onClick.AddListener(() =>
         {
-            PanelMediator.SendNotification(NotificationName.SHOW_HELPPANEL);
+            // 显示HelpPanel前先显示BeginPanel
+            PanelMediator.SendNotification(NotificationName.SHOW_BEGINPANEL);
+            // false当消息体传递标识显示helpPanel无动画过渡
+            PanelMediator.SendNotification(NotificationName.SHOW_HELPPANEL, false);
             UIManager.Instance.Hide<SelectBigLevelPanel>(false);
         });
     }
