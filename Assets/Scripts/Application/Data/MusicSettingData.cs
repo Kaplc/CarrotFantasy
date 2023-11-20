@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MusicData
+[Serializable]
+public class MusicSettingData
 {
     public bool musicOpen;
     public bool soundOpen;

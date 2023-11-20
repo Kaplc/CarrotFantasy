@@ -12,7 +12,8 @@ public class GameManager : BaseMonoSingleton<GameManager>
 
     [HideInInspector] public int nowBigLevelId; // 大关卡id
     [HideInInspector] public int nowLevelId; // 小关卡id
-    
+
+    public LevelData nowLevelData; // 当前Level数据
 
     
     protected override void Awake()

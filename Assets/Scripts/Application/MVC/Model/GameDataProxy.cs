@@ -7,7 +7,7 @@ public class GameDataProxy : Proxy
 {
     public new const string NAME = "GameDataProxy";
 
-    public Dictionary<int, MapData> nowBigLevelData = new Dictionary<int, MapData>();
+    public Dictionary<int, LevelData> nowBigLevelData = new Dictionary<int, LevelData>();
 
     public GameDataProxy() : base(NAME)
     {
@@ -18,6 +18,13 @@ public class GameDataProxy : Proxy
     /// </summary>
     public void LoadPlayerData()
     {
+        PlayerData playerData = BinaryManager.Instance.Load<PlayerData>("PlayerData.zy");
+        SendNotification(NotificationName.LOADED_PLAYERDATA, playerData);
+    }
+
+    public void SavePlayerData(PlayerData playerData)
+    {
+        BinaryManager.Instance.Save("PlayerData.zy", playerData);
     }
 
     /// <summary>
@@ -25,6 +32,13 @@ public class GameDataProxy : Proxy
     /// </summary>
     public void LoadMusicData()
     {
+        MusicSettingData musicSettingData = BinaryManager.Instance.Load<MusicSettingData>("MusicSettingData.zy");
+        SendNotification(NotificationName.LOADED_MUSICSETTINGDATA, musicSettingData);
+    }
+
+    public void SaveMusicSetting(MusicSettingData musicSettingData)
+    {
+        BinaryManager.Instance.Save("MusicSettingData.zy", musicSettingData);
     }
 
     /// <summary>
@@ -33,15 +47,24 @@ public class GameDataProxy : Proxy
     /// <param name="levelId">关卡id</param>
     public void LoadLevelData(int bigLevelId, int levelId)
     {
+        // 已经加载过直接返回
+        if (nowBigLevelData.ContainsKey(levelId))
+        {
+            SendNotification(NotificationName.LOADED_LEVELDATA, nowBigLevelData[levelId]);
+            return;
+        }
+        
         BigLevelData bigLevelData = Resources.Load<BigLevelData>($"Data/BigLevel{bigLevelId}");
         // 加载所有小关卡数据
         for (int i = 0; i < bigLevelData.levelIds.Count; i++)
         {
-            MapData mapData = BinaryManager.Instance.Load<MapData>("Level/" + $"Level{bigLevelData.levelIds[i]}");
-            nowBigLevelData.Add(bigLevelData.levelIds[i], mapData);
+            // 加载LevelData
+            LevelData levelData = Resources.Load<LevelData>($"Data/Level{bigLevelData.levelIds[i]}Data");
+            levelData.mapData = BinaryManager.Instance.Load<MapData>("MapData/" + $"Level{bigLevelData.levelIds[i]}MapData");
+            nowBigLevelData.Add(bigLevelData.levelIds[i], levelData);
         }
-        
-        SendNotification(NotificationName.LOADED_LEVELDATA, nowBigLevelData);
+        // 带出指定levelId的关卡数据
+        SendNotification(NotificationName.LOADED_LEVELDATA, nowBigLevelData[levelId]);
     }
 
     /// <summary>
@@ -49,5 +72,6 @@ public class GameDataProxy : Proxy
     /// </summary>
     public void ClearData()
     {
+        nowBigLevelData.Clear();
     }
 }

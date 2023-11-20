@@ -31,7 +31,9 @@ public class NotificationName
     #endregion
 
     #region 数据相关
-    public const string LOADED_LEVELDATA = "LoadLevelData"; // 加载完成关卡数据
+    public const string LOADED_LEVELDATA = "LoadedLevelData"; // 加载完成关卡数据
+    public const string LOADED_PLAYERDATA = "LoadedPlayerData"; // 加载完成玩家数据
+    public const string LOADED_MUSICSETTINGDATA = "LoadedMusicSettingData"; // 加载完成音乐设置数据
 
     #endregion
 }
