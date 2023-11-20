@@ -3,6 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+/// <summary>
+/// 使用对象池的对象要继承该接口
+/// </summary>
+public interface IPoolObject
+{
+    void OnPush(GameObject obj);
+    GameObject OnGet(string fullName);
+}
+
 public class PoolData
 {
     // 该容器的父对象
@@ -90,7 +99,7 @@ public class PoolManager : BaseSingleton<PoolManager>
             gameObject.name = fullName;
             return gameObject;
         }
-        
+
         // 异步加载
         ResourcesFrameWork.Instance.LoadAsync<GameObject>(fullName, resObj =>
         {

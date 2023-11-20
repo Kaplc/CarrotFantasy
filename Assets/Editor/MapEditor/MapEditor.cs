@@ -156,7 +156,7 @@ public class MapEditor : Editor
     /// </summary>
     private void LoadLevel()
     {
-        map.levelInfo = BinaryManager.Instance.Load<Level>(map.Path + levelFileName[nowMapIndex]);
+        map.mapData = BinaryManager.Instance.Load<MapData>(map.Path + levelFileName[nowMapIndex]);
         map.LoadLevel();
     }
 }
