@@ -11,12 +11,14 @@ public class StartGameCommand : SimpleCommand
     {
         base.Execute(notification);
         
+        
         // 加载场景
         SceneManager.LoadScene("3.GameScene");
         // 加载当前关卡数据
         GameDataProxy gameDataProxy = GameFacade.Instance.RetrieveProxy("GameDataProxy") as GameDataProxy;
         gameDataProxy?.LoadLevelData(GameManager.Instance.nowBigLevelId, GameManager.Instance.nowLevelId);
-        
+        // 加载完成隐藏LoadingPanel
+        SendNotification(NotificationName.HIDE_LOADINGPANEL);
     }
     
 }

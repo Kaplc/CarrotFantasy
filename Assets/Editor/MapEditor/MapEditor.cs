@@ -14,7 +14,7 @@ public class MapEditor : Editor
     public int nowMapIndex;
     private string[] levelFileName; // 加载到的关卡信息文件名
     private string fileReName;
-    
+
     private void Awake()
     {
         map = target as Map; // 关联mono脚本
@@ -22,7 +22,7 @@ public class MapEditor : Editor
         // 默认选中第一个文件
         nowMapIndex = 0;
 
-        fileReName = "复制新地图文件的文件名.lvi";
+        fileReName = "复制新地图文件的文件名.md";
         LoadLevel();
     }
 
@@ -55,7 +55,7 @@ public class MapEditor : Editor
         fileReName = EditorGUILayout.TextField("", fileReName);
         if (GUILayout.Button("复制新地图文件"))
         {
-            if (fileReName == "复制新地图文件的文件名.lvi")
+            if (fileReName == "复制新地图文件的文件名.md")
             {
                 return;
             }
@@ -70,10 +70,20 @@ public class MapEditor : Editor
 
             File.Copy(BinaryManager.BINARYFILE_PATH + map.Path + levelFileName[nowMapIndex],
                 BinaryManager.BINARYFILE_PATH + map.Path + fileReName);
-            
+
             LoadAllLevelFileName();
             Repaint();
             AssetDatabase.Refresh();
+        }
+
+        if (GUILayout.Button("创建新文件"))
+        {
+            if (fileReName == "复制新地图文件的文件名.md")
+            {
+                return;
+            }
+
+            CreateNewFile(fileReName);
         }
 
         EditorGUILayout.EndHorizontal();
@@ -128,6 +138,12 @@ public class MapEditor : Editor
         map.SaveData(levelFileName[nowMapIndex]);
         Repaint();
     }
+    
+    private void SaveMapData(string fileName)
+    {
+        map.SaveData(fileName);
+        Repaint();
+    }
 
     /// <summary>
     /// 加载所有level文件
@@ -142,7 +158,7 @@ public class MapEditor : Editor
         // 加载level文件
         for (int i = 0; i < fileInfos.Length; i++)
         {
-            if (fileInfos[i].Extension == ".lvi")
+            if (fileInfos[i].Extension == ".md")
             {
                 fileName.Add(fileInfos[i].Name);
             }
@@ -157,6 +173,18 @@ public class MapEditor : Editor
     private void LoadLevel()
     {
         map.mapData = BinaryManager.Instance.Load<MapData>(map.Path + levelFileName[nowMapIndex]);
-        map.LoadLevel();
+        map.LoadData();
+    }
+
+    /// <summary>
+    /// 创建新地图文件
+    /// </summary>
+    private void CreateNewFile(string fileName)
+    {
+        // 创建新文件
+        map.mapData = new MapData();
+        map.SaveData(fileName);
+        LoadAllLevelFileName();
+        AssetDatabase.Refresh();
     }
 }

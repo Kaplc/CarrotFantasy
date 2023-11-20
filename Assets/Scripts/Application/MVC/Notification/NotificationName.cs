@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class NotificationName
 {
+    #region 游戏进程相关
+
     public const string INIT = "Init"; // 游戏初始化
     public const string INIT_END = "InitEnd"; // 游戏初始化结束
-    public const string LOADING_SCENE = "LoadScene"; // 进入场景
     public const string START_GAME = "StartGame"; // 开始游戏
+    public const string START_SPAWN = "StartSpawn"; // 开始出怪
+    #endregion
+    
 
     #region 打开面板事件
     

@@ -33,6 +33,7 @@ public class CountDownPanel : MonoBehaviour
             index--;
         }
         gameObject.SetActive(false);
-        GameFacade.Instance.SendNotification(NotificationName.SHOW_LOSEPANEL);
+        // 开始出怪
+        EventCenter.Instance.TriggerEvent(NotificationName.START_SPAWN);
     }
 }

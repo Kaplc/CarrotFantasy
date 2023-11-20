@@ -25,6 +25,7 @@ public class GameFacade : Facade
         RegisterCommand(NotificationName.INIT_END, () => new InitEndCommand());
         RegisterCommand(NotificationName.START_GAME, () => new StartGameCommand());
         RegisterCommand(NotificationName.SELECT_LEVEL, () => new SelectLevelCommand());
+        RegisterCommand(NotificationName.LOADED_LEVELDATA, ()=> new LoadDataCommand());
     }
 
     protected override void InitializeView()
@@ -46,5 +47,7 @@ public class GameFacade : Facade
     protected override void InitializeModel()
     {
         base.InitializeModel();
+        
+        RegisterProxy(new GameDataProxy());
     }
 }

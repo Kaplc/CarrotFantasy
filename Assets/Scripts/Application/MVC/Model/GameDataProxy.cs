@@ -60,7 +60,7 @@ public class GameDataProxy : Proxy
         {
             // 加载LevelData
             LevelData levelData = Resources.Load<LevelData>($"Data/Level{bigLevelData.levelIds[i]}Data");
-            levelData.mapData = BinaryManager.Instance.Load<MapData>("MapData/" + $"Level{bigLevelData.levelIds[i]}MapData");
+            levelData.mapData = BinaryManager.Instance.Load<MapData>("MapData/" + $"Level{bigLevelData.levelIds[i]}MapData.md");
             nowBigLevelData.Add(bigLevelData.levelIds[i], levelData);
         }
         // 带出指定levelId的关卡数据

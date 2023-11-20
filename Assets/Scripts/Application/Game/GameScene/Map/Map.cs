@@ -41,8 +41,8 @@ public class Map : MonoBehaviour
     [HideInInspector] public List<MapData> levelList = new List<MapData>();
 
     // 当前选择的关卡信息
-    [FormerlySerializedAs("levelData")] [HideInInspector] public MapData mapData;
-    public string Path => "Level/"; // 保存路径子文件夹
+    [HideInInspector] public MapData mapData;
+    public string Path => "MapData/"; // 保存路径子文件夹
 
     public bool drawGizmos;
     [HideInInspector] public bool drawTowerPos;
@@ -189,7 +189,7 @@ public class Map : MonoBehaviour
     }
 
 
-    public void LoadLevel()
+    public void LoadData()
     {
         Clear();
         
