@@ -17,7 +17,6 @@ public class LoadDataCommand : SimpleCommand
                 // 注入数据
                 GameManager.Instance.nowLevelData = notification.Body as LevelData;
                 break;
-
         }
     }
 }
