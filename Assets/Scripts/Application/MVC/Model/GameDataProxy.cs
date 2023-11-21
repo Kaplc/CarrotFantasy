@@ -54,7 +54,7 @@ public class GameDataProxy : Proxy
             return;
         }
         
-        BigLevelData bigLevelData = Resources.Load<BigLevelData>($"Data/BigLevel{bigLevelId}");
+        BigLevelData bigLevelData = Resources.Load<BigLevelData>($"Data/BigLevel{bigLevelId}Data");
         // 加载所有小关卡数据
         for (int i = 0; i < bigLevelData.levelIds.Count; i++)
         {

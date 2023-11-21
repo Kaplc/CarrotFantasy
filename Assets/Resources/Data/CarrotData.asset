@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e61f55381ad5d046b6d4585d9e39a47, type: 3}
-  m_Name: BigLevel0
+  m_Script: {fileID: 11500000, guid: fbaa885eb9918f84db33e393eb287a1b, type: 3}
+  m_Name: CarrotData
   m_EditorClassIdentifier: 
-  levelIds: 00000000
+  hp: 10
