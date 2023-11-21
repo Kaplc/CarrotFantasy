@@ -91,9 +91,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5110039673762505352}
   - component: {fileID: 5110039673762505591}
-  - component: {fileID: -2815650742027598929}
+  - component: {fileID: 5110039673762505353}
   m_Layer: 0
-  m_Name: Map
+  m_Name: EditorMap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -164,7 +164,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-2815650742027598929
+--- !u!114 &5110039673762505353
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -173,6 +173,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 5110039673762505590}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a66e21b2472fd574a8579c89e23a5410, type: 3}
+  m_Script: {fileID: 11500000, guid: df67da4778bdd54489fb61d519c84c72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cellsList: []
+  pathList: []
+  levelList: []
+  levelInfo:
+    pathList: []
+    towerList: []
+  drawGizmos: 0
+  drawTowerPos: 0
+  drawPath: 0

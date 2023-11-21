@@ -27,63 +27,81 @@ public struct Point
 
 public class Map : MonoBehaviour
 {
-    public int rowNum = 8; // 地图行数
-    public int columnNum = 12; // 列数
+    [HideInInspector]public int rowNum = 8; // 地图行数
+    [HideInInspector]public int columnNum = 12; // 列数
 
     private float mapWidth;
     private float mapHeight;
     private float cellWidth;
     private float cellHeight;
 
+    public SpriteRenderer mapBgSpriteRenderer;
+    public SpriteRenderer roadSpriteRenderer;
+
+    #region 编辑器相关字段
     [HideInInspector] public List<Cell> cellsList = new List<Cell>(); // 所有格子
     [HideInInspector] public List<Cell> pathList = new List<Cell>(); // 所有路径拐点
-
-    [HideInInspector] public List<MapData> levelList = new List<MapData>();
-
-    // 当前选择的关卡信息
-    [HideInInspector] public MapData mapData;
-    public string Path => ProjectPath.MAPDATA_PATH; // 保存路径子文件夹
-
-    public bool drawGizmos;
+    
+    public MapData nowEditorMapData; // 当前编辑地图数据
+    
+    public bool drawGizmos; // 开启绘制
     [HideInInspector] public bool drawTowerPos;
     [HideInInspector] public bool drawPath;
+    #endregion
 
+    #region 游戏相关字段
+    
+    // 当前选择的关卡信息
+    [HideInInspector] public MapData nowMapData;
+
+    #endregion
+    
     private void Awake()
     {
+        // 计算格子数据
         CalCellSize();
-        // 关联GameManager
-        GameManager.Instance.map = this;
     }
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        CheckMouse();
+    }
+    
+    /// <summary>
+    /// 检测绘画鼠标事件
+    /// </summary>
+    private void CheckMouse()
+    {
+        if (drawGizmos)
         {
-            if (drawTowerPos)
+            if (Input.GetMouseButtonDown(0))
             {
-                Cell cell = GetMousePositionCell();
-                cell.AllowTowerPos();
+                if (drawTowerPos)
+                {
+                    Cell cell = GetMousePositionCell();
+                    cell.AllowTowerPos();
+                }
+
+                if (drawPath)
+                {
+                    Cell cell = GetMousePositionCell();
+                    pathList.Add(cell);
+                }
             }
 
-            if (drawPath)
+            if (Input.GetMouseButtonDown(1))
             {
-                Cell cell = GetMousePositionCell();
-                pathList.Add(cell);
-            }
-        }
+                if (drawTowerPos)
+                {
+                    Cell cell = GetMousePositionCell();
+                    cell.NotAllowTowerPos();
+                }
 
-        if (Input.GetMouseButtonDown(1))
-        {
-            if (drawTowerPos)
-            {
-                Cell cell = GetMousePositionCell();
-                cell.NotAllowTowerPos();
-            }
-
-            if (drawPath)
-            {
-                Cell cell = GetMousePositionCell();
-                pathList.Remove(cell);
+                if (drawPath)
+                {
+                    Cell cell = GetMousePositionCell();
+                    pathList.Remove(cell);
+                }
             }
         }
     }

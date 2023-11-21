@@ -16,28 +16,28 @@ public class Monster : BaseRole, IPoolObject
         Move();
         
         // 判断是否到达目标格子
-        if (Vector3.Distance(GameManager.Instance.map.GetCellCenterPos(nextCell), transform.position) < 0.1f && isDead == false)
-        {
-            // 到达终点格子, 触发死亡方法
-            if (pathIndex == mapData.pathList.Count-1)
-            {
-                Dead();
-                return;
-            }
-            
-            // 到达换下个目标格子
-            pathIndex++;
-            pathIndex = Mathf.Clamp(pathIndex, 0, mapData.pathList.Count-1);
-            nextCell = mapData.pathList[pathIndex];
-        }
+        // if (Vector3.Distance(GameManager.Instance.map.GetCellCenterPos(nextCell), transform.position) < 0.1f && isDead == false)
+        // {
+        //     // 到达终点格子, 触发死亡方法
+        //     if (pathIndex == mapData.pathList.Count-1)
+        //     {
+        //         Dead();
+        //         return;
+        //     }
+        //     
+        //     // 到达换下个目标格子
+        //     pathIndex++;
+        //     pathIndex = Mathf.Clamp(pathIndex, 0, mapData.pathList.Count-1);
+        //     nextCell = mapData.pathList[pathIndex];
+        // }
     }
 
     public void Move()
     {
-        Vector3 dir = (GameManager.Instance.map.GetCellCenterPos(nextCell) - transform.position);
-        dir.Normalize();
+        // Vector3 dir = (GameManager.Instance.map.GetCellCenterPos(nextCell) - transform.position);
+        // dir.Normalize();
         // 移动
-        transform.Translate(dir * (Time.deltaTime * Speed));
+        // transform.Translate(dir * (Time.deltaTime * Speed));
     }
 
     public override void Dead()
@@ -69,7 +69,7 @@ public class Monster : BaseRole, IPoolObject
         // 获取当前关卡的地图路径信息
         mapData = GameManager.Instance.nowLevelData.mapData;
         // 位置设置在起点
-        transform.position = GameManager.Instance.map.GetCellCenterPos(mapData.pathList[0]);
+        // transform.position = GameManager.Instance.map.GetCellCenterPos(mapData.pathList[0]);
         // 设置第一个目标格子
         nextCell = mapData.pathList[0];
         // 刷新血

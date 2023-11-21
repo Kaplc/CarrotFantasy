@@ -16,12 +16,12 @@ MonoBehaviour:
   mapData:
     pathList: []
     towerList: []
-  monsterIds: 0000000001000000
+  monsterIds: 0000000000000000
   intervalTimePerWave: 5
   roundDataList:
   - monsterId: 0
-    waveCount: 5
-    intervalTimeEach: 1
-  - monsterId: 1
+    waveCount: 10
+    intervalTimeEach: 0.5
+  - monsterId: 0
     waveCount: 5
     intervalTimeEach: 1
