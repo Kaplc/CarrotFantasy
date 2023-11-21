@@ -1,43 +1,58 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseRole : MonoBehaviour, IPoolObject
+public abstract class BaseRole : MonoBehaviour, IPoolObject
 {
-    // Start is called before the first frame update
-    void Start()
+    public RoleData data;
+    public int Id => data.id;
+
+    private int hp;
+
+    public int Hp
     {
-        
+        get => hp;
+        set
+        {
+            hp = value;
+            
+            // 每次改变hp判断是否死亡
+            if (hp < 0)
+            {
+                hp = 0;
+                Dead();
+            }
+        }
+    }
+    public int MaxHp => data.hp;
+
+    public bool isDead;
+
+    private void Awake()
+    {
+        hp = MaxHp;
     }
 
-    // Update is called once per frame
-    void Update()
+    public virtual void Wound(int woundHp)
     {
-        
+        Hp -= woundHp;
+    } 
+
+    public virtual void Dead()
+    {
+        isDead = true;
     }
     
     /// <summary>
     /// 适用于对象池回收时复原
     /// </summary>
     /// <param name="obj"></param>
-    public virtual void OnPush(GameObject obj)
-    {
-        // 复原数据
-        
-        // 回收
-        GameManager.Instance.poolManager.PushObject(obj);
-    }
-
+    public abstract void OnPush();
+    
     /// <summary>
     /// 使用对象池时初始化
     /// </summary>
     /// <returns></returns>
-    public virtual GameObject OnGet(string fullName)
-    {
-        // 取出
-        GameObject obj = GameManager.Instance.poolManager.GetObject(fullName);
-        // 初始化
-        
-        return null;
-    }
+    public abstract void OnGet();
 }

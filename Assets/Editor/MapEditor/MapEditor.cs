@@ -98,7 +98,7 @@ public class MapEditor : Editor
 
         if (GUILayout.Button("清除"))
         {
-            map.ClearAllTowerPos();
+            ClearAllTowerPos();
         }
 
         EditorGUILayout.EndHorizontal();
@@ -112,7 +112,7 @@ public class MapEditor : Editor
 
         if (GUILayout.Button("清除"))
         {
-            map.ClearAllPath();
+            ClearAllPath();
         }
 
         EditorGUILayout.EndHorizontal();
@@ -135,13 +135,13 @@ public class MapEditor : Editor
     // 保存当前修改状态
     private void SaveMapData()
     {
-        map.SaveData(levelFileName[nowMapIndex]);
+        SaveData(levelFileName[nowMapIndex]);
         Repaint();
     }
     
     private void SaveMapData(string fileName)
     {
-        map.SaveData(fileName);
+        SaveData(fileName);
         Repaint();
     }
 
@@ -166,14 +166,14 @@ public class MapEditor : Editor
 
         levelFileName = fileName.ToArray();
     }
-
+    
     /// <summary>
     /// 加载关卡信息
     /// </summary>
     private void LoadLevel()
     {
         map.mapData = BinaryManager.Instance.Load<MapData>(map.Path + levelFileName[nowMapIndex]);
-        map.LoadData();
+        LoadData();
     }
 
     /// <summary>
@@ -183,8 +183,90 @@ public class MapEditor : Editor
     {
         // 创建新文件
         map.mapData = new MapData();
-        map.SaveData(fileName);
+        SaveData(fileName);
         LoadAllLevelFileName();
         AssetDatabase.Refresh();
     }
+    
+    #region 加载和保存
+
+    public void SaveData(string fileName)
+    {
+        // 清空旧数据
+        map.mapData.pathList.Clear();
+        map.mapData.towerList.Clear();
+
+        // 写入新数据
+        for (int i = 0; i < map.pathList.Count; i++)
+        {
+            map.mapData.pathList.Add(map.pathList[i]);
+        }
+
+        for (int i = 0; i < map.cellsList.Count; i++)
+        {
+            if (map.cellsList[i].IsTowerPos)
+            {
+                map.mapData.towerList.Add(map.cellsList[i]);
+            }
+        }
+
+        BinaryManager.Instance.Save(ProjectPath.MAPDATA_PATH + fileName, map.mapData);
+        AssetDatabase.Refresh();
+    }
+    
+
+    public void LoadData()
+    {
+        Clear();
+        
+        // 生成格子
+        for (int y = 0; y < map.rowNum; y++)
+        {
+            for (int x = 0; x < map.columnNum; x++)
+            {
+                map.cellsList.Add(new Cell(new Point(x, y)));
+            }
+        }
+        // 覆盖放塔点
+        for (int i = 0; i < map.mapData.towerList.Count; i++)
+        {
+            map.GetCell(map.mapData.towerList[i].X, map.mapData.towerList[i].Y).AllowTowerPos();
+        }
+
+        for (int i = 0; i < map.mapData.pathList.Count; i++)
+        {
+            map.pathList.Add(map.mapData.pathList[i]);
+        }
+    }
+
+    #endregion
+    
+    #region 清除
+
+    /// <summary>
+    /// 清除所有放塔点
+    /// </summary>
+    public void ClearAllTowerPos()
+    {
+        for (int i = 0; i < map.cellsList.Count; i++)
+        {
+            map.cellsList[i].NotAllowTowerPos();
+        }
+    }
+
+    /// <summary>
+    /// 清除所有怪物路径
+    /// </summary>
+    public void ClearAllPath()
+    {
+        map.pathList.Clear();
+    }
+
+    public void Clear()
+    {
+        map.cellsList.Clear();
+        map.pathList.Clear();
+    }
+
+    #endregion
 }

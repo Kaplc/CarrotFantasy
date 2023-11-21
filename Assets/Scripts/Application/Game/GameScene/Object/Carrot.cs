@@ -2,16 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Carrot : MonoBehaviour
+public class Carrot : BaseRole, IPoolObject
 {
-    // Start is called before the first frame update
-    void Start()
+
+    
+    
+    public override void OnPush()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void OnGet()
     {
         
     }

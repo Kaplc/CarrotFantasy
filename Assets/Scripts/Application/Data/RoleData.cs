@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
-public class MonsterData: ScriptableObject
+public class RoleData: ScriptableObject
 {
     public int id;
     public float speed;

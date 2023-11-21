@@ -27,8 +27,8 @@ public struct Point
 
 public class Map : MonoBehaviour
 {
-    private const int rowNum = 8; // 地图行数
-    private const int columnNum = 12; // 列数
+    public int rowNum = 8; // 地图行数
+    public int columnNum = 12; // 列数
 
     private float mapWidth;
     private float mapHeight;
@@ -42,7 +42,7 @@ public class Map : MonoBehaviour
 
     // 当前选择的关卡信息
     [HideInInspector] public MapData mapData;
-    public string Path => "MapData/"; // 保存路径子文件夹
+    public string Path => ProjectPath.MAPDATA_PATH; // 保存路径子文件夹
 
     public bool drawGizmos;
     [HideInInspector] public bool drawTowerPos;
@@ -51,6 +51,8 @@ public class Map : MonoBehaviour
     private void Awake()
     {
         CalCellSize();
+        // 关联GameManager
+        GameManager.Instance.map = this;
     }
 
     private void Update()
@@ -132,88 +134,6 @@ public class Map : MonoBehaviour
             Gizmos.DrawLine(from, to);
         }
     }
-
-    #region 清除
-
-    /// <summary>
-    /// 清除所有放塔点
-    /// </summary>
-    public void ClearAllTowerPos()
-    {
-        for (int i = 0; i < cellsList.Count; i++)
-        {
-            cellsList[i].NotAllowTowerPos();
-        }
-    }
-
-    /// <summary>
-    /// 清除所有怪物路径
-    /// </summary>
-    public void ClearAllPath()
-    {
-        pathList.Clear();
-    }
-
-    public void Clear()
-    {
-        cellsList.Clear();
-        pathList.Clear();
-    }
-
-    #endregion
-
-    #region 加载和保存
-
-    public void SaveData(string fileName)
-    {
-        // 清空旧数据
-        mapData.pathList.Clear();
-        mapData.towerList.Clear();
-
-        // 写入新数据
-        for (int i = 0; i < pathList.Count; i++)
-        {
-            mapData.pathList.Add(pathList[i]);
-        }
-
-        for (int i = 0; i < cellsList.Count; i++)
-        {
-            if (cellsList[i].IsTowerPos)
-            {
-                mapData.towerList.Add(cellsList[i]);
-            }
-        }
-
-        BinaryManager.Instance.Save(Path + fileName, mapData);
-        AssetDatabase.Refresh();
-    }
-
-
-    public void LoadData()
-    {
-        Clear();
-        
-        // 生成格子
-        for (int y = 0; y < rowNum; y++)
-        {
-            for (int x = 0; x < columnNum; x++)
-            {
-                cellsList.Add(new Cell(new Point(x, y)));
-            }
-        }
-        // 覆盖放塔点
-        for (int i = 0; i < mapData.towerList.Count; i++)
-        {
-            GetCell(mapData.towerList[i].X, mapData.towerList[i].Y).AllowTowerPos();
-        }
-
-        for (int i = 0; i < mapData.pathList.Count; i++)
-        {
-            pathList.Add(mapData.pathList[i]);
-        }
-    }
-
-    #endregion
 
     #region 计算
 

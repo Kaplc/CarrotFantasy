@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 131881831683465117}
   - component: {fileID: 1863784303008727756}
   - component: {fileID: 4861448707126105299}
+  - component: {fileID: -4778214835551515537}
   m_Layer: 0
   m_Name: Carrot
   m_TagString: Untagged
@@ -101,3 +102,16 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &-4778214835551515537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4556778025221152451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22a52739c703b5541aa954f238ad2319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: f852e16f88c29b94091646d017d17841, type: 2}

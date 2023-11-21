@@ -7,7 +7,8 @@ public class GameDataProxy : Proxy
 {
     public new const string NAME = "GameDataProxy";
 
-    public Dictionary<int, LevelData> nowBigLevelData = new Dictionary<int, LevelData>();
+    private Dictionary<int, LevelData> nowBigLevelData = new Dictionary<int, LevelData>();
+    private Dictionary<int, RoleData> monsterData = new Dictionary<int, RoleData>();
 
     public GameDataProxy() : base(NAME)
     {
@@ -54,17 +55,28 @@ public class GameDataProxy : Proxy
             return;
         }
         
-        BigLevelData bigLevelData = Resources.Load<BigLevelData>($"Data/BigLevel{bigLevelId}Data");
+        BigLevelData bigLevelData = Resources.Load<BigLevelData>(ProjectPath.LEVELRDATA_PATH + $"BigLevel{bigLevelId}Data");
         // 加载所有小关卡数据
         for (int i = 0; i < bigLevelData.levelIds.Count; i++)
         {
             // 加载LevelData
-            LevelData levelData = Resources.Load<LevelData>($"Data/Level{bigLevelData.levelIds[i]}Data");
-            levelData.mapData = BinaryManager.Instance.Load<MapData>("MapData/" + $"Level{bigLevelData.levelIds[i]}MapData.md");
+            LevelData levelData = Resources.Load<LevelData>(ProjectPath.LEVELRDATA_PATH + $"Level{bigLevelData.levelIds[i]}Data");
+            levelData.mapData =
+                GameManager.Instance.BinaryManager.Load<MapData>(ProjectPath.MAPDATA_PATH + $"Level{bigLevelData.levelIds[i]}MapData.md");
             nowBigLevelData.Add(bigLevelData.levelIds[i], levelData);
+            // 加载该大关卡的所有怪物信息
+            for (int j = 0; j < levelData.monsterIds.Count; j++)
+            {
+                if (!monsterData.ContainsKey(j))
+                {
+                    monsterData.Add(j, Resources.Load<RoleData>(ProjectPath.MONSTERDATA_PATH+$"Monster{j}Data"));
+                }
+            }
         }
+
         // 带出指定levelId的关卡数据
-        SendNotification(NotificationName.LOADED_LEVELDATA, nowBigLevelData[levelId]);
+        SendNotification(NotificationName.LOADED_LEVELDATA,
+            new LevelDataBody() { levelData = nowBigLevelData[levelId], monsterData = this.monsterData });
     }
 
     /// <summary>

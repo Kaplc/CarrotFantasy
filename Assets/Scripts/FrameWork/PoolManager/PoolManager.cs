@@ -8,8 +8,8 @@ using UnityEngine.Events;
 /// </summary>
 public interface IPoolObject
 {
-    void OnPush(GameObject obj);
-    GameObject OnGet(string fullName);
+    void OnPush();
+    void OnGet();
 }
 
 public class PoolData
@@ -37,7 +37,7 @@ public class PoolData
         targetObject.transform.parent = null;
         // 从list移除
         objectList.RemoveAt(0);
-
+        
         targetObject.SetActive(true);
         return targetObject;
     }

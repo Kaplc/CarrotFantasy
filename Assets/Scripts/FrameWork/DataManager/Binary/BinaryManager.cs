@@ -12,7 +12,7 @@ public class BinaryManager: BaseSingleton<BinaryManager>
 {
     public static string EXCELFILE_PATH = Application.dataPath + "/GameInfo/Excel/";
     public static string INFOCLASS_PATH = Application.dataPath + "/Scripts/Data/";
-    public static string BINARYFILE_PATH = Application.streamingAssetsPath + "/Data/";
+    public static string BINARYFILE_PATH = Application.streamingAssetsPath + "/";
 
     // 存放读取出来的Excel二进制文件数据
     public Dictionary<string, object> tableDic = new Dictionary<string, object>();

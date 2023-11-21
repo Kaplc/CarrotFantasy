@@ -16,7 +16,7 @@ public class Spawner : MonoBehaviour
         // 获取当前关卡数据
         levelData = GameManager.Instance.nowLevelData;
         // 监听开始出怪事件
-        EventCenter.Instance.AddEventListener(NotificationName.START_SPAWN, StartSpawn);
+        GameManager.Instance.EventCenter.AddEventListener(NotificationName.START_SPAWN, StartSpawn);
     }
     
     /// <summary>
@@ -41,20 +41,26 @@ public class Spawner : MonoBehaviour
             roundData = levelData.roundDataList[i];
             for (int j = 0; j < roundData.waveCount; j++)
             {
-                Debug.Log("出怪");
+                string prefabsPath = GameManager.Instance.monsterData[roundData.monsterId].prefabsPath;
+                // 缓存池取出
+                Monster monster = GameManager.Instance.PoolManager.GetObject(prefabsPath).GetComponent<Monster>();
+                monster.OnGet(); // 取出时执行还原方法
                 // 每只间隔
                 yield return new WaitForSeconds(roundData.intervalTimeEach);
             }
             
             // 等待每波间隔
             yield return new WaitForSeconds(levelData.intervalTimePerWave);
-            Debug.Log("下一波");
+
         }
     }
 
     private void OnDestroy()
     {
         // 销毁时移除监听事件
-        EventCenter.Instance.RemoveEventListener(NotificationName.START_SPAWN, StartSpawn);
+        GameManager.Instance.EventCenter.RemoveEventListener(NotificationName.START_SPAWN, StartSpawn);
+        // 停止协程
+        StopCoroutine(spawnCoroutine);
+        spawnCoroutine = null;
     }
 }
