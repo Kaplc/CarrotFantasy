@@ -16,7 +16,8 @@ public class Spawner : MonoBehaviour
         // 获取当前关卡数据
         levelData = GameManager.Instance.nowLevelData;
         // 监听开始出怪事件
-        GameManager.Instance.EventCenter.AddEventListener(NotificationName.START_SPAWN, StartSpawn);
+        GameManager.Instance.EventCenter.AddEventListener(NotificationName.START_SPAWN, StartSpawn); // 开始出怪
+        GameManager.Instance.EventCenter.AddEventListener(NotificationName.CARROT_DEAD, StopSpawn); // 监听萝卜死亡停止出怪
     }
     
     /// <summary>
@@ -29,7 +30,10 @@ public class Spawner : MonoBehaviour
 
     private void StopSpawn()
     {
-        StopCoroutine(spawnCoroutine);
+        if (spawnCoroutine != null)
+        {
+            StopCoroutine(spawnCoroutine);
+        }
     }
 
     private IEnumerator SpawnCoroutine()
@@ -59,6 +63,7 @@ public class Spawner : MonoBehaviour
     {
         // 销毁时移除监听事件
         GameManager.Instance.EventCenter.RemoveEventListener(NotificationName.START_SPAWN, StartSpawn);
+        GameManager.Instance.EventCenter.RemoveEventListener(NotificationName.CARROT_DEAD, StopSpawn);
         // 停止协程
         StopCoroutine(spawnCoroutine);
         spawnCoroutine = null;

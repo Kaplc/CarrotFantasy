@@ -26,13 +26,23 @@ public class MenuPanelMediator : Mediator
     {
         return new string[]
         {
-            NotificationName.SHOW_MENUPANEL
+            NotificationName.SHOW_MENUPANEL,
+            NotificationName.HIDE_MENUPANEL
         };
     }
 
     public override void HandleNotification(INotification notification)
     {
         base.HandleNotification(notification);
-        Panel = UIManager.Instance.Show<MenuPanel>(false);
+        switch (notification.Name)
+        {
+            case NotificationName.SHOW_MENUPANEL:
+                Panel = UIManager.Instance.Show<MenuPanel>(false);
+                break;
+            case NotificationName.HIDE_MENUPANEL:
+                UIManager.Instance.Hide<MenuPanel>(false);
+                break;
+        }
+        
     }
 }

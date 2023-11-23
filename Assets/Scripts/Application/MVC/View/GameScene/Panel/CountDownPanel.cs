@@ -34,6 +34,6 @@ public class CountDownPanel : MonoBehaviour
         }
         gameObject.SetActive(false);
         // 开始出怪
-        EventCenter.Instance.TriggerEvent(NotificationName.START_SPAWN);
+        GameManager.Instance.EventCenter.TriggerEvent(NotificationName.START_SPAWN);
     }
 }

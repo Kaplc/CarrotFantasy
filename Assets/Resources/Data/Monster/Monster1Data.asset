@@ -15,4 +15,6 @@ MonoBehaviour:
   id: 1
   speed: 5
   hp: 1
+  maxHp: 0
+  atk: 1
   prefabsPath: Object/Monster/2-1

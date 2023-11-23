@@ -5,46 +5,74 @@ using UnityEngine;
 
 public class Monster : BaseRole, IPoolObject
 {
-    public float Speed => data.speed;
-
-    public MapData mapData;
+    public MonsterData data;
+    
+    private int hp;
     public int pathIndex = 0;
+    
     public Cell nextCell;
+    private Animator animator;
 
+    #region 属性
+
+    public int ID => data.id;
+    private float Speed => data.speed;
+    private int Hp
+    {
+        get => hp;
+        set
+        {
+            hp = value;
+            if (hp <= 0)
+            {
+                hp = 0;
+                isDead = true;
+                Dead();
+            }
+        }
+    }
+
+    #endregion
+    
+    
     private void Update()
     {
         Move();
         
         // 判断是否到达目标格子
-        // if (Vector3.Distance(GameManager.Instance.map.GetCellCenterPos(nextCell), transform.position) < 0.1f && isDead == false)
-        // {
-        //     // 到达终点格子, 触发死亡方法
-        //     if (pathIndex == mapData.pathList.Count-1)
-        //     {
-        //         Dead();
-        //         return;
-        //     }
-        //     
-        //     // 到达换下个目标格子
-        //     pathIndex++;
-        //     pathIndex = Mathf.Clamp(pathIndex, 0, mapData.pathList.Count-1);
-        //     nextCell = mapData.pathList[pathIndex];
-        // }
+        if (Vector3.Distance(GameManager.Instance.GetCellCenterPos(nextCell), transform.position) < 0.1f && isDead == false)
+        {
+            // 到达终点格子, 触发死亡方法
+            if (pathIndex == GameManager.Instance.nowLevelData.mapData.pathList.Count-1)
+            {
+                // 触发怪物到达终点事件
+                GameManager.Instance.EventCenter.TriggerEvent<int>(NotificationName.REACH_ENDPOINT, data.atk);
+                Dead();
+                return;
+            }
+            
+            // 到达换下个目标格子
+            pathIndex++;
+            pathIndex = Mathf.Clamp(pathIndex, 0, GameManager.Instance.nowLevelData.mapData.pathList.Count-1);
+            nextCell = GameManager.Instance.nowLevelData.mapData.pathList[pathIndex];
+        }
     }
 
-    public void Move()
+    private void Move()
     {
-        // Vector3 dir = (GameManager.Instance.map.GetCellCenterPos(nextCell) - transform.position);
-        // dir.Normalize();
+        Vector3 dir = GameManager.Instance.GetCellCenterPos(nextCell) - transform.position;
+        dir.Normalize();
         // 移动
-        // transform.Translate(dir * (Time.deltaTime * Speed));
+        transform.Translate(dir * (Time.deltaTime * Speed));
     }
 
-    public override void Dead()
+    protected override void Wound(int woundHp)
     {
-        base.Dead();
-        
+        Hp -= woundHp;
+    }
 
+    protected override void Dead()
+    {
         // 回收
         OnPush();
     }
@@ -52,7 +80,6 @@ public class Monster : BaseRole, IPoolObject
     public override void OnPush()
     {
         // 清空数据
-        mapData = null;
         nextCell = null;
         pathIndex = 0;
         isDead = false;
@@ -66,13 +93,11 @@ public class Monster : BaseRole, IPoolObject
     /// </summary>
     public override void OnGet()
     {
-        // 获取当前关卡的地图路径信息
-        mapData = GameManager.Instance.nowLevelData.mapData;
         // 位置设置在起点
-        // transform.position = GameManager.Instance.map.GetCellCenterPos(mapData.pathList[0]);
+        transform.position = GameManager.Instance.GetCellCenterPos(GameManager.Instance.nowLevelData.mapData.pathList[0]);
         // 设置第一个目标格子
-        nextCell = mapData.pathList[0];
+        nextCell = GameManager.Instance.nowLevelData.mapData.pathList[0];
         // 刷新血
-        Hp = MaxHp;
+        hp = data.maxHp;
     }
 }

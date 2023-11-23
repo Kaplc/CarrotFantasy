@@ -37,6 +37,9 @@ public class LosePanelMediator : Mediator
         switch (notification.Name)
         {
             case NotificationName.SHOW_LOSEPANEL:
+                // 先关闭菜单面板
+                SendNotification(NotificationName.HIDE_MENUPANEL);
+                
                 Panel = UIManager.Instance.Show<LosePanel>(false);
                 break;
         }

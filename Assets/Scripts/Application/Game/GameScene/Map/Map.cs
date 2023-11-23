@@ -27,8 +27,8 @@ public struct Point
 
 public class Map : MonoBehaviour
 {
-    [HideInInspector]public int rowNum = 8; // 地图行数
-    [HideInInspector]public int columnNum = 12; // 列数
+    [HideInInspector] public int rowNum = 8; // 地图行数
+    [HideInInspector] public int columnNum = 12; // 列数
 
     private float mapWidth;
     private float mapHeight;
@@ -39,69 +39,85 @@ public class Map : MonoBehaviour
     public SpriteRenderer roadSpriteRenderer;
 
     #region 编辑器相关字段
+
     [HideInInspector] public List<Cell> cellsList = new List<Cell>(); // 所有格子
     [HideInInspector] public List<Cell> pathList = new List<Cell>(); // 所有路径拐点
-    
+
     public MapData nowEditorMapData; // 当前编辑地图数据
-    
+
     public bool drawGizmos; // 开启绘制
     [HideInInspector] public bool drawTowerPos;
     [HideInInspector] public bool drawPath;
+
     #endregion
 
     #region 游戏相关字段
+
+    public bool gaming; // 游戏中标识
     
-    // 当前选择的关卡信息
-    [HideInInspector] public MapData nowMapData;
+    public Carrot carrot; // 萝卜
+    public Transform startPoint; // 开始路牌位置
+    [HideInInspector] public MapData nowMapData; // 当前选择的关卡信息
 
     #endregion
-    
+
     private void Awake()
     {
         // 计算格子数据
         CalCellSize();
+        
+        
+        if (!gaming) return;
+
+        // 游戏模式绑定map脚本
+        GameManager.Instance.map = this;
+        // 初始化地图
+        InitMap();
     }
 
     private void Update()
     {
-        CheckMouse();
+        // 编辑器模式才开启检测
+        if (drawGizmos)
+        {
+            CheckMouse();
+        }
     }
-    
+
+    #region 编辑器相关
+
     /// <summary>
     /// 检测绘画鼠标事件
     /// </summary>
     private void CheckMouse()
     {
-        if (drawGizmos)
+        if (Input.GetMouseButtonDown(0))
         {
-            if (Input.GetMouseButtonDown(0))
+            if (drawTowerPos)
             {
-                if (drawTowerPos)
-                {
-                    Cell cell = GetMousePositionCell();
-                    cell.AllowTowerPos();
-                }
-
-                if (drawPath)
-                {
-                    Cell cell = GetMousePositionCell();
-                    pathList.Add(cell);
-                }
+                Cell cell = GetMousePositionCell();
+                cell.AllowTowerPos();
             }
 
-            if (Input.GetMouseButtonDown(1))
+            if (drawPath)
             {
-                if (drawTowerPos)
-                {
-                    Cell cell = GetMousePositionCell();
-                    cell.NotAllowTowerPos();
-                }
+                Cell cell = GetMousePositionCell();
+                pathList.Add(cell);
+            }
+        }
 
-                if (drawPath)
-                {
-                    Cell cell = GetMousePositionCell();
-                    pathList.Remove(cell);
-                }
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (drawTowerPos)
+            {
+                Cell cell = GetMousePositionCell();
+                cell.NotAllowTowerPos();
+            }
+
+            if (drawPath)
+            {
+                Cell cell = GetMousePositionCell();
+                pathList.Remove(cell);
             }
         }
     }
@@ -128,30 +144,33 @@ public class Map : MonoBehaviour
             Vector2 to = new Vector2(i * cellWidth - mapWidth / 2f, mapHeight - mapHeight / 2f);
             Gizmos.DrawLine(from, to);
         }
-        
+
         // 绘制放塔点
         for (int i = 0; i < cellsList.Count; i++)
         {
             if (cellsList[i].IsTowerPos)
             {
-                Gizmos.DrawIcon(GetCellCenterPos(cellsList[i]), "holder.png",true);
+                Gizmos.DrawIcon(GetCellCenterPos(cellsList[i]), "holder.png", true);
             }
         }
-        
+
         Gizmos.color = Color.red;
         // 绘制路径
         if (pathList.Count > 0)
         {
-            Gizmos.DrawIcon(GetCellCenterPos(pathList[0]), "start.png",true);
-            Gizmos.DrawIcon(GetCellCenterPos(pathList[pathList.Count-1]), "end.png",true);
+            Gizmos.DrawIcon(GetCellCenterPos(pathList[0]), "start.png", true);
+            Gizmos.DrawIcon(GetCellCenterPos(pathList[pathList.Count - 1]), "end.png", true);
         }
+
         for (int i = 0; i < pathList.Count - 1; i++)
         {
             Vector2 from = GetCellCenterPos(pathList[i]);
-            Vector2 to = GetCellCenterPos(pathList[i+1]);
+            Vector2 to = GetCellCenterPos(pathList[i + 1]);
             Gizmos.DrawLine(from, to);
         }
     }
+
+    #endregion
 
     #region 计算
 
@@ -170,8 +189,10 @@ public class Map : MonoBehaviour
         cellWidth = mapWidth / columnNum;
         cellHeight = mapHeight / rowNum;
     }
-    
+
     #endregion
+
+    #region 格子数据相关
 
     /// <summary>
     /// 索引获取格子
@@ -191,8 +212,8 @@ public class Map : MonoBehaviour
     /// <returns></returns>
     public Cell GetCell(Vector3 worldPos)
     {
-        float x = (worldPos.x + mapWidth/2f) / (mapWidth / columnNum);
-        float y = (worldPos.y + mapHeight/2f) / (mapHeight / rowNum);
+        float x = (worldPos.x + mapWidth / 2f) / (mapWidth / columnNum);
+        float y = (worldPos.y + mapHeight / 2f) / (mapHeight / rowNum);
 
         return GetCell((int)x, (int)y);
     }
@@ -204,7 +225,7 @@ public class Map : MonoBehaviour
     /// <returns></returns>
     public Vector3 GetCellCenterPos(Cell cell)
     {
-        return new Vector3(-mapWidth/2f + cellWidth / 2f + cell.X * cellWidth, -mapHeight/2f + cellHeight / 2f + cell.Y * cellHeight);
+        return new Vector3(-mapWidth / 2f + cellWidth / 2f + cell.X * cellWidth, -mapHeight / 2f + cellHeight / 2f + cell.Y * cellHeight);
     }
 
     /// <summary>
@@ -215,7 +236,32 @@ public class Map : MonoBehaviour
     {
         Vector3 mouseViewPos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
         Vector3 mouseWorldPos = Camera.main.ViewportToWorldPoint(mouseViewPos);
-        
+
         return GetCell(mouseWorldPos);
     }
+
+    #endregion
+
+    #region 游戏相关
+    
+    /// <summary>
+    /// 初始化地图
+    /// </summary>
+    private void InitMap()
+    {
+        // 获取当前地图数据
+        nowMapData = GameManager.Instance.nowLevelData.mapData;
+        // 创建萝卜和开始路牌
+        carrot = GameManager.Instance.PoolManager.GetObject("Object/Carrot").GetComponent<Carrot>();
+        carrot.OnGet();
+        startPoint = Instantiate(Resources.Load<GameObject>("Object/StartPoint")).GetComponent<Transform>();
+        // 设置萝卜位置
+        Cell lastPathCell = nowMapData.pathList[nowMapData.pathList.Count - 1];
+        carrot.transform.position = GetCellCenterPos(lastPathCell);
+        // 设置开始路牌位置
+        Cell firstPathCell = nowMapData.pathList[0];
+        startPoint.position = GetCellCenterPos(firstPathCell);
+    }
+    
+    #endregion
 }

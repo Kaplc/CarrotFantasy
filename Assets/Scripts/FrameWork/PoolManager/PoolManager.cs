@@ -66,6 +66,8 @@ public class PoolManager : BaseSingleton<PoolManager>
         poolDic = new Dictionary<string, PoolData>();
         // 在场景上创建物体统一管理内容
         poolObject = new GameObject("Pool");
+        // 
+        GameObject.DontDestroyOnLoad(poolObject);
     }
 
 
@@ -137,6 +139,7 @@ public class PoolManager : BaseSingleton<PoolManager>
         if (poolDic != null)
         {
             poolDic.Clear();
+            GameObject.Destroy(poolObject);
             poolObject = null;
         }
     }

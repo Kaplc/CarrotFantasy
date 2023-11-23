@@ -5,5 +5,5 @@ using UnityEngine;
 public class LevelDataBody
 {
     public LevelData levelData;
-    public Dictionary<int, RoleData> monsterData;
+    public Dictionary<int, MonsterData> monsterData;
 }

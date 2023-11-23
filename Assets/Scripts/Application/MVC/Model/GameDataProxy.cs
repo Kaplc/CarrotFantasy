@@ -8,7 +8,7 @@ public class GameDataProxy : Proxy
     public new const string NAME = "GameDataProxy";
 
     private Dictionary<int, LevelData> nowBigLevelData = new Dictionary<int, LevelData>();
-    private Dictionary<int, RoleData> monsterData = new Dictionary<int, RoleData>();
+    private Dictionary<int, MonsterData> monsterData = new Dictionary<int, MonsterData>();
 
     public GameDataProxy() : base(NAME)
     {
@@ -51,7 +51,7 @@ public class GameDataProxy : Proxy
         // 已经加载过直接返回
         if (nowBigLevelData.ContainsKey(levelId))
         {
-            SendNotification(NotificationName.LOADED_LEVELDATA, nowBigLevelData[levelId]);
+            SendNotification(NotificationName.LOADED_LEVELDATA, new LevelDataBody() { levelData = nowBigLevelData[levelId], monsterData = this.monsterData });
             return;
         }
         
@@ -69,7 +69,7 @@ public class GameDataProxy : Proxy
             {
                 if (!monsterData.ContainsKey(j))
                 {
-                    monsterData.Add(j, Resources.Load<RoleData>(ProjectPath.MONSTERDATA_PATH+$"Monster{j}Data"));
+                    monsterData.Add(j, Resources.Load<MonsterData>(ProjectPath.MONSTERDATA_PATH+$"Monster{j}Data"));
                 }
             }
         }

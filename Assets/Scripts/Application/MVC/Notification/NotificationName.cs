@@ -10,6 +10,8 @@ public class NotificationName
     public const string INIT_END = "InitEnd"; // 游戏初始化结束
     public const string START_GAME = "StartGame"; // 开始游戏
     public const string START_SPAWN = "StartSpawn"; // 开始出怪
+    public const string REACH_ENDPOINT = "ReachEndPoint"; // 怪物到达终点
+    public const string CARROT_DEAD = "CarrotDead"; // 萝卜死亡
     #endregion
     
 
@@ -19,12 +21,15 @@ public class NotificationName
     public const string SHOW_SELECTLEVELPANEL = "ShowSelectLevelPanel"; // 选择小关卡
     public const string SHOW_HELPPANEL = "ShowHelpPanel"; // 帮助面板
     public const string SHOW_BEGINPANEL = "ShowBeginPanel"; // 开始面板
+    public const string SHOW_GAMEPANEL = "ShowGamePanel"; // 游戏面板
     public const string SHOW_MENUPANEL = "ShowMenuPanel"; // 菜单
     public const string SHOW_SETTINGPANEL = "ShowSettingPanel"; // 设置
     public const string SHOW_LOSEPANEL = "ShowLosePanel"; // 失败
     public const string SHOW_WINPANEL = "ShowWinPanel"; // 胜利
     public const string SHOW_LOADINGPANEL = "ShowLoadingPanel"; // 加载面板
+    
     public const string HIDE_LOADINGPANEL = "HideLoadingPanel"; // 隐藏加载面板
+    public const string HIDE_MENUPANEL = "HideMenuPanel"; // 关闭菜单面板
     
     #endregion
 

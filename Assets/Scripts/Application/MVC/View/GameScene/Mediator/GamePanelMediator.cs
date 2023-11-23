@@ -27,7 +27,7 @@ public class GamePanelMediator : Mediator
     {
         return new string[]
         {
-            NotificationName.START_GAME,
+            NotificationName.SHOW_GAMEPANEL,
             NotificationName.SELECT_LEVEL
         };
     }
@@ -38,7 +38,7 @@ public class GamePanelMediator : Mediator
 
         switch (notification.Name)
         {
-            case NotificationName.START_GAME:
+            case NotificationName.SHOW_GAMEPANEL:
                 // 判断是否重新开始, 清空面板并重新生成, 让倒计时面板重新显示
                 if (Panel!=null)
                 {

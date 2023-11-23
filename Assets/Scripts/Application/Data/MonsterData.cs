@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
-public class RoleData: ScriptableObject
+public class MonsterData: ScriptableObject
 {
     public int id;
     public float speed;
     public int hp;
+    public int maxHp;
+    public int atk;
     public string prefabsPath;
 }

@@ -142,4 +142,13 @@ public class UIManager
 
         return null;
     }
+
+    public void CloseAllPanel()
+    {
+        foreach (KeyValuePair<string, BasePanel> panel in panelsDic)
+        {
+            GameObject.Destroy(panel.Value.gameObject);
+        }
+        panelsDic.Clear();
+    }
 }

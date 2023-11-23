@@ -17,6 +17,11 @@ public class SelectLevelCommand : SimpleCommand
 
         SceneManager.LoadScene("2.BeginScene");
         
+        // 重新选择关卡则清空缓存池
+        GameManager.Instance.PoolManager.Clear();
+        // 清空事件中心
+        GameManager.Instance.EventCenter.ClearAllEvent();
+        
         SendNotification(NotificationName.SHOW_SELECTLEVELPANEL);
     }
 }
