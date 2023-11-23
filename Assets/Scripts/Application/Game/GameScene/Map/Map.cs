@@ -27,8 +27,8 @@ public struct Point
 
 public class Map : MonoBehaviour
 {
-    [HideInInspector] public int rowNum = 8; // 地图行数
-    [HideInInspector] public int columnNum = 12; // 列数
+    public const int rowNum = 8; // 地图行数
+    public const int columnNum = 12; // 列数
 
     private float mapWidth;
     private float mapHeight;
@@ -66,13 +66,7 @@ public class Map : MonoBehaviour
         // 计算格子数据
         CalCellSize();
         
-        
         if (!gaming) return;
-
-        // 游戏模式绑定map脚本
-        GameManager.Instance.map = this;
-        // 初始化地图
-        InitMap();
     }
 
     private void Update()
@@ -177,7 +171,7 @@ public class Map : MonoBehaviour
     /// <summary>
     /// 计算格子大小
     /// </summary>
-    public void CalCellSize()
+    private void CalCellSize()
     {
         // 摄像机视口左下和右上转世界坐标
         Vector3 bottomLeft = Camera.main.ViewportToWorldPoint(new Vector3(0, 0));
@@ -247,7 +241,7 @@ public class Map : MonoBehaviour
     /// <summary>
     /// 初始化地图
     /// </summary>
-    private void InitMap()
+    public void InitMap()
     {
         // 获取当前地图数据
         nowMapData = GameManager.Instance.nowLevelData.mapData;

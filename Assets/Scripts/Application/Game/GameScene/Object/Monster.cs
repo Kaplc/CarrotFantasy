@@ -8,7 +8,7 @@ public class Monster : BaseRole, IPoolObject
     public MonsterData data;
     
     private int hp;
-    public int pathIndex = 0;
+    public int pathIndex;
     
     public Cell nextCell;
     private Animator animator;
@@ -47,7 +47,8 @@ public class Monster : BaseRole, IPoolObject
             {
                 // 触发怪物到达终点事件
                 GameManager.Instance.EventCenter.TriggerEvent<int>(NotificationName.REACH_ENDPOINT, data.atk);
-                Dead();
+                // 怪物死亡
+                Hp = 0;
                 return;
             }
             
@@ -60,6 +61,8 @@ public class Monster : BaseRole, IPoolObject
 
     private void Move()
     {
+        if(GameManager.Instance.isPause) return;
+        
         Vector3 dir = GameManager.Instance.GetCellCenterPos(nextCell) - transform.position;
         dir.Normalize();
         // 移动
@@ -73,6 +76,8 @@ public class Monster : BaseRole, IPoolObject
 
     protected override void Dead()
     {
+        // 触发怪物死亡
+        GameManager.Instance.EventCenter.TriggerEvent(NotificationName.MONSTER_DEAD);
         // 回收
         OnPush();
     }
@@ -81,15 +86,14 @@ public class Monster : BaseRole, IPoolObject
     {
         // 清空数据
         nextCell = null;
-        pathIndex = 0;
-        isDead = false;
+        
         
         // 回收
         GameManager.Instance.PoolManager.PushObject(gameObject);
     }
     
     /// <summary>
-    /// // 每次从缓存池取出初始化数据
+    /// 每次从缓存池取出初始化数据
     /// </summary>
     public override void OnGet()
     {
@@ -97,7 +101,10 @@ public class Monster : BaseRole, IPoolObject
         transform.position = GameManager.Instance.GetCellCenterPos(GameManager.Instance.nowLevelData.mapData.pathList[0]);
         // 设置第一个目标格子
         nextCell = GameManager.Instance.nowLevelData.mapData.pathList[0];
+        pathIndex = 0;
         // 刷新血
         hp = data.maxHp;
+        
+        isDead = false;
     }
 }

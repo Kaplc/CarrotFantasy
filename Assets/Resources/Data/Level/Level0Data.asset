@@ -14,14 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelId: 0
   mapData:
+    mapBgSpritePath: Map/BigLevel0/BG0
+    roadSpritePath: Map/BigLevel0/Road1
     pathList: []
     towerList: []
   monsterIds: 0000000000000000
   intervalTimePerWave: 5
   roundDataList:
   - monsterId: 0
-    waveCount: 10
+    waveCount: 5
     intervalTimeEach: 0.5
   - monsterId: 0
-    waveCount: 5
+    waveCount: 1
     intervalTimeEach: 1

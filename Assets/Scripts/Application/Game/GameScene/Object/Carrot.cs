@@ -8,11 +8,12 @@ public class Carrot : BaseRole, IPoolObject
     public int hp;
 
     public CarrotData data;
-    public List<Sprite> sprites;
+    public List<Sprite> sprites; // 各血量萝卜Sprite
     public SpriteRenderer spriteRenderer;
     public Animator animator;
+    public Coroutine idleAnimaCoroutine; // 待机动画协程
 
-    public int Hp
+    private int Hp
     {
         get => hp;
         set
@@ -33,14 +34,7 @@ public class Carrot : BaseRole, IPoolObject
     protected void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-
-        // 监听怪物到达终点事件
-        EventCenter.Instance.AddEventListener<int>(NotificationName.REACH_ENDPOINT, Wound);
-    }
-
-    private void Start()
-    {
-        StartCoroutine(TimedIdleCoroutine());
+        
     }
 
     private void Update()
@@ -61,15 +55,18 @@ public class Carrot : BaseRole, IPoolObject
 
     protected override void Dead()
     {
-        GameManager.Instance.EventCenter.TriggerEvent(NotificationName.CARROT_DEAD); // 触发萝卜死亡事件
-        // 显示失败面板
-        GameFacade.Instance.SendNotification(NotificationName.SHOW_LOSEPANEL);
+        // 萝卜死亡触发游戏结束
+        GameManager.Instance.EventCenter.TriggerEvent(NotificationName.GAME_OVER);
         // 回收
         OnPush();
     }
 
     public override void OnPush()
     {
+        // 移除监听
+        GameManager.Instance.EventCenter.RemoveEventListener<int>(NotificationName.REACH_ENDPOINT, Wound);
+        StopCoroutine(idleAnimaCoroutine);
+        // 回收
         GameManager.Instance.PoolManager.PushObject(gameObject);
     }
 
@@ -79,19 +76,22 @@ public class Carrot : BaseRole, IPoolObject
         Hp = data.maxHp;
         isDead = false;
         // 重新开启动画协程
-        StartCoroutine(TimedIdleCoroutine());
+        idleAnimaCoroutine = StartCoroutine(IdleAnimaCoroutine());
+        // 监听怪物到达终点事件
+        GameManager.Instance.EventCenter.AddEventListener<int>(NotificationName.REACH_ENDPOINT, Wound);
     }
 
     /// <summary>
     /// 定时播放Idle动画协程
     /// </summary>
     /// <returns></returns>
-    private IEnumerator TimedIdleCoroutine()
+    private IEnumerator IdleAnimaCoroutine()
     {
         // 满血才播放动画
-        while (Hp == data.maxHp)
+        while (true)
         {
             yield return new WaitForSeconds(5f);
+            
             if (Hp == data.maxHp)
             {
                 animator.SetTrigger("Idle");

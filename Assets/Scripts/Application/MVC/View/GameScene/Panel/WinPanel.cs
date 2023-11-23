@@ -16,7 +16,7 @@ public class WinPanel : BasePanel
         });
         btnSelect.onClick.AddListener(() =>
         {
-            PanelMediator.SendNotification(NotificationName.SHOW_SELECTLEVELPANEL);
+            PanelMediator.SendNotification(NotificationName.EXIT_GAME);
             UIManager.Instance.Hide<WinPanel>(false);
         });
     }

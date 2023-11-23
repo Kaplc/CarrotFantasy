@@ -12,12 +12,12 @@ public class LosePanel : BasePanel
     {
         btnReStart.onClick.AddListener(() =>
         {
-            PanelMediator.SendNotification(NotificationName.START_GAME);
+            PanelMediator.SendNotification(NotificationName.RESTART_GAME);
             UIManager.Instance.Hide<LosePanel>(false);
         });
         btnSelect.onClick.AddListener(() =>
         {
-            PanelMediator.SendNotification(NotificationName.SHOW_SELECTLEVELPANEL);
+            PanelMediator.SendNotification(NotificationName.EXIT_GAME);
             UIManager.Instance.Hide<LosePanel>(false);
         });
     }

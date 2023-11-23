@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
-public class SceneManagerFrameWork : BaseSingleton<SceneManagerFrameWork>
+public class ZFrameWorkSceneManager : BaseSingleton<ZFrameWorkSceneManager>
 {
     public void LoadScene(string sceneName, UnityAction callBack = null)
     {
@@ -15,10 +15,9 @@ public class SceneManagerFrameWork : BaseSingleton<SceneManagerFrameWork>
     public void LoadSceneAsync(string sceneName, UnityAction callBack = null)
     {
         MonoManager.Instance.StartCoroutineFrameWork(LoadSceneAsyncCoroutine(sceneName, callBack));
-
     }
 
-    public IEnumerator LoadSceneAsyncCoroutine(string sceneName, UnityAction callBack)
+    private IEnumerator LoadSceneAsyncCoroutine(string sceneName, UnityAction callBack)
     {
         AsyncOperation ao = SceneManager.LoadSceneAsync(sceneName);
         while (!ao.isDone)
@@ -26,6 +25,7 @@ public class SceneManagerFrameWork : BaseSingleton<SceneManagerFrameWork>
             EventCenter.Instance.TriggerEvent<float>("进度条更新", ao.progress);
             yield return ao;
         }
+
         callBack?.Invoke();
     }
 }

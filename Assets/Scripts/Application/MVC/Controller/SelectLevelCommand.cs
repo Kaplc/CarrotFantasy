@@ -14,14 +14,10 @@ public class SelectLevelCommand : SimpleCommand
     public override void Execute(INotification notification)
     {
         base.Execute(notification);
-
-        SceneManager.LoadScene("2.BeginScene");
         
-        // 重新选择关卡则清空缓存池
-        GameManager.Instance.PoolManager.Clear();
-        // 清空事件中心
-        GameManager.Instance.EventCenter.ClearAllEvent();
-        
-        SendNotification(NotificationName.SHOW_SELECTLEVELPANEL);
+        ZFrameWorkSceneManager.Instance.LoadSceneAsync("2.BeginScene", () =>
+        {
+            SendNotification(NotificationName.SHOW_SELECTLEVELPANEL);
+        });
     }
 }

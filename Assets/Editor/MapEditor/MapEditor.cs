@@ -9,6 +9,8 @@ using UnityEngine;
 [CustomEditor(typeof(Map))]
 public class MapEditor : Editor
 {
+    public const int rowNum = 8; // 地图行数
+    public const int columnNum = 12; // 列数
     // 当前正在编辑的地图
     public Map map;
     public int nowMapIndex = 0; // 默认选中第一个文件
@@ -166,9 +168,9 @@ public class MapEditor : Editor
         Clear();
 
         // 初始化生成格子
-        for (int y = 0; y < map.rowNum; y++)
+        for (int y = 0; y < rowNum; y++)
         {
-            for (int x = 0; x < map.columnNum; x++)
+            for (int x = 0; x < columnNum; x++)
             {
                 map.cellsList.Add(new Cell(new Point(x, y)));
             }
@@ -259,9 +261,9 @@ public class MapEditor : Editor
         Clear();
 
         // 初始化生成格子
-        for (int y = 0; y < map.rowNum; y++)
+        for (int y = 0; y < rowNum; y++)
         {
-            for (int x = 0; x < map.columnNum; x++)
+            for (int x = 0; x < columnNum; x++)
             {
                 map.cellsList.Add(new Cell(new Point(x, y)));
             }

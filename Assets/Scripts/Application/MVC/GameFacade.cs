@@ -23,9 +23,16 @@ public class GameFacade : Facade
         base.InitializeController();
         
         RegisterCommand(NotificationName.INIT_END, () => new InitEndCommand());
-        RegisterCommand(NotificationName.START_GAME, () => new StartGameCommand());
         RegisterCommand(NotificationName.SELECT_LEVEL, () => new SelectLevelCommand());
-        RegisterCommand(NotificationName.LOADED_LEVELDATA, ()=> new LoadDataCommand());
+        
+        // GameManagerController
+        RegisterCommand(NotificationName.START_GAME, () => new StartGameCommand());
+        RegisterCommand(NotificationName.LOADED_LEVELDATA, ()=> new LoadedDataCommand());
+        RegisterCommand(NotificationName.INIT_GAME, ()=> new InitGameCommand());
+        RegisterCommand(NotificationName.EXIT_GAME, () => new ExitGameCommand());
+        RegisterCommand(NotificationName.RESTART_GAME, ()=>new RestartGameCommand());
+        RegisterCommand(NotificationName.PAUSE_GAME, ()=>new PauseGameCommand());
+        RegisterCommand(NotificationName.CONTINUE_GAME, ()=>new ContinueGameCommand());
     }
 
     protected override void InitializeView()

@@ -8,10 +8,20 @@ public class NotificationName
 
     public const string INIT = "Init"; // 游戏初始化
     public const string INIT_END = "InitEnd"; // 游戏初始化结束
+    
     public const string START_GAME = "StartGame"; // 开始游戏
+    public const string RESTART_GAME = "RestartGame"; // 重新开始
+    public const string EXIT_GAME = "ExitGame"; // 退出游戏
+    public const string INIT_GAME = "InitGame"; // 初始化游戏
+    public const string PAUSE_GAME = "PauseGame"; // 暂停游戏
+    public const string CONTINUE_GAME = "ContinueGame"; // 继续游戏
+    
     public const string START_SPAWN = "StartSpawn"; // 开始出怪
     public const string REACH_ENDPOINT = "ReachEndPoint"; // 怪物到达终点
-    public const string CARROT_DEAD = "CarrotDead"; // 萝卜死亡
+    public const string MONSTER_DEAD = "MonsterDead"; // 怪物死亡
+    public const string GAME_OVER = "GameOver"; // 游戏结束
+    public const string JUDGING_WIN = "JudgingWin"; // 判断胜利
+    
     #endregion
     
 
