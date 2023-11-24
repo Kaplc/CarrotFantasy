@@ -26,6 +26,7 @@ public class GameFacade : Facade
         RegisterCommand(NotificationName.SELECT_LEVEL, () => new SelectLevelCommand());
         
         // GameManagerController
+        RegisterCommand(NotificationName.LOAD_GAME, () => new LoadGameCommand());
         RegisterCommand(NotificationName.START_GAME, () => new StartGameCommand());
         
         RegisterCommand(NotificationName.LOADED_LEVELDATA, ()=> new AcceptDataCommand());
@@ -52,6 +53,7 @@ public class GameFacade : Facade
         RegisterMediator(new LoadingPanelMediator());
         RegisterMediator(new WinPanelMediator());
         RegisterMediator(new LosePanelMediator());
+        RegisterMediator(new BuiltPanelMediator());
     }
 
     protected override void InitializeModel()

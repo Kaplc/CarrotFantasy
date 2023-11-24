@@ -7,9 +7,9 @@ using UnityEngine.SceneManagement;
 
 
 /// <summary>
-/// 开始游戏
+/// 开始加载游戏
 /// </summary>
-public class StartGameCommand : SimpleCommand
+public class LoadGameCommand : SimpleCommand
 {
     public override void Execute(INotification notification)
     {
@@ -69,6 +69,20 @@ public class InitGameCommand : SimpleCommand
 }
 
 /// <summary>
+/// 读秒结束开始游戏
+/// </summary>
+public class StartGameCommand : SimpleCommand
+{
+    public override void Execute(INotification notification)
+    {
+        base.Execute(notification);
+        GameManager.Instance.Pause = false;
+        // 开始出怪
+        GameManager.Instance.EventCenter.TriggerEvent(NotificationName.START_SPAWN);
+    }
+}
+
+/// <summary>
 /// 退出游戏命令
 /// </summary>
 public class ExitGameCommand : SimpleCommand
@@ -98,8 +112,8 @@ public class RestartGameCommand : SimpleCommand
         
         // 退出游戏
         GameManager.Instance.GameExit();
-        
-        SendNotification(NotificationName.START_GAME);
+        // 重新加载游戏
+        SendNotification(NotificationName.LOAD_GAME);
     }
 }
 

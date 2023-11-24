@@ -19,7 +19,8 @@ public class UIManager
 
     private Dictionary<string, BasePanel> panelsDic = new Dictionary<string, BasePanel>();
 
-    private Canvas canvasCpm;
+    private Canvas canvas;
+    public Camera uiCamera;
 
     // 各层面板
     private Transform bottom;
@@ -30,43 +31,50 @@ public class UIManager
     private UIManager()
     {
         // 获取canvas
-        canvasCpm = GameObject.Find("Canvas")?.GetComponent<Canvas>();
+        canvas = GameObject.Find("Canvas")?.GetComponent<Canvas>();
 
-        if (!canvasCpm)
+        if (!canvas)
         {
-            canvasCpm = GameObject.Instantiate(Resources.Load<GameObject>("UI/Canvas")).GetComponent<Canvas>();
+            canvas = GameObject.Instantiate(Resources.Load<GameObject>("UI/Canvas")).GetComponent<Canvas>();
         }
-
+        
+        // 获取摄像机
+        uiCamera = GameObject.Find("UICamera")?.GetComponent<Camera>();
+        if (!uiCamera)
+        {
+            Debug.Log("UI摄像机未获取成功");
+        }
+        
         // 获取各层
-        bottom = canvasCpm.transform.Find("Bottom");
+        bottom = canvas.transform.Find("Bottom");
         if (!bottom)
         {
             bottom = new GameObject("Bottom").transform;
-            bottom.SetParent(canvasCpm.transform);
+            bottom.SetParent(canvas.transform);
         }
 
-        middle = canvasCpm.transform.Find("Middle");
+        middle = canvas.transform.Find("Middle");
         if (!middle)
         {
             middle = new GameObject("Middle").transform;
-            middle.SetParent(canvasCpm.transform);
+            middle.SetParent(canvas.transform);
         }
 
-        top = canvasCpm.transform.Find("Top");
+        top = canvas.transform.Find("Top");
         if (!top)
         {
             top = new GameObject("Top").transform;
-            top.SetParent(canvasCpm.transform);
+            top.SetParent(canvas.transform);
         }
 
-        system = canvasCpm.transform.Find("System");
+        system = canvas.transform.Find("System");
         if (!system)
         {
             system = new GameObject("System").transform;
-            system.SetParent(canvasCpm.transform);
+            system.SetParent(canvas.transform);
         }
 
-        GameObject.DontDestroyOnLoad(canvasCpm);
+        GameObject.DontDestroyOnLoad(canvas);
     }
 
     public T Show<T>(bool isFade = true, EUILayerType layerType = EUILayerType.Bottom, UnityAction callBack = null) where T : BasePanel
@@ -82,7 +90,7 @@ public class UIManager
         }
 
         // 不存在直接创建并保存
-        T newPanel = GameObject.Instantiate(Resources.Load<GameObject>("UI/" + panelName), canvasCpm.transform).GetComponent<T>();
+        T newPanel = GameObject.Instantiate(Resources.Load<GameObject>("UI/" + panelName), canvas.transform).GetComponent<T>();
         panelsDic.Add(panelName, newPanel);
         newPanel.Show(isFade, callBack);
 

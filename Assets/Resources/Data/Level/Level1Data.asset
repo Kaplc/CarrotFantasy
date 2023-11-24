@@ -23,7 +23,7 @@ MonoBehaviour:
   roundDataList:
   - monsterId: 0
     waveCount: 5
-    intervalTimeEach: 0.5
+    intervalTimeEach: 1
   - monsterId: 0
     waveCount: 1
     intervalTimeEach: 1

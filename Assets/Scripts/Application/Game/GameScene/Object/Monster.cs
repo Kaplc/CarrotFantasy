@@ -61,7 +61,7 @@ public class Monster : BaseRole, IPoolObject
 
     private void Move()
     {
-        if(GameManager.Instance.isPause) return;
+        if(GameManager.Instance.Pause) return;
         
         Vector3 dir = Map.GetCellCenterPos(nextCell) - transform.position;
         dir.Normalize();

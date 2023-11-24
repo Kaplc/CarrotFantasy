@@ -10,23 +10,24 @@ public class Cell
     private Point point;
     public int X => point.X;
     public int Y => point.Y;
-    
     // 是否可以放塔
     private bool isTowerPos;
-    public bool IsTowerPos => isTowerPos;
+
+    public BaseTower tower;
+
+    public bool IsTowerPos
+    {
+        get => isTowerPos;
+        set => isTowerPos = value;
+    }
 
     public Cell(Point point)
     {
         this.point = point;
     }
 
-    public void AllowTowerPos()
+    public override string ToString()
     {
-        isTowerPos = true;
-    }
-
-    public void NotAllowTowerPos()
-    {
-        isTowerPos = false;
+        return $"x:{X},y:{Y}";
     }
 }

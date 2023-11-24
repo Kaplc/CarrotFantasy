@@ -33,7 +33,7 @@ public class CountDownPanel : MonoBehaviour
             index--;
         }
         gameObject.SetActive(false);
-        // 开始出怪
-        GameManager.Instance.EventCenter.TriggerEvent(NotificationName.START_SPAWN);
+        // 开始游戏
+        SendMessageUpwards("SendStartGameNotification");
     }
 }

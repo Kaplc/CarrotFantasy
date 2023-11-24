@@ -8,7 +8,8 @@ public class NotificationName
 
     public const string INIT = "Init"; // 游戏初始化
     public const string INIT_END = "InitEnd"; // 游戏初始化结束
-    
+
+    public const string LOAD_GAME = "LoadGame"; // 开始加载游戏
     public const string START_GAME = "StartGame"; // 开始游戏
     public const string RESTART_GAME = "RestartGame"; // 重新开始
     public const string EXIT_GAME = "ExitGame"; // 退出游戏
@@ -37,6 +38,8 @@ public class NotificationName
     public const string SHOW_LOSEPANEL = "ShowLosePanel"; // 失败
     public const string SHOW_WINPANEL = "ShowWinPanel"; // 胜利
     public const string SHOW_LOADINGPANEL = "ShowLoadingPanel"; // 加载面板
+    public const string SHOW_BUILTPANEL = "ShowBuiltPanel"; // 建造面板
+    public const string SHOW_UPGRADEPANEl = "ShowUpgradePanel"; // 升级面板
     
     public const string HIDE_LOADINGPANEL = "HideLoadingPanel"; // 隐藏加载面板
     public const string HIDE_MENUPANEL = "HideMenuPanel"; // 关闭菜单面板

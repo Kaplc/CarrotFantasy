@@ -11,10 +11,23 @@ public class GameManager : BaseMonoSingleton<GameManager>
     public MusicManger MusicManager => MusicManger.Instance;
     public EventCenter EventCenter => EventCenter.Instance;
     
-    public bool isPause; // 暂停标识
-    public float pauseTime; // 暂停时间
+    private bool pause; // 暂停标识
+    private float pauseTime; // 暂停时间
     public int nowBigLevelId; // 大关卡id
     public int nowLevelId; // 小关卡id
+
+    public bool Pause
+    {
+        get => pause;
+        set
+        {
+            pause = value;
+            // 记录暂停时间
+            pauseTime = Time.time;
+        }
+    }
+
+    public float PauseTime => pauseTime;
 
     public LevelData nowLevelData; // 当前Level数据
     public Dictionary<int, MonsterData> monstersData = new Dictionary<int, MonsterData>(); // 当前关卡所有怪物数据
@@ -39,7 +52,7 @@ public class GameManager : BaseMonoSingleton<GameManager>
     /// </summary>
     public void GameInit()
     {
-        isPause = false;
+        Pause = true;
         // 创建地图
         map = Instantiate(Resources.Load<GameObject>("Prefabs/Map")).GetComponent<Map>();
         // 地图初始化
@@ -56,6 +69,7 @@ public class GameManager : BaseMonoSingleton<GameManager>
     /// </summary>
     public void GameExit()
     {
+        Pause = true;
         // 回收萝卜和怪物
         map.carrot.OnPush();
         spawner.OnPushAllMonster();
@@ -68,9 +82,8 @@ public class GameManager : BaseMonoSingleton<GameManager>
     /// </summary>
     public void GamePause()
     {
-        isPause = true;
-        // 记录暂停时间
-        pauseTime = Time.time;
+        Pause = true;
+        
     }
     
     /// <summary>
@@ -78,7 +91,7 @@ public class GameManager : BaseMonoSingleton<GameManager>
     /// </summary>
     public void GameContinue()
     {
-        isPause = false;
+        Pause = false;
     }
 
     #endregion

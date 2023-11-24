@@ -28,6 +28,14 @@ public class GamePanel : BasePanel
         });
         tgPause.onValueChanged.AddListener(isOn =>
         {
+            if (isOn)
+            {
+                PanelMediator.SendNotification(NotificationName.CONTINUE_GAME);
+            }
+            else
+            {
+                PanelMediator.SendNotification(NotificationName.PAUSE_GAME);
+            }
             
         });
         btnMenu.onClick.AddListener(() =>
@@ -38,4 +46,11 @@ public class GamePanel : BasePanel
         imgPause.gameObject.SetActive(false);
     }
     
+    /// <summary>
+    /// 广播接受子类信息
+    /// </summary>
+    public void SendStartGameNotification()
+    {
+        PanelMediator.SendNotification(NotificationName.START_GAME);
+    }
 }
