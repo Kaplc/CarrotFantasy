@@ -245,6 +245,12 @@ public class Map : MonoBehaviour
     {
         // 获取当前地图数据
         nowMapData = GameManager.Instance.nowLevelData.mapData;
+        
+        // 设置地图背景
+        mapBgSpriteRenderer.sprite = Resources.Load<Sprite>(nowMapData.mapBgSpritePath);
+        // 设置路径背景
+        roadSpriteRenderer.sprite = Resources.Load<Sprite>(nowMapData.roadSpritePath);
+        
         // 创建萝卜和开始路牌
         carrot = GameManager.Instance.PoolManager.GetObject("Object/Carrot").GetComponent<Carrot>();
         carrot.OnGet();

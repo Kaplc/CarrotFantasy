@@ -12,10 +12,10 @@ public class GameManager : BaseMonoSingleton<GameManager>
     public EventCenter EventCenter => EventCenter.Instance;
 
     [HideInInspector] public int nowBigLevelId; // 大关卡id
-    [HideInInspector] public int nowLevelId; // 小关卡id
+    public int nowLevelId; // 小关卡id
 
     public LevelData nowLevelData; // 当前Level数据
-    public Dictionary<int, MonsterData> monsterData = new Dictionary<int, MonsterData>(); // 当前关卡所有怪物数据
+    public Dictionary<int, MonsterData> monstersData = new Dictionary<int, MonsterData>(); // 当前关卡所有怪物数据
     public Map map;
     public Spawner spawner;
     public bool isPause; // 暂停标识
@@ -93,6 +93,25 @@ public class GameManager : BaseMonoSingleton<GameManager>
         spawner.OnPushAllMonster();
         // 清空事件中心
         EventCenter.ClearAllEvent();
+    }
+    
+    /// <summary>
+    /// 游戏暂停
+    /// </summary>
+    public void GamePause()
+    {
+        isPause = true;
+        // 停止出怪协程
+        spawner.StopSpawn();
+    }
+    
+    /// <summary>
+    /// 游戏继续
+    /// </summary>
+    public void GameContinue()
+    {
+        isPause = false;
+        spawner.StartSpawn();
     }
 
     #endregion

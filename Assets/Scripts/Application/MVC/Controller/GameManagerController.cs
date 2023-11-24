@@ -20,28 +20,31 @@ public class StartGameCommand : SimpleCommand
         {
             // 加载当前关卡数据
             GameDataProxy gameDataProxy = GameFacade.Instance.RetrieveProxy("GameDataProxy") as GameDataProxy;
-            gameDataProxy?.LoadLevelData(GameManager.Instance.nowBigLevelId, GameManager.Instance.nowLevelId);
+            gameDataProxy?.LoadLevelData(GameManager.Instance.nowLevelId);
         });
     }
     
 }
 
 /// <summary>
-/// 加载完成LevelData
+/// 接受数据
 /// </summary>
-public class LoadedDataCommand : SimpleCommand
+public class AcceptDataCommand : SimpleCommand
 {
     public override void Execute(INotification notification)
     {
         base.Execute(notification);
-        
-        // 注入数据
-        LevelDataBody body = notification.Body as LevelDataBody;
-        GameManager.Instance.monsterData = body?.monsterData;
-        GameManager.Instance.nowLevelData = body?.levelData;
-        
-        // 加载完成数据隐藏LoadingPanel
-        SendNotification(NotificationName.HIDE_LOADINGPANEL);
+
+        switch (notification.Name)
+        {
+            case NotificationName.LOADED_LEVELDATA:
+                LevelDataBody body = notification.Body as LevelDataBody;
+                GameManager.Instance.nowLevelData = body?.levelData;
+                GameManager.Instance.monstersData = body?.monstersData;
+                
+                break;
+        }
+
         SendNotification(NotificationName.INIT_GAME);
     }
 }
@@ -57,6 +60,9 @@ public class InitGameCommand : SimpleCommand
         
         // 游戏初始化
         GameManager.Instance.GameInit();
+        
+        // 加载完成数据隐藏 LoadingPanel
+        SendNotification(NotificationName.HIDE_LOADINGPANEL);
         // 显示游戏面板
         SendNotification(NotificationName.SHOW_GAMEPANEL);
     }
@@ -105,7 +111,7 @@ public class PauseGameCommand : SimpleCommand
     public override void Execute(INotification notification)
     {
         base.Execute(notification);
-        GameManager.Instance.isPause = true;
+        GameManager.Instance.GamePause();
     }
 } 
 
@@ -117,7 +123,7 @@ public class ContinueGameCommand : SimpleCommand
     public override void Execute(INotification notification)
     {
         base.Execute(notification);
-        GameManager.Instance.isPause = false;
+        GameManager.Instance.GameContinue();
     }
 } 
 
