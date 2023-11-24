@@ -30,40 +30,6 @@ public class GameManager : BaseMonoSingleton<GameManager>
         GameFacade.Instance.SendNotification(NotificationName.INIT_END);
     }
 
-    #region 重新封装map的方法
-
-    /// <summary>
-    /// 索引获取格子
-    /// </summary>
-    /// <param name="x"></param>
-    /// <param name="y"></param>
-    /// <returns></returns>
-    public Cell GetCell(int x, int y)
-    {
-        return map.GetCell(x,y);
-    }
-
-    /// <summary>
-    /// 世界坐标获取格子
-    /// </summary>
-    /// <param name="worldPos"></param>
-    /// <returns></returns>
-    public Cell GetCell(Vector3 worldPos)
-    {
-        return map.GetCell(worldPos);
-    }
-
-    /// <summary>
-    /// 返回格子中心点坐标坐标
-    /// </summary>
-    /// <param name="cell"></param>
-    /// <returns></returns>
-    public Vector3 GetCellCenterPos(Cell cell)
-    {
-        return map.GetCellCenterPos(cell);
-    }
-    #endregion
-
     #region 游戏相关
     
     /// <summary>

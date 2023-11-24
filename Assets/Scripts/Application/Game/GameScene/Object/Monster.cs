@@ -40,7 +40,7 @@ public class Monster : BaseRole, IPoolObject
         Move();
         
         // 判断是否到达目标格子
-        if (Vector3.Distance(GameManager.Instance.GetCellCenterPos(nextCell), transform.position) < 0.1f && isDead == false)
+        if (Vector3.Distance(Map.GetCellCenterPos(nextCell), transform.position) < 0.1f && isDead == false)
         {
             // 到达终点格子, 触发死亡方法
             if (pathIndex == GameManager.Instance.nowLevelData.mapData.pathList.Count-1)
@@ -63,7 +63,7 @@ public class Monster : BaseRole, IPoolObject
     {
         if(GameManager.Instance.isPause) return;
         
-        Vector3 dir = GameManager.Instance.GetCellCenterPos(nextCell) - transform.position;
+        Vector3 dir = Map.GetCellCenterPos(nextCell) - transform.position;
         dir.Normalize();
         // 移动
         transform.Translate(dir * (Time.deltaTime * Speed));
@@ -98,7 +98,7 @@ public class Monster : BaseRole, IPoolObject
     public override void OnGet()
     {
         // 位置设置在起点
-        transform.position = GameManager.Instance.GetCellCenterPos(GameManager.Instance.nowLevelData.mapData.pathList[0]);
+        transform.position = Map.GetCellCenterPos(GameManager.Instance.nowLevelData.mapData.pathList[0]);
         // 设置第一个目标格子
         nextCell = GameManager.Instance.nowLevelData.mapData.pathList[0];
         pathIndex = 0;

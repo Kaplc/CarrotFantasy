@@ -172,20 +172,20 @@ public class MapEditor : Editor
         {
             for (int x = 0; x < columnNum; x++)
             {
-                map.cellsList.Add(new Cell(new Point(x, y)));
+                Map.cellsList.Add(new Cell(new Point(x, y)));
             }
         }
 
         // 加载放塔点
         for (int i = 0; i < map.nowEditorMapData.towerList.Count; i++)
         {
-            map.GetCell(map.nowEditorMapData.towerList[i].X, map.nowEditorMapData.towerList[i].Y).AllowTowerPos();
+            Map.GetCell(map.nowEditorMapData.towerList[i].X, map.nowEditorMapData.towerList[i].Y).AllowTowerPos();
         }
 
         // 加载路径
         for (int i = 0; i < map.nowEditorMapData.pathList.Count; i++)
         {
-            map.pathList.Add(map.nowEditorMapData.pathList[i]);
+            Map.pathList.Add(map.nowEditorMapData.pathList[i]);
         }
         
         // 加载地图背景图片
@@ -230,16 +230,16 @@ public class MapEditor : Editor
         map.nowEditorMapData.towerList.Clear();
 
         // 写入新数据
-        for (int i = 0; i < map.pathList.Count; i++)
+        for (int i = 0; i < Map.pathList.Count; i++)
         {
-            map.nowEditorMapData.pathList.Add(map.pathList[i]);
+            map.nowEditorMapData.pathList.Add(Map.pathList[i]);
         }
 
-        for (int i = 0; i < map.cellsList.Count; i++)
+        for (int i = 0; i < Map.cellsList.Count; i++)
         {
-            if (map.cellsList[i].IsTowerPos)
+            if (Map.cellsList[i].IsTowerPos)
             {
-                map.nowEditorMapData.towerList.Add(map.cellsList[i]);
+                map.nowEditorMapData.towerList.Add(Map.cellsList[i]);
             }
         }
 
@@ -265,20 +265,20 @@ public class MapEditor : Editor
         {
             for (int x = 0; x < columnNum; x++)
             {
-                map.cellsList.Add(new Cell(new Point(x, y)));
+                Map.cellsList.Add(new Cell(new Point(x, y)));
             }
         }
 
         // 加载放塔点
         for (int i = 0; i < map.nowEditorMapData.towerList.Count; i++)
         {
-            map.GetCell(map.nowEditorMapData.towerList[i].X, map.nowEditorMapData.towerList[i].Y).AllowTowerPos();
+            Map.GetCell(map.nowEditorMapData.towerList[i].X, map.nowEditorMapData.towerList[i].Y).AllowTowerPos();
         }
 
         // 加载路径
         for (int i = 0; i < map.nowEditorMapData.pathList.Count; i++)
         {
-            map.pathList.Add(map.nowEditorMapData.pathList[i]);
+            Map.pathList.Add(map.nowEditorMapData.pathList[i]);
         }
     }
 
@@ -291,27 +291,27 @@ public class MapEditor : Editor
     /// </summary>
     public void ClearAllTowerPos()
     {
-        for (int i = 0; i < map.cellsList.Count; i++)
+        for (int i = 0; i < Map.cellsList.Count; i++)
         {
-            map.cellsList[i].NotAllowTowerPos();
+            Map.cellsList[i].NotAllowTowerPos();
         }
     }
 
     /// <summary>
-    /// 清除怪物路径修改缓存
+    /// 清除怪物路径修改缓存 
     /// </summary>
     public void ClearAllPath()
     {
-        map.pathList.Clear();
+        Map.pathList.Clear();
     }
 
     /// <summary>
     /// 清空修改缓存
     /// </summary>
     public void Clear()
-    {
-        map.cellsList.Clear();
-        map.pathList.Clear();
+    {   
+        Map.cellsList.Clear();
+        Map.pathList.Clear();
     }
 
     #endregion

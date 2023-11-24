@@ -30,18 +30,18 @@ public class Map : MonoBehaviour
     public const int rowNum = 8; // 地图行数
     public const int columnNum = 12; // 列数
 
-    private float mapWidth;
-    private float mapHeight;
-    private float cellWidth;
-    private float cellHeight;
+    private static float mapWidth;
+    private static float mapHeight;
+    private static float cellWidth;
+    private static float cellHeight;
 
     public SpriteRenderer mapBgSpriteRenderer;
     public SpriteRenderer roadSpriteRenderer;
 
     #region 编辑器相关字段
 
-    [HideInInspector] public List<Cell> cellsList = new List<Cell>(); // 所有格子
-    [HideInInspector] public List<Cell> pathList = new List<Cell>(); // 所有路径拐点
+    public static List<Cell> cellsList = new List<Cell>(); // 所有格子
+    public static List<Cell> pathList = new List<Cell>(); // 所有路径拐点
 
     public MapData nowEditorMapData; // 当前编辑地图数据
 
@@ -194,7 +194,7 @@ public class Map : MonoBehaviour
     /// <param name="x"></param>
     /// <param name="y"></param>
     /// <returns></returns>
-    public Cell GetCell(int x, int y)
+    public static Cell GetCell(int x, int y)
     {
         return cellsList[x + y * columnNum];
     }
@@ -204,7 +204,7 @@ public class Map : MonoBehaviour
     /// </summary>
     /// <param name="worldPos"></param>
     /// <returns></returns>
-    public Cell GetCell(Vector3 worldPos)
+    public static Cell GetCell(Vector3 worldPos)
     {
         float x = (worldPos.x + mapWidth / 2f) / (mapWidth / columnNum);
         float y = (worldPos.y + mapHeight / 2f) / (mapHeight / rowNum);
@@ -217,7 +217,7 @@ public class Map : MonoBehaviour
     /// </summary>
     /// <param name="cell"></param>
     /// <returns></returns>
-    public Vector3 GetCellCenterPos(Cell cell)
+    public static Vector3 GetCellCenterPos(Cell cell)
     {
         return new Vector3(-mapWidth / 2f + cellWidth / 2f + cell.X * cellWidth, -mapHeight / 2f + cellHeight / 2f + cell.Y * cellHeight);
     }
@@ -226,7 +226,7 @@ public class Map : MonoBehaviour
     /// 获取当前鼠标位置的格子
     /// </summary>
     /// <returns></returns>
-    public Cell GetMousePositionCell()
+    public static Cell GetMousePositionCell()
     {
         Vector3 mouseViewPos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
         Vector3 mouseWorldPos = Camera.main.ViewportToWorldPoint(mouseViewPos);
