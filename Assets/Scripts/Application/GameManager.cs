@@ -10,15 +10,17 @@ public class GameManager : BaseMonoSingleton<GameManager>
     public BinaryManager BinaryManager => BinaryManager.Instance;
     public MusicManger MusicManager => MusicManger.Instance;
     public EventCenter EventCenter => EventCenter.Instance;
-
-    [HideInInspector] public int nowBigLevelId; // 大关卡id
+    
+    public bool isPause; // 暂停标识
+    public float pauseTime; // 暂停时间
+    public int nowBigLevelId; // 大关卡id
     public int nowLevelId; // 小关卡id
 
     public LevelData nowLevelData; // 当前Level数据
     public Dictionary<int, MonsterData> monstersData = new Dictionary<int, MonsterData>(); // 当前关卡所有怪物数据
     public Map map;
     public Spawner spawner;
-    public bool isPause; // 暂停标识
+    
 
     protected override void Awake()
     {
@@ -67,8 +69,8 @@ public class GameManager : BaseMonoSingleton<GameManager>
     public void GamePause()
     {
         isPause = true;
-        // 停止出怪协程
-        spawner.StopSpawn();
+        // 记录暂停时间
+        pauseTime = Time.time;
     }
     
     /// <summary>
@@ -77,7 +79,6 @@ public class GameManager : BaseMonoSingleton<GameManager>
     public void GameContinue()
     {
         isPause = false;
-        spawner.StartSpawn();
     }
 
     #endregion

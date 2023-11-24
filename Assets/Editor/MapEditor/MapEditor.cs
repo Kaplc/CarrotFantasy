@@ -157,7 +157,7 @@ public class MapEditor : Editor
     }
 
     /// <summary>
-    /// 加载关卡信息
+    /// 读取数据文件加载绘制好的路径和放塔点
     /// </summary>
     private void LoadMapData()
     {
@@ -250,36 +250,6 @@ public class MapEditor : Editor
         
         Repaint();
         AssetDatabase.Refresh();
-    }
-
-    /// <summary>
-    /// 读取数据文件加载绘制好的路径和放塔点
-    /// </summary>
-    public void LoadData()
-    {
-        // 清除所有修改缓存
-        Clear();
-
-        // 初始化生成格子
-        for (int y = 0; y < rowNum; y++)
-        {
-            for (int x = 0; x < columnNum; x++)
-            {
-                Map.cellsList.Add(new Cell(new Point(x, y)));
-            }
-        }
-
-        // 加载放塔点
-        for (int i = 0; i < map.nowEditorMapData.towerList.Count; i++)
-        {
-            Map.GetCell(map.nowEditorMapData.towerList[i].X, map.nowEditorMapData.towerList[i].Y).AllowTowerPos();
-        }
-
-        // 加载路径
-        for (int i = 0; i < map.nowEditorMapData.pathList.Count; i++)
-        {
-            Map.pathList.Add(map.nowEditorMapData.pathList[i]);
-        }
     }
 
     #endregion
