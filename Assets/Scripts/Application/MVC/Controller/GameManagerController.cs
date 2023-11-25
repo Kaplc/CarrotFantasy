@@ -41,7 +41,7 @@ public class AcceptDataCommand : SimpleCommand
                 LevelDataBody body = notification.Body as LevelDataBody;
                 GameManager.Instance.nowLevelData = body?.levelData;
                 GameManager.Instance.monstersData = body?.monstersData;
-                
+                GameManager.Instance.towersDara = body?.towersData;
                 break;
         }
 

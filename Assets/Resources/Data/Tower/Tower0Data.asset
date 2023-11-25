@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 758f0040af967cc4b8dc9ab9395507fc, type: 3}
-  m_Name: BottleTower
+  m_Name: Tower0Data
   m_EditorClassIdentifier: 
   id: 0
   atk: 1

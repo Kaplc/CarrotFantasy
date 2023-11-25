@@ -85,8 +85,7 @@ public class Spawner : MonoBehaviour
                     // 取消暂停继续时间
                     yield return new WaitForSeconds(roundData.intervalTimeEach + lastSpawnTime - GameManager.Instance.PauseTime); // 还应继续读多少秒才下一个
                 }
-
-
+                
                 string prefabsPath = GameManager.Instance.monstersData[roundData.monsterId].prefabsPath;
                 // 缓存池取出
                 Monster monster = GameManager.Instance.PoolManager.GetObject(prefabsPath).GetComponent<Monster>();

@@ -8,8 +8,8 @@ public class LevelData : ScriptableObject
 {
     public int levelId; // 关卡id
     [HideInInspector] public MapData mapData; // 地图数据
-    public int[] monsterIds; // 该关卡所有怪id
+    public int[] monstersID; // 该关卡所有怪id
     public float intervalTimePerWave; // 每波间隔时间
     public List<RoundData> roundDataList;
-    public int[] towerIDs; // 所有塔id
+    public int[] towersID; // 所有塔id
 }

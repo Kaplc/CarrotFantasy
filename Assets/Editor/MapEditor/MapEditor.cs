@@ -70,8 +70,8 @@ public class MapEditor : Editor
                 }
             }
 
-            File.Copy(BinaryManager.BINARYFILE_PATH + ProjectPath.MAPDATA_PATH + fileNames[nowMapIndex],
-                BinaryManager.BINARYFILE_PATH + ProjectPath.MAPDATA_PATH + fileReName);
+            File.Copy(BinaryManager.BINARYFILE_PATH + DataPath.MAPDATA_PATH + fileNames[nowMapIndex],
+                BinaryManager.BINARYFILE_PATH + DataPath.MAPDATA_PATH + fileReName);
 
             LoadAllLevelFileName();
             Repaint();
@@ -140,7 +140,7 @@ public class MapEditor : Editor
     /// <returns></returns>
     private void LoadAllLevelFileName()
     {
-        DirectoryInfo directoryInfo = Directory.CreateDirectory(BinaryManager.BINARYFILE_PATH + ProjectPath.MAPDATA_PATH);
+        DirectoryInfo directoryInfo = Directory.CreateDirectory(BinaryManager.BINARYFILE_PATH + DataPath.MAPDATA_PATH);
         FileInfo[] fileInfos = directoryInfo.GetFiles();
 
         List<string> fileName = new List<string>();
@@ -162,7 +162,7 @@ public class MapEditor : Editor
     private void LoadMapData()
     {
         // 读取二进制文件
-        nowEditorMapData = BinaryManager.Instance.Load<MapData>(ProjectPath.MAPDATA_PATH + fileNames[nowMapIndex]);
+        nowEditorMapData = BinaryManager.Instance.Load<MapData>(DataPath.MAPDATA_PATH + fileNames[nowMapIndex]);
 
         // 清除所有修改缓存
         Clear();
@@ -236,7 +236,7 @@ public class MapEditor : Editor
             }
         }
 
-        BinaryManager.Instance.Save(ProjectPath.MAPDATA_PATH + fileName, nowEditorMapData);
+        BinaryManager.Instance.Save(DataPath.MAPDATA_PATH + fileName, nowEditorMapData);
         
         // 保存后重新读取
         LoadMapData();

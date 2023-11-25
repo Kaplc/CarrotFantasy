@@ -34,6 +34,7 @@ public class GameManager : BaseMonoSingleton<GameManager>
 
     public LevelData nowLevelData; // 当前Level数据
     public Dictionary<int, MonsterData> monstersData = new Dictionary<int, MonsterData>(); // 当前关卡所有怪物数据
+    public Dictionary<int, TowerData> towersDara = new Dictionary<int, TowerData>(); // 当前关卡所有塔数据
     public Map map;
     public Spawner spawner;
     
