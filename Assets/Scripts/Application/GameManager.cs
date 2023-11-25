@@ -22,8 +22,11 @@ public class GameManager : BaseMonoSingleton<GameManager>
         set
         {
             pause = value;
-            // 记录暂停时间
-            pauseTime = Time.time;
+            if (value)
+            {
+                // 记录暂停时间
+                pauseTime = Time.time;
+            }
         }
     }
 
@@ -83,7 +86,6 @@ public class GameManager : BaseMonoSingleton<GameManager>
     public void GamePause()
     {
         Pause = true;
-        
     }
     
     /// <summary>

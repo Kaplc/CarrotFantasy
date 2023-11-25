@@ -73,7 +73,7 @@ public class GameDataProxy : Proxy
         levelData.mapData = GameManager.Instance.BinaryManager.Load<MapData>(ProjectPath.MAPDATA_PATH + $"Level{levelID}MapData.md");
         levelsData.Add(levelID, levelData);
         // 加载关卡的所有怪物信息
-        LoadMonstersData(levelData.monsterIds.ToArray());
+        LoadMonstersData(levelData.monsterIds);
         
         // 带出指定levelId的关卡数据和怪物数据
         SendNotification(NotificationName.LOADED_LEVELDATA, new LevelDataBody()

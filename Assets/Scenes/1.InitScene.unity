@@ -169,4 +169,3 @@ MonoBehaviour:
   nowLevelData: {fileID: 0}
   map: {fileID: 0}
   spawner: {fileID: 0}
-  isPause: 0

@@ -27,3 +27,4 @@ MonoBehaviour:
   - monsterId: 0
     waveCount: 1
     intervalTimeEach: 1
+  towerIDs: 0000000000000000
