@@ -28,7 +28,7 @@ public class GamePanelMediator : Mediator
         return new string[]
         {
             NotificationName.SHOW_GAMEPANEL,
-            NotificationName.SELECT_LEVEL
+            NotificationName.HIDE_GAMEPANEL
         };
     }
 
@@ -46,7 +46,7 @@ public class GamePanelMediator : Mediator
                 }
                 Panel = UIManager.Instance.Show<GamePanel>(false);
                 break;
-            case NotificationName.SELECT_LEVEL:
+            case NotificationName.HIDE_GAMEPANEL:
                 UIManager.Instance.Hide<GamePanel>(false);
                 break;
         }

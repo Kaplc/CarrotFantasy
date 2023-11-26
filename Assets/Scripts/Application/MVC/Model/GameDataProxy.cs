@@ -63,7 +63,8 @@ public class GameDataProxy : Proxy
             SendNotification(NotificationName.LOADED_LEVELDATA, new LevelDataBody()
             {
                 levelData = levelsData[levelID],
-                monstersData = monstersData
+                monstersData = monstersData,
+                towersData = towersData
             });
             return;
         }

@@ -301,22 +301,92 @@ public class Map : MonoBehaviour
         {
             Vector3 mouseWorldPos = Camera.main.ViewportToWorldPoint(Camera.main.ScreenToViewportPoint(Input.mousePosition));
             Cell cell = GetCell(mouseWorldPos);
-            
+
             // 是放塔点
             if (cell.IsTowerPos)
             {
-                if (cell.tower)
+                // 根据点击格子选择面板显示位置
+                EBuiltPanelShowDir showDir;
+                if (cell.X == 0)
                 {
-                    // 存在塔显示升级面板
-                    GameFacade.Instance.SendNotification(NotificationName.SHOW_UPGRADEPANEl);
+                    // 地图左边
+                    showDir = EBuiltPanelShowDir.Right;
+                }
+                else if (cell.X == ColumnNum - 1)
+                {
+                    // 地图右边
+                    showDir = EBuiltPanelShowDir.Left;
+                }
+                else if (cell.Y == 0)
+                {
+                    // 地图底边
+                    showDir = EBuiltPanelShowDir.Up;
+                }
+                else if (cell.Y == RowNum - 1)
+                {
+                    // 地图顶边
+                    showDir = EBuiltPanelShowDir.Down;
                 }
                 else
                 {
-                    GameFacade.Instance.SendNotification(NotificationName.SHOW_BUILTPANEL, new BuiltTowerArgsBody() {cellCenterPos = GetCellCenterPos(cell)});
+                    showDir = EBuiltPanelShowDir.Up;
                 }
+
+                // 判断格子是否存在塔
+                if (cell.tower)
+                    // 升级塔
+                    UpGradeTower();
+                else
+                    // 创建塔
+                    CreateTower(GetCellCenterPos(cell), showDir);
             }
-            
+        }else if (Input.GetMouseButtonDown(1))
+        {
+            // 右键关闭建造面板
+            GameFacade.Instance.SendNotification(NotificationName.HIDE_BUILTPANEL);
         }
+    }
+
+    /// <summary>
+    /// 升级塔
+    /// </summary>
+    private void UpGradeTower()
+    {
+        // 显示升级面板
+        GameFacade.Instance.SendNotification(NotificationName.SHOW_UPGRADEPANEL);
+    }
+
+    /// <summary>
+    /// 创建塔
+    /// </summary>
+    private void CreateTower(Vector3 createPos, EBuiltPanelShowDir showDir)
+    {
+        Dictionary<int, Sprite> iconsDic = new Dictionary<int, Sprite>();
+
+        // 获取当前关卡可创建塔的所有Icons
+        for (int i = 0; i < GameManager.Instance.towersData.Count; i++)
+        {
+            TowerData towerData = GameManager.Instance.towersData[i];
+            // 判断是否够钱, 获取0级的Icon
+            if (GameManager.Instance.money >= towerData.prices[0])
+            {
+                // 普通图标
+                iconsDic.Add(towerData.id, towerData.icons[0]);
+            }
+            else
+            {
+                // 灰色图标
+                iconsDic.Add(towerData.id, towerData.greyIcons[0]);
+            }
+        }
+
+        // 不存在显示创建塔面板
+        GameFacade.Instance.SendNotification(NotificationName.SHOW_CREATEPANEL, new CreatePanelArgsBody()
+        {
+            createPos = createPos,
+            iconsDic = iconsDic,
+            showDir = showDir
+        });
     }
 
     #endregion

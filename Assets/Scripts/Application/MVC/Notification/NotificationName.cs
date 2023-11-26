@@ -26,29 +26,36 @@ public class NotificationName
     #endregion
     
 
-    #region 打开面板事件
+    #region 面板事件
     
     public const string SHOW_SELECTBIGLEVELPANEL = "ShowSelectBigLevelPanel"; // 选择大关卡
     public const string SHOW_SELECTLEVELPANEL = "ShowSelectLevelPanel"; // 选择小关卡
     public const string SHOW_HELPPANEL = "ShowHelpPanel"; // 帮助面板
     public const string SHOW_BEGINPANEL = "ShowBeginPanel"; // 开始面板
+    
     public const string SHOW_GAMEPANEL = "ShowGamePanel"; // 游戏面板
+    public const string HIDE_GAMEPANEL = "HideGamePaenl"; 
+    
     public const string SHOW_MENUPANEL = "ShowMenuPanel"; // 菜单
+    public const string HIDE_MENUPANEL = "HideMenuPanel";
+    
     public const string SHOW_SETTINGPANEL = "ShowSettingPanel"; // 设置
     public const string SHOW_LOSEPANEL = "ShowLosePanel"; // 失败
     public const string SHOW_WINPANEL = "ShowWinPanel"; // 胜利
     public const string SHOW_LOADINGPANEL = "ShowLoadingPanel"; // 加载面板
-    public const string SHOW_BUILTPANEL = "ShowBuiltPanel"; // 建造面板
-    public const string SHOW_UPGRADEPANEl = "ShowUpgradePanel"; // 升级面板
+    
+    public const string SHOW_CREATEPANEL = "ShowCreatePanel"; // 建造面板
+    public const string SHOW_UPGRADEPANEL = "ShowUpGradePanel"; // 升级面板
+    public const string HIDE_BUILTPANEL = "HideBuiltPanel"; // 隐藏所有建造面板
     
     public const string HIDE_LOADINGPANEL = "HideLoadingPanel"; // 隐藏加载面板
-    public const string HIDE_MENUPANEL = "HideMenuPanel"; // 关闭菜单面板
-    
+
     #endregion
 
     #region 控件事件
 
     public const string SELECT_LEVEL = "SelectLevel"; // 重新选择关卡
+    public const string CREATE_TOWER = "CreateTower"; // 创建塔
 
     #endregion
 

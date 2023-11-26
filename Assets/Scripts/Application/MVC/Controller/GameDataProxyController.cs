@@ -28,7 +28,7 @@ public class LoadLevelDataCommand : SimpleCommand
     {
         base.Execute(notification);
         
-
+        
     }
     
 }
@@ -42,7 +42,7 @@ public class LoadMonsterDataCommand : SimpleCommand
     {
         base.Execute(notification);
         
-
+        
     }
     
 }

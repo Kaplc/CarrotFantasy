@@ -166,6 +166,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nowBigLevelId: 0
   nowLevelId: 0
+  money: 999
   nowLevelData: {fileID: 0}
   map: {fileID: 0}
   spawner: {fileID: 0}

@@ -16,9 +16,21 @@ MonoBehaviour:
   mapData:
     mapBgSpritePath: Map/BigLevel0/BG0
     roadSpritePath: Map/BigLevel0/Road1
-    pathList: []
-    towerList: []
-  monsterIds: 0000000000000000
+    pathList:
+    - tower: {fileID: 0}
+    - tower: {fileID: 0}
+    - tower: {fileID: 0}
+    - tower: {fileID: 0}
+    - tower: {fileID: 0}
+    - tower: {fileID: 0}
+    - tower: {fileID: 0}
+    - tower: {fileID: 0}
+    towerList:
+    - tower: {fileID: 0}
+    - tower: {fileID: 0}
+    - tower: {fileID: 0}
+    - tower: {fileID: 0}
+  monstersID: 00000000
   intervalTimePerWave: 5
   roundDataList:
   - monsterId: 0
@@ -27,4 +39,4 @@ MonoBehaviour:
   - monsterId: 0
     waveCount: 1
     intervalTimeEach: 1
-  towerIDs: 0000000000000000
+  towersID: 0000000001000000

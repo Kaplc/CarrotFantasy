@@ -15,6 +15,7 @@ public class GameManager : BaseMonoSingleton<GameManager>
     private float pauseTime; // 暂停时间
     public int nowBigLevelId; // 大关卡id
     public int nowLevelId; // 小关卡id
+    public int money; // 金钱
 
     public bool Pause
     {
@@ -34,7 +35,7 @@ public class GameManager : BaseMonoSingleton<GameManager>
 
     public LevelData nowLevelData; // 当前Level数据
     public Dictionary<int, MonsterData> monstersData = new Dictionary<int, MonsterData>(); // 当前关卡所有怪物数据
-    public Dictionary<int, TowerData> towersDara = new Dictionary<int, TowerData>(); // 当前关卡所有塔数据
+    public Dictionary<int, TowerData> towersData = new Dictionary<int, TowerData>(); // 当前关卡所有塔数据
     public Map map;
     public Spawner spawner;
     

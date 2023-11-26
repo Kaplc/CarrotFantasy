@@ -19,8 +19,9 @@ public class BuiltPanelMediator : Mediator
     {
         return new string[]
         {
-            NotificationName.SHOW_BUILTPANEL,
-            NotificationName.SHOW_UPGRADEPANEl
+            NotificationName.SHOW_CREATEPANEL,
+            NotificationName.SHOW_UPGRADEPANEL,
+            NotificationName.HIDE_BUILTPANEL,
         };
     }
 
@@ -30,13 +31,20 @@ public class BuiltPanelMediator : Mediator
 
         switch (notification.Name)
         {
-            case NotificationName.SHOW_BUILTPANEL:
-                ViewComponent = UIManager.Instance.Show<BuiltPanel>(false);
-                Panel.ShowBuiltPanel(((BuiltTowerArgsBody)notification.Body).cellCenterPos);
+            case NotificationName.SHOW_CREATEPANEL:
+
+                ViewComponent = UIManager.Instance.Show<BuiltPanel>();
+                CreatePanelArgsBody body = notification.Body as CreatePanelArgsBody;
+                Panel.ShowCreatePanel(body.createPos, body.iconsDic, body.showDir);
                 break;
-            case NotificationName.SHOW_UPGRADEPANEl:
-                ViewComponent = UIManager.Instance.Show<BuiltPanel>(false);
+            case NotificationName.SHOW_UPGRADEPANEL:
+
+                ViewComponent = UIManager.Instance.Show<BuiltPanel>();
                 Panel.ShowUpGradePanel();
+                break;
+            case NotificationName.HIDE_BUILTPANEL:
+                UIManager.Instance.Hide<BuiltPanel>(false);
+                ViewComponent = null;
                 break;
         }
     }

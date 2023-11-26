@@ -5,7 +5,6 @@ using PureMVC.Patterns.Command;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-
 /// <summary>
 /// 开始加载游戏
 /// </summary>
@@ -41,10 +40,10 @@ public class AcceptDataCommand : SimpleCommand
                 LevelDataBody body = notification.Body as LevelDataBody;
                 GameManager.Instance.nowLevelData = body?.levelData;
                 GameManager.Instance.monstersData = body?.monstersData;
-                GameManager.Instance.towersDara = body?.towersData;
+                GameManager.Instance.towersData = body?.towersData;
                 break;
         }
-
+        
         SendNotification(NotificationName.INIT_GAME);
     }
 }
@@ -95,7 +94,9 @@ public class ExitGameCommand : SimpleCommand
         GameManager.Instance.GameExit();
         // 销毁缓存池
         GameManager.Instance.PoolManager.Clear();
-        
+        // 关闭相关面板
+        SendNotification(NotificationName.HIDE_BUILTPANEL);
+        SendNotification(NotificationName.HIDE_MENUPANEL);
         // 进入选择面板
         SendNotification(NotificationName.SELECT_LEVEL);
     }
@@ -112,6 +113,9 @@ public class RestartGameCommand : SimpleCommand
         
         // 退出游戏
         GameManager.Instance.GameExit();
+        // 关闭相关面板
+        SendNotification(NotificationName.HIDE_BUILTPANEL);
+        SendNotification(NotificationName.HIDE_MENUPANEL);
         // 重新加载游戏
         SendNotification(NotificationName.LOAD_GAME);
     }
@@ -140,4 +144,3 @@ public class ContinueGameCommand : SimpleCommand
         GameManager.Instance.GameContinue();
     }
 } 
-
