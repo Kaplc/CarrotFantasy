@@ -95,23 +95,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df67da4778bdd54489fb61d519c84c72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rowNum: 8
-  columnNum: 12
   mapBgSpriteRenderer: {fileID: 5901309570911178279}
   roadSpriteRenderer: {fileID: 6611210825532551183}
-  cellsList: []
-  pathList: []
-  nowEditorMapData:
-    mapBgSpritePath: Map/BigLevel0/BG0
-    roadSpritePath: Map/BigLevel0/Road1
-    pathList: []
-    towerList: []
   drawGizmos: 0
   drawTowerPos: 0
   drawPath: 0
-  gaming: 1
-  carrot: {fileID: 0}
-  startPoint: {fileID: 0}
   nowMapData:
     mapBgSpritePath: 
     roadSpritePath: 
@@ -184,8 +172,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -876753119
+  m_SortingLayer: 2
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 4b1b3d55969940f43abca95ce5b03b45, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

@@ -16,8 +16,6 @@ public class MapEditor : Editor
     private string fileReName = "必须填写新地图文件的文件名.md";
     private string default_MapBgSpritePath = "Map/BigLevel0/BG0";
     private string default_RoadSpritePath = "Map/BigLevel0/Road1";
-    
-    public MapData nowEditorMapData; // 当前编辑地图数据
 
     private void Awake()
     {
@@ -162,7 +160,7 @@ public class MapEditor : Editor
     private void LoadMapData()
     {
         // 读取二进制文件
-        nowEditorMapData = BinaryManager.Instance.Load<MapData>(DataPath.MAPDATA_PATH + fileNames[nowMapIndex]);
+        map.nowEditorMapData = BinaryManager.Instance.Load<MapData>(DataPath.MAPDATA_PATH + fileNames[nowMapIndex]);
 
         // 清除所有修改缓存
         Clear();
@@ -170,19 +168,19 @@ public class MapEditor : Editor
         Map.GenerateCell();
 
         // 加载放塔点覆盖空数据的格子
-        for (int i = 0; i < nowEditorMapData.towerList.Count; i++)
+        for (int i = 0; i < map.nowEditorMapData.towerList.Count; i++)
         {
-            Map.GetCell(nowEditorMapData.towerList[i].X, nowEditorMapData.towerList[i].Y).IsTowerPos = true;
+            Map.GetCell(map.nowEditorMapData.towerList[i].X, map.nowEditorMapData.towerList[i].Y).IsTowerPos = true;
         }
 
         // 加载路径
-        for (int i = 0; i < nowEditorMapData.pathList.Count; i++)
+        for (int i = 0; i < map.nowEditorMapData.pathList.Count; i++)
         {
-            Map.pathList.Add(nowEditorMapData.pathList[i]);
+            Map.pathList.Add(map.nowEditorMapData.pathList[i]);
         }
         
         // 加载地图背景图片
-        Sprite mapBgSprite = Resources.Load<Sprite>(nowEditorMapData.mapBgSpritePath);
+        Sprite mapBgSprite = Resources.Load<Sprite>(map.nowEditorMapData.mapBgSpritePath);
         if (!mapBgSprite)
         {
             // 无地图背景图片使用默认
@@ -192,7 +190,7 @@ public class MapEditor : Editor
         map.mapBgSpriteRenderer.sprite = mapBgSprite;
 
         // 加载路径图片
-        Sprite roadSprite = Resources.Load<Sprite>(nowEditorMapData.roadSpritePath);
+        Sprite roadSprite = Resources.Load<Sprite>(map.nowEditorMapData.roadSpritePath);
         if (!roadSprite)
         {
             // 无地图背景图片使用默认
@@ -208,7 +206,7 @@ public class MapEditor : Editor
     private void CreateNewFile(string fileName)
     {
         // 创建新文件
-        nowEditorMapData = new MapData();
+        map.nowEditorMapData = new MapData();
         SaveData(fileName);
         LoadAllLevelFileName();
         AssetDatabase.Refresh();
@@ -219,24 +217,35 @@ public class MapEditor : Editor
     private void SaveData(string fileName)
     {
         // 清空旧数据
-        nowEditorMapData.pathList.Clear();
-        nowEditorMapData.towerList.Clear();
+        map.nowEditorMapData.pathList.Clear();
+        map.nowEditorMapData.towerList.Clear();
 
         // 写入新数据
         for (int i = 0; i < Map.pathList.Count; i++)
         {
-            nowEditorMapData.pathList.Add(Map.pathList[i]);
+            map.nowEditorMapData.pathList.Add(Map.pathList[i]);
         }
 
         for (int i = 0; i < Map.cellsList.Count; i++)
         {
             if (Map.cellsList[i].IsTowerPos)
             {
-                nowEditorMapData.towerList.Add(Map.cellsList[i]);
+                map.nowEditorMapData.towerList.Add(Map.cellsList[i]);
             }
         }
+        
+        // 没有设置地图图片自动保存默认路径
+        if (map.nowEditorMapData.mapBgSpritePath == "")
+        {
+            map.nowEditorMapData.mapBgSpritePath = default_MapBgSpritePath;
+        }
 
-        BinaryManager.Instance.Save(DataPath.MAPDATA_PATH + fileName, nowEditorMapData);
+        if (map.nowEditorMapData.roadSpritePath == "")
+        {
+            map.nowEditorMapData.roadSpritePath = default_RoadSpritePath;
+        }
+
+        BinaryManager.Instance.Save(DataPath.MAPDATA_PATH + fileName, map.nowEditorMapData);
         
         // 保存后重新读取
         LoadMapData();

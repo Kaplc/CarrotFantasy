@@ -42,7 +42,9 @@ public class Map : MonoBehaviour
     public static List<Cell> pathList = new List<Cell>(); // 所有路径拐点
 
     #region 编辑器相关字段
-
+    
+    public MapData nowEditorMapData; // 当前编辑地图数据
+    
     public bool drawGizmos; // 开启绘制
     [HideInInspector] public bool drawTowerPos;
     [HideInInspector] public bool drawPath;
@@ -281,7 +283,10 @@ public class Map : MonoBehaviour
             GetCell(nowMapData.towerList[i].X, nowMapData.towerList[i].Y).IsTowerPos = true;
         }
     }
-
+    
+    /// <summary>
+    /// 开始游戏时鼠标点击事件
+    /// </summary>
     private void CheckMouseEvent()
     {
         // 左键打开升级或者建造面板
@@ -319,14 +324,17 @@ public class Map : MonoBehaviour
                 {
                     showDir = EBuiltPanelShowDir.Up;
                 }
-
+                
+                // 在显示下一次面板前先上次旧面板
+                GameFacade.Instance.SendNotification(NotificationName.HIDE_BUILTPANEL);
+                
                 // 判断格子是否存在塔
-                if (cell.tower)
-                    // 升级塔
-                    UpGradeTower();
+                if (cell.tower as BaseTower)
+                    // 显示升级塔面板
+                    ShowUpGradePanel();
                 else
-                    // 创建塔
-                    CreateTower(GetCellCenterPos(cell), showDir);
+                    // 显示创建塔面板
+                    ShowCreatePanel(GetCellCenterPos(cell), showDir);
             }
         }else if (Input.GetMouseButtonDown(1))
         {
@@ -338,16 +346,16 @@ public class Map : MonoBehaviour
     /// <summary>
     /// 升级塔
     /// </summary>
-    private void UpGradeTower()
+    private void ShowUpGradePanel()
     {
         // 显示升级面板
-        GameFacade.Instance.SendNotification(NotificationName.SHOW_UPGRADEPANEL);
+        // GameFacade.Instance.SendNotification(NotificationName.SHOW_UPGRADEPANEL);
     }
 
     /// <summary>
     /// 创建塔
     /// </summary>
-    private void CreateTower(Vector3 createPos, EBuiltPanelShowDir showDir)
+    private void ShowCreatePanel(Vector3 createPos, EBuiltPanelShowDir showDir)
     {
         Dictionary<int, Sprite> iconsDic = new Dictionary<int, Sprite>();
 
@@ -367,7 +375,7 @@ public class Map : MonoBehaviour
                 iconsDic.Add(towerData.id, towerData.greyIcons[0]);
             }
         }
-
+        
         // 不存在显示创建塔面板
         GameFacade.Instance.SendNotification(NotificationName.SHOW_CREATEPANEL, new CreatePanelArgsBody()
         {

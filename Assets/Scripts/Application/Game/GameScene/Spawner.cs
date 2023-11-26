@@ -50,6 +50,8 @@ public class Spawner : MonoBehaviour
             GameManager.Instance.money -= towerData.prices[0];
             // 关闭建造面板
             GameFacade.Instance.SendNotification(NotificationName.HIDE_BUILTPANEL);
+            // 记录该格子已经存在塔
+            Map.GetCell(createWorldPos).tower = tower;
         }
         
     }

@@ -12,8 +12,8 @@ public class Cell
     public int Y => point.Y;
     // 是否可以放塔
     private bool isTowerPos;
-
-    public BaseTower tower;
+    
+    public object tower = null;
 
     public bool IsTowerPos
     {

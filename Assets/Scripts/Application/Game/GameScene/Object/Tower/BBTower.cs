@@ -11,11 +11,10 @@ public class BBTower : BaseTower
 
     public override void OnGet()
     {
-        throw new System.NotImplementedException();
     }
 
     public override void OnPush()
     {
-        throw new System.NotImplementedException();
+        
     }
 }

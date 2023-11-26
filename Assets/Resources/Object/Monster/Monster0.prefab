@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6877530162334749445}
   - component: {fileID: 7973483087144223831}
   m_Layer: 0
-  m_Name: 1-1
+  m_Name: Monster0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -69,9 +69,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 854265121
-  m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingLayerID: 315469461
+  m_SortingLayer: 3
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 53b4c9813c52a9541b18e04a45042c7c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -114,5 +114,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88b53cf5aadaf784f8cbce10e561a114, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDead: 0
   data: {fileID: 11400000, guid: eea0463a05e335f42801b8c62937d482, type: 2}
   pathIndex: 0
+  nextCell:
+    tower: {fileID: 0}
