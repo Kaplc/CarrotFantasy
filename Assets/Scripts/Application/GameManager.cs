@@ -64,6 +64,10 @@ public class GameManager : BaseMonoSingleton<GameManager>
         map.InitMap();
         // 创建出怪器
         spawner = Instantiate(Resources.Load<GameObject>("Prefabs/Spawner")).GetComponent<Spawner>();
+        // 创建萝卜
+        spawner.CreateCarrot();
+        // 创建起点路牌
+        spawner.CreateStartBrand();
         // 注册事件
         EventCenter.AddEventListener(NotificationName.JUDGING_WIN, JudgingWin);
         EventCenter.AddEventListener(NotificationName.GAME_OVER, GameOver);
@@ -76,7 +80,7 @@ public class GameManager : BaseMonoSingleton<GameManager>
     {
         Pause = true;
         // 回收萝卜和怪物
-        map.carrot.OnPush();
+        spawner.carrot.OnPush();
         spawner.OnPushAllMonster();
         // 清空事件中心
         EventCenter.ClearAllEvent();
@@ -108,7 +112,7 @@ public class GameManager : BaseMonoSingleton<GameManager>
     private void JudgingWin()
     {
         // 1.出怪完成 2.萝卜没死 3.怪物全部死亡
-        if (map.carrot.isDead == false)
+        if (spawner.carrot.isDead == false)
         {
             GameFacade.Instance.SendNotification(NotificationName.SHOW_WINPANEL);
         }

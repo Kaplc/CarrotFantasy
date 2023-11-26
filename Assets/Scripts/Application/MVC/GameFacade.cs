@@ -28,15 +28,15 @@ public class GameFacade : Facade
         // GameManagerController
         RegisterCommand(NotificationName.LOAD_GAME, () => new LoadGameCommand());
         RegisterCommand(NotificationName.START_GAME, () => new StartGameCommand());
-        
         RegisterCommand(NotificationName.LOADED_LEVELDATA, ()=> new AcceptDataCommand());
-        RegisterCommand(NotificationName.LOADED_MONSTERDATA, ()=> new AcceptDataCommand());
-
         RegisterCommand(NotificationName.INIT_GAME, ()=> new InitGameCommand());
         RegisterCommand(NotificationName.EXIT_GAME, () => new ExitGameCommand());
         RegisterCommand(NotificationName.RESTART_GAME, ()=>new RestartGameCommand());
         RegisterCommand(NotificationName.PAUSE_GAME, ()=>new PauseGameCommand());
         RegisterCommand(NotificationName.CONTINUE_GAME, ()=>new ContinueGameCommand());
+        
+        // SpawnerController
+        RegisterCommand(NotificationName.CREATE_TOWER, () => new CreateTowerCommand());
     }
 
     protected override void InitializeView()

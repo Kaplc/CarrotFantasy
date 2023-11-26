@@ -51,8 +51,7 @@ public class Map : MonoBehaviour
 
     #region 游戏相关字段
 
-    public Carrot carrot; // 萝卜
-    public Transform startPoint; // 开始路牌位置
+
     [HideInInspector] public MapData nowMapData; // 当前游戏的关卡地图信息
 
     #endregion
@@ -269,17 +268,6 @@ public class Map : MonoBehaviour
         mapBgSpriteRenderer.sprite = Resources.Load<Sprite>(nowMapData.mapBgSpritePath);
         // 设置路径背景
         roadSpriteRenderer.sprite = Resources.Load<Sprite>(nowMapData.roadSpritePath);
-
-        // 创建萝卜和开始路牌
-        carrot = GameManager.Instance.PoolManager.GetObject("Object/Carrot").GetComponent<Carrot>();
-        carrot.OnGet();
-        startPoint = Instantiate(Resources.Load<GameObject>("Object/StartPoint")).GetComponent<Transform>();
-        // 设置萝卜位置
-        Cell lastPathCell = nowMapData.pathList[nowMapData.pathList.Count - 1];
-        carrot.transform.position = GetCellCenterPos(lastPathCell);
-        // 设置开始路牌位置
-        Cell firstPathCell = nowMapData.pathList[0];
-        startPoint.position = GetCellCenterPos(firstPathCell);
     }
 
     /// <summary>

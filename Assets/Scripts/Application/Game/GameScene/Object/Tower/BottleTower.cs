@@ -10,4 +10,14 @@ public class BottleTower : BaseTower
     {
         
     }
+
+    public override void OnGet()
+    {
+        
+    }
+
+    public override void OnPush()
+    {
+        
+    }
 }

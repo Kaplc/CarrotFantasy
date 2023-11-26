@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class BaseTower : MonoBehaviour
+public abstract class BaseTower : MonoBehaviour, IPoolObject
 {
     public TowerData data;
     public int ID => data.id;
@@ -10,5 +10,8 @@ public abstract class BaseTower : MonoBehaviour
     public int RotaSpeed => data.rotaSpeed;
 
     public abstract void Attack();
+
+    public abstract void OnGet();
     
+    public abstract void OnPush();
 }

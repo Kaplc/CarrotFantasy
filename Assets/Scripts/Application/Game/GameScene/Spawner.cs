@@ -11,6 +11,8 @@ public class Spawner : MonoBehaviour
     private bool spawnedComplete; // 完成出怪
     public float lastSpawnTime; // 上一只出怪时间
 
+    public Carrot carrot; // 萝卜
+    public Transform startPoint; // 开始路牌位置
     private LevelData levelData;
     private Coroutine spawnCoroutine;
     public List<Monster> monsters = new List<Monster>(); // 已经出生的怪物
@@ -28,6 +30,55 @@ public class Spawner : MonoBehaviour
         GameManager.Instance.EventCenter.AddEventListener(NotificationName.MONSTER_DEAD, CheckMonstersSurvival); // 检查怪物存活情况
     }
 
+    /// <summary>
+    /// 创建塔对象
+    /// </summary>
+    /// <param name="towerID">塔id</param>
+    /// <param name="createWorldPos">创建的位置世界坐标</param>
+    public void CreateTowerObject(int towerID, Vector3 createWorldPos)
+    {
+        TowerData towerData = GameManager.Instance.towersData[towerID];
+        
+        // 够钱才创建
+        if (GameManager.Instance.money >= towerData.prices[0])
+        {
+            BaseTower tower = GameManager.Instance.PoolManager.GetObject(towerData.prefabsPath).GetComponent<BaseTower>();
+            tower.OnGet();
+            tower.transform.position = createWorldPos;
+            
+            // 扣钱
+            GameManager.Instance.money -= towerData.prices[0];
+            // 关闭建造面板
+            GameFacade.Instance.SendNotification(NotificationName.HIDE_BUILTPANEL);
+        }
+        
+    }
+    
+    /// <summary>
+    /// 创建萝卜
+    /// </summary>
+    public void CreateCarrot()
+    {
+        carrot = GameManager.Instance.PoolManager.GetObject("Object/Carrot").GetComponent<Carrot>();
+        carrot.OnGet();
+        
+        // 设置萝卜位置
+        Cell lastPathCell = levelData.mapData.pathList[levelData.mapData.pathList.Count - 1];
+        carrot.transform.position = Map.GetCellCenterPos(lastPathCell);
+    }
+    
+    /// <summary>
+    /// 创建开始路牌
+    /// </summary>
+    public void CreateStartBrand()
+    {
+        startPoint = Instantiate(Resources.Load<GameObject>("Object/StartPoint")).GetComponent<Transform>();
+        
+        // 设置开始路牌位置
+        Cell firstPathCell = levelData.mapData.pathList[0];
+        startPoint.position = Map.GetCellCenterPos(firstPathCell);
+    }
+    
     /// <summary>
     /// 检查怪物存活
     /// </summary>

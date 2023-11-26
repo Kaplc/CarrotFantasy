@@ -44,8 +44,8 @@ public class BuiltPanel : BasePanel
     public void ShowCreatePanel(Vector3 createPos, Dictionary<int, Sprite> iconsDic, EBuiltPanelShowDir showDir)
     {
         createPanel.gameObject.SetActive(true);
-        Vector2 pos = WorldPosToUIPos(createPos);
-        createPanel.Show(pos, iconsDic, showDir);
+        Vector2 uiPos = WorldPosToUIPos(createPos);
+        createPanel.Show(uiPos, createPos, iconsDic, showDir);
     }
 
     public void ShowUpGradePanel()
