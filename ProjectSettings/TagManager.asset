@@ -47,9 +47,6 @@ TagManager:
   - name: Road
     uniqueID: 3418214177
     locked: 0
-  - name: Monstar
-    uniqueID: 854265121
-    locked: 0
-  - name: Carrot
-    uniqueID: 2102845591
+  - name: Role
+    uniqueID: 315469461
     locked: 0

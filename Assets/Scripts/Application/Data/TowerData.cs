@@ -14,4 +14,5 @@ public class TowerData : ScriptableObject
     public List<int> sellPrices; // 每级卖掉价格
     public List<Sprite> icons; // 每级Icon
     public List<Sprite> greyIcons; // 不够价钱Icon
+    public List<string> animatorsPath; // 每级的状态机加载路径
 }

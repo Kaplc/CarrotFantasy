@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 2850226180809011501}
   - component: {fileID: 2822472970669940543}
   - component: {fileID: 3415750839629856564}
+  - component: {fileID: 8049761517242303395}
   m_Layer: 0
   m_Name: BottleTower
   m_TagString: Untagged
@@ -177,3 +178,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: aab2e8cd34433054a981d09ecb22a4b3, type: 2}
+--- !u!95 &8049761517242303395
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8628199633042941779}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 22100000, guid: 0cd260a038c9dc744a1e711286247bea, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
