@@ -17,13 +17,12 @@ MonoBehaviour:
   atkInterval: 1
   rotaSpeed: 10
   prefabsPath: Object/Tower/BottleTower
+  attackRange: 3.5
   prices: 64000000b400000004010000
   sellPrices: 50000000e0000000b0010000
-  icons:
-  - {fileID: 21300000, guid: 0346e09d7d1d10f43b62d65b776fd707, type: 3}
-  - {fileID: 21300000, guid: 0346e09d7d1d10f43b62d65b776fd707, type: 3}
-  - {fileID: 21300000, guid: 0346e09d7d1d10f43b62d65b776fd707, type: 3}
-  greyIcons:
-  - {fileID: 21300000, guid: dc1c33297ed3a344798f767f911d0ca8, type: 3}
-  - {fileID: 21300000, guid: dc1c33297ed3a344798f767f911d0ca8, type: 3}
-  - {fileID: 21300000, guid: dc1c33297ed3a344798f767f911d0ca8, type: 3}
+  icons: {fileID: 21300000, guid: 0346e09d7d1d10f43b62d65b776fd707, type: 3}
+  greyIcons: {fileID: 21300000, guid: dc1c33297ed3a344798f767f911d0ca8, type: 3}
+  animatorsPath:
+  - Animation/Tower/TowerBottle/0/TowerBottle0
+  - Animation/Tower/TowerBottle/1/TowerBottle1
+  - Animation/Tower/TowerBottle/2/TowerBottle2

@@ -17,13 +17,9 @@ MonoBehaviour:
   atkInterval: 1
   rotaSpeed: 101
   prefabsPath: Object/Tower/BBTower
+  attackRange: 0
   prices: 000000000000000000000000
   sellPrices: 000000000000000000000000
-  icons:
-  - {fileID: 21300000, guid: ad07072d0f75e584da5c5fec72645385, type: 3}
-  - {fileID: 21300000, guid: ad07072d0f75e584da5c5fec72645385, type: 3}
-  - {fileID: 21300000, guid: ad07072d0f75e584da5c5fec72645385, type: 3}
-  greyIcons:
-  - {fileID: 21300000, guid: 3afa3941870a73c4dbac2b865565332a, type: 3}
-  - {fileID: 21300000, guid: 3afa3941870a73c4dbac2b865565332a, type: 3}
-  - {fileID: 21300000, guid: 3afa3941870a73c4dbac2b865565332a, type: 3}
+  icons: {fileID: 21300000, guid: ad07072d0f75e584da5c5fec72645385, type: 3}
+  greyIcons: {fileID: 21300000, guid: 3afa3941870a73c4dbac2b865565332a, type: 3}
+  animatorsPath: []

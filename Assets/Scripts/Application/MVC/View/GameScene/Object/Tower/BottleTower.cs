@@ -18,6 +18,10 @@ public class BottleTower : BaseTower
 
     public override void OnPush()
     {
+        // 复原
+        animator.runtimeAnimatorController = controllers[0];
+        level = 0;
         
+        GameManager.Instance.PoolManager.PushObject(gameObject);
     }
 }

@@ -37,13 +37,15 @@ public class MenuPanelMediator : Mediator
         switch (notification.Name)
         {
             case NotificationName.SHOW_MENUPANEL:
+                Panel = UIManager.Instance.Show<MenuPanel>(false);
                 // 暂停游戏
                 SendNotification(NotificationName.PAUSE_GAME);
                 
-                Panel = UIManager.Instance.Show<MenuPanel>(false);
+                SendNotification(NotificationName.ALLOW_CLICKCELL, false);
                 break;
             case NotificationName.HIDE_MENUPANEL:
                 UIManager.Instance.Hide<MenuPanel>(false);
+                SendNotification(NotificationName.ALLOW_CLICKCELL, true);
                 break;
         }
         

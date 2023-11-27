@@ -178,6 +178,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: aab2e8cd34433054a981d09ecb22a4b3, type: 2}
+  level: 0
+  animator: {fileID: 8049761517242303395}
+  controllers:
+  - {fileID: 9100000, guid: 00c9b508a164fb74e9e1a02879d404bd, type: 2}
+  - {fileID: 22100000, guid: fbf66b2b983c7d243bb05f14b4ecc239, type: 2}
+  - {fileID: 22100000, guid: 0cd260a038c9dc744a1e711286247bea, type: 2}
 --- !u!95 &8049761517242303395
 Animator:
   serializedVersion: 3
@@ -188,7 +194,7 @@ Animator:
   m_GameObject: {fileID: 8628199633042941779}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 22100000, guid: 0cd260a038c9dc744a1e711286247bea, type: 2}
+  m_Controller: {fileID: 9100000, guid: 00c9b508a164fb74e9e1a02879d404bd, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

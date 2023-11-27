@@ -13,6 +13,30 @@ public class CreateTowerCommand : SimpleCommand
     {
         base.Execute(notification);
         CreateTowerArgsBogy body = notification.Body as CreateTowerArgsBogy;
-        GameManager.Instance.spawner.CreateTowerObject(body.towerID, body.createWorldPos);
+        GameManager.Instance.spawner.CreateTowerObject(body.towerID, body.cellWorldPos);
+    }
+}
+
+/// <summary>
+/// 出售塔
+/// </summary>
+public class SellTowerCommand : SimpleCommand
+{
+    public override void Execute(INotification notification)
+    {
+        base.Execute(notification);
+        GameManager.Instance.spawner.SellTower((Vector3)notification.Body);
+    }
+}
+
+/// <summary>
+/// 升级塔
+/// </summary>
+public class UpGradeTower : SimpleCommand
+{
+    public override void Execute(INotification notification)
+    {
+        base.Execute(notification);
+        GameManager.Instance.spawner.UpGradeTower((Vector3)notification.Body);
     }
 }

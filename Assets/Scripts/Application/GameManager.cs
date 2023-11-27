@@ -16,11 +16,12 @@ public class GameManager : BaseMonoSingleton<GameManager>
     public int nowBigLevelId; // 大关卡id
     public int nowLevelId; // 小关卡id
     public int money; // 金钱
+    public bool allowClickCell; // 允许点击格子
 
     public bool Pause
     {
         get => pause;
-        set
+        private set
         {
             pause = value;
             if (value)
@@ -73,6 +74,14 @@ public class GameManager : BaseMonoSingleton<GameManager>
         EventCenter.AddEventListener(NotificationName.GAME_OVER, GameOver);
     }
     
+    /// <summary>
+    /// 读秒结束真正开始游戏
+    /// </summary>
+    public void GameStart()
+    {
+        Pause = false;
+        allowClickCell = true;
+    }
     /// <summary>
     /// 游戏退出
     /// </summary>

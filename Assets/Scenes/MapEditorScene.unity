@@ -282,6 +282,26 @@ PrefabInstance:
       propertyPath: drawGizmos
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: nowEditorMapData.roadSpritePath
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: nowEditorMapData.mapBgSpritePath
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: nowEditorMapData.pathList.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: nowEditorMapData.towerList.Array.size
+      value: 62
+      objectReference: {fileID: 0}
     - target: {fileID: 1273241216140422240, guid: 84cb90b3880a3ff4ea7a80c84606488c,
         type: 3}
       propertyPath: m_RootOrder

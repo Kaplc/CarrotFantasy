@@ -11,13 +11,14 @@ public class CreatePanel : MonoBehaviour
     /// <summary>
     /// 根据UI坐标显示建造面板
     /// </summary>
-    /// <param name="pos"></param>
-    /// <param name="icons"></param>
-    /// <param name="showDir"></param>
-    public void Show(Vector2 pos, Vector3 createWorldPos, Dictionary<int, Sprite> iconsDic, EBuiltPanelShowDir showDir)
+    /// <param name="iconsDic">icons字典</param>
+    /// <param name="showDir">显示方向</param>
+    /// <param name="uiPos">ui的位置坐标</param>
+    /// <param name="cellWorldPos">格子世界坐标</param>
+    public void Show(Vector2 uiPos, Vector3 cellWorldPos, Dictionary<int, Sprite> iconsDic, EBuiltPanelShowDir showDir)
     {
         // 设置面板中心位置为格子中心
-        ((RectTransform)transform).anchoredPosition = pos;
+        ((RectTransform)transform).anchoredPosition = uiPos;
         
         // 创建遍历计数器
         int count = 0;
@@ -28,7 +29,7 @@ public class CreatePanel : MonoBehaviour
             // 设置信息
             button.towerID = item.Key;
             button.icon.sprite = item.Value;
-            button.createWorldPos = createWorldPos;
+            button.cellWorldPos = cellWorldPos;
 
             // 设置位置
             RectTransform buttonRect = button.transform as RectTransform;
@@ -44,8 +45,6 @@ public class CreatePanel : MonoBehaviour
                     break;
                 case EBuiltPanelShowDir.Left:
                     break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(showDir), showDir, null);
             }
 
             count++;

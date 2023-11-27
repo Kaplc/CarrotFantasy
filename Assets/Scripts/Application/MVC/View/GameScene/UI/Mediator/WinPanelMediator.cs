@@ -26,7 +26,7 @@ public class WinPanelMediator : Mediator
     {
         return new string[]
         {
-            NotificationName.SHOW_WINPANEL
+            NotificationName.SHOW_WINPANEL,
         };
     }
 
@@ -38,6 +38,8 @@ public class WinPanelMediator : Mediator
         {
             case NotificationName.SHOW_WINPANEL:
                 Panel = UIManager.Instance.Show<WinPanel>(false);
+                // 关闭格子点击检测
+                SendNotification(NotificationName.ALLOW_CLICKCELL, false);
                 break;
         }
     }

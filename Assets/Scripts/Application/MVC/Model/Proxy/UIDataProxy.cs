@@ -7,7 +7,7 @@ using UnityEngine.U2D;
 public class UIDataProxy : Proxy
 {
     public new const string NAME = "UIDataProxy";
-    private Dictionary<string, SpriteAtlas> atlasDataDic;
+    private Dictionary<string, SpriteAtlas> atlasDataDic= new Dictionary<string, SpriteAtlas>();
 
     public UIDataProxy() : base(NAME)
     {

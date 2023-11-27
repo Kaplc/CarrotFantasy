@@ -34,9 +34,13 @@ public class GameFacade : Facade
         RegisterCommand(NotificationName.RESTART_GAME, ()=>new RestartGameCommand());
         RegisterCommand(NotificationName.PAUSE_GAME, ()=>new PauseGameCommand());
         RegisterCommand(NotificationName.CONTINUE_GAME, ()=>new ContinueGameCommand());
+        RegisterCommand(NotificationName.ALLOW_CLICKCELL, () => new AllowClickCellCommand());
         
         // SpawnerController
         RegisterCommand(NotificationName.CREATE_TOWER, () => new CreateTowerCommand());
+        RegisterCommand(NotificationName.SELL_TOWER, () => new SellTowerCommand());
+        RegisterCommand(NotificationName.UPGRADE_TOWER, () => new UpGradeTower());
+        
         
         RegisterCommand(NotificationName.LOAD_ATLAS, ()=> new LoadAtlasCommand());
     }

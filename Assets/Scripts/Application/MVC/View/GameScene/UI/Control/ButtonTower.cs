@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class ButtonTower : MonoBehaviour
 {
     public int towerID;
-    public Vector3 createWorldPos;
+    public Vector3 cellWorldPos;
     
     public Button button;
     public Image icon;
@@ -19,7 +19,7 @@ public class ButtonTower : MonoBehaviour
             GameFacade.Instance.SendNotification(NotificationName.CREATE_TOWER, new CreateTowerArgsBogy()
             {
                 towerID = towerID,
-                createWorldPos = createWorldPos
+                cellWorldPos = cellWorldPos
             });
         });
     }

@@ -22,6 +22,7 @@ public class NotificationName
     public const string MONSTER_DEAD = "MonsterDead"; // 怪物死亡
     public const string GAME_OVER = "GameOver"; // 游戏结束
     public const string JUDGING_WIN = "JudgingWin"; // 判断胜利
+    public const string ALLOW_CLICKCELL = "AllowClickCell"; // 是否允许点击格子
     
     #endregion
     
@@ -56,6 +57,8 @@ public class NotificationName
 
     public const string SELECT_LEVEL = "SelectLevel"; // 重新选择关卡
     public const string CREATE_TOWER = "CreateTower"; // 创建塔
+    public const string SELL_TOWER = "SellTower"; // 出售塔
+    public const string UPGRADE_TOWER = "UpGradeTower"; // 升级塔
 
     #endregion
 

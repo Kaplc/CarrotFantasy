@@ -66,21 +66,22 @@ public class BuiltPanel : BasePanel
     /// <summary>
     /// 显示创建塔面板
     /// </summary>
-    /// <param name="createPos">创建位置</param>
+    /// <param name="cellWorldPos"></param>
     /// <param name="iconsDic"></param>
     /// <param name="showDir">显示位置</param>
-    public void ShowCreatePanel(Vector3 createPos, Dictionary<int, Sprite> iconsDic, EBuiltPanelShowDir showDir)
+    public void ShowCreatePanel(Vector3 cellWorldPos, Dictionary<int, Sprite> iconsDic, EBuiltPanelShowDir showDir)
     {
         IsShowCreatePanel = true;
-        Vector2 uiPos = WorldPosToUIPos(createPos);
-        createPanel.Show(uiPos, createPos, iconsDic, showDir);
+        Vector2 uiPos = WorldPosToUIPos(cellWorldPos);
+        createPanel.Show(uiPos, cellWorldPos, iconsDic, showDir);
     }
 
-    public void ShowUpGradePanel(Vector3 createPos, Sprite icon, int upGradeMoney, int sellMoney, float attackRange, EBuiltPanelShowDir showDir)
+    public void ShowUpGradePanel(Vector3 cellWorldPos, Sprite icon, int upGradeMoney, int sellMoney, float attackRange, EBuiltPanelShowDir showDir)
     {
         IsShowUpGradePanel = true;
-        Vector2 uiPos = WorldPosToUIPos(createPos);
-        upGradePanel.Show(uiPos,icon, upGradeMoney, sellMoney, attackRange, showDir);
+        upGradePanel.cellWorldPos = cellWorldPos;
+        Vector2 uiPos = WorldPosToUIPos(cellWorldPos);
+        upGradePanel.Show(uiPos, icon, upGradeMoney, sellMoney, attackRange, showDir);
     }
     
     

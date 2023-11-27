@@ -5,5 +5,5 @@ using UnityEngine;
 public class CreateTowerArgsBogy
 {
     public int towerID;
-    public Vector3 createWorldPos;
+    public Vector3 cellWorldPos;
 }

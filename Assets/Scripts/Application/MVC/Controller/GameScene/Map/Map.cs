@@ -71,12 +71,8 @@ public class Map : MonoBehaviour
             EditorCheckMouseEvent();
             return;
         }
-
-        // 非编辑器下且
-        if (!GameManager.Instance.Pause)
-        {
-            CheckMouseEvent();
-        }
+        
+        CheckMouseEvent();
     }
 
     #region 编辑器相关
@@ -251,7 +247,7 @@ public class Map : MonoBehaviour
 
     #endregion
 
-    #region 游戏相关
+    #region 游戏相关方法
 
     /// <summary>
     /// 初始化地图
@@ -270,7 +266,7 @@ public class Map : MonoBehaviour
         // 设置路径背景
         roadSpriteRenderer.sprite = Resources.Load<Sprite>(nowMapData.roadSpritePath);
     }
-
+    
     /// <summary>
     /// 用地图数据刷新格子数据
     /// </summary>
@@ -289,7 +285,7 @@ public class Map : MonoBehaviour
     private void CheckMouseEvent()
     {
         // 左键打开升级或者建造面板
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && GameManager.Instance.allowClickCell)
         {
             Vector3 mouseWorldPos = Camera.main.ViewportToWorldPoint(Camera.main.ScreenToViewportPoint(Input.mousePosition));
             Cell cell = GetCell(mouseWorldPos);
@@ -334,17 +330,21 @@ public class Map : MonoBehaviour
                 else
                     // 显示创建塔面板
                     ShowCreatePanel(GetCellCenterPos(cell), showDir);
+
+                // 面板打开禁止监测格子
+                GameManager.Instance.allowClickCell = false;
             }
         }
         else if (Input.GetMouseButtonDown(1))
         {
             // 右键关闭建造面板
             GameFacade.Instance.SendNotification(NotificationName.HIDE_BUILTPANEL);
+            GameManager.Instance.allowClickCell = true;
         }
     }
 
     /// <summary>
-    /// 升级塔
+    /// 显示升级塔面板
     /// </summary>
     private void ShowUpGradePanel(BaseTower tower, Vector3 createPos, EBuiltPanelShowDir showDir)
     {
@@ -358,18 +358,22 @@ public class Map : MonoBehaviour
         {
             // 最大等级
             body.icon = proxy?.GetSprite("Atlas/BuiltPanelAtlas", "Btn_ReachHighestLevel");
-        }else if (GameManager.Instance.money >= towerData.prices[tower.level])
+        }
+        else if (GameManager.Instance.money >= towerData.prices[tower.level])
         {
             // 够钱升级
             body.icon = proxy?.GetSprite("Atlas/BuiltPanelAtlas", "Btn_CanUpLevel");
+            // 取下一级的价格
+            body.upGradeMoney = towerData.prices[tower.level + 1];
         }
         else
         {
             // 不够钱升级
             body.icon = proxy?.GetSprite("Atlas/BuiltPanelAtlas", "Btn_CantUpLevel");
+            body.upGradeMoney = towerData.prices[tower.level + 1];
         }
-
-        body.upGradeMoney = towerData.prices[tower.level];
+        
+        body.createPos = createPos;
         body.sellMoney = towerData.sellPrices[tower.level];
         body.attackRange = towerData.attackRange;
         body.showDir = showDir;
@@ -379,7 +383,7 @@ public class Map : MonoBehaviour
     }
 
     /// <summary>
-    /// 创建塔
+    /// 显示创建塔面板
     /// </summary>
     private void ShowCreatePanel(Vector3 createPos, EBuiltPanelShowDir showDir)
     {

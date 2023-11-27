@@ -75,7 +75,7 @@ public class StartGameCommand : SimpleCommand
     public override void Execute(INotification notification)
     {
         base.Execute(notification);
-        GameManager.Instance.Pause = false;
+        GameManager.Instance.GameStart();
         // 开始出怪
         GameManager.Instance.EventCenter.TriggerEvent(NotificationName.START_SPAWN);
     }
@@ -143,4 +143,16 @@ public class ContinueGameCommand : SimpleCommand
         base.Execute(notification);
         GameManager.Instance.GameContinue();
     }
-} 
+}
+
+/// <summary>
+/// 允许点击格子
+/// </summary>
+public class AllowClickCellCommand : SimpleCommand
+{
+    public override void Execute(INotification notification)
+    {
+        base.Execute(notification);
+        GameManager.Instance.allowClickCell = (bool)notification.Body;
+    }
+}

@@ -29,13 +29,54 @@ public class Spawner : MonoBehaviour
         GameManager.Instance.EventCenter.AddEventListener(NotificationName.GAME_OVER, StopSpawn); // 监听萝卜死亡停止出怪
         GameManager.Instance.EventCenter.AddEventListener(NotificationName.MONSTER_DEAD, CheckMonstersSurvival); // 检查怪物存活情况
     }
-
+    
+    /// <summary>
+    /// 升级塔
+    /// </summary>
+    public void UpGradeTower(Vector3 cellWorldPos)
+    {
+        BaseTower tower = Map.GetCell(cellWorldPos).tower as BaseTower;
+        // 最大等级直接返回
+        if (tower.level == 2)
+        {
+            return;
+        }
+        
+        tower.UpGrade();
+        // 扣钱
+        GameManager.Instance.money -= tower.data.prices[tower.level];
+        
+        // 关闭建造面板
+        GameFacade.Instance.SendNotification(NotificationName.HIDE_BUILTPANEL);
+        GameFacade.Instance.SendNotification(NotificationName.ALLOW_CLICKCELL, true);
+    }
+    
+    /// <summary>
+    /// 出售塔
+    /// </summary>
+    public void SellTower(Vector3 cellWorldPos)
+    {
+        Cell cell = Map.GetCell(cellWorldPos);
+        BaseTower tower = cell.tower as BaseTower;
+        
+        // 加钱
+        GameManager.Instance.money += tower.data.sellPrices[tower.level];
+        // 回收对象
+        tower.OnPush();
+        // 清空格子
+        cell.tower = null;
+        
+        // 关闭建造面板
+        GameFacade.Instance.SendNotification(NotificationName.HIDE_BUILTPANEL);
+        GameFacade.Instance.SendNotification(NotificationName.ALLOW_CLICKCELL, true);
+    }
+    
     /// <summary>
     /// 创建塔对象
     /// </summary>
     /// <param name="towerID">塔id</param>
-    /// <param name="createWorldPos">创建的位置世界坐标</param>
-    public void CreateTowerObject(int towerID, Vector3 createWorldPos)
+    /// <param name="cellWorldPos">创建的位置世界坐标</param>
+    public void CreateTowerObject(int towerID, Vector3 cellWorldPos)
     {
         TowerData towerData = GameManager.Instance.towersData[towerID];
         
@@ -44,16 +85,18 @@ public class Spawner : MonoBehaviour
         {
             BaseTower tower = GameManager.Instance.PoolManager.GetObject(towerData.prefabsPath).GetComponent<BaseTower>();
             tower.OnGet();
-            tower.transform.position = createWorldPos;
+            tower.transform.position = cellWorldPos;
             
             // 扣钱
             GameManager.Instance.money -= towerData.prices[0];
+            // 记录该格子已经存在塔
+            Map.GetCell(cellWorldPos).tower = tower;
+            
             // 关闭建造面板
             GameFacade.Instance.SendNotification(NotificationName.HIDE_BUILTPANEL);
-            // 记录该格子已经存在塔
-            Map.GetCell(createWorldPos).tower = tower;
+            // 建造成功允许检测格子
+            GameFacade.Instance.SendNotification(NotificationName.ALLOW_CLICKCELL, true);
         }
-        
     }
     
     /// <summary>
