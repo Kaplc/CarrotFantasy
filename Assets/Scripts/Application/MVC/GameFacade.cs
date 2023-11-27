@@ -37,6 +37,8 @@ public class GameFacade : Facade
         
         // SpawnerController
         RegisterCommand(NotificationName.CREATE_TOWER, () => new CreateTowerCommand());
+        
+        RegisterCommand(NotificationName.LOAD_ATLAS, ()=> new LoadAtlasCommand());
     }
 
     protected override void InitializeView()
@@ -61,5 +63,6 @@ public class GameFacade : Facade
         base.InitializeModel();
         
         RegisterProxy(new GameDataProxy());
+        RegisterProxy(new UIDataProxy());
     }
 }

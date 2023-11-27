@@ -64,6 +64,8 @@ public class NotificationName
     public const string LOADED_MONSTERDATA = "LoadedMonsterData"; // 加载怪物数据
     public const string LOADED_PLAYERDATA = "LoadedPlayerData"; // 加载完成玩家数据
     public const string LOADED_MUSICSETTINGDATA = "LoadedMusicSettingData"; // 加载完成音乐设置数据
+    public const string LOAD_ATLAS = "LoadAtlas"; // 加载图集
+    public const string LOADED_ATLAS = "LoadedAtlas"; // 加载完成图集
 
     #endregion
 }

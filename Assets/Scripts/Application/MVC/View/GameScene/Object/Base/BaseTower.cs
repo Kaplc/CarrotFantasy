@@ -10,6 +10,7 @@ public abstract class BaseTower : MonoBehaviour, IPoolObject
     public int ID => data.id;
     public int Atk => data.atk;
     public int RotaSpeed => data.rotaSpeed;
+    public int level;
 
     public abstract void Attack();
 

@@ -16,9 +16,37 @@ public enum EBuiltPanelShowDir
 
 public class BuiltPanel : BasePanel
 {
+    private bool showCreatePanel;
+    private bool showUpGradePanel;
     public CreatePanel createPanel; // 创建面板
-    public GameObject upGradePanel; // 升级面板
-
+    public UpGradePanel upGradePanel; // 升级面板
+    
+    public bool IsShowCreatePanel
+    {
+        get => showCreatePanel;
+        set
+        {
+            showCreatePanel = value;
+            if (value)
+            {
+                // 创建面板出现升级面板就隐藏
+                upGradePanel.gameObject.SetActive(false);  
+            }
+        }
+    }
+    
+    public bool IsShowUpGradePanel
+    {
+        get => showUpGradePanel;
+        set
+        {
+            showUpGradePanel = value;
+            if (value)
+            {
+                createPanel.gameObject.SetActive(false);  
+            }
+        }
+    }
 
     protected override void Init()
     {
@@ -43,14 +71,16 @@ public class BuiltPanel : BasePanel
     /// <param name="showDir">显示位置</param>
     public void ShowCreatePanel(Vector3 createPos, Dictionary<int, Sprite> iconsDic, EBuiltPanelShowDir showDir)
     {
-        createPanel.gameObject.SetActive(true);
+        IsShowCreatePanel = true;
         Vector2 uiPos = WorldPosToUIPos(createPos);
         createPanel.Show(uiPos, createPos, iconsDic, showDir);
     }
 
-    public void ShowUpGradePanel()
+    public void ShowUpGradePanel(Vector3 createPos, Sprite icon, int upGradeMoney, int sellMoney, float attackRange, EBuiltPanelShowDir showDir)
     {
-        
+        IsShowUpGradePanel = true;
+        Vector2 uiPos = WorldPosToUIPos(createPos);
+        upGradePanel.Show(uiPos,icon, upGradeMoney, sellMoney, attackRange, showDir);
     }
     
     

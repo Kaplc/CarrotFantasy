@@ -42,9 +42,9 @@ public class Map : MonoBehaviour
     public static List<Cell> pathList = new List<Cell>(); // 所有路径拐点
 
     #region 编辑器相关字段
-    
+
     public MapData nowEditorMapData; // 当前编辑地图数据
-    
+
     public bool drawGizmos; // 开启绘制
     [HideInInspector] public bool drawTowerPos;
     [HideInInspector] public bool drawPath;
@@ -52,7 +52,6 @@ public class Map : MonoBehaviour
     #endregion
 
     #region 游戏相关字段
-
 
     [HideInInspector] public MapData nowMapData; // 当前游戏的关卡地图信息
 
@@ -283,7 +282,7 @@ public class Map : MonoBehaviour
             GetCell(nowMapData.towerList[i].X, nowMapData.towerList[i].Y).IsTowerPos = true;
         }
     }
-    
+
     /// <summary>
     /// 开始游戏时鼠标点击事件
     /// </summary>
@@ -324,19 +323,20 @@ public class Map : MonoBehaviour
                 {
                     showDir = EBuiltPanelShowDir.Up;
                 }
-                
+
                 // 在显示下一次面板前先上次旧面板
                 GameFacade.Instance.SendNotification(NotificationName.HIDE_BUILTPANEL);
-                
+
                 // 判断格子是否存在塔
                 if (cell.tower as BaseTower)
                     // 显示升级塔面板
-                    ShowUpGradePanel();
+                    ShowUpGradePanel(cell.tower as BaseTower, GetCellCenterPos(cell), showDir);
                 else
                     // 显示创建塔面板
                     ShowCreatePanel(GetCellCenterPos(cell), showDir);
             }
-        }else if (Input.GetMouseButtonDown(1))
+        }
+        else if (Input.GetMouseButtonDown(1))
         {
             // 右键关闭建造面板
             GameFacade.Instance.SendNotification(NotificationName.HIDE_BUILTPANEL);
@@ -346,10 +346,36 @@ public class Map : MonoBehaviour
     /// <summary>
     /// 升级塔
     /// </summary>
-    private void ShowUpGradePanel()
+    private void ShowUpGradePanel(BaseTower tower, Vector3 createPos, EBuiltPanelShowDir showDir)
     {
+        TowerData towerData = tower.data;
+
+        UpGradeTowerArgsBody body = new UpGradeTowerArgsBody();
+
+        UIDataProxy proxy = GameFacade.Instance.RetrieveProxy("UIDataProxy") as UIDataProxy;
+        // 根据当前塔等级选择升级Icon和卖出Icon
+        if (tower.level == 2)
+        {
+            // 最大等级
+            body.icon = proxy?.GetSprite("Atlas/BuiltPanelAtlas", "Btn_ReachHighestLevel");
+        }else if (GameManager.Instance.money >= towerData.prices[tower.level])
+        {
+            // 够钱升级
+            body.icon = proxy?.GetSprite("Atlas/BuiltPanelAtlas", "Btn_CanUpLevel");
+        }
+        else
+        {
+            // 不够钱升级
+            body.icon = proxy?.GetSprite("Atlas/BuiltPanelAtlas", "Btn_CantUpLevel");
+        }
+
+        body.upGradeMoney = towerData.prices[tower.level];
+        body.sellMoney = towerData.sellPrices[tower.level];
+        body.attackRange = towerData.attackRange;
+        body.showDir = showDir;
+
         // 显示升级面板
-        // GameFacade.Instance.SendNotification(NotificationName.SHOW_UPGRADEPANEL);
+        GameFacade.Instance.SendNotification(NotificationName.SHOW_UPGRADEPANEL, body);
     }
 
     /// <summary>
@@ -367,15 +393,15 @@ public class Map : MonoBehaviour
             if (GameManager.Instance.money >= towerData.prices[0])
             {
                 // 普通图标
-                iconsDic.Add(towerData.id, towerData.icons[0]);
+                iconsDic.Add(towerData.id, towerData.icons);
             }
             else
             {
                 // 灰色图标
-                iconsDic.Add(towerData.id, towerData.greyIcons[0]);
+                iconsDic.Add(towerData.id, towerData.greyIcons);
             }
         }
-        
+
         // 不存在显示创建塔面板
         GameFacade.Instance.SendNotification(NotificationName.SHOW_CREATEPANEL, new CreatePanelArgsBody()
         {
