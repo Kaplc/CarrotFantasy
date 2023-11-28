@@ -11,9 +11,10 @@ public abstract class BaseTower : MonoBehaviour, IPoolObject
     public int Atk => data.atk;
     public int RotaSpeed => data.rotaSpeed;
     public int level;
-
+    
     public Animator animator;
     public List<RuntimeAnimatorController> controllers;
+    public Monster target;
 
     public abstract void Attack();
     

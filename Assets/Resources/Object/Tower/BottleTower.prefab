@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1315073423192171977}
   - component: {fileID: 408073105459271751}
   m_Layer: 0
-  m_Name: TowerBottle0
+  m_Name: Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27,7 +27,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.025, y: 0.032, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 5134161121861542705}
   m_Father: {fileID: 2850226180809011501}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -184,6 +185,9 @@ MonoBehaviour:
   - {fileID: 9100000, guid: 00c9b508a164fb74e9e1a02879d404bd, type: 2}
   - {fileID: 22100000, guid: fbf66b2b983c7d243bb05f14b4ecc239, type: 2}
   - {fileID: 22100000, guid: 0cd260a038c9dc744a1e711286247bea, type: 2}
+  target: {fileID: 0}
+  weapon: {fileID: 1315073423192171977}
+  firePos: {fileID: 5134161121861542705}
 --- !u!95 &8049761517242303395
 Animator:
   serializedVersion: 3
@@ -203,3 +207,33 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &8945184341711045469
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5134161121861542705}
+  m_Layer: 0
+  m_Name: FirePos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5134161121861542705
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8945184341711045469}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.292, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1315073423192171977}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

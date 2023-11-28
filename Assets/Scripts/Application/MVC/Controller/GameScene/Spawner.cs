@@ -41,11 +41,14 @@ public class Spawner : MonoBehaviour
         {
             return;
         }
-        
-        tower.UpGrade();
+        // 够钱才升级
+        if (GameManager.Instance.money < tower.data.prices[tower.level + 1])
+        {
+            return;
+        }
         // 扣钱
-        GameManager.Instance.money -= tower.data.prices[tower.level];
-        
+        GameManager.Instance.money -= tower.data.prices[tower.level + 1];
+        tower.UpGrade();
         // 关闭建造面板
         GameFacade.Instance.SendNotification(NotificationName.HIDE_BUILTPANEL);
         GameFacade.Instance.SendNotification(NotificationName.ALLOW_CLICKCELL, true);
@@ -220,5 +223,7 @@ public class Spawner : MonoBehaviour
                 monsters[i].OnPush();
             }
         }
+        
+        monsters.Clear();
     }
 }

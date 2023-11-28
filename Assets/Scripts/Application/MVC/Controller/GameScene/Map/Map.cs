@@ -359,7 +359,7 @@ public class Map : MonoBehaviour
             // 最大等级
             body.icon = proxy?.GetSprite("Atlas/BuiltPanelAtlas", "Btn_ReachHighestLevel");
         }
-        else if (GameManager.Instance.money >= towerData.prices[tower.level])
+        else if (GameManager.Instance.money >= towerData.prices[tower.level + 1])
         {
             // 够钱升级
             body.icon = proxy?.GetSprite("Atlas/BuiltPanelAtlas", "Btn_CanUpLevel");
