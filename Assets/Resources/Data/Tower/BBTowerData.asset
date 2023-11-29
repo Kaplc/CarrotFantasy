@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 758f0040af967cc4b8dc9ab9395507fc, type: 3}
+  m_Name: BBTowerData
+  m_EditorClassIdentifier: 
+  id: 1
+  atk: 2
+  atkCd: 0
+  rotaSpeed: 101
+  prefabsPath: Object/Tower/BBTower/BBTower
+  attackRange: 0
+  bulletsPrefabsPath: []
+  prices: 000000000000000000000000
+  sellPrices: 000000000000000000000000
+  icons: {fileID: 21300000, guid: ad07072d0f75e584da5c5fec72645385, type: 3}
+  greyIcons: {fileID: 21300000, guid: 3afa3941870a73c4dbac2b865565332a, type: 3}

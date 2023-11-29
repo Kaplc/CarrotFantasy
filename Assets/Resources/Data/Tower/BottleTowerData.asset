@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 758f0040af967cc4b8dc9ab9395507fc, type: 3}
+  m_Name: BottleTowerData
+  m_EditorClassIdentifier: 
+  id: 0
+  atk: 1
+  atkCd: 0
+  rotaSpeed: 10
+  prefabsPath: Object/Tower/BottleTower/BottleTower
+  attackRange: 4
+  bulletsPrefabsPath:
+  - Object/Tower/BottleTower/Bullet/0
+  - Object/Tower/BottleTower/Bullet/1
+  - Object/Tower/BottleTower/Bullet/2
+  prices: 64000000b400000004010000
+  sellPrices: 50000000e0000000b0010000
+  icons: {fileID: 21300000, guid: 0346e09d7d1d10f43b62d65b776fd707, type: 3}
+  greyIcons: {fileID: 21300000, guid: dc1c33297ed3a344798f767f911d0ca8, type: 3}
