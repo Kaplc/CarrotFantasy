@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using PureMVC.Patterns.Proxy;
 using UnityEngine;
 
@@ -75,9 +76,9 @@ public class GameDataProxy : Proxy
         levelData.mapData = GameManager.Instance.BinaryManager.Load<MapData>(DataPath.MAPDATA_PATH + $"Level{levelID}MapData.md");
         levelsData.Add(levelID, levelData);
         // 加载关卡的所有怪物信息
-        LoadMonstersData(levelData.monstersID);
+        LoadMonstersData();
         // 加载获该关卡所有塔数据
-        LoadTowersData(levelData.towersID);
+        LoadTowersData();
         
         // 带出指定levelId的关卡数据和怪物数据
         SendNotification(NotificationName.LOADED_LEVELDATA, new LevelDataBody()
@@ -87,33 +88,35 @@ public class GameDataProxy : Proxy
             towersData = this.towersData
         });
     }
-    
+
     /// <summary>
     /// 加载该关卡所有怪物数据
     /// </summary>
-    /// <param name="monstersID"></param>
-    private void LoadMonstersData(int[] monstersID)
-    {   
-        for (int i = 0; i < monstersID.Length; i++)
+    private void LoadMonstersData()
+    {
+        MonsterData[] data = Resources.LoadAll<MonsterData>(DataPath.MONSTERDATA_PATH);
+        
+        for (int i = 0; i < data.Length; i++)
         {
-            if (!monstersData.ContainsKey(monstersID[i]))
+            if (!monstersData.ContainsKey(data[i].id))
             {
-                monstersData.Add(monstersID[i], Resources.Load<MonsterData>(DataPath.MONSTERDATA_PATH + $"Monster{monstersID[i]}Data"));
+                monstersData.Add(data[i].id, data[i]);
             }
         }
     }
-    
+
     /// <summary>
     /// 加载获该关卡所有塔数据
     /// </summary>
-    /// <param name="towersID"></param>
-    private void LoadTowersData(int[] towersID)
+    private void LoadTowersData()
     {
-        for (int i = 0; i < towersID.Length; i++)
+        TowerData[] data = Resources.LoadAll<TowerData>(DataPath.TOWERDATA_PATH);
+        
+        for (int i = 0; i < data.Length; i++)
         {
-            if (!towersData.ContainsKey(towersID[i]))
+            if (!towersData.ContainsKey(data[i].id))
             {
-                towersData.Add(towersID[i], Resources.Load<TowerData>(DataPath.TOWERDATA_PATH + $"Tower{towersID[i]}Data"));
+                towersData.Add(data[i].id, data[i]);
             }
         }
     }

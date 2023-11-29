@@ -179,6 +179,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: aab2e8cd34433054a981d09ecb22a4b3, type: 2}
+  bulletData: {fileID: 11400000, guid: e58d08622564d144e9b35ac91ea352b0, type: 2}
   level: 0
   animator: {fileID: 8049761517242303395}
   controllers:

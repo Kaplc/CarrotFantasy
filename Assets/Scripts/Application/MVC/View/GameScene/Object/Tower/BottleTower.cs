@@ -29,7 +29,16 @@ public class BottleTower : BaseTower
             {
                 target = null;
             }
+            
+            // 攻击
+            if (Time.time > lastAtkTime + AtkCd)
+            {
+                lastAtkTime = Time.time;
+                // 创建子弹
+                // GameManager.Instance.PoolManager.GetObject(bulletData.prefabsPath);
+            }
         }
+        
     }
 
     private void LookAtTarget()

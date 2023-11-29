@@ -8,8 +8,8 @@ using UnityEngine.Events;
 /// </summary>
 public interface IPoolObject
 {
-    void OnPush();
     void OnGet();
+    void OnPush();
 }
 
 public class PoolData

@@ -22,7 +22,6 @@ public class LoadGameCommand : SimpleCommand
             gameDataProxy?.LoadLevelData(GameManager.Instance.nowLevelId);
         });
     }
-    
 }
 
 /// <summary>
