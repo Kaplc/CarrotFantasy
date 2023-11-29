@@ -58,7 +58,7 @@ public class Carrot : BaseRole, IPoolObject
         // 萝卜死亡触发游戏结束
         GameManager.Instance.EventCenter.TriggerEvent(NotificationName.GAME_OVER);
         // 回收
-        OnPush();
+        GameManager.Instance.PoolManager.PushObject(gameObject);
     }
 
     public override void OnPush()
@@ -66,8 +66,7 @@ public class Carrot : BaseRole, IPoolObject
         // 移除监听
         GameManager.Instance.EventCenter.RemoveEventListener<int>(NotificationName.REACH_ENDPOINT, Wound);
         StopCoroutine(idleAnimaCoroutine);
-        // 回收
-        GameManager.Instance.PoolManager.PushObject(gameObject);
+        
     }
 
     public override void OnGet()

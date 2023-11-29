@@ -65,7 +65,7 @@ public class Spawner : MonoBehaviour
         // 加钱
         GameManager.Instance.money += tower.data.sellPrices[tower.level];
         // 回收对象
-        tower.OnPush();
+        GameManager.Instance.PoolManager.PushObject(tower.gameObject);
         // 清空格子
         cell.tower = null;
         
@@ -87,7 +87,7 @@ public class Spawner : MonoBehaviour
         if (GameManager.Instance.money >= towerData.prices[0])
         {
             BaseTower tower = GameManager.Instance.PoolManager.GetObject(towerData.prefabsPath).GetComponent<BaseTower>();
-            tower.OnGet();
+            // tower.OnGet();
             tower.transform.position = cellWorldPos;
             
             // 扣钱
@@ -108,7 +108,7 @@ public class Spawner : MonoBehaviour
     public void CreateCarrot()
     {
         carrot = GameManager.Instance.PoolManager.GetObject("Object/Carrot").GetComponent<Carrot>();
-        carrot.OnGet();
+        // carrot.OnGet();
         
         // 设置萝卜位置
         Cell lastPathCell = levelData.mapData.pathList[levelData.mapData.pathList.Count - 1];
@@ -188,7 +188,7 @@ public class Spawner : MonoBehaviour
                 string prefabsPath = GameManager.Instance.monstersData[roundData.monsterId].prefabsPath;
                 // 缓存池取出
                 Monster monster = GameManager.Instance.PoolManager.GetObject(prefabsPath).GetComponent<Monster>();
-                monster.OnGet(); // 取出时执行还原方法
+                // monster.OnGet(); // 取出时执行还原方法
                 // 保存出生的怪物
                 monsters.Add(monster);
                 // 记录时间
@@ -220,7 +220,7 @@ public class Spawner : MonoBehaviour
         {
             if (monsters[i].isDead == false)
             {
-                monsters[i].OnPush();
+                GameManager.Instance.PoolManager.PushObject(monsters[i].gameObject);
             }
         }
         

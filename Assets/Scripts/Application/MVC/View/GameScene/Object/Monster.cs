@@ -79,17 +79,13 @@ public class Monster : BaseRole, IPoolObject
         // 触发怪物死亡
         GameManager.Instance.EventCenter.TriggerEvent(NotificationName.MONSTER_DEAD);
         // 回收
-        OnPush();
+        GameManager.Instance.PoolManager.PushObject(gameObject);
     }
 
     public override void OnPush()
     {
         // 清空数据
         nextCell = null;
-        
-        
-        // 回收
-        GameManager.Instance.PoolManager.PushObject(gameObject);
     }
     
     /// <summary>

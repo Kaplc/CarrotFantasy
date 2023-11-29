@@ -34,8 +34,11 @@ public class BottleTower : BaseTower
 
     private void LookAtTarget()
     {
+        // 向量
         Vector3 dir = target.transform.position - weapon.position;
+        // 计算x轴的角度
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        // 
         weapon.rotation = Quaternion.Slerp(weapon.rotation, Quaternion.Euler(0f, 0f, angle), Time.deltaTime * data.rotaSpeed);
     }
     
@@ -56,6 +59,5 @@ public class BottleTower : BaseTower
         animator.runtimeAnimatorController = controllers[0];
         level = 0;
         
-        GameManager.Instance.PoolManager.PushObject(gameObject);
     }
 }

@@ -38,6 +38,12 @@ public class PoolData
         // 从list移除
         objectList.RemoveAt(0);
         
+        // 调用OnGet方法
+        if (targetObject.TryGetComponent<IPoolObject>(out var poolObjectComponent))
+        {
+            poolObjectComponent.OnGet();
+        }
+        
         targetObject.SetActive(true);
         return targetObject;
     }
@@ -47,6 +53,12 @@ public class PoolData
         objectList.Add(gameObject);
         // 设置为list的子对象
         gameObject.transform.SetParent(father.transform);
+        
+        // 调用OnPush方法
+        if (gameObject.TryGetComponent<IPoolObject>(out var poolObjectComponent))
+        {
+            poolObjectComponent.OnPush();
+        }
         // 失活
         gameObject.SetActive(false);
     }
@@ -77,7 +89,7 @@ public class PoolManager : BaseSingleton<PoolManager>
     /// <param name="fullName">资源名</param>
     /// <param name="asyncHandleFun">异步加载时的执行函数</param>
     /// <returns></returns>
-    public GameObject GetObject(string fullName, UnityAction<GameObject> asyncHandleFun = null)
+    public GameObject GetObject(string fullName, UnityAction<GameObject> asyncHandleFunc = null)
     {
         // 初始化缓存池
         if (!poolObject) Init();
@@ -94,11 +106,18 @@ public class PoolManager : BaseSingleton<PoolManager>
             return poolDic[fullName].Get();
         }
 
-        // 异步加载时的执行函数为空时执行同步加载
-        if (asyncHandleFun == null)
+        // 同步加载
+        if (asyncHandleFunc == null)
         {
             GameObject gameObject = GameObject.Instantiate(ResourcesFrameWork.Instance.Load<GameObject>(fullName));
             gameObject.name = fullName;
+            
+            // 调用OnGet方法
+            if (gameObject.TryGetComponent<IPoolObject>(out var poolObjectComponent))
+            {
+                poolObjectComponent.OnGet();
+            }
+            
             return gameObject;
         }
 
@@ -107,7 +126,7 @@ public class PoolManager : BaseSingleton<PoolManager>
         {
             GameObject gameObject = GameObject.Instantiate(resObj);
             gameObject.name = fullName;
-            asyncHandleFun.Invoke(gameObject);
+            asyncHandleFunc.Invoke(gameObject);
         });
 
 
