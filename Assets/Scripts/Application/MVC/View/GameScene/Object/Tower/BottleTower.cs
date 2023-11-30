@@ -8,8 +8,10 @@ public class BottleTower : BaseTower
     public Transform weapon;
     public Transform firePos;
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
+        
         // 查找目标
         if (target is null)
         {
