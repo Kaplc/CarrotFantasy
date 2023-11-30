@@ -7,26 +7,15 @@ public class BottleTower : BaseTower
 {
     public Transform weapon;
     public Transform firePos;
-    
+
     private void Update()
     {
         // 查找目标
-        for (int i = 0; i < GameManager.Instance.spawner.monsters.Count; i++)
+        if (target is null)
         {
-            Monster monster = GameManager.Instance.spawner.monsters[i];
-            if (Vector3.Distance(transform.position, monster.transform.position) < data.attackRange && !target)
-            {
-                if (!monster.isDead)
-                {
-                    target = monster;
-                }
-                else
-                {
-                    target = null;
-                }
-            }
+            FindTargets();
         }
-        
+
         if (target)
         {
             // 看向目标
@@ -37,7 +26,7 @@ public class BottleTower : BaseTower
                 animator.SetBool("Attack", false);
                 target = null;
             }
-            
+
             // 攻击
             if (Time.time > lastAtkTime + AtkCd)
             {
@@ -45,12 +34,13 @@ public class BottleTower : BaseTower
                 // Attack();
                 animator.SetBool("Attack", true);
             }
-            
+
             // 打死怪物
             if (target != null && target.isDead)
             {
                 animator.SetBool("Attack", false);
                 target = null;
+                FindTargets();
             }
         }
     }
@@ -64,7 +54,7 @@ public class BottleTower : BaseTower
         // 
         weapon.rotation = Quaternion.Slerp(weapon.rotation, Quaternion.Euler(0f, 0f, angle), Time.deltaTime * data.rotaSpeed);
     }
-    
+
 
     public override void Attack()
     {
@@ -78,7 +68,6 @@ public class BottleTower : BaseTower
 
     public override void OnGet()
     {
-        
     }
 
     public override void OnPush()
@@ -86,6 +75,5 @@ public class BottleTower : BaseTower
         // 复原
         animator.runtimeAnimatorController = controllers[0];
         level = 0;
-        
     }
 }

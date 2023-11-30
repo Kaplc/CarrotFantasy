@@ -16,10 +16,33 @@ public abstract class BaseTower : MonoBehaviour, IPoolObject
     
     public Animator animator;
     public List<RuntimeAnimatorController> controllers;
-    public Monster target;
+    public Monster target; // 当前目标
 
-    public abstract void Attack();
+    protected void FindTargets()
+    {
+        float closestDistance = 0f;
+        // 查找目标
+        for (int i = 0; i < GameManager.Instance.spawner.monsters.Count; i++)
+        {
+            Monster monster = GameManager.Instance.spawner.monsters[i];
+            float distance = Vector3.Distance(transform.position, monster.transform.position);
+            
+            // 处于攻击范围
+            if (distance < data.attackRange && !monster.isDead)
+            {
+                if (closestDistance == 0f)closestDistance = distance;
+
+                if (distance <= closestDistance)
+                {
+                    closestDistance = distance;
+                    target = monster;
+                }
+            }
+        }
+    }
     
+    public abstract void Attack();
+
     /// <summary>
     /// 炮塔升级
     /// </summary>
