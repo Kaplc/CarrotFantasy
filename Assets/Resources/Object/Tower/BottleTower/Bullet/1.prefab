@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4703361710266458}
-  - component: {fileID: 58555121122503032}
   - component: {fileID: 5699511893792454705}
+  - component: {fileID: 2454223738638031936}
   m_Layer: 0
   m_Name: 1
   m_TagString: Untagged
@@ -33,22 +33,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 90, z: 0}
---- !u!58 &58555121122503032
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1106724949481474}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.08
 --- !u!114 &5699511893792454705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61,8 +45,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2eb750255441f364e9db36607eae5f9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  atk: 0
+  active: 0
   data: {fileID: 11400000, guid: e58d08622564d144e9b35ac91ea352b0, type: 2}
   target: {fileID: 0}
+--- !u!95 &2454223738638031936
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1106724949481474}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 22100000, guid: 54418e09e4e3ca64db89291b63f2cab9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1290787149614536
 GameObject:
   m_ObjectHideFlags: 0
@@ -73,7 +78,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4461992349570250}
   - component: {fileID: 212862781940713690}
-  - component: {fileID: 95269060500699048}
   m_Layer: 0
   m_Name: Bullect
   m_TagString: Untagged
@@ -134,7 +138,8 @@ SpriteRenderer:
   m_SortingLayerID: 315469461
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: fe642573d26e6b34dae7221d04339a08, type: 3}
+  m_Sprite: {fileID: 5435966030520051972, guid: 584b50fa863f45141bb4709c93a3d559,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -145,22 +150,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &95269060500699048
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1290787149614536}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 21e0a7b73668d534d90022eb79e8907a, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0

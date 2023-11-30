@@ -12,11 +12,11 @@ public class BottleTowerBullet : BaseBullet
 
     public override void OnPush()
     {
-        
+        base.OnPush();
     }
 
     public override void OnGet()
     {
-        
+        base.OnGet();
     }
 }

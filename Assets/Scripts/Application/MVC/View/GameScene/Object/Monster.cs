@@ -27,14 +27,19 @@ public class Monster : BaseRole, IPoolObject
             {
                 hp = 0;
                 isDead = true;
-                Dead();
+                // 播放死亡动画
+                animator.SetBool("Dead", true);
             }
         }
     }
 
     #endregion
-    
-    
+
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
+
     private void Update()
     {
         Move();
@@ -61,7 +66,7 @@ public class Monster : BaseRole, IPoolObject
 
     private void Move()
     {
-        if(GameManager.Instance.Pause) return;
+        if(GameManager.Instance.Pause || isDead) return;
         
         Vector3 dir = Map.GetCellCenterPos(nextCell) - transform.position;
         dir.Normalize();
@@ -100,6 +105,8 @@ public class Monster : BaseRole, IPoolObject
         pathIndex = 0;
         // 刷新血
         hp = data.maxHp;
+        // 还原动画
+        animator.SetBool("Dead", false);
         
         isDead = false;
     }

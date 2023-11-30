@@ -13,23 +13,8 @@ MonoBehaviour:
   m_Name: Level0Data
   m_EditorClassIdentifier: 
   levelId: 0
-  mapData:
-    mapBgSpritePath: Map/BigLevel0/BG0
-    roadSpritePath: Map/BigLevel0/Road1
-    pathList:
-    - tower: {fileID: 0}
-    - tower: {fileID: 0}
-    - tower: {fileID: 0}
-    - tower: {fileID: 0}
-    - tower: {fileID: 0}
-    - tower: {fileID: 0}
-    - tower: {fileID: 0}
-    - tower: {fileID: 0}
-    towerList:
-    - tower: {fileID: 0}
-    - tower: {fileID: 0}
-    - tower: {fileID: 0}
-    - tower: {fileID: 0}
+  money: 500
+  towersID: 00000000
   monstersID: 00000000
   intervalTimePerWave: 5
   roundDataList:
@@ -39,4 +24,8 @@ MonoBehaviour:
   - monsterId: 0
     waveCount: 1
     intervalTimeEach: 1
-  towersID: 0000000001000000
+  mapData:
+    mapBgSpritePath: Map/BigLevel0/BG0
+    roadSpritePath: Map/BigLevel0/Road1
+    pathList: []
+    towerList: []

@@ -69,6 +69,8 @@ public class GameManager : BaseMonoSingleton<GameManager>
         spawner.CreateCarrot();
         // 创建起点路牌
         spawner.CreateStartBrand();
+        // 刷新钱
+        money = nowLevelData.money;
         // 注册事件
         EventCenter.AddEventListener(NotificationName.JUDGING_WIN, JudgingWin);
         EventCenter.AddEventListener(NotificationName.GAME_OVER, GameOver);

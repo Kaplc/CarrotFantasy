@@ -50,3 +50,6 @@ TagManager:
   - name: Role
     uniqueID: 315469461
     locked: 0
+  - name: Bullet
+    uniqueID: 1345092691
+    locked: 0

@@ -12,6 +12,7 @@ public class WinPanel : BasePanel
     {
         btnContinue.onClick.AddListener(() =>
         {
+            PanelMediator.SendNotification(NotificationName.EXIT_GAME);
             UIManager.Instance.Hide<WinPanel>(false);
         });
         btnSelect.onClick.AddListener(() =>

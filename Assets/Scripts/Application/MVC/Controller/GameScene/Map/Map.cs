@@ -389,10 +389,11 @@ public class Map : MonoBehaviour
     {
         Dictionary<int, Sprite> iconsDic = new Dictionary<int, Sprite>();
 
+        int[] towersID = GameManager.Instance.nowLevelData.towersID;
         // 获取当前关卡可创建塔的所有Icons
-        for (int i = 0; i < GameManager.Instance.towersData.Count; i++)
+        for (int i = 0; i < towersID.Length; i++)
         {
-            TowerData towerData = GameManager.Instance.towersData[i];
+            TowerData towerData = GameManager.Instance.towersData[towersID[i]];
             // 判断是否够钱, 获取0级的Icon
             if (GameManager.Instance.money >= towerData.prices[0])
             {
