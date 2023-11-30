@@ -16,7 +16,14 @@ public class BottleTower : BaseTower
             Monster monster = GameManager.Instance.spawner.monsters[i];
             if (Vector3.Distance(transform.position, monster.transform.position) < data.attackRange && !target)
             {
-                target = monster;
+                if (!monster.isDead)
+                {
+                    target = monster;
+                }
+                else
+                {
+                    target = null;
+                }
             }
         }
         
@@ -27,6 +34,7 @@ public class BottleTower : BaseTower
             // 大于攻击距离解除锁定
             if (Vector3.Distance(transform.position, target.transform.position) > data.attackRange)
             {
+                animator.SetBool("Attack", false);
                 target = null;
             }
             
@@ -34,11 +42,17 @@ public class BottleTower : BaseTower
             if (Time.time > lastAtkTime + AtkCd)
             {
                 lastAtkTime = Time.time;
-                // 创建子弹
-                // GameManager.Instance.PoolManager.GetObject(bulletData.prefabsPath);
+                // Attack();
+                animator.SetBool("Attack", true);
+            }
+            
+            // 打死怪物
+            if (target != null && target.isDead)
+            {
+                animator.SetBool("Attack", false);
+                target = null;
             }
         }
-        
     }
 
     private void LookAtTarget()
@@ -54,7 +68,12 @@ public class BottleTower : BaseTower
 
     public override void Attack()
     {
-        
+        if (!target) return;
+        // 创建子弹预设体并设置目标
+        BaseBullet bullet = GameManager.Instance.PoolManager.GetObject(data.bulletsPrefabsPath[level]).GetComponent<BaseBullet>();
+        bullet.transform.position = firePos.position;
+        bullet.target = target;
+        bullet.atk = Atk;
     }
 
     public override void OnGet()

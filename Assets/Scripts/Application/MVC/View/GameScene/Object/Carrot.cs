@@ -45,7 +45,7 @@ public class Carrot : BaseRole, IPoolObject
         }
     }
 
-    protected override void Wound(int woundHp)
+    public override void Wound(int woundHp)
     {
         Hp -= woundHp;
 

@@ -7,7 +7,7 @@ public abstract class BaseRole : MonoBehaviour, IPoolObject
 {
     public bool isDead;
     
-    protected abstract void Wound(int woundHp);
+    public abstract void Wound(int woundHp);
 
     protected abstract void Dead();
     

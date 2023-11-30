@@ -69,7 +69,7 @@ public class Monster : BaseRole, IPoolObject
         transform.Translate(dir * (Time.deltaTime * Speed));
     }
 
-    protected override void Wound(int woundHp)
+    public override void Wound(int woundHp)
     {
         Hp -= woundHp;
     }

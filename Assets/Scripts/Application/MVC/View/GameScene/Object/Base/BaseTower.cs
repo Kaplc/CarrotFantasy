@@ -8,7 +8,7 @@ public abstract class BaseTower : MonoBehaviour, IPoolObject
 {
     public TowerData data;
     public int ID => data.id;
-    public int Atk => data.atk;
+    public int Atk => data.atkList[level];
     public int RotaSpeed => data.rotaSpeed;
     public float lastAtkTime;
     public float AtkCd => data.atkCd;

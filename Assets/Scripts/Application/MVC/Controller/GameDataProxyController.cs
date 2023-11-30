@@ -34,9 +34,23 @@ public class LoadLevelDataCommand : SimpleCommand
 }
 
 /// <summary>
-/// 加载怪物数据
+/// 加载所有怪物数据
 /// </summary>
 public class LoadMonsterDataCommand : SimpleCommand
+{
+    public override void Execute(INotification notification)
+    {
+        base.Execute(notification);
+        
+        
+    }
+    
+}
+
+/// <summary>
+/// 加载所有塔数据
+/// </summary>
+public class LoadTowerDataCommand : SimpleCommand
 {
     public override void Execute(INotification notification)
     {

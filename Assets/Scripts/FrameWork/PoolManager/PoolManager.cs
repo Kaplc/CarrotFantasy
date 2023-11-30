@@ -38,13 +38,13 @@ public class PoolData
         // 从list移除
         objectList.RemoveAt(0);
         
+        targetObject.SetActive(true);
         // 调用OnGet方法
         if (targetObject.TryGetComponent<IPoolObject>(out var poolObjectComponent))
         {
             poolObjectComponent.OnGet();
         }
         
-        targetObject.SetActive(true);
         return targetObject;
     }
 
