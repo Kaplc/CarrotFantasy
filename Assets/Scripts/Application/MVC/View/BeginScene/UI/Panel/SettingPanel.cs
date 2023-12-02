@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class SettingPanel : BasePanel
 {
     public Button btnHome;
-    
+
     protected override void Init()
     {
         btnHome.onClick.AddListener(() =>
