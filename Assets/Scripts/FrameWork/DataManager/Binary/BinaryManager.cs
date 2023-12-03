@@ -131,12 +131,12 @@ public class BinaryManager: BaseSingleton<BinaryManager>
     /// <param name="fileName">文件名要加后缀</param>
     /// <typeparam name="T">返回的类类型</typeparam>
     /// <returns></returns>
-    public T Load<T>(string fileName) where T : class
+    public T Load<T>(string fileName) where T : class, new()
     {
         // 不存在该类的二进制文件返回默认值对象
         if (!File.Exists(BINARYFILE_PATH + fileName))
         {
-            return default;
+            return new T();
         }
 
         T obj;

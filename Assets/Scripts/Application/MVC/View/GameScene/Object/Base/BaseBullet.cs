@@ -39,6 +39,12 @@ public abstract class BaseBullet : MonoBehaviour, IPoolObject
         {
             transform.LookAt(target.transform);
             transform.Translate(transform.forward * (Time.deltaTime * data.speed), Space.World);
+            
+            // 目标死亡立刻回收
+            if (target.isDead)
+            {
+                GameManager.Instance.PoolManager.PushObject(gameObject);
+            }
         }
     }
     

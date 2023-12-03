@@ -37,7 +37,9 @@ public class BeginPanelMediator : Mediator
         {
             NotificationName.SHOW_BEGINPANEL,
             NotificationName.SHOW_HELPPANEL,
-            NotificationName.SHOW_SETTINGPANEL
+            NotificationName.SHOW_SETTINGPANEL,
+            NotificationName.LOADED_MUSICSETTINGDATA,
+            NotificationName.LOADED_STATISTICALDATA
         };
     }
 
@@ -68,8 +70,18 @@ public class BeginPanelMediator : Mediator
 
                 break;
             case NotificationName.SHOW_SETTINGPANEL:
+                // 给设置面板刷获取数据
+                SendNotification(NotificationName.LOAD_MUSICSETTINGDATA);
                 // 播放显示HelpPanel的动画
                 Panel.animator.SetBool("ShowSettingPanel", true);
+                break;
+            case NotificationName.LOADED_MUSICSETTINGDATA:
+                // 刷新音乐设置数据
+                Panel.settingPanel.UpdateMusicSetting(notification.Body as MusicSettingData);
+                break;
+            case NotificationName.LOADED_STATISTICALDATA:
+                // 刷新统计数据
+                
                 break;
         }
     }

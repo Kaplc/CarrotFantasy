@@ -23,8 +23,9 @@ public class GameFacade : Facade
         base.InitializeController();
         
         // 初始化通知
-        RegisterCommand(NotificationName.INIT, () => new InitGameControllerCommand());
-        RegisterCommand(NotificationName.INIT, () => new InitGameDataProxyCommand());
+        RegisterCommand(NotificationName.INIT, () => new InitCommand());
+        RegisterCommand(NotificationName.INIT_GAMEMANAGERCONTROLLER, () => new InitGameManagerControllerCommand());
+        RegisterCommand(NotificationName.INIT_GAMEDATAPROXY, () => new InitGameDataProxyCommand());
         
         RegisterCommand(NotificationName.INIT_END, () => new InitEndCommand());
         RegisterCommand(NotificationName.SELECT_LEVEL, () => new SelectLevelCommand());

@@ -6,16 +6,17 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
-public class InitGameControllerCommand : SimpleCommand
+public class InitGameManagerControllerCommand : SimpleCommand
 {
     public override void Execute(INotification notification)
     {
         base.Execute(notification);
         
         // 初始化GameController注册命令
+        GameFacade.Instance.RegisterCommand(NotificationName.LOADED_LEVELDATA, ()=> new AcceptDataCommand());
+
         GameFacade.Instance.RegisterCommand(NotificationName.LOAD_GAME, () => new LoadGameCommand());
         GameFacade.Instance.RegisterCommand(NotificationName.START_GAME, () => new StartGameCommand());
-        GameFacade.Instance.RegisterCommand(NotificationName.LOADED_LEVELDATA, ()=> new AcceptDataCommand());
         GameFacade.Instance.RegisterCommand(NotificationName.INIT_GAME, ()=> new InitGameCommand());
         GameFacade.Instance.RegisterCommand(NotificationName.EXIT_GAME, () => new ExitGameCommand());
         GameFacade.Instance.RegisterCommand(NotificationName.RESTART_GAME, ()=>new RestartGameCommand());

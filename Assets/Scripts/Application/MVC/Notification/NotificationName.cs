@@ -7,6 +7,8 @@ public class NotificationName
     #region 游戏进程相关
 
     public const string INIT = "Init"; // 游戏初始化
+    public const string INIT_GAMEMANAGERCONTROLLER = "InitGameManagerController";
+    public const string INIT_GAMEDATAPROXY = "InitGameDataProxy";
     public const string INIT_END = "InitEnd"; // 游戏初始化结束
 
     public const string LOAD_GAME = "LoadGame"; // 开始加载游戏
@@ -28,6 +30,9 @@ public class NotificationName
     
 
     #region 面板事件
+
+    public const string SHOW_INITPANEL = "ShowInitPanel"; // 初始化界面
+    public const string HIDE_INIPANEL = "HideInitPanel";
     
     public const string SHOW_SELECTBIGLEVELPANEL = "ShowSelectBigLevelPanel"; // 选择大关卡
     public const string SHOW_SELECTLEVELPANEL = "ShowSelectLevelPanel"; // 选择小关卡
@@ -69,6 +74,7 @@ public class NotificationName
     // 音乐设置
     public const string LOAD_MUSICSETTINGDATA = "LoadMusciSettingData";
     public const string LOADED_MUSICSETTINGDATA = "LoadedMusicSettingData";
+    public const string SAVE_MUSCISETTINGDATA = "SaveMusicSettingData";
     // 游戏进程数据
     public const string LOAD_PROCESSDATA = "LoadProcessData";
     public const string LOADED_PROCESSDATA = "LoadedProcessData";

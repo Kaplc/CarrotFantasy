@@ -5,10 +5,6 @@ using UnityEngine.UI;
 
 public class SettingPanel : BasePanel
 {
-    public bool showSelectPage;
-    public bool showDataPage;
-    public bool showMakerPage;
-    
     public Button btnHome;
     public Toggle tgSelect;
     public Toggle tgData;
@@ -17,6 +13,7 @@ public class SettingPanel : BasePanel
     public Image imgDataPage;
     public Image imgMakerPage;
     public DataPage dataPage;
+    public SelectPage selectPage;
 
     private bool ShowSelectPage
     {
@@ -61,8 +58,13 @@ public class SettingPanel : BasePanel
         tgData.onValueChanged.AddListener((isOn) => { ShowDataPage = isOn; });
 
         tgMaker.onValueChanged.AddListener((isOn) => { ShowMakerPage = isOn; });
-        
+
         // 默认是选择界面
         ShowSelectPage = true;
+    }
+
+    public void UpdateMusicSetting(MusicSettingData data)
+    {
+        selectPage.UpdateMusicSetting(data);
     }
 }

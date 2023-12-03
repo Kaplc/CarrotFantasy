@@ -10,12 +10,11 @@ public class InitCommand : SimpleCommand
     public override void Execute(INotification notification)
     {
         base.Execute(notification);
-        
-        // 初始化GameMangerController
-        GameFacade.Instance.RegisterCommand(NotificationName.INIT, () => new InitGameControllerCommand());
-        // 初始化GameDataProxy
-        GameFacade.Instance.RegisterCommand(NotificationName.INIT, () => new InitGameControllerCommand());
-        
+        SendNotification(NotificationName.SHOW_INITPANEL);
+        // 初始化Controller
+        SendNotification(NotificationName.INIT_GAMEMANAGERCONTROLLER);
+        SendNotification(NotificationName.INIT_GAMEDATAPROXY);
+
         SendNotification(NotificationName.INIT_END);
     }
 }

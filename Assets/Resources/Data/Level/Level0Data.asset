@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Level0Data
   m_EditorClassIdentifier: 
   levelId: 0
-  money: 500
+  money: 1500
   towersID: 00000000
   monstersID: 00000000
   intervalTimePerWave: 5
@@ -22,7 +22,7 @@ MonoBehaviour:
     waveCount: 5
     intervalTimeEach: 1
   - monsterId: 0
-    waveCount: 1
+    waveCount: 10
     intervalTimeEach: 1
   mapData:
     mapBgSpritePath: Map/BigLevel0/BG0

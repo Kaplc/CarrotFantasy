@@ -1365,13 +1365,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9fb804c535db3844a2cff24810cf045, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  txAdventure: {fileID: 0}
-  txHideLevel: {fileID: 0}
-  txBoss: {fileID: 0}
-  txMoney: {fileID: 0}
-  txMonster: {fileID: 0}
-  txBossCount: {fileID: 0}
-  txDestroyCount: {fileID: 0}
+  txAdventureMap: {fileID: 693510359207366255}
+  txHideMap: {fileID: 201173272210988165}
+  txBossMap: {fileID: 6453138195414300647}
+  txMoney: {fileID: 3030568320933838266}
+  txKillMonsterCount: {fileID: 6516387123279455729}
+  txKillBossCount: {fileID: 1108873486679571013}
+  txDestroyItemCount: {fileID: 6049097815017340231}
 --- !u!1 &3901008777019084290
 GameObject:
   m_ObjectHideFlags: 0
@@ -2518,6 +2518,7 @@ GameObject:
   - component: {fileID: 3218274827211833187}
   - component: {fileID: 8676287334224382222}
   - component: {fileID: 5269658518039393916}
+  - component: {fileID: 727364899554237250}
   m_Layer: 5
   m_Name: ImageSelectPage
   m_TagString: Untagged
@@ -2586,6 +2587,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &727364899554237250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6160366414793321495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 697dd33a89a740ebbc343271f6e92533, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tgMusic: {fileID: 8878845969932468014}
+  tgSound: {fileID: 3784637977009556798}
 --- !u!1 &6649235458712750513
 GameObject:
   m_ObjectHideFlags: 0
@@ -2725,9 +2740,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeSpeed: 3
-  showSelectPage: 0
-  showDataPage: 0
-  showMakerPage: 0
   btnHome: {fileID: 4182314574511597618}
   tgSelect: {fileID: 7359308263714737050}
   tgData: {fileID: 1634030257077008184}
@@ -2735,6 +2747,8 @@ MonoBehaviour:
   imgSelectPage: {fileID: 5269658518039393916}
   imgDataPage: {fileID: 9220202145677153492}
   imgMakerPage: {fileID: 8845471652681728603}
+  dataPage: {fileID: 6417574387675522777}
+  selectPage: {fileID: 727364899554237250}
 --- !u!1 &7048053366390626758
 GameObject:
   m_ObjectHideFlags: 0
