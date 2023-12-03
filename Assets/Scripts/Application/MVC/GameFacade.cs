@@ -22,20 +22,11 @@ public class GameFacade : Facade
     {
         base.InitializeController();
         
+        RegisterCommand(NotificationName.INIT, () => new InitGameControllerCommand());
+        
         RegisterCommand(NotificationName.INIT_END, () => new InitEndCommand());
         RegisterCommand(NotificationName.SELECT_LEVEL, () => new SelectLevelCommand());
-        
-        // GameManagerController
-        RegisterCommand(NotificationName.LOAD_GAME, () => new LoadGameCommand());
-        RegisterCommand(NotificationName.START_GAME, () => new StartGameCommand());
-        RegisterCommand(NotificationName.LOADED_LEVELDATA, ()=> new AcceptDataCommand());
-        RegisterCommand(NotificationName.INIT_GAME, ()=> new InitGameCommand());
-        RegisterCommand(NotificationName.EXIT_GAME, () => new ExitGameCommand());
-        RegisterCommand(NotificationName.RESTART_GAME, ()=>new RestartGameCommand());
-        RegisterCommand(NotificationName.PAUSE_GAME, ()=>new PauseGameCommand());
-        RegisterCommand(NotificationName.CONTINUE_GAME, ()=>new ContinueGameCommand());
-        RegisterCommand(NotificationName.ALLOW_CLICKCELL, () => new AllowClickCellCommand());
-        
+
         // SpawnerController
         RegisterCommand(NotificationName.CREATE_TOWER, () => new CreateTowerCommand());
         RegisterCommand(NotificationName.SELL_TOWER, () => new SellTowerCommand());

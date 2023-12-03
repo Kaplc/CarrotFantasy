@@ -84,6 +84,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4409799294024016412}
   - component: {fileID: 8878845969932468014}
+  - component: {fileID: 2049287704514674751}
   m_Layer: 5
   m_Name: ToggleMusic
   m_TagString: Untagged
@@ -159,6 +160,19 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_IsOn: 1
+--- !u!114 &2049287704514674751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 894546987509083487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e24aaae9c707bf243b9b1cb27e229961, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  imgBackGround: {fileID: 3314800082363378047}
 --- !u!1 &1115727643841085368
 GameObject:
   m_ObjectHideFlags: 0
@@ -171,7 +185,7 @@ GameObject:
   - component: {fileID: 6222701435697898796}
   - component: {fileID: 8845471652681728603}
   m_Layer: 5
-  m_Name: ImageBGMaker
+  m_Name: ImageMakerPage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -396,7 +410,7 @@ GameObject:
   - component: {fileID: 4154942318878638256}
   - component: {fileID: 693510359207366255}
   m_Layer: 5
-  m_Name: TextAdventure
+  m_Name: TextAdventureMap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -548,7 +562,7 @@ GameObject:
   - component: {fileID: 5664011715549923232}
   - component: {fileID: 6516387123279455729}
   m_Layer: 5
-  m_Name: Text (4)
+  m_Name: TextMonster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -849,7 +863,7 @@ GameObject:
   - component: {fileID: 5794411073655931922}
   - component: {fileID: 1108873486679571013}
   m_Layer: 5
-  m_Name: Text (5)
+  m_Name: TextBossCount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1076,7 +1090,7 @@ GameObject:
   - component: {fileID: 2310359526888834393}
   - component: {fileID: 8628400887055692017}
   m_Layer: 5
-  m_Name: ImageMonster
+  m_Name: ImageKillMonsterCount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1268,8 +1282,9 @@ GameObject:
   - component: {fileID: 6654986637476255264}
   - component: {fileID: 295624670729477423}
   - component: {fileID: 9220202145677153492}
+  - component: {fileID: 6417574387675522777}
   m_Layer: 5
-  m_Name: ImageBGData
+  m_Name: ImageDataPage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1338,6 +1353,25 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6417574387675522777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2785828132559775597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9fb804c535db3844a2cff24810cf045, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  txAdventure: {fileID: 0}
+  txHideLevel: {fileID: 0}
+  txBoss: {fileID: 0}
+  txMoney: {fileID: 0}
+  txMonster: {fileID: 0}
+  txBossCount: {fileID: 0}
+  txDestroyCount: {fileID: 0}
 --- !u!1 &3901008777019084290
 GameObject:
   m_ObjectHideFlags: 0
@@ -2081,6 +2115,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3598415387789270677}
   - component: {fileID: 3784637977009556798}
+  - component: {fileID: 13416924857244888}
   m_Layer: 5
   m_Name: ToggleSound
   m_TagString: Untagged
@@ -2156,6 +2191,19 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_IsOn: 1
+--- !u!114 &13416924857244888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5571057993363016264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e24aaae9c707bf243b9b1cb27e229961, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  imgBackGround: {fileID: 6219443643302764977}
 --- !u!1 &5724426995411425935
 GameObject:
   m_ObjectHideFlags: 0
@@ -2317,7 +2365,7 @@ GameObject:
   - component: {fileID: 105601945290100060}
   - component: {fileID: 6049097815017340231}
   m_Layer: 5
-  m_Name: Text (6)
+  m_Name: TextDestoryCount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2471,7 +2519,7 @@ GameObject:
   - component: {fileID: 8676287334224382222}
   - component: {fileID: 5269658518039393916}
   m_Layer: 5
-  m_Name: ImageBGSelect
+  m_Name: ImageSelectPage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2677,7 +2725,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeSpeed: 3
+  showSelectPage: 0
+  showDataPage: 0
+  showMakerPage: 0
   btnHome: {fileID: 4182314574511597618}
+  tgSelect: {fileID: 7359308263714737050}
+  tgData: {fileID: 1634030257077008184}
+  tgMaker: {fileID: 1640208929549394750}
+  imgSelectPage: {fileID: 5269658518039393916}
+  imgDataPage: {fileID: 9220202145677153492}
+  imgMakerPage: {fileID: 8845471652681728603}
 --- !u!1 &7048053366390626758
 GameObject:
   m_ObjectHideFlags: 0
@@ -2848,7 +2905,7 @@ GameObject:
   - component: {fileID: 5883649279036161008}
   - component: {fileID: 7062643853120900526}
   m_Layer: 5
-  m_Name: ImageDestoryCount
+  m_Name: ImageDestroyItemCount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2923,7 +2980,7 @@ GameObject:
   - component: {fileID: 8617424218921839626}
   - component: {fileID: 4359221527701030082}
   m_Layer: 5
-  m_Name: ImageHideLevel
+  m_Name: ImageHideMap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2999,7 +3056,7 @@ GameObject:
   - component: {fileID: 5366552376195142414}
   - component: {fileID: 8886668830959145689}
   m_Layer: 5
-  m_Name: ImageAdventure
+  m_Name: ImageAdventureMap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3075,7 +3132,7 @@ GameObject:
   - component: {fileID: 46043180379283403}
   - component: {fileID: 4735368850330578122}
   m_Layer: 5
-  m_Name: ImageBossCount
+  m_Name: ImageKillBossCount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3234,7 +3291,7 @@ GameObject:
   - component: {fileID: 7570631555953503441}
   - component: {fileID: 1070942915330271574}
   m_Layer: 5
-  m_Name: ImageBoss
+  m_Name: ImageBossMap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3310,7 +3367,7 @@ GameObject:
   - component: {fileID: 8723749247976374882}
   - component: {fileID: 6453138195414300647}
   m_Layer: 5
-  m_Name: TextBoss
+  m_Name: TextBossMap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3388,7 +3445,7 @@ GameObject:
   - component: {fileID: 8919773276136720700}
   - component: {fileID: 201173272210988165}
   m_Layer: 5
-  m_Name: TextHideLevel
+  m_Name: TextHideMap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
