@@ -45,7 +45,6 @@ public class MenuPanelMediator : Mediator
                 break;
             case NotificationName.HIDE_MENUPANEL:
                 UIManager.Instance.Hide<MenuPanel>(false);
-                SendNotification(NotificationName.ALLOW_CLICKCELL, true);
                 break;
         }
         

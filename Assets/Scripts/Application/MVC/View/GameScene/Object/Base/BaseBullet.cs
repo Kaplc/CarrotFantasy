@@ -20,16 +20,19 @@ public abstract class BaseBullet : MonoBehaviour, IPoolObject
     private void Update()
     {
         Flying();
-        
-        // 根据距离判断是否击中
-        if (Vector3.Distance(transform.position, target.transform.position) < 0.3f && active)
+
+        if (target)
         {
-            // 只扣血一次
-            active = false;
-            // 怪物扣血
-            target.Wound(atk + data.baseAtk);
-            // 播放爆炸动画
-            animator.SetTrigger("Explode");
+            // 根据距离判断是否击中
+            if (Vector3.Distance(transform.position, target.transform.position) < 0.3f && active)
+            {
+                // 只扣血一次
+                active = false;
+                // 怪物扣血
+                target.Wound(atk + data.baseAtk);
+                // 播放爆炸动画
+                animator.SetTrigger("Explode");
+            } 
         }
     }
 
@@ -38,8 +41,11 @@ public abstract class BaseBullet : MonoBehaviour, IPoolObject
         if (target)
         {
             transform.LookAt(target.transform);
-            transform.Translate(transform.forward * (Time.deltaTime * data.speed), Space.World);
-            
+            if (!GameManager.Instance.Pause)
+            {
+                transform.Translate(transform.forward * (Time.deltaTime * data.speed), Space.World);
+            }
+
             // 目标死亡立刻回收
             if (target.isDead)
             {

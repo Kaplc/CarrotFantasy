@@ -14,6 +14,7 @@ public class MenuPanel : BasePanel
         btnContinue.onClick.AddListener(() =>
         {
             PanelMediator.SendNotification(NotificationName.CONTINUE_GAME);
+            PanelMediator.SendNotification(NotificationName.ALLOW_CLICKCELL, true);
             UIManager.Instance.Hide<MenuPanel>(false);
         });
         

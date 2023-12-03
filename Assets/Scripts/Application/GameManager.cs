@@ -89,6 +89,7 @@ public class GameManager : BaseMonoSingleton<GameManager>
     public void GameExit()
     {
         Pause = true;
+        allowClickCell = false;
         // 回收萝卜和怪物
         PoolManager.PushObject(spawner.carrot.gameObject);
         spawner.OnPushAllMonster();
