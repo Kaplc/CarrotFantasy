@@ -18,17 +18,6 @@ public abstract class BaseTower : MonoBehaviour, IPoolObject
     public List<RuntimeAnimatorController> controllers;
     public Monster target; // 当前目标
 
-    protected virtual void Update()
-    {
-        if (GameManager.Instance.Pause)
-        {
-            animator.speed = 0;
-            return;
-        }
-
-        animator.speed = 1;
-    }
-
     protected void FindTargets()
     {
         float closestDistance = 0f;

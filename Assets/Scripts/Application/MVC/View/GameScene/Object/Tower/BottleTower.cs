@@ -8,9 +8,14 @@ public class BottleTower : BaseTower
     public Transform weapon;
     public Transform firePos;
 
-    protected override void Update()
+    private void Update()
     {
-        base.Update();
+        if (GameManager.Instance.Pause)
+        {
+            // 游戏暂停停止炮塔动画
+            animator.SetBool("Attack", false);
+            return;
+        }
         
         // 查找目标
         if (target is null)
