@@ -8,6 +8,10 @@ public class GameDataProxy : Proxy
 {
     public new const string NAME = "GameDataProxy";
 
+    private StatisticalData statisticalData;
+    private ProcessData processData;
+    private MusicSettingData musicSettingData;
+
     private Dictionary<int, LevelData> levelsData = new Dictionary<int, LevelData>();
     private Dictionary<int, MonsterData> monstersData = new Dictionary<int, MonsterData>();
     private Dictionary<int, TowerData> towersData = new Dictionary<int, TowerData>();
@@ -16,33 +20,68 @@ public class GameDataProxy : Proxy
     {
     }
 
-    /// <summary>
-    /// 加载玩家当前进度数据
-    /// </summary>
-    public void LoadPlayerData()
-    {
-        PlayerData playerData = BinaryManager.Instance.Load<PlayerData>("PlayerData.zy");
-        SendNotification(NotificationName.LOADED_PLAYERDATA, playerData);
-    }
 
-    public void SavePlayerData(PlayerData playerData)
+    #region 游戏进程数据
+
+    public void LoadStatisticalData()
     {
-        BinaryManager.Instance.Save("PlayerData.zy", playerData);
+        if (statisticalData != null)
+        {
+            SendNotification(NotificationName.LOADED_STATISTICALDATA, statisticalData);
+            return;
+        }
+        statisticalData = BinaryManager.Instance.Load<StatisticalData>("StatisticalData.zy");
+        SendNotification(NotificationName.LOADED_STATISTICALDATA, statisticalData);
     }
+    
+    public void SavePassedLevelData(StatisticalData data)
+    {
+        BinaryManager.Instance.Save("StatisticalData.zy", data);
+    }
+    
+    public void LoadProcessData()
+    {
+        if (processData != null)
+        {
+            SendNotification(NotificationName.LOADED_PROCESSDATA,processData);
+            return;
+        }
+        processData = BinaryManager.Instance.Load<ProcessData>("ProcessData.zy");
+        SendNotification(NotificationName.LOADED_PROCESSDATA,processData);
+    }
+    
+    public void SaveProcessData(ProcessData data)
+    {
+        BinaryManager.Instance.Save("ProcessData.zy", data);
+    }
+    
+
+    #endregion
+
+    #region 音乐数据
 
     /// <summary>
     /// 加载音乐设置数据
     /// </summary>
-    public void LoadMusicData()
+    public void LoadMusicSettingData()
     {
-        MusicSettingData musicSettingData = BinaryManager.Instance.Load<MusicSettingData>("MusicSettingData.zy");
+        if (musicSettingData != null)
+        {
+            SendNotification(NotificationName.LOADED_MUSICSETTINGDATA, musicSettingData);
+            return;
+        }
+        musicSettingData = BinaryManager.Instance.Load<MusicSettingData>("MusicSettingData.zy");
         SendNotification(NotificationName.LOADED_MUSICSETTINGDATA, musicSettingData);
     }
 
-    public void SaveMusicSetting(MusicSettingData musicSettingData)
+    public void SaveMusicSettingData(MusicSettingData data)
     {
-        BinaryManager.Instance.Save("MusicSettingData.zy", musicSettingData);
+        BinaryManager.Instance.Save("MusicSettingData.zy", data);
     }
+
+    #endregion
+
+    #region 关卡数据
 
     /// <summary>
     /// 加载大关卡数据
@@ -120,6 +159,9 @@ public class GameDataProxy : Proxy
             }
         }
     }
+
+    #endregion
+    
 
     /// <summary>
     /// 清空数据

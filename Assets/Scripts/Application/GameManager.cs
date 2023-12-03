@@ -46,9 +46,6 @@ public class GameManager : BaseMonoSingleton<GameManager>
         base.Awake();
         GameFacade.Instance.SendNotification(NotificationName.INIT);
         DontDestroyOnLoad(gameObject);
-
-        // 发送初始化完成的通知
-        GameFacade.Instance.SendNotification(NotificationName.INIT_END);
     }
 
     #region 游戏相关

@@ -6,5 +6,5 @@ using UnityEngine;
 [Serializable]
 public class ProcessData
 {
-    public List<PassedLevelData> passedLevels; // 已通关的关卡
+    public List<PassedLevelData> passedLevels = new List<PassedLevelData>(){new PassedLevelData(){id = 0, grade = -1}}; // 已通关的关卡
 }
