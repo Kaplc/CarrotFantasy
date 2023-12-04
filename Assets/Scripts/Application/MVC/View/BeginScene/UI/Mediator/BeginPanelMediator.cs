@@ -11,7 +11,7 @@ public interface Bind
 
 public class BeginPanelMediator : Mediator
 {
-    public static new string NAME = "BeginPanelVIew";
+    public static new string NAME = "BeginPanelMediator";
 
     // 相互绑定的Panel
     public BeginPanel Panel
@@ -72,16 +72,17 @@ public class BeginPanelMediator : Mediator
             case NotificationName.SHOW_SETTINGPANEL:
                 // 给设置面板刷获取数据
                 SendNotification(NotificationName.LOAD_MUSICSETTINGDATA);
+                SendNotification(NotificationName.LOAD_STATISTICALDATA);
                 // 播放显示HelpPanel的动画
                 Panel.animator.SetBool("ShowSettingPanel", true);
                 break;
             case NotificationName.LOADED_MUSICSETTINGDATA:
                 // 刷新音乐设置数据
-                Panel.settingPanel.UpdateMusicSetting(notification.Body as MusicSettingData);
+                Panel.settingPanel.UpdateSelectPage(notification.Body as MusicSettingData);
                 break;
             case NotificationName.LOADED_STATISTICALDATA:
                 // 刷新统计数据
-                
+                Panel.settingPanel.UpdateStatisticalPage(notification.Body as StatisticalData);
                 break;
         }
     }

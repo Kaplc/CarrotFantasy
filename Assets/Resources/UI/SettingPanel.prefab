@@ -1284,7 +1284,7 @@ GameObject:
   - component: {fileID: 9220202145677153492}
   - component: {fileID: 6417574387675522777}
   m_Layer: 5
-  m_Name: ImageDataPage
+  m_Name: ImageStatisticalDataPage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2747,7 +2747,7 @@ MonoBehaviour:
   imgSelectPage: {fileID: 5269658518039393916}
   imgDataPage: {fileID: 9220202145677153492}
   imgMakerPage: {fileID: 8845471652681728603}
-  dataPage: {fileID: 6417574387675522777}
+  statisticalPage: {fileID: 6417574387675522777}
   selectPage: {fileID: 727364899554237250}
 --- !u!1 &7048053366390626758
 GameObject:

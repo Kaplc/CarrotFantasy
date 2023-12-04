@@ -12,7 +12,7 @@ public class SettingPanel : BasePanel
     public Image imgSelectPage;
     public Image imgDataPage;
     public Image imgMakerPage;
-    public DataPage dataPage;
+    public StatisticalPage statisticalPage;
     public SelectPage selectPage;
 
     private bool ShowSelectPage
@@ -63,8 +63,13 @@ public class SettingPanel : BasePanel
         ShowSelectPage = true;
     }
 
-    public void UpdateMusicSetting(MusicSettingData data)
+    public void UpdateSelectPage(MusicSettingData data)
     {
         selectPage.UpdateMusicSetting(data);
+    }
+
+    public void UpdateStatisticalPage(StatisticalData data)
+    {
+        statisticalPage.UpdateDate(data);
     }
 }

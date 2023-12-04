@@ -9,7 +9,7 @@ public class InitGameDataProxyCommand : SimpleCommand
     {
         base.Execute(notification);
 
-        GameFacade.Instance.RegisterCommand(NotificationName.LOAD_STATISTICALDATA, () => new StatisticalDataCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.LOAD_STATISTICALDATA, () => new LoadStatisticalDataCommand());
         GameFacade.Instance.RegisterCommand(NotificationName.LOAD_MUSICSETTINGDATA, () => new LoadMusicSettingDataCommand());
         GameFacade.Instance.RegisterCommand(NotificationName.SAVE_MUSCISETTINGDATA, () => new SaveMusicSettingDataCommand());
 
@@ -17,8 +17,7 @@ public class InitGameDataProxyCommand : SimpleCommand
     }
 }
 
-
-public class StatisticalDataCommand : SimpleCommand
+public class LoadStatisticalDataCommand : SimpleCommand
 {
     public override void Execute(INotification notification)
     {

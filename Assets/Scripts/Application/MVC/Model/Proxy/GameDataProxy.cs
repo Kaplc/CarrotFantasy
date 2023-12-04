@@ -34,7 +34,7 @@ public class GameDataProxy : Proxy
         SendNotification(NotificationName.LOADED_STATISTICALDATA, statisticalData);
     }
     
-    public void SavePassedLevelData(StatisticalData data)
+    public void SaveStatisticalData(StatisticalData data)
     {
         BinaryManager.Instance.Save("StatisticalData.zy", data);
     }
@@ -89,6 +89,7 @@ public class GameDataProxy : Proxy
     /// <param name="bigLevelID">大关卡id</param>
     public void LoadBigLevelData(int bigLevelID)
     {
+        
     }
 
     /// <summary>
