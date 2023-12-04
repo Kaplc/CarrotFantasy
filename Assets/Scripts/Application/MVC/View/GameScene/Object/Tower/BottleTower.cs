@@ -8,48 +8,23 @@ public class BottleTower : BaseTower
     public Transform weapon;
     public Transform firePos;
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
+        
         if (GameManager.Instance.Pause)
         {
             // 游戏暂停停止炮塔动画
             animator.SetBool("Attack", false);
             return;
         }
-        
-        // 查找目标
-        if (target is null)
-        {
-            FindTargets();
-        }
 
         if (target)
         {
             // 看向目标
             LookAtTarget();
-            // 大于攻击距离解除锁定
-            if (Vector3.Distance(transform.position, target.transform.position) > data.attackRange)
-            {
-                animator.SetBool("Attack", false);
-                target = null;
-            }
-
-            // 攻击
-            if (Time.time > lastAtkTime + AtkCd)
-            {
-                lastAtkTime = Time.time;
-                // Attack();
-                animator.SetBool("Attack", true);
-            }
-
-            // 打死怪物
-            if (target != null && target.isDead)
-            {
-                animator.SetBool("Attack", false);
-                target = null;
-                FindTargets();
-            }
         }
+        
     }
 
     private void LookAtTarget()

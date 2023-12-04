@@ -18,6 +18,44 @@ public abstract class BaseTower : MonoBehaviour, IPoolObject
     public List<RuntimeAnimatorController> controllers;
     public Monster target; // 当前目标
 
+    protected virtual void Update()
+    {
+        if (GameManager.Instance.Pause)
+        {
+            // 游戏暂停停止炮塔动画
+            animator.SetBool("Attack", false);
+            return;
+        }
+        
+        // 查找目标
+        if (target is null)
+        {
+            FindTargets();
+        }
+        
+        if (target != null)
+        {
+            // 大于攻击距离解除锁定或打死怪物
+            if (Vector3.Distance(transform.position, target.transform.position) > data.attackRange || target.isDead)
+            {
+                animator.SetBool("Attack", false);
+                target = null;
+                FindTargets();
+            }
+
+            // 攻击
+            if (Time.time > lastAtkTime + AtkCd)
+            {
+                lastAtkTime = Time.time;
+                // Attack();
+                if (!animator.GetBool("Attack"))
+                {
+                    animator.SetBool("Attack", true);
+                }
+            }
+        }
+    }
+
     protected void FindTargets()
     {
         float closestDistance = 0f;
