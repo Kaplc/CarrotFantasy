@@ -10,8 +10,7 @@ public class GameManager : BaseMonoSingleton<GameManager>
     public BinaryManager BinaryManager => BinaryManager.Instance;
     public MusicManger MusicManager => MusicManger.Instance;
     public EventCenter EventCenter => EventCenter.Instance;
-    public DataManager dataManager = new DataManager();
-    
+
     private bool pause; // 暂停标识
     private float pauseTime; // 暂停时间
     public int nowBigLevelId; // 大关卡id

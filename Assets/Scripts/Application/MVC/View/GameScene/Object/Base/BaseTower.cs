@@ -18,7 +18,7 @@ public abstract class BaseTower : MonoBehaviour, IPoolObject
     public List<RuntimeAnimatorController> controllers;
     public Monster target; // 当前目标
 
-    protected virtual void Update()
+    protected virtual  void Update()
     {
         if (GameManager.Instance.Pause)
         {
@@ -33,26 +33,30 @@ public abstract class BaseTower : MonoBehaviour, IPoolObject
             FindTargets();
         }
         
+        
+        
         if (target != null)
         {
+            // 攻击
+            animator.SetBool("Attack", true);
+            
             // 大于攻击距离解除锁定或打死怪物
             if (Vector3.Distance(transform.position, target.transform.position) > data.attackRange || target.isDead)
             {
                 animator.SetBool("Attack", false);
                 target = null;
-                FindTargets();
             }
 
-            // 攻击
-            if (Time.time > lastAtkTime + AtkCd)
-            {
-                lastAtkTime = Time.time;
-                // Attack();
-                if (!animator.GetBool("Attack"))
-                {
-                    animator.SetBool("Attack", true);
-                }
-            }
+            
+            // if (Time.time > lastAtkTime + AtkCd)
+            // {
+            //     lastAtkTime = Time.time;
+            //     // Attack();
+            //     if (!animator.GetBool("Attack"))
+            //     {
+            //         
+            //     }
+            // }
         }
     }
 
@@ -87,7 +91,7 @@ public abstract class BaseTower : MonoBehaviour, IPoolObject
     public virtual void UpGrade()
     {
         level++;
-
+        
         // 切换状态机
         animator.runtimeAnimatorController = controllers[level];
     }
