@@ -9,9 +9,9 @@ using UnityEngine.UI;
 public class HelpPanel : BasePanel
 {
     public Button btnHome;
-    public Button btnHelp;
-    public Button btnMonster;
-    public Button btnTower;
+    public Toggle tgHelp;
+    public Toggle tgMonster;
+    public Toggle tgTower;
 
     public Transform helpPage;
     public Transform towerPage;
@@ -22,9 +22,9 @@ public class HelpPanel : BasePanel
     private bool showHelpPage;
     private bool showMonsterPage;
     private bool showTowerPage;
-
-    public Scrollbar scrollbar;
+    
     private float oldValue;
+    
 
     #region 页面属性
 
@@ -43,25 +43,7 @@ public class HelpPanel : BasePanel
             monsterPage.gameObject.SetActive(!value); // 怪物页面
             towerPage.gameObject.SetActive(!value); // tower页面
 
-            if (0.0f <= scrollbar.value && scrollbar.value <= 0.3f)
-            {
-                txBottomPageNumber.text = "1/4";
-            }
-
-            if (0.30f < scrollbar.value && scrollbar.value <= 0.6f)
-            {
-                txBottomPageNumber.text = "2/4";
-            }
-
-            if (0.60f < scrollbar.value && scrollbar.value <= 0.9f)
-            {
-                txBottomPageNumber.text = "3/4";
-            }
-
-            if (0.9f < scrollbar.value && scrollbar.value <= 1f)
-            {
-                txBottomPageNumber.text = "4/4";
-            }
+            txBottomPageNumber.text = "1/4";
         }
     }
 
@@ -92,6 +74,8 @@ public class HelpPanel : BasePanel
             helpPage.gameObject.SetActive(!value);
             monsterPage.gameObject.SetActive(!value);
             towerPage.gameObject.SetActive(value);
+            
+            txBottomPageNumber.text = "1/13";
         }
     }
 
@@ -104,48 +88,23 @@ public class HelpPanel : BasePanel
             // 通过MVC管理器发送显示BeginPanel的消息
             GameFacade.Instance.SendNotification(NotificationName.SHOW_BEGINPANEL);
         });
-        btnHelp.onClick.AddListener(() =>
-        {
-            ShowHelpPage = true;
-        });
-        btnMonster.onClick.AddListener(() =>
-        {
-            ShowMonsterPage = true;
-        });
-        btnTower.onClick.AddListener(() =>
+        
+        tgTower.onValueChanged.AddListener((isOn) =>
         {
             ShowTowerPage = true;
         });
-
-        scrollbar.onValueChanged.AddListener(value =>
+        
+        tgMonster.onValueChanged.AddListener((isOn) =>
         {
-            if (0.0f <= value && value <= 0.3f)
-            {
-                txBottomPageNumber.text = "1/4";
-            }
-
-            if (0.30f < value && value <= 0.6f)
-            {
-                txBottomPageNumber.text = "2/4";
-            }
-
-            if (0.60f < value && value <= 0.9f)
-            {
-                txBottomPageNumber.text = "3/4";
-            }
-
-            if (0.9f < value && value <= 1f)
-            {
-                txBottomPageNumber.text = "4/4";
-            }
+            ShowMonsterPage = true;
+        });
+        
+        tgHelp.onValueChanged.AddListener((isOn) =>
+        {
+            ShowHelpPage = true;
         });
 
         // 初始显示HelpPage
         ShowHelpPage = true;
-    }
-
-    public override void Update()
-    {
-        base.Update();
     }
 }
