@@ -5,5 +5,5 @@ using UnityEngine;
 [CreateAssetMenu]
 public class BigLevelData : ScriptableObject
 {
-    public List<int> levelIds; // 大关卡下的所有小关卡id
+    public List<LevelData> levels; // 大关卡下的所有小关卡id
 }

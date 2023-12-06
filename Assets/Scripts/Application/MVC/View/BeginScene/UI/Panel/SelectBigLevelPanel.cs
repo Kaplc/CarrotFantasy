@@ -14,17 +14,11 @@ public class SelectBigLevelPanel : BasePanel
 
     public Button btnLeft;
     public Button btnRight;
-
-    public float speed;
-    public List<RectTransform> posList;
-
-    // 三个btn跟踪的位置下标
-    private int btn0Index;
-    private int btn1Index;
-    private int btn2Index;
+    public ScrollViewPageFlippingEffect scrollRectEffect;
 
     protected override void Init()
     {
+        //
         btnBigLevel0.onClick.AddListener(() =>
         {
             // 记录选择的大关卡索引
@@ -37,7 +31,7 @@ public class SelectBigLevelPanel : BasePanel
         {
             GameManager.Instance.nowBigLevelId = 1;
             PanelMediator.SendNotification(NotificationName.SHOW_SELECTLEVELPANEL);
-            
+
             UIManager.Instance.Hide<SelectBigLevelPanel>(false);
         });
         btnBigLevel2.onClick.AddListener(() =>
@@ -63,62 +57,59 @@ public class SelectBigLevelPanel : BasePanel
 
         btnLeft.onClick.AddListener(() =>
         {
-            btn0Index++;
-            btn1Index++;
-            btn2Index++;
-            
-            if (btn0Index == 1)
+            scrollRectEffect.LastPage();
+
+            if (scrollRectEffect.pageIndex == 1)
             {
-                // 到最左边时隐藏左按钮
+                // 最小页码隐藏左边按钮
                 btnLeft.gameObject.SetActive(false);
             }
             else
             {
-                // 其他情况右按钮都显示
+                // 显示所有按钮
+                btnLeft.gameObject.SetActive(true);
                 btnRight.gameObject.SetActive(true);
             }
         });
+
         btnRight.onClick.AddListener(() =>
         {
-            btn0Index--;
-            btn1Index--;
-            btn2Index--;
-            
-            if (btn2Index == 1)
+            scrollRectEffect.NextPage();
+
+            if (scrollRectEffect.pageIndex == scrollRectEffect.totalPageIndex)
             {
+                // 最大页码隐藏右边按钮
                 btnRight.gameObject.SetActive(false);
             }
             else
             {
+                // 显示所有按钮
                 btnLeft.gameObject.SetActive(true);
+                btnRight.gameObject.SetActive(true);
             }
         });
     }
 
-    protected override void Start()
-    {
-        base.Start();
+    #region 接受ScrollView的消息
 
-        // 一开始跟踪的位置
-        btn0Index = 1;
-        btn1Index = 2;
-        btn2Index = 3;
-        
-        // 开始左按钮隐藏
+    public void FirstPage()
+    {
+        // 最小页码隐藏左边按钮
         btnLeft.gameObject.SetActive(false);
     }
 
-    public override void Update()
+    public void FinallyPage()
     {
-        base.Update();
-
-        // 每个控件都跟踪固定的位置下标, 只要改变posList的内容控件就会跟踪动态调整位置
-        // Mathf.Clamp(btn2Index, 0, posList.Count - 1)越界保持数组不越界
-        ((RectTransform)btnBigLevel0.transform).anchoredPosition = Vector2.Lerp(((RectTransform)btnBigLevel0.transform).anchoredPosition,
-            posList[Mathf.Clamp(btn0Index, 0, posList.Count)].anchoredPosition, Time.deltaTime * speed);
-        ((RectTransform)btnBigLevel1.transform).anchoredPosition = Vector2.Lerp(((RectTransform)btnBigLevel1.transform).anchoredPosition,
-            posList[Mathf.Clamp(btn1Index, 0, posList.Count - 1)].anchoredPosition, Time.deltaTime * speed);
-        ((RectTransform)btnBigLevel2.transform).anchoredPosition = Vector2.Lerp(((RectTransform)btnBigLevel2.transform).anchoredPosition,
-            posList[Mathf.Clamp(btn2Index, 0, posList.Count - 1)].anchoredPosition, Time.deltaTime * speed);
+        // 最大页码隐藏右边按钮
+        btnRight.gameObject.SetActive(false);
     }
+
+    public void NormalPage()
+    {
+        // 显示所有按钮
+        btnLeft.gameObject.SetActive(true);
+        btnRight.gameObject.SetActive(true);
+    }
+    #endregion
+    
 }

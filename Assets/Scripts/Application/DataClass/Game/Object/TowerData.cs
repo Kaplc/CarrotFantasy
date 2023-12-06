@@ -1,10 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
-public class 
-    TowerData : ScriptableObject
+[CreateAssetMenu][Serializable]
+public class TowerData : ScriptableObject
 {
     public int id;
     public float atkCd; // 攻击间隔

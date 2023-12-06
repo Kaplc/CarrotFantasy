@@ -9,7 +9,7 @@ public class ScrollViewPageFlippingEffect : MonoBehaviour, IBeginDragHandler, IE
 {
     public float slidingThreshold; // 滑动像素阈值
     private float offSetMouseX; // 鼠标拖动的水平位移
-    private int pageIndex; // 当前页码
+    public int pageIndex; // 当前页码
     public int totalPageIndex; // 总共页码
     private ScrollRect scrollRect;
     public Text txPage;
@@ -21,46 +21,84 @@ public class ScrollViewPageFlippingEffect : MonoBehaviour, IBeginDragHandler, IE
         UpdatePageIndex();
     }
 
+    public void NextPage()
+    {
+        // 右滑
+        pageIndex++;
+        pageIndex = Mathf.Clamp(pageIndex, 1, totalPageIndex);
+        float newHorizontalNormalizedPosition = 1f / (totalPageIndex - 1) * (pageIndex - 1);
+        SlideTween(newHorizontalNormalizedPosition);
+    }
+
+    public void LastPage()
+    {
+        // 左滑
+        pageIndex--;
+        pageIndex = Mathf.Clamp(pageIndex, 1, totalPageIndex);
+        float newHorizontalNormalizedPosition = 1f / (totalPageIndex - 1) * (pageIndex - 1);
+        SlideTween(newHorizontalNormalizedPosition);
+    }
+
+    private void StayNowPage()
+    {
+        pageIndex = Mathf.Clamp(pageIndex, 1, totalPageIndex);
+        float newHorizontalNormalizedPosition = 1f / (totalPageIndex - 1) * (pageIndex - 1);
+        SlideTween(newHorizontalNormalizedPosition);
+    }
+
     private void UpdatePageIndex()
     {
+        if (!txPage) return;
         txPage.text = $"{pageIndex}/{totalPageIndex}";
     }
 
     /// <summary>
-    /// 设置ScrollView的内容位置
+    /// 实现滑动
     /// </summary>
-    private void SetContentPos()
+    private void SlideContent()
     {
-        float newHorizontalNormalizedPosition = 0;
         // 到达滑动阈值视为滑向下一页或上一页
         if (offSetMouseX <= -slidingThreshold)
         {
-            // 右滑
-            pageIndex++;
-            pageIndex = Mathf.Clamp(pageIndex, 1, totalPageIndex);
-            newHorizontalNormalizedPosition = 1f / (totalPageIndex - 1) * (pageIndex - 1);
+            NextPage();
         }
-        else if(offSetMouseX > slidingThreshold)
+        else if (offSetMouseX > slidingThreshold)
         {
-            // 左滑
-            pageIndex--;
-            pageIndex = Mathf.Clamp(pageIndex, 1, totalPageIndex);
-            newHorizontalNormalizedPosition = 1f / (totalPageIndex-1) * (pageIndex - 1);
+            LastPage();
         }
         else
         {
-            pageIndex = Mathf.Clamp(pageIndex, 1, totalPageIndex);
-            newHorizontalNormalizedPosition = 1f / (totalPageIndex-1) * (pageIndex - 1);
+            // 不够滑动阈值回弹
+            StayNowPage();
         }
-        
+        UpdatePageIndex();
+    }
+
+    /// <summary>
+    /// 滑动动画
+    /// </summary>
+    private void SlideTween(float targetValue)
+    {
         DOTween.To(
-            () => scrollRect.horizontalNormalizedPosition, 
+            () => scrollRect.horizontalNormalizedPosition,
             value => scrollRect.horizontalNormalizedPosition = value,
-            newHorizontalNormalizedPosition, 
+            targetValue,
             0.2f
         ).SetEase(Ease.Linear);
+
+        if (pageIndex == 1)
+        {
+            // 告诉父对象现在是第一页
+            SendMessageUpwards("FirstPage", SendMessageOptions.DontRequireReceiver);
+        }else if (pageIndex == totalPageIndex)
+        {
+            SendMessageUpwards("FinallyPage", SendMessageOptions.DontRequireReceiver);
+        }
+        else
+        {
+            SendMessageUpwards("NormalPage", SendMessageOptions.DontRequireReceiver);
+        }
         
-        UpdatePageIndex();
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -71,9 +109,9 @@ public class ScrollViewPageFlippingEffect : MonoBehaviour, IBeginDragHandler, IE
     public void OnEndDrag(PointerEventData eventData)
     {
         offSetMouseX = Input.mousePosition.x - offSetMouseX;
-        SetContentPos();
+        SlideContent();
     }
-    
+
     public void OnDrag(PointerEventData eventData)
     {
         // print(Input.mousePosition.x - offSetMouseX);
