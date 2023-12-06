@@ -47,13 +47,18 @@ public class ScrollViewPageFlippingEffect : MonoBehaviour, IBeginDragHandler, IE
             pageIndex = Mathf.Clamp(pageIndex, 1, totalPageIndex);
             newHorizontalNormalizedPosition = 1f / (totalPageIndex-1) * (pageIndex - 1);
         }
+        else
+        {
+            pageIndex = Mathf.Clamp(pageIndex, 1, totalPageIndex);
+            newHorizontalNormalizedPosition = 1f / (totalPageIndex-1) * (pageIndex - 1);
+        }
         
         DOTween.To(
             () => scrollRect.horizontalNormalizedPosition, 
             value => scrollRect.horizontalNormalizedPosition = value,
             newHorizontalNormalizedPosition, 
             0.2f
-            ).SetEase(Ease.Linear);
+        ).SetEase(Ease.Linear);
         
         UpdatePageIndex();
     }
@@ -68,8 +73,7 @@ public class ScrollViewPageFlippingEffect : MonoBehaviour, IBeginDragHandler, IE
         offSetMouseX = Input.mousePosition.x - offSetMouseX;
         SetContentPos();
     }
-
-
+    
     public void OnDrag(PointerEventData eventData)
     {
         // print(Input.mousePosition.x - offSetMouseX);
