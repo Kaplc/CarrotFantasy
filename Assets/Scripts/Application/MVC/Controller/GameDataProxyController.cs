@@ -8,32 +8,43 @@ public class InitGameDataProxyCommand : SimpleCommand
     public override void Execute(INotification notification)
     {
         base.Execute(notification);
-
-        GameFacade.Instance.RegisterCommand(NotificationName.LOAD_STATISTICALDATA, () => new LoadStatisticalDataCommand());
-        GameFacade.Instance.RegisterCommand(NotificationName.LOAD_MUSICSETTINGDATA, () => new LoadMusicSettingDataCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.INIT_GAMEDATA, () => new LoadInitGameDataCommand());
+        
+        GameFacade.Instance.RegisterCommand(NotificationName.LOAD_STATISTICALDATA, () => new GetStatisticalDataCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.LOAD_MUSICSETTINGDATA, () => new GetMusicSettingDataCommand());
         GameFacade.Instance.RegisterCommand(NotificationName.SAVE_MUSCISETTINGDATA, () => new SaveMusicSettingDataCommand());
-
-        GameFacade.Instance.RegisterCommand(NotificationName.LOAD_PROCESSDATA, () => new LoadProcessDataCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.LOAD_PROCESSDATA, () => new GetProcessDataCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.LOAD_BIGLEVELDATA, () => new GetBigLevelData());
     }
 }
 
-public class LoadStatisticalDataCommand : SimpleCommand
+public class LoadInitGameDataCommand : SimpleCommand
 {
     public override void Execute(INotification notification)
     {
         base.Execute(notification);
         GameDataProxy proxy = GameFacade.Instance.RetrieveProxy("GameDataProxy") as GameDataProxy;
-        proxy.LoadStatisticalData();
+        proxy.LoadInitGameData();
     }
 }
 
-public class LoadMusicSettingDataCommand : SimpleCommand
+public class GetStatisticalDataCommand : SimpleCommand
 {
     public override void Execute(INotification notification)
     {
         base.Execute(notification);
         GameDataProxy proxy = GameFacade.Instance.RetrieveProxy("GameDataProxy") as GameDataProxy;
-        proxy.LoadMusicSettingData();
+        proxy.GetStatisticalData();
+    }
+}
+
+public class GetMusicSettingDataCommand : SimpleCommand
+{
+    public override void Execute(INotification notification)
+    {
+        base.Execute(notification);
+        GameDataProxy proxy = GameFacade.Instance.RetrieveProxy("GameDataProxy") as GameDataProxy;
+        proxy.GetMusicSettingData();
     }
 }
 
@@ -47,12 +58,22 @@ public class SaveMusicSettingDataCommand : SimpleCommand
     }
 }
 
-public class LoadProcessDataCommand : SimpleCommand
+public class GetProcessDataCommand : SimpleCommand
 {
     public override void Execute(INotification notification)
     {
         base.Execute(notification);
         GameDataProxy proxy = GameFacade.Instance.RetrieveProxy("GameDataProxy") as GameDataProxy;
-        proxy.LoadProcessData();
+        proxy.GetProcessData();
+    }
+}
+
+public class GetBigLevelData : SimpleCommand
+{
+    public override void Execute(INotification notification)
+    {
+        base.Execute(notification);
+        GameDataProxy proxy = GameFacade.Instance.RetrieveProxy("GameDataProxy") as GameDataProxy;
+        proxy.GetBigLevelData((int)notification.Body);
     }
 }

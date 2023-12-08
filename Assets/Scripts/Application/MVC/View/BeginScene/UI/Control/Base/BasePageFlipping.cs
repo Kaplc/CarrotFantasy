@@ -1,27 +1,24 @@
-﻿using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ScrollViewPageFlippingEffect : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
+public class BasePageFlipping : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     public float slidingThreshold; // 滑动像素阈值
     private float offSetMouseX; // 鼠标拖动的水平位移
     public int pageIndex; // 当前页码
     public int totalPageIndex; // 总共页码
+    public float speed; // 动画速度
     private ScrollRect scrollRect;
-    public Text txPage;
 
     private void Awake()
     {
         scrollRect = GetComponent<ScrollRect>();
         pageIndex = 1;
-        UpdatePageIndex();
     }
 
-    public void NextPage()
+    public virtual void NextPage()
     {
         // 右滑
         pageIndex++;
@@ -30,7 +27,7 @@ public class ScrollViewPageFlippingEffect : MonoBehaviour, IBeginDragHandler, IE
         SlideTween(newHorizontalNormalizedPosition);
     }
 
-    public void LastPage()
+    public virtual void LastPage()
     {
         // 左滑
         pageIndex--;
@@ -39,23 +36,17 @@ public class ScrollViewPageFlippingEffect : MonoBehaviour, IBeginDragHandler, IE
         SlideTween(newHorizontalNormalizedPosition);
     }
 
-    private void StayNowPage()
+    protected virtual void StayNowPage()
     {
         pageIndex = Mathf.Clamp(pageIndex, 1, totalPageIndex);
         float newHorizontalNormalizedPosition = 1f / (totalPageIndex - 1) * (pageIndex - 1);
         SlideTween(newHorizontalNormalizedPosition);
     }
 
-    private void UpdatePageIndex()
-    {
-        if (!txPage) return;
-        txPage.text = $"{pageIndex}/{totalPageIndex}";
-    }
-
     /// <summary>
     /// 实现滑动
     /// </summary>
-    private void SlideContent()
+    protected virtual void SlideContent()
     {
         // 到达滑动阈值视为滑向下一页或上一页
         if (offSetMouseX <= -slidingThreshold)
@@ -71,20 +62,24 @@ public class ScrollViewPageFlippingEffect : MonoBehaviour, IBeginDragHandler, IE
             // 不够滑动阈值回弹
             StayNowPage();
         }
-        UpdatePageIndex();
     }
 
     /// <summary>
     /// 滑动动画
     /// </summary>
-    private void SlideTween(float targetValue)
+    protected virtual void SlideTween(float targetValue)
     {
-        DOTween.To(
+       Tween tween = DOTween.To(
             () => scrollRect.horizontalNormalizedPosition,
             value => scrollRect.horizontalNormalizedPosition = value,
             targetValue,
-            0.2f
+            speed
         ).SetEase(Ease.Linear);
+       // 添加动画完成的回调
+       tween.onComplete = () =>
+       {
+           SendMessageUpwards("PageFlippingCompleted", SendMessageOptions.DontRequireReceiver);
+       };
 
         if (pageIndex == 1)
         {

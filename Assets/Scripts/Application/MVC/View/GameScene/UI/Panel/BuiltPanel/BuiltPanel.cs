@@ -67,13 +67,13 @@ public class BuiltPanel : BasePanel
     /// 显示创建塔面板
     /// </summary>
     /// <param name="cellWorldPos"></param>
-    /// <param name="iconsDic"></param>
+    /// <param name="towersDataDic"></param>
     /// <param name="showDir">显示位置</param>
-    public void ShowCreatePanel(Vector3 cellWorldPos, Dictionary<int, Sprite> iconsDic, EBuiltPanelShowDir showDir)
+    public void ShowCreatePanel(Vector3 cellWorldPos, Dictionary<TowerData, Sprite> towersDataDic, EBuiltPanelShowDir showDir)
     {
         IsShowCreatePanel = true;
         Vector2 uiPos = WorldPosToUIPos(cellWorldPos);
-        createPanel.Show(uiPos, cellWorldPos, iconsDic, showDir);
+        createPanel.Show(uiPos, cellWorldPos, towersDataDic, showDir);
     }
 
     public void ShowUpGradePanel(Vector3 cellWorldPos, Sprite icon, int upGradeMoney, int sellMoney, float attackRange, EBuiltPanelShowDir showDir)

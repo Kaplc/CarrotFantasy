@@ -26,7 +26,7 @@ public class SelectBigLevelPanelMediator : Mediator
     {
         return new string[]
         {
-            NotificationName.SHOW_SELECTBIGLEVELPANEL
+            NotificationName.SHOW_SELECTBIGLEVELPANEL,
         };
 
     }
@@ -35,6 +35,12 @@ public class SelectBigLevelPanelMediator : Mediator
     {
         base.HandleNotification(notification);
 
-        Panel = UIManager.Instance.Show<SelectBigLevelPanel>(false);
+        switch (notification.Name)
+        {
+            case NotificationName.SHOW_SELECTBIGLEVELPANEL:
+                Panel = UIManager.Instance.Show<SelectBigLevelPanel>(false);
+                break;
+        }
+        
     }
 }

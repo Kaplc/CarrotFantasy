@@ -29,3 +29,4 @@ MonoBehaviour:
     roadSpritePath: Map/BigLevel0/Road1
     pathList: []
     towerList: []
+  image: {fileID: 21300000, guid: 36c2481e29204f94ea9c422958ee22f7, type: 3}

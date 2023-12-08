@@ -13,7 +13,7 @@ public class CreateTowerCommand : SimpleCommand
     {
         base.Execute(notification);
         CreateTowerArgsBogy body = notification.Body as CreateTowerArgsBogy;
-        GameManager.Instance.spawner.CreateTowerObject(body.towerID, body.cellWorldPos);
+        GameManager.Instance.spawner.CreateTowerObject(body.towerData, body.cellWorldPos);
     }
 }
 

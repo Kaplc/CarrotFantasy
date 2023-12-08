@@ -33,12 +33,14 @@ public class BuiltPanelMediator : Mediator
             case NotificationName.SHOW_CREATEPANEL:
 
                 ViewComponent = UIManager.Instance.Show<BuiltPanel>();
+                
                 CreatePanelArgsBody createPanelArgsBody = notification.Body as CreatePanelArgsBody;
                 Panel.ShowCreatePanel(
                     createPanelArgsBody.createPos, 
-                    createPanelArgsBody.iconsDic, 
+                    createPanelArgsBody.towersDataDic, 
                     createPanelArgsBody.showDir
                     );
+                
                 break;
             case NotificationName.SHOW_UPGRADEPANEL:
 

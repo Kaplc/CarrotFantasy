@@ -26,7 +26,8 @@ public class SelectLevelPanelMediator : Mediator
     {
         return new string[]
         {
-            NotificationName.SHOW_SELECTLEVELPANEL
+            NotificationName.SHOW_SELECTLEVELPANEL,
+            NotificationName.LOADED_BIGLEVELDATA
         };
     }
 
@@ -38,6 +39,11 @@ public class SelectLevelPanelMediator : Mediator
         {
             case NotificationName.SHOW_SELECTLEVELPANEL:
                 Panel = UIManager.Instance.Show<SelectLevelPanel>(false);
+                // 获取当前选择的大关卡数据
+                SendNotification(NotificationName.LOAD_BIGLEVELDATA, notification.Body);
+                break;
+            case NotificationName.LOADED_BIGLEVELDATA:
+                Panel.CreateLevelButton(notification.Body as BigLevelData);
                 break;
         }
     }

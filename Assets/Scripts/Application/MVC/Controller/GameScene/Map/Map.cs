@@ -387,23 +387,21 @@ public class Map : MonoBehaviour
     /// </summary>
     private void ShowCreatePanel(Vector3 createPos, EBuiltPanelShowDir showDir)
     {
-        Dictionary<int, Sprite> iconsDic = new Dictionary<int, Sprite>();
-
-        int[] towersID = GameManager.Instance.nowLevelData.towersID;
+        Dictionary<TowerData, Sprite> towersDataDic = new Dictionary<TowerData, Sprite>();
+        List<TowerData> towersData = GameManager.Instance.nowLevelData.towersData;
         // 获取当前关卡可创建塔的所有Icons
-        for (int i = 0; i < towersID.Length; i++)
+        for (int i = 0; i < towersData.Count; i++)
         {
-            TowerData towerData = GameManager.Instance.towersData[towersID[i]];
             // 判断是否够钱, 获取0级的Icon
-            if (GameManager.Instance.money >= towerData.prices[0])
+            if (GameManager.Instance.money >= towersData[i].prices[0])
             {
                 // 普通图标
-                iconsDic.Add(towerData.id, towerData.icons);
+                towersDataDic.Add(towersData[i], towersData[i].icon);
             }
             else
             {
                 // 灰色图标
-                iconsDic.Add(towerData.id, towerData.greyIcons);
+                towersDataDic.Add(towersData[i], towersData[i].greyIcon);
             }
         }
 
@@ -411,7 +409,7 @@ public class Map : MonoBehaviour
         GameFacade.Instance.SendNotification(NotificationName.SHOW_CREATEPANEL, new CreatePanelArgsBody()
         {
             createPos = createPos,
-            iconsDic = iconsDic,
+            towersDataDic = towersDataDic,
             showDir = showDir
         });
     }

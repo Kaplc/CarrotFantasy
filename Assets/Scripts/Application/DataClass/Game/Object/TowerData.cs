@@ -16,6 +16,7 @@ public class TowerData : ScriptableObject
     public List<string> bulletsPrefabsPath; // 每级子弹预设体路径
     public List<int> prices; // 每级价格
     public List<int> sellPrices; // 每级卖掉价格
-    public Sprite icons; // 创建Icon
-    public Sprite greyIcons; // 不够价钱Icon
+    public Sprite icon; // 创建Icon
+    public Sprite greyIcon; // 不够价钱Icon
+    public Sprite selectLevelIcon; // 选择关卡时的icon
 }

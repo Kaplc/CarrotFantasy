@@ -5,6 +5,6 @@ using UnityEngine;
 public class CreatePanelArgsBody
 {
     public Vector3 createPos;
-    public Dictionary<int, Sprite> iconsDic;
+    public Dictionary<TowerData, Sprite> towersDataDic;
     public EBuiltPanelShowDir showDir;
 }

@@ -8,6 +8,11 @@ using UnityEngine.UI;
 /// </summary>
 public class HelpPanel : BasePanel
 {
+    private bool showHelpPage;
+    private bool showMonsterPage;
+    private bool showTowerPage;
+    private float oldValue;
+    
     public Button btnHome;
     public Toggle tgHelp;
     public Toggle tgMonster;
@@ -17,15 +22,7 @@ public class HelpPanel : BasePanel
     public Transform towerPage;
     public Transform monsterPage;
     public Transform bottomImage;
-    public Text txBottomPageNumber;
-
-    private bool showHelpPage;
-    private bool showMonsterPage;
-    private bool showTowerPage;
     
-    private float oldValue;
-    
-
     #region 页面属性
 
     // 显示HelpPage
@@ -42,8 +39,6 @@ public class HelpPanel : BasePanel
             helpPage.gameObject.SetActive(value); // help页面
             monsterPage.gameObject.SetActive(!value); // 怪物页面
             towerPage.gameObject.SetActive(!value); // tower页面
-
-            txBottomPageNumber.text = "1/4";
         }
     }
 
@@ -74,8 +69,6 @@ public class HelpPanel : BasePanel
             helpPage.gameObject.SetActive(!value);
             monsterPage.gameObject.SetActive(!value);
             towerPage.gameObject.SetActive(value);
-            
-            txBottomPageNumber.text = "1/13";
         }
     }
 

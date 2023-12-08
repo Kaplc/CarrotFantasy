@@ -15,7 +15,7 @@ public class CreatePanel : MonoBehaviour
     /// <param name="showDir">显示方向</param>
     /// <param name="uiPos">ui的位置坐标</param>
     /// <param name="cellWorldPos">格子世界坐标</param>
-    public void Show(Vector2 uiPos, Vector3 cellWorldPos, Dictionary<int, Sprite> iconsDic, EBuiltPanelShowDir showDir)
+    public void Show(Vector2 uiPos, Vector3 cellWorldPos, Dictionary<TowerData, Sprite> towersDataDic, EBuiltPanelShowDir showDir)
     {
         // 设置面板中心位置为格子中心
         ((RectTransform)transform).anchoredPosition = uiPos;
@@ -23,23 +23,25 @@ public class CreatePanel : MonoBehaviour
         // 创建遍历计数器
         int count = 0;
         // 创建按钮
-        foreach (KeyValuePair<int, Sprite> item in iconsDic)
+        foreach (KeyValuePair<TowerData, Sprite> item in towersDataDic)
         {
-            ButtonTower button = Instantiate(Resources.Load<GameObject>("UI/Button/ButtonCreateTower"), iconsRect).GetComponent<ButtonTower>();
+            Button button =Instantiate(Resources.Load<GameObject>("UI/Button/ButtonCreateTower"), iconsRect).GetComponent<Button>();
+            // ButtonTower button = Instantiate(Resources.Load<GameObject>("UI/Button/ButtonCreateTower"), iconsRect).GetComponent<ButtonTower>();
             // 设置信息
-            button.towerID = item.Key;
-            button.icon.sprite = item.Value;
-            button.cellWorldPos = cellWorldPos;
+            button.GetComponent<Image>().sprite = item.Value;
+            // button.towerID = item.Key;
+            // button.icon.sprite = item.Value;
+            // button.cellWorldPos = cellWorldPos;
 
             // 设置位置
             RectTransform buttonRect = button.transform as RectTransform;
             switch (showDir)
             {
                 case EBuiltPanelShowDir.Up:
-                    buttonRect.anchoredPosition = new Vector2(-40 * (iconsDic.Count - 1) + 80 * count, buttonRect.anchoredPosition.y);
+                    buttonRect.anchoredPosition = new Vector2(-40 * (towersDataDic.Count - 1) + 80 * count, buttonRect.anchoredPosition.y);
                     break;
                 case EBuiltPanelShowDir.Down:
-                    buttonRect.anchoredPosition = new Vector2(-40 * (iconsDic.Count - 1) + 80 * count, -buttonRect.anchoredPosition.y);
+                    buttonRect.anchoredPosition = new Vector2(-40 * (towersDataDic.Count - 1) + 80 * count, -buttonRect.anchoredPosition.y);
                     break;
                 case EBuiltPanelShowDir.Right:
                     break;
@@ -48,6 +50,16 @@ public class CreatePanel : MonoBehaviour
             }
 
             count++;
+            
+            // 监听点击事件
+            button.onClick.AddListener(() =>
+            {
+                GameFacade.Instance.SendNotification(NotificationName.CREATE_TOWER, new CreateTowerArgsBogy()
+                {
+                    towerData = item.Key,
+                    cellWorldPos = cellWorldPos
+                });
+            });
         }
     }
 }

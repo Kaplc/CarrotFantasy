@@ -79,10 +79,8 @@ public class Spawner : MonoBehaviour
     /// </summary>
     /// <param name="towerID">塔id</param>
     /// <param name="cellWorldPos">创建的位置世界坐标</param>
-    public void CreateTowerObject(int towerID, Vector3 cellWorldPos)
+    public void CreateTowerObject(TowerData towerData, Vector3 cellWorldPos)
     {
-        TowerData towerData = GameManager.Instance.towersData[towerID];
-        
         // 够钱才创建
         if (GameManager.Instance.money >= towerData.prices[0])
         {
@@ -167,11 +165,9 @@ public class Spawner : MonoBehaviour
 
     private IEnumerator SpawnCoroutine()
     {
-        RoundData roundData;
-
         for (int i = 0; i < levelData.roundDataList.Count; i++)
         {
-            roundData = levelData.roundDataList[i];
+            var roundData = levelData.roundDataList[i];
             for (int j = 0; j < roundData.waveCount; j++)
             {
                 if (GameManager.Instance.Pause)
@@ -184,11 +180,10 @@ public class Spawner : MonoBehaviour
                     // 取消暂停继续时间
                     yield return new WaitForSeconds(roundData.intervalTimeEach + lastSpawnTime - GameManager.Instance.PauseTime); // 还应继续读多少秒才下一个
                 }
-                
-                string prefabsPath = GameManager.Instance.monstersData[roundData.monsterId].prefabsPath;
+
+                string prefabsPath = roundData.monsterData.prefabsPath;
                 // 缓存池取出
                 Monster monster = GameManager.Instance.PoolManager.GetObject(prefabsPath).GetComponent<Monster>();
-                // monster.OnGet(); // 取出时执行还原方法
                 // 保存出生的怪物
                 monsters.Add(monster);
                 // 记录时间

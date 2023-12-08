@@ -13,8 +13,9 @@ public class InitGameManagerControllerCommand : SimpleCommand
         base.Execute(notification);
         
         // 初始化GameController注册命令
-        GameFacade.Instance.RegisterCommand(NotificationName.LOADED_LEVELDATA, ()=> new AcceptDataCommand());
-
+        GameFacade.Instance.RegisterCommand(NotificationName.LOADED_LEVELMAPDATA, ()=> new AcceptDataCommand());
+        
+        GameFacade.Instance.RegisterCommand(NotificationName.SELECT_BIGLEVEL, () => new SelectBigLevelCommand());
         GameFacade.Instance.RegisterCommand(NotificationName.LOAD_GAME, () => new LoadGameCommand());
         GameFacade.Instance.RegisterCommand(NotificationName.START_GAME, () => new StartGameCommand());
         GameFacade.Instance.RegisterCommand(NotificationName.INIT_GAME, ()=> new InitGameCommand());
@@ -23,6 +24,19 @@ public class InitGameManagerControllerCommand : SimpleCommand
         GameFacade.Instance.RegisterCommand(NotificationName.PAUSE_GAME, ()=>new PauseGameCommand());
         GameFacade.Instance.RegisterCommand(NotificationName.CONTINUE_GAME, ()=>new ContinueGameCommand());
         GameFacade.Instance.RegisterCommand(NotificationName.ALLOW_CLICKCELL, () => new AllowClickCellCommand());
+    }
+}
+
+/// <summary>
+/// 选择大关卡命令
+/// </summary>
+public class SelectBigLevelCommand : SimpleCommand
+{
+    public override void Execute(INotification notification)
+    {
+        base.Execute(notification);
+        GameManager.Instance.nowBigLevelId = (int)notification.Body;
+        SendNotification(NotificationName.SHOW_SELECTLEVELPANEL, GameManager.Instance.nowBigLevelId);
     }
 }
 
@@ -38,9 +52,10 @@ public class LoadGameCommand : SimpleCommand
         // 加载场景
         ZFrameWorkSceneManager.Instance.LoadSceneAsync("3.GameScene", () =>
         {
-            // 加载当前关卡数据
+            LevelData levelData = notification.Body as LevelData;
+            // 加载当前关卡的地图数据
             GameDataProxy gameDataProxy = GameFacade.Instance.RetrieveProxy("GameDataProxy") as GameDataProxy;
-            gameDataProxy?.LoadLevelData(GameManager.Instance.nowLevelId);
+            gameDataProxy?.LoadMapData(levelData);
         });
     }
 }
@@ -56,11 +71,12 @@ public class AcceptDataCommand : SimpleCommand
 
         switch (notification.Name)
         {
-            case NotificationName.LOADED_LEVELDATA:
-                LevelDataBody body = notification.Body as LevelDataBody;
-                GameManager.Instance.nowLevelData = body?.levelData;
-                GameManager.Instance.monstersData = body?.monstersData;
-                GameManager.Instance.towersData = body?.towersData;
+            case NotificationName.LOADED_LEVELMAPDATA:
+                // LevelDataBody body = notification.Body as LevelDataBody;
+                // GameManager.Instance.nowLevelData = body?.levelData;
+                // GameManager.Instance.monstersData = body?.monstersData;
+                // GameManager.Instance.towersData = body?.towersData;
+                GameManager.Instance.nowLevelData = notification.Body as LevelData;
                 break;
         }
         

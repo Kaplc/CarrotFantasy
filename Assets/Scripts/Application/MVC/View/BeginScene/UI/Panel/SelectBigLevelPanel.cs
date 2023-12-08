@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class SelectBigLevelPanel : BasePanel
@@ -14,7 +15,7 @@ public class SelectBigLevelPanel : BasePanel
 
     public Button btnLeft;
     public Button btnRight;
-    public ScrollViewPageFlippingEffect scrollRectEffect;
+    public BasePageFlipping pageFlipping;
 
     protected override void Init()
     {
@@ -23,21 +24,21 @@ public class SelectBigLevelPanel : BasePanel
         {
             // 记录选择的大关卡索引
             GameManager.Instance.nowBigLevelId = 0;
-            PanelMediator.SendNotification(NotificationName.SHOW_SELECTLEVELPANEL);
+            PanelMediator.SendNotification(NotificationName.SHOW_SELECTLEVELPANEL, GameManager.Instance.nowBigLevelId);
 
             UIManager.Instance.Hide<SelectBigLevelPanel>(false);
         });
         btnBigLevel1.onClick.AddListener(() =>
         {
             GameManager.Instance.nowBigLevelId = 1;
-            PanelMediator.SendNotification(NotificationName.SHOW_SELECTLEVELPANEL);
+            PanelMediator.SendNotification(NotificationName.SHOW_SELECTLEVELPANEL, GameManager.Instance.nowBigLevelId);
 
             UIManager.Instance.Hide<SelectBigLevelPanel>(false);
         });
         btnBigLevel2.onClick.AddListener(() =>
         {
             GameManager.Instance.nowBigLevelId = 2;
-            PanelMediator.SendNotification(NotificationName.SHOW_SELECTLEVELPANEL);
+            PanelMediator.SendNotification(NotificationName.SHOW_SELECTLEVELPANEL, GameManager.Instance.nowBigLevelId);
 
             UIManager.Instance.Hide<SelectBigLevelPanel>(false);
         });
@@ -57,9 +58,9 @@ public class SelectBigLevelPanel : BasePanel
 
         btnLeft.onClick.AddListener(() =>
         {
-            scrollRectEffect.LastPage();
+            pageFlipping.LastPage();
 
-            if (scrollRectEffect.pageIndex == 1)
+            if (pageFlipping.pageIndex == 1)
             {
                 // 最小页码隐藏左边按钮
                 btnLeft.gameObject.SetActive(false);
@@ -74,9 +75,9 @@ public class SelectBigLevelPanel : BasePanel
 
         btnRight.onClick.AddListener(() =>
         {
-            scrollRectEffect.NextPage();
+            pageFlipping.NextPage();
 
-            if (scrollRectEffect.pageIndex == scrollRectEffect.totalPageIndex)
+            if (pageFlipping.pageIndex == pageFlipping.totalPageIndex)
             {
                 // 最大页码隐藏右边按钮
                 btnRight.gameObject.SetActive(false);
@@ -88,6 +89,9 @@ public class SelectBigLevelPanel : BasePanel
                 btnRight.gameObject.SetActive(true);
             }
         });
+        
+        // 开始为第一页自动隐藏左边按钮
+        btnLeft.gameObject.SetActive(false);
     }
 
     #region 接受ScrollView的消息

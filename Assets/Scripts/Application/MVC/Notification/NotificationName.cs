@@ -9,8 +9,10 @@ public class NotificationName
     public const string INIT = "Init"; // 游戏初始化
     public const string INIT_GAMEMANAGERCONTROLLER = "InitGameManagerController";
     public const string INIT_GAMEDATAPROXY = "InitGameDataProxy";
+    public const string INIT_GAMEDATA = "InitGameData"; // 初始化数据
     public const string INIT_END = "InitEnd"; // 游戏初始化结束
 
+    public const string SELECT_BIGLEVEL = "SelectBigLevel";
     public const string LOAD_GAME = "LoadGame"; // 开始加载游戏
     public const string START_GAME = "StartGame"; // 开始游戏
     public const string RESTART_GAME = "RestartGame"; // 重新开始
@@ -70,7 +72,10 @@ public class NotificationName
     #region 数据相关
     // 关卡数据
     public const string LOAD_LEVELDATA = "LoadLevelData";
-    public const string LOADED_LEVELDATA = "LoadedLevelData";
+    public const string LOADED_LEVELMAPDATA = "LoadedLevelMapData"; // 加载完成关卡地图数据
+    // 大关卡数据
+    public const string LOAD_BIGLEVELDATA = "LoadBigLevelData";
+    public const string LOADED_BIGLEVELDATA = "LoadedBigLevelData";
     // 音乐设置
     public const string LOAD_MUSICSETTINGDATA = "LoadMusciSettingData";
     public const string LOADED_MUSICSETTINGDATA = "LoadedMusicSettingData";

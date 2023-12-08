@@ -219,7 +219,7 @@ MonoBehaviour:
   btnHelp: {fileID: 77367096394878481}
   btnLeft: {fileID: 288876976605288013}
   btnRight: {fileID: 9047996888338632586}
-  scrollRectEffect: {fileID: 8849941870195382971}
+  pageFlipping: {fileID: 949090166324950257}
 --- !u!1 &77367096394878495
 GameObject:
   m_ObjectHideFlags: 0
@@ -423,7 +423,7 @@ GameObject:
   - component: {fileID: 7392480778522057279}
   - component: {fileID: 8184544077099479108}
   - component: {fileID: 9120211580841344541}
-  - component: {fileID: 8849941870195382971}
+  - component: {fileID: 949090166324950257}
   m_Layer: 5
   m_Name: Scroll View
   m_TagString: Untagged
@@ -490,7 +490,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &8849941870195382971
+--- !u!114 &949090166324950257
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -499,13 +499,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 674732193206339198}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75bcff7eaade33e479b20084fbfdf7e5, type: 3}
+  m_Script: {fileID: 11500000, guid: 1e0a034a2e353ad479e61a9cdbf72cd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   slidingThreshold: 150
   pageIndex: 0
   totalPageIndex: 3
-  txPage: {fileID: 0}
+  speed: 0.2
 --- !u!1 &1213256143861179034
 GameObject:
   m_ObjectHideFlags: 0
