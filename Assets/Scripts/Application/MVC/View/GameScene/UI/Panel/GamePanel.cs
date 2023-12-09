@@ -9,7 +9,7 @@ public class GamePanel : BasePanel
     public Button btnSpeed2;
     public Toggle tgPause;
     public Button btnMenu;
-    public Text txGem;
+    public Text txMoney;
     public Text txNowWave;
     public Text txTotalWaves;
     public Image imgPause;
@@ -44,6 +44,18 @@ public class GamePanel : BasePanel
         });
         btnSpeed2.gameObject.SetActive(false);
         imgPause.gameObject.SetActive(false);
+    }
+
+
+    public void UpdateMoney(int num)
+    {
+        txMoney.text = num.ToString();
+    }
+
+    public void UpdateWavesCount((int nowWave, int totalWavesCount) data)
+    {
+        txNowWave.text = $"{data.nowWave / 10}  {data.nowWave % 10}";
+        txTotalWaves.text = data.totalWavesCount.ToString();
     }
     
     /// <summary>

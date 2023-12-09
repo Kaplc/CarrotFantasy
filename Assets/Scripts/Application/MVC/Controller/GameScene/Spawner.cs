@@ -28,8 +28,10 @@ public class Spawner : MonoBehaviour
         GameManager.Instance.EventCenter.AddEventListener(NotificationName.START_SPAWN, StartSpawn); // 开始出怪
         GameManager.Instance.EventCenter.AddEventListener(NotificationName.GAME_OVER, StopSpawn); // 监听萝卜死亡停止出怪
         GameManager.Instance.EventCenter.AddEventListener(NotificationName.MONSTER_DEAD, CheckMonstersSurvival); // 检查怪物存活情况
+        // 更新面板波数显示
+        GameFacade.Instance.SendNotification(NotificationName.UPDATE_WAVESCOUNT, (1, levelData.roundDataList.Count));
     }
-    
+
     /// <summary>
     /// 升级塔
     /// </summary>
@@ -41,19 +43,24 @@ public class Spawner : MonoBehaviour
         {
             return;
         }
+
         // 够钱才升级
         if (GameManager.Instance.money < tower.data.prices[tower.level + 1])
         {
             return;
         }
+
         // 扣钱
         GameManager.Instance.money -= tower.data.prices[tower.level + 1];
+        // 更新面板
+        GameFacade.Instance.SendNotification(NotificationName.UPDATE_MONEY, GameManager.Instance.money);
+        // 调用更新方法
         tower.UpGrade();
         // 关闭建造面板
         GameFacade.Instance.SendNotification(NotificationName.HIDE_BUILTPANEL);
         GameFacade.Instance.SendNotification(NotificationName.ALLOW_CLICKCELL, true);
     }
-    
+
     /// <summary>
     /// 出售塔
     /// </summary>
@@ -61,23 +68,25 @@ public class Spawner : MonoBehaviour
     {
         Cell cell = Map.GetCell(cellWorldPos);
         BaseTower tower = cell.tower as BaseTower;
-        
+
         // 加钱
         GameManager.Instance.money += tower.data.sellPrices[tower.level];
+        // 更新面板
+        GameFacade.Instance.SendNotification(NotificationName.UPDATE_MONEY, GameManager.Instance.money);
         // 回收对象
         GameManager.Instance.PoolManager.PushObject(tower.gameObject);
         // 清空格子
         cell.tower = null;
-        
+
         // 关闭建造面板
         GameFacade.Instance.SendNotification(NotificationName.HIDE_BUILTPANEL);
         GameFacade.Instance.SendNotification(NotificationName.ALLOW_CLICKCELL, true);
     }
-    
+
     /// <summary>
     /// 创建塔对象
     /// </summary>
-    /// <param name="towerID">塔id</param>
+    /// <param name="towerData"></param>
     /// <param name="cellWorldPos">创建的位置世界坐标</param>
     public void CreateTowerObject(TowerData towerData, Vector3 cellWorldPos)
     {
@@ -85,21 +94,21 @@ public class Spawner : MonoBehaviour
         if (GameManager.Instance.money >= towerData.prices[0])
         {
             BaseTower tower = GameManager.Instance.PoolManager.GetObject(towerData.prefabsPath).GetComponent<BaseTower>();
-            // tower.OnGet();
             tower.transform.position = cellWorldPos;
-            
             // 扣钱
             GameManager.Instance.money -= towerData.prices[0];
+            // 更新面板
+            GameFacade.Instance.SendNotification(NotificationName.UPDATE_MONEY, GameManager.Instance.money);
             // 记录该格子已经存在塔
             Map.GetCell(cellWorldPos).tower = tower;
-            
+
             // 关闭建造面板
             GameFacade.Instance.SendNotification(NotificationName.HIDE_BUILTPANEL);
             // 建造成功允许检测格子
             GameFacade.Instance.SendNotification(NotificationName.ALLOW_CLICKCELL, true);
         }
     }
-    
+
     /// <summary>
     /// 创建萝卜
     /// </summary>
@@ -107,24 +116,24 @@ public class Spawner : MonoBehaviour
     {
         carrot = GameManager.Instance.PoolManager.GetObject("Object/Carrot").GetComponent<Carrot>();
         // carrot.OnGet();
-        
+
         // 设置萝卜位置
         Cell lastPathCell = levelData.mapData.pathList[levelData.mapData.pathList.Count - 1];
         carrot.transform.position = Map.GetCellCenterPos(lastPathCell);
     }
-    
+
     /// <summary>
     /// 创建开始路牌
     /// </summary>
     public void CreateStartBrand()
     {
         startPoint = Instantiate(Resources.Load<GameObject>("Object/StartPoint")).GetComponent<Transform>();
-        
+
         // 设置开始路牌位置
         Cell firstPathCell = levelData.mapData.pathList[0];
         startPoint.position = Map.GetCellCenterPos(firstPathCell);
     }
-    
+
     /// <summary>
     /// 检查怪物存活
     /// </summary>
@@ -152,7 +161,6 @@ public class Spawner : MonoBehaviour
     private void StartSpawn()
     {
         spawnCoroutine = StartCoroutine(SpawnCoroutine());
-        
     }
 
     private void StopSpawn()
@@ -167,16 +175,11 @@ public class Spawner : MonoBehaviour
     {
         for (int i = 0; i < levelData.roundDataList.Count; i++)
         {
+            // 更新面板波数显示
+            GameFacade.Instance.SendNotification(NotificationName.UPDATE_WAVESCOUNT, (i + 1, levelData.roundDataList.Count));
+
             RoundData roundData = levelData.roundDataList[i];
-            
-            // 这一波怪总数
-            int totalCount = 0;
-            for (int j = 0; j < roundData.group.Count; j++)
-            {
-                // 累加每组怪数量
-                totalCount += roundData.group[j].count;
-            }
-            
+
             // 创建每组怪
             for (int j = 0; j < roundData.group.Count; j++)
             {
@@ -190,11 +193,11 @@ public class Spawner : MonoBehaviour
                         {
                             yield return null;
                         }
-                    
+
                         // 取消暂停继续时间
                         yield return new WaitForSeconds(roundData.intervalTimeEach + lastSpawnTime - GameManager.Instance.PauseTime); // 还应继续读多少秒才下一个
                     }
-                    
+
                     // 缓存池取出
                     Monster monster = GameManager.Instance.PoolManager.GetObject(groupData.monsterData.prefabsPath).GetComponent<Monster>();
                     // 保存出生的怪物
@@ -205,7 +208,7 @@ public class Spawner : MonoBehaviour
                     if (!(j == roundData.group.Count - 1 && k == groupData.count - 1))
                     {
                         // 每只间隔
-                        yield return new WaitForSeconds(roundData.intervalTimeEach); 
+                        yield return new WaitForSeconds(roundData.intervalTimeEach);
                     }
                 }
             }
@@ -233,7 +236,7 @@ public class Spawner : MonoBehaviour
                 GameManager.Instance.PoolManager.PushObject(monsters[i].gameObject);
             }
         }
-        
+
         monsters.Clear();
     }
 }

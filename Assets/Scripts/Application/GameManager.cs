@@ -12,6 +12,7 @@ public class GameManager : BaseMonoSingleton<GameManager>
     public EventCenter EventCenter => EventCenter.Instance;
 
     private bool pause; // 暂停标识
+    private bool stop; // 停止标识
     private float pauseTime; // 暂停时间
     public int nowBigLevelId; // 大关卡id
     public int money; // 金钱
@@ -30,15 +31,13 @@ public class GameManager : BaseMonoSingleton<GameManager>
             }
         }
     }
-
     public float PauseTime => pauseTime;
+    public bool Stop => stop;
 
     public LevelData nowLevelData; // 当前Level数据
     public Map map;
     public Spawner spawner;
     
-    
-
     protected override void Awake()
     {
         base.Awake();
@@ -51,9 +50,11 @@ public class GameManager : BaseMonoSingleton<GameManager>
     /// <summary>
     /// 初始化游戏
     /// </summary>
-    public void GameInit()
+    public void InitGame()
     {
+        stop = true;
         Pause = true;
+        allowClickCell = false;
         // 创建地图
         map = Instantiate(Resources.Load<GameObject>("Prefabs/Map")).GetComponent<Map>();
         // 地图初始化
@@ -74,18 +75,17 @@ public class GameManager : BaseMonoSingleton<GameManager>
     /// <summary>
     /// 读秒结束真正开始游戏
     /// </summary>
-    public void GameStart()
+    public void StartGame()
     {
         Pause = false;
         allowClickCell = true;
+        stop = false;
     }
     /// <summary>
     /// 游戏退出
     /// </summary>
-    public void GameExit()
+    public void ExitGame()
     {
-        Pause = true;
-        allowClickCell = false;
         // 回收萝卜和怪物
         PoolManager.PushObject(spawner.carrot.gameObject);
         spawner.OnPushAllMonster();
@@ -96,17 +96,29 @@ public class GameManager : BaseMonoSingleton<GameManager>
     /// <summary>
     /// 游戏暂停
     /// </summary>
-    public void GamePause()
+    public void PauseGame()
     {
         Pause = true;
     }
     
     /// <summary>
+    /// 停止游戏
+    /// </summary>
+    public void StopGame()
+    {
+        stop = true;
+        // 暂停且禁止鼠标检测
+        Pause = true; 
+        allowClickCell = false;
+    }
+    
+    /// <summary>
     /// 游戏继续
     /// </summary>
-    public void GameContinue()
+    public void ContinueGame()
     {
         Pause = false;
+        stop = false;
     }
 
     #endregion

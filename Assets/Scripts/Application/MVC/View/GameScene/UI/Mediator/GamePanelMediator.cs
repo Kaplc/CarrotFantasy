@@ -28,7 +28,9 @@ public class GamePanelMediator : Mediator
         return new string[]
         {
             NotificationName.SHOW_GAMEPANEL,
-            NotificationName.HIDE_GAMEPANEL
+            NotificationName.HIDE_GAMEPANEL,
+            NotificationName.UPDATE_MONEY,
+            NotificationName.UPDATE_WAVESCOUNT
         };
     }
 
@@ -45,9 +47,17 @@ public class GamePanelMediator : Mediator
                     UIManager.Instance.Hide<GamePanel>(false);
                 }
                 Panel = UIManager.Instance.Show<GamePanel>(false);
+                
                 break;
             case NotificationName.HIDE_GAMEPANEL:
                 UIManager.Instance.Hide<GamePanel>(false);
+                
+                break;
+            case NotificationName.UPDATE_MONEY:
+                Panel.UpdateMoney((int)notification.Body);
+                break;
+            case NotificationName.UPDATE_WAVESCOUNT:
+                Panel.UpdateWavesCount(((int, int))notification.Body);
                 break;
         }
     }

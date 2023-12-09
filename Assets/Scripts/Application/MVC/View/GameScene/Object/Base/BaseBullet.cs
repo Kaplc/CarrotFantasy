@@ -47,7 +47,7 @@ public abstract class BaseBullet : MonoBehaviour, IPoolObject
             }
 
             // 目标死亡立刻回收
-            if (target.isDead)
+            if (target.isDead || !target.gameObject.activeSelf)
             {
                 GameManager.Instance.PoolManager.PushObject(gameObject);
             }

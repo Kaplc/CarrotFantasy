@@ -37,9 +37,10 @@ public class WinPanelMediator : Mediator
         switch (notification.Name)
         {
             case NotificationName.SHOW_WINPANEL:
+                // 停止游戏
+                SendNotification(NotificationName.STOP_GAME);
+                
                 Panel = UIManager.Instance.Show<WinPanel>(false);
-                // 关闭格子点击检测
-                SendNotification(NotificationName.ALLOW_CLICKCELL, false);
                 break;
         }
     }

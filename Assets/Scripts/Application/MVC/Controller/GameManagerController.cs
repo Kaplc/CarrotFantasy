@@ -26,6 +26,7 @@ public class InitGameManagerControllerCommand : SimpleCommand
         GameFacade.Instance.RegisterCommand(NotificationName.SELECT_LEVEL, () => new SelectLevelCommand());
         GameFacade.Instance.RegisterCommand(NotificationName.NEXT_LEVEL, () => new NextLevelCommand());
         GameFacade.Instance.RegisterCommand(NotificationName.ALLOW_CLICKCELL, () => new AllowClickCellCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.STOP_GAME, () => new StopGameCommand());
     }
 }
 
@@ -83,14 +84,12 @@ public class InitGameCommand : SimpleCommand
     public override void Execute(INotification notification)
     {
         base.Execute(notification);
-        
-        // 游戏初始化
-        GameManager.Instance.GameInit();
-        
-        // 加载完成数据隐藏 LoadingPanel
-        SendNotification(NotificationName.HIDE_LOADINGPANEL);
         // 显示游戏面板
         SendNotification(NotificationName.SHOW_GAMEPANEL);
+        // 游戏初始化
+        GameManager.Instance.InitGame();
+        // 更新面板
+        GameFacade.Instance.SendNotification(NotificationName.UPDATE_MONEY, GameManager.Instance.money);
     }
 }
 
@@ -102,7 +101,7 @@ public class StartGameCommand : SimpleCommand
     public override void Execute(INotification notification)
     {
         base.Execute(notification);
-        GameManager.Instance.GameStart();
+        GameManager.Instance.StartGame();
         // 开始出怪
         GameManager.Instance.EventCenter.TriggerEvent(NotificationName.START_SPAWN);
     }
@@ -118,7 +117,7 @@ public class ExitGameCommand : SimpleCommand
         base.Execute(notification);
         
         // 退出游戏
-        GameManager.Instance.GameExit();
+        GameManager.Instance.ExitGame();
         
         // 关闭相关面板
         SendNotification(NotificationName.HIDE_BUILTPANEL);
@@ -150,9 +149,21 @@ public class PauseGameCommand : SimpleCommand
     public override void Execute(INotification notification)
     {
         base.Execute(notification);
-        GameManager.Instance.GamePause();
+        GameManager.Instance.PauseGame();
     }
-} 
+}
+
+/// <summary>
+/// 停止游戏
+/// </summary>
+public class StopGameCommand : SimpleCommand
+{
+    public override void Execute(INotification notification)
+    {
+        base.Execute(notification);
+        GameManager.Instance.StopGame();
+    }
+}
 
 /// <summary>
 /// 继续游戏
@@ -162,7 +173,7 @@ public class ContinueGameCommand : SimpleCommand
     public override void Execute(INotification notification)
     {
         base.Execute(notification);
-        GameManager.Instance.GameContinue();
+        GameManager.Instance.ContinueGame();
     }
 }
 

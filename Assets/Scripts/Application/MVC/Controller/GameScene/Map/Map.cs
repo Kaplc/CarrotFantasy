@@ -54,6 +54,7 @@ public class Map : MonoBehaviour
     #region 游戏相关字段
 
     [HideInInspector] public MapData nowMapData; // 当前游戏的关卡地图信息
+    private Cell lastClickCell; // 上一次点击的格子
 
     #endregion
 
@@ -337,9 +338,12 @@ public class Map : MonoBehaviour
         }
         else if (Input.GetMouseButtonDown(1))
         {
+            // 完全停止时失效
+            if (GameManager.Instance.Stop)return;
+
             // 右键关闭建造面板
             GameFacade.Instance.SendNotification(NotificationName.HIDE_BUILTPANEL);
-            GameManager.Instance.allowClickCell = true;
+            GameFacade.Instance.SendNotification(NotificationName.ALLOW_CLICKCELL, true);
         }
     }
 

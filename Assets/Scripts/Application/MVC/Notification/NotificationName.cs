@@ -21,6 +21,7 @@ public class NotificationName
     public const string PAUSE_GAME = "PauseGame"; // 暂停游戏
     public const string CONTINUE_GAME = "ContinueGame"; // 继续游戏
     public const string NEXT_LEVEL = "NextLevel"; // 下一关
+    public const string STOP_GAME = "StopGame";
     
     public const string START_SPAWN = "StartSpawn"; // 开始出怪
     public const string REACH_ENDPOINT = "ReachEndPoint"; // 怪物到达终点
@@ -69,6 +70,10 @@ public class NotificationName
     public const string CREATE_TOWER = "CreateTower"; // 创建塔
     public const string SELL_TOWER = "SellTower"; // 出售塔
     public const string UPGRADE_TOWER = "UpGradeTower"; // 升级塔
+    
+    // GamePanel
+    public const string UPDATE_MONEY = "UpdateMoney";
+    public const string UPDATE_WAVESCOUNT = "UpdateWavesCount";
 
     #endregion
 
