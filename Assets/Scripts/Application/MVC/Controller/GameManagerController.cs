@@ -23,6 +23,7 @@ public class InitGameManagerControllerCommand : SimpleCommand
         GameFacade.Instance.RegisterCommand(NotificationName.RESTART_GAME, ()=>new RestartGameCommand());
         GameFacade.Instance.RegisterCommand(NotificationName.PAUSE_GAME, ()=>new PauseGameCommand());
         GameFacade.Instance.RegisterCommand(NotificationName.CONTINUE_GAME, ()=>new ContinueGameCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.SELECT_LEVEL, () => new SelectLevelCommand());
         GameFacade.Instance.RegisterCommand(NotificationName.ALLOW_CLICKCELL, () => new AllowClickCellCommand());
     }
 }
@@ -153,7 +154,7 @@ public class RestartGameCommand : SimpleCommand
         SendNotification(NotificationName.HIDE_BUILTPANEL);
         SendNotification(NotificationName.HIDE_MENUPANEL);
         // 重新加载游戏
-        SendNotification(NotificationName.LOAD_GAME);
+        SendNotification(NotificationName.LOAD_GAME, GameManager.Instance.nowLevelData);
     }
 }
 
@@ -178,6 +179,22 @@ public class ContinueGameCommand : SimpleCommand
     {
         base.Execute(notification);
         GameManager.Instance.GameContinue();
+    }
+}
+
+/// <summary>
+/// 菜单点击选择关卡
+/// </summary>
+public class SelectLevelCommand : SimpleCommand
+{
+    public override void Execute(INotification notification)
+    {
+        base.Execute(notification);
+        
+        ZFrameWorkSceneManager.Instance.LoadSceneAsync("2.BeginScene", () =>
+        {
+            SendNotification(NotificationName.SHOW_SELECTLEVELPANEL, GameManager.Instance.nowBigLevelId);
+        });
     }
 }
 

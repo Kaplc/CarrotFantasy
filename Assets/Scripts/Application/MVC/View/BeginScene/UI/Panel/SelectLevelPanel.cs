@@ -33,9 +33,6 @@ public class SelectLevelPanel : BasePanel
         });
         btnStart.onClick.AddListener(() =>
         {
-            // 跳场景前显示LoadingPanel
-            PanelMediator.SendNotification(NotificationName.SHOW_LOADINGPANEL);
-            UIManager.Instance.Hide<SelectLevelPanel>(false);
             // 触发当前选中的Level按钮
             nowCenterButton.onClick.Invoke();
         });
@@ -72,6 +69,10 @@ public class SelectLevelPanel : BasePanel
                     return;
                 }
 
+                // 跳场景前显示LoadingPanel
+                PanelMediator.SendNotification(NotificationName.SHOW_LOADINGPANEL);
+                UIManager.Instance.Hide<SelectLevelPanel>(false);
+                
                 GameFacade.Instance.SendNotification(NotificationName.LOAD_GAME, levelData);
             });
         }

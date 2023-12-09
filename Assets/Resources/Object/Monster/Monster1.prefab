@@ -93,7 +93,7 @@ Animator:
   m_GameObject: {fileID: 1891311104066969968}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 6766befc3af3b47419212c9339660c09, type: 2}
+  m_Controller: {fileID: 22100000, guid: 7fce37cf472ac2245948e87d5560b561, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -117,5 +117,3 @@ MonoBehaviour:
   isDead: 0
   data: {fileID: 11400000, guid: bbcd0d4dc615e4e43891da72f72db3b4, type: 2}
   pathIndex: 0
-  nextCell:
-    tower: {fileID: 0}

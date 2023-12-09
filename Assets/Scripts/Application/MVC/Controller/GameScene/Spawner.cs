@@ -167,33 +167,75 @@ public class Spawner : MonoBehaviour
     {
         for (int i = 0; i < levelData.roundDataList.Count; i++)
         {
-            var roundData = levelData.roundDataList[i];
-            for (int j = 0; j < roundData.waveCount; j++)
+            RoundData roundData = levelData.roundDataList[i];
+            
+            // 这一波怪总数
+            int totalCount = 0;
+            for (int j = 0; j < roundData.group.Count; j++)
             {
-                if (GameManager.Instance.Pause)
+                // 累加每组怪数量
+                totalCount += roundData.group[j].count;
+            }
+            
+            // 创建每组怪
+            for (int j = 0; j < roundData.group.Count; j++)
+            {
+                GroupData groupData = roundData.group[j];
+                for (int k = 0; k < groupData.count; k++)
                 {
-                    while (GameManager.Instance.Pause)
+                    // 实现暂停
+                    if (GameManager.Instance.Pause)
                     {
-                        yield return null;
+                        while (GameManager.Instance.Pause)
+                        {
+                            yield return null;
+                        }
+                    
+                        // 取消暂停继续时间
+                        yield return new WaitForSeconds(roundData.intervalTimeEach + lastSpawnTime - GameManager.Instance.PauseTime); // 还应继续读多少秒才下一个
                     }
                     
-                    // 取消暂停继续时间
-                    yield return new WaitForSeconds(roundData.intervalTimeEach + lastSpawnTime - GameManager.Instance.PauseTime); // 还应继续读多少秒才下一个
+                    // 缓存池取出
+                    Monster monster = GameManager.Instance.PoolManager.GetObject(groupData.monsterData.prefabsPath).GetComponent<Monster>();
+                    // 保存出生的怪物
+                    monsters.Add(monster);
+                    // 记录时间
+                    lastSpawnTime = Time.time;
+                    // 最后一组怪最后一只跳过等待
+                    if (!(j == roundData.group.Count - 1 && k == groupData.count - 1))
+                    {
+                        // 每只间隔
+                        yield return new WaitForSeconds(roundData.intervalTimeEach); 
+                    }
                 }
-
-                string prefabsPath = roundData.monsterData.prefabsPath;
-                // 缓存池取出
-                Monster monster = GameManager.Instance.PoolManager.GetObject(prefabsPath).GetComponent<Monster>();
-                // 保存出生的怪物
-                monsters.Add(monster);
-                // 记录时间
-                lastSpawnTime = Time.time;
-                // 当前波最后一个怪跳过每只间隔读秒
-                if (roundData.waveCount - 1 == j) break;
-
-                // 每只间隔
-                yield return new WaitForSeconds(roundData.intervalTimeEach);
             }
+            
+            // for (int j = 0; j < totalCount; j++)
+            // {
+            //     if (GameManager.Instance.Pause)
+            //     {
+            //         while (GameManager.Instance.Pause)
+            //         {
+            //             yield return null;
+            //         }
+            //         
+            //         // 取消暂停继续时间
+            //         yield return new WaitForSeconds(roundData.intervalTimeEach + lastSpawnTime - GameManager.Instance.PauseTime); // 还应继续读多少秒才下一个
+            //     }
+            //
+            //     string prefabsPath = roundData.monsterData.prefabsPath;
+            //     // 缓存池取出
+            //     Monster monster = GameManager.Instance.PoolManager.GetObject(prefabsPath).GetComponent<Monster>();
+            //     // 保存出生的怪物
+            //     monsters.Add(monster);
+            //     // 记录时间
+            //     lastSpawnTime = Time.time;
+            //     // 当前波最后一个怪跳过每只间隔读秒
+            //     if (roundData.waveCount - 1 == j) break;
+            //
+            //     // 每只间隔
+            //     yield return new WaitForSeconds(roundData.intervalTimeEach);
+            // }
 
             // 下一波前直接判断还有无下一波怪物
             if (levelData.roundDataList.Count - 1 == i)

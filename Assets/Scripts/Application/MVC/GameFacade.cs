@@ -28,8 +28,7 @@ public class GameFacade : Facade
         RegisterCommand(NotificationName.INIT_GAMEDATAPROXY, () => new InitGameDataProxyCommand());
         
         RegisterCommand(NotificationName.INIT_END, () => new InitEndCommand());
-        RegisterCommand(NotificationName.SELECT_LEVEL, () => new SelectLevelCommand());
-
+        
         // SpawnerController
         RegisterCommand(NotificationName.CREATE_TOWER, () => new CreateTowerCommand());
         RegisterCommand(NotificationName.SELL_TOWER, () => new SellTowerCommand());
