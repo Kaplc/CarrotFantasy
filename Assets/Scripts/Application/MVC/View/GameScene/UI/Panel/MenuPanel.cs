@@ -13,21 +13,24 @@ public class MenuPanel : BasePanel
     {
         btnContinue.onClick.AddListener(() =>
         {
+            UIManager.Instance.Hide<MenuPanel>(false);
             PanelMediator.SendNotification(NotificationName.CONTINUE_GAME);
             PanelMediator.SendNotification(NotificationName.ALLOW_CLICKCELL, true);
-            UIManager.Instance.Hide<MenuPanel>(false);
         });
         
         btnReStart.onClick.AddListener(() =>
         {
-            PanelMediator.SendNotification(NotificationName.RESTART_GAME);
             UIManager.Instance.Hide<MenuPanel>(false);
+            PanelMediator.SendNotification(NotificationName.RESTART_GAME);
         });
         
         btnSelect.onClick.AddListener(() =>
         {
-            PanelMediator.SendNotification(NotificationName.EXIT_GAME);
             UIManager.Instance.Hide<MenuPanel>(false);
+            // 退出游戏
+            PanelMediator.SendNotification(NotificationName.EXIT_GAME);
+            // 进入选择面板
+            PanelMediator.SendNotification(NotificationName.SELECT_LEVEL);;
         });
     }
     

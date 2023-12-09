@@ -133,26 +133,44 @@ public class GameDataProxy : Proxy
     }
 
     /// <summary>
-    /// 获取小关卡数据
+    /// 加载关卡的地图数据
     /// </summary>
-    /// <param name="levelId">关卡id</param>
-    public void LoadMapData(LevelData levelData)
+    /// <param name="levelData">未加载地图数据的关卡数据</param>
+    private void LoadMapData(LevelData levelData)
     {
         // 已经加载过直接返回
         if (levelsData.ContainsKey(levelData.levelId))
         {
-            SendNotification(NotificationName.LOADED_LEVELMAPDATA, levelsData[levelData.levelId]);
+            SendNotification(NotificationName.LOADED_LEVELDATA, levelsData[levelData.levelId]);
             return;
         }
-
-        // 加载LevelData
-        // LevelData levelData = Resources.Load<LevelData>(DataPath.LEVELRDATA_PATH + $"Level{data.levelId}Data");
+        
         // 加载地图数据
         levelData.mapData = GameManager.Instance.BinaryManager.Load<MapData>(DataPath.MAPDATA_PATH + $"{levelData.mapDataPath}.md");
         levelsData.Add(levelData.levelId, levelData);
 
-        // 带出指定levelId的关卡数据和怪物数据
-        SendNotification(NotificationName.LOADED_LEVELMAPDATA, levelData);
+        // 带出指定的关卡数据
+        SendNotification(NotificationName.LOADED_LEVELDATA, levelData);
+    }
+    
+    /// <summary>
+    /// 根据关卡id获取关卡数据
+    /// </summary>
+    /// <param name="id">关卡id</param>
+    public void LoadLevelData(int id)
+    {
+        foreach (KeyValuePair<int,BigLevelData> item in bigLevelsData)
+        {
+            for (int i = 0; i < item.Value.levels.Count; i++)
+            {
+                if (id == item.Value.levels[i].levelId)
+                {
+                    // 加载地图数据
+                    LoadMapData(item.Value.levels[i]);
+                    return;
+                }
+            }
+        }
     }
 
     /// <summary>

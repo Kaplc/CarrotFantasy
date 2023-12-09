@@ -14,7 +14,6 @@ public class GameManager : BaseMonoSingleton<GameManager>
     private bool pause; // 暂停标识
     private float pauseTime; // 暂停时间
     public int nowBigLevelId; // 大关卡id
-    public int nowLevelId; // 小关卡id
     public int money; // 金钱
     public bool allowClickCell; // 允许点击格子
 

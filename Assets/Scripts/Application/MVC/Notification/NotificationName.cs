@@ -20,6 +20,7 @@ public class NotificationName
     public const string INIT_GAME = "InitGame"; // 初始化游戏
     public const string PAUSE_GAME = "PauseGame"; // 暂停游戏
     public const string CONTINUE_GAME = "ContinueGame"; // 继续游戏
+    public const string NEXT_LEVEL = "NextLevel"; // 下一关
     
     public const string START_SPAWN = "StartSpawn"; // 开始出怪
     public const string REACH_ENDPOINT = "ReachEndPoint"; // 怪物到达终点
@@ -58,6 +59,8 @@ public class NotificationName
     
     public const string HIDE_LOADINGPANEL = "HideLoadingPanel"; // 隐藏加载面板
 
+    public const string SHOW_ENDPANEL = "ShowEndPanel"; // 显示通关面板
+
     #endregion
 
     #region 控件事件
@@ -72,7 +75,7 @@ public class NotificationName
     #region 数据相关
     // 关卡数据
     public const string LOAD_LEVELDATA = "LoadLevelData";
-    public const string LOADED_LEVELMAPDATA = "LoadedLevelMapData"; // 加载完成关卡地图数据
+    public const string LOADED_LEVELDATA = "LoadedLevelMapData"; // 加载完成关卡
     // 大关卡数据
     public const string LOAD_BIGLEVELDATA = "LoadBigLevelData";
     public const string LOADED_BIGLEVELDATA = "LoadedBigLevelData";

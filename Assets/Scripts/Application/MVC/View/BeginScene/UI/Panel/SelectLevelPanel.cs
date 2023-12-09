@@ -68,12 +68,10 @@ public class SelectLevelPanel : BasePanel
                     pageFlipping.ToPage(btnsLevel.IndexOf(button) + 1);
                     return;
                 }
-
-                // 跳场景前显示LoadingPanel
-                PanelMediator.SendNotification(NotificationName.SHOW_LOADINGPANEL);
+                
                 UIManager.Instance.Hide<SelectLevelPanel>(false);
                 
-                GameFacade.Instance.SendNotification(NotificationName.LOAD_GAME, levelData);
+                GameFacade.Instance.SendNotification(NotificationName.LOAD_GAME, levelData.levelId);
             });
         }
 
