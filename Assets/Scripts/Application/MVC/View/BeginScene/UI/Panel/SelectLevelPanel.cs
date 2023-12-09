@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class SelectLevelPanel : BasePanel
 {
+    public int pageIndex; // 当前选择的页码
+    
     public Button btnBack;
     public Button btnHelp;
     public Button btnStart;
@@ -14,6 +16,7 @@ public class SelectLevelPanel : BasePanel
     private List<Image> towerIcons = new List<Image>();
     private List<Button> btnsLevel = new List<Button>();
     private Button nowCenterButton; // 当前在中间的关卡按钮
+    
     private LevelData nowCenterLevelData; // 当前中间的关卡数据
 
     public SelectLevelPanelPageFlipping pageFlipping;
@@ -23,11 +26,12 @@ public class SelectLevelPanel : BasePanel
     {
         btnBack.onClick.AddListener(() =>
         {
-            PanelMediator.SendNotification(NotificationName.SHOW_SELECTBIGLEVELPANEL);
             UIManager.Instance.Hide<SelectLevelPanel>(false);
+            PanelMediator.SendNotification(NotificationName.SHOW_SELECTBIGLEVELPANEL);
         });
         btnHelp.onClick.AddListener(() =>
         {
+            UIManager.Instance.Hide<SelectLevelPanel>(false);
             PanelMediator.SendNotification(NotificationName.SHOW_BEGINPANEL);
             PanelMediator.SendNotification(NotificationName.SHOW_HELPPANEL, false);
         });
@@ -39,6 +43,23 @@ public class SelectLevelPanel : BasePanel
 
         // 初始化更新
         PageFlippingCompleted();
+
+        // 滑动到上一次打开的关卡
+        ToPage();
+    }
+
+    private void ToPage()
+    {
+        if (!GameManager.Instance.nowLevelData)return;
+
+        for (int i = 0; i < bigLevelData.levels.Count; i++)
+        {
+            if (GameManager.Instance.nowLevelData.levelId == bigLevelData.levels[i].levelId)
+            {
+                pageFlipping.ToPage(i + 1);
+                return;
+            }
+        }
     }
 
     /// <summary>
@@ -54,7 +75,7 @@ public class SelectLevelPanel : BasePanel
         {
             Button button = Instantiate(Resources.Load<GameObject>("UI/Button/ButtonLevel"), content).GetComponent<Button>();
             btnsLevel.Add(button);
-            
+
             // 修改图片
             Image buttonImage = button.GetComponent<Image>();
             buttonImage.sprite = data.levels[i].image;
@@ -68,9 +89,9 @@ public class SelectLevelPanel : BasePanel
                     pageFlipping.ToPage(btnsLevel.IndexOf(button) + 1);
                     return;
                 }
-                
+
                 UIManager.Instance.Hide<SelectLevelPanel>(false);
-                
+
                 GameFacade.Instance.SendNotification(NotificationName.LOAD_GAME, levelData.levelId);
             });
         }
@@ -129,14 +150,14 @@ public class SelectLevelPanel : BasePanel
         nowCenterButton.GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
 
         // 获取icons
-        List<Sprite> towerIcons = new List<Sprite>();
+        List<Sprite> towerIconSprites = new List<Sprite>();
         for (int i = 0; i < nowCenterLevelData.towersData.Count; i++)
         {
-            towerIcons.Add(nowCenterLevelData.towersData[i].selectLevelIcon);
+            towerIconSprites.Add(nowCenterLevelData.towersData[i].selectLevelIcon);
         }
 
         // 更新面板
-        UpdateTowerIcon(towerIcons.ToArray());
+        UpdateTowerIcon(towerIconSprites.ToArray());
         UpdateWavesCount(nowCenterLevelData.roundDataList.Count);
     }
 }

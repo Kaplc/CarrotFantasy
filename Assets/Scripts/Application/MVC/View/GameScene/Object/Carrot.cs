@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using PureMVC.Patterns.Mediator;
 using UnityEngine;
 
 public class Carrot : BaseRole, IPoolObject
