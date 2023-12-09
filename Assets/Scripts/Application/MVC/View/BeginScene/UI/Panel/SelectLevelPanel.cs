@@ -39,7 +39,7 @@ public class SelectLevelPanel : BasePanel
             // 触发当前选中的Level按钮
             nowCenterButton.onClick.Invoke();
         });
-        
+
         // 初始化更新
         PageFlippingCompleted();
     }
@@ -56,6 +56,8 @@ public class SelectLevelPanel : BasePanel
         for (int i = 0; i < data.levels.Count; i++)
         {
             Button button = Instantiate(Resources.Load<GameObject>("UI/Button/ButtonLevel"), content).GetComponent<Button>();
+            btnsLevel.Add(button);
+            
             // 修改图片
             Image buttonImage = button.GetComponent<Image>();
             buttonImage.sprite = data.levels[i].image;
@@ -63,10 +65,15 @@ public class SelectLevelPanel : BasePanel
             LevelData levelData = data.levels[i];
             button.onClick.AddListener(() =>
             {
+                // 如果点击时并不是在中间选中状态，则自动滑动到中间
+                if (nowCenterButton != button)
+                {
+                    pageFlipping.ToPage(btnsLevel.IndexOf(button) + 1);
+                    return;
+                }
+
                 GameFacade.Instance.SendNotification(NotificationName.LOAD_GAME, levelData);
             });
-
-            btnsLevel.Add(button);
         }
 
         // 初始化翻页效果脚本
@@ -84,6 +91,7 @@ public class SelectLevelPanel : BasePanel
         {
             Destroy(towerIcons[i].gameObject);
         }
+
         towerIcons.Clear();
 
         for (int i = 0; i < icons.Length; i++)
@@ -110,16 +118,16 @@ public class SelectLevelPanel : BasePanel
         // 记录当前中间的关卡按钮
         nowCenterButton = btnsLevel[pageFlipping.pageIndex - 1];
         nowCenterLevelData = bigLevelData.levels[pageFlipping.pageIndex - 1];
-        
+
         // 设置黑色遮罩
         for (int i = 0; i < btnsLevel.Count; i++)
         {
             // 未选中的按钮设置黑色遮罩
             Color color = btnsLevel[i].GetComponent<Image>().color;
-            btnsLevel[i].GetComponent<Image>().color = new Color(100/255f, 100/255f, 100/255f, color.a);
+            btnsLevel[i].GetComponent<Image>().color = new Color(100 / 255f, 100 / 255f, 100 / 255f, color.a);
         }
 
-        nowCenterButton.GetComponent<Image>().color= new Color(1f, 1f, 1f, 1f);
+        nowCenterButton.GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
 
         // 获取icons
         List<Sprite> towerIcons = new List<Sprite>();
@@ -127,7 +135,7 @@ public class SelectLevelPanel : BasePanel
         {
             towerIcons.Add(nowCenterLevelData.towersData[i].selectLevelIcon);
         }
-        
+
         // 更新面板
         UpdateTowerIcon(towerIcons.ToArray());
         UpdateWavesCount(nowCenterLevelData.roundDataList.Count);

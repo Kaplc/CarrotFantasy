@@ -1912,7 +1912,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2038754253434937032}
   - component: {fileID: 1734886216317539364}
-  - component: {fileID: 4310350757200105242}
   m_Layer: 5
   m_Name: ImageTowersPage
   m_TagString: Untagged
@@ -1948,18 +1947,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2310092126166358236}
   m_CullTransparentMesh: 0
---- !u!114 &4310350757200105242
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2310092126166358236}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 638804e60fea924428897235486df7e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2432167225970272803
 GameObject:
   m_ObjectHideFlags: 0
@@ -6372,8 +6359,6 @@ MonoBehaviour:
   towerPage: {fileID: 2038754253434937032}
   monsterPage: {fileID: 8954414529231071370}
   bottomImage: {fileID: 5676429031821203656}
-  txBottomPageNumber: {fileID: 6543558620934066516}
-  effect: {fileID: 6140797505285973713}
 --- !u!1 &9111981394874405391
 GameObject:
   m_ObjectHideFlags: 0

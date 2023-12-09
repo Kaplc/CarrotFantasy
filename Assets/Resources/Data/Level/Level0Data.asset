@@ -14,16 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelId: 0
   money: 1500
-  towersID: 00000000
-  monstersID: 00000000
+  towersData:
+  - {fileID: 11400000, guid: aab2e8cd34433054a981d09ecb22a4b3, type: 2}
+  - {fileID: 11400000, guid: 5dc00981fead5df4e922d0d6fd12f5f6, type: 2}
+  monstersData:
+  - {fileID: 11400000, guid: eea0463a05e335f42801b8c62937d482, type: 2}
   intervalTimePerWave: 5
   roundDataList:
-  - monsterId: 0
+  - monsterData: {fileID: 11400000, guid: eea0463a05e335f42801b8c62937d482, type: 2}
     waveCount: 5
     intervalTimeEach: 1
-  - monsterId: 0
+  - monsterData: {fileID: 11400000, guid: eea0463a05e335f42801b8c62937d482, type: 2}
     waveCount: 10
     intervalTimeEach: 1
+  mapDataPath: Level0MapData
   mapData:
     mapBgSpritePath: Map/BigLevel0/BG0
     roadSpritePath: Map/BigLevel0/Road1

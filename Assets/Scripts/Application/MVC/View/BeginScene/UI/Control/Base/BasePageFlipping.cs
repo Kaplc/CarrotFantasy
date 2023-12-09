@@ -18,7 +18,17 @@ public class BasePageFlipping : MonoBehaviour, IBeginDragHandler, IEndDragHandle
         pageIndex = 1;
     }
 
-    public virtual void NextPage()
+    public void ToPage(int index)
+    {
+        // 直接跳转
+        if (index>totalPageIndex || index < 1)return;
+
+        pageIndex = index;
+        float newHorizontalNormalizedPosition = 1f / (totalPageIndex - 1) * (pageIndex - 1);
+        SlideTween(newHorizontalNormalizedPosition);
+    }
+
+    public void NextPage()
     {
         // 右滑
         pageIndex++;
@@ -27,7 +37,7 @@ public class BasePageFlipping : MonoBehaviour, IBeginDragHandler, IEndDragHandle
         SlideTween(newHorizontalNormalizedPosition);
     }
 
-    public virtual void LastPage()
+    public void LastPage()
     {
         // 左滑
         pageIndex--;
@@ -36,7 +46,7 @@ public class BasePageFlipping : MonoBehaviour, IBeginDragHandler, IEndDragHandle
         SlideTween(newHorizontalNormalizedPosition);
     }
 
-    protected virtual void StayNowPage()
+    private void StayNowPage()
     {
         pageIndex = Mathf.Clamp(pageIndex, 1, totalPageIndex);
         float newHorizontalNormalizedPosition = 1f / (totalPageIndex - 1) * (pageIndex - 1);
