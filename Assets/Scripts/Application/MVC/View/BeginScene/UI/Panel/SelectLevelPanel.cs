@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using PureMVC.Interfaces;
+using PureMVC.Patterns.Mediator;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -57,6 +59,8 @@ public class SelectLevelPanel : BasePanel
             if (GameManager.Instance.nowLevelData.levelId == bigLevelData.levels[i].levelId)
             {
                 pageFlipping.ToPage(i + 1);
+                // 仅自动滑动一次退出选择关卡界面就无效
+                GameManager.Instance.nowLevelData = null;
                 return;
             }
         }
@@ -159,5 +163,50 @@ public class SelectLevelPanel : BasePanel
         // 更新面板
         UpdateTowerIcon(towerIconSprites.ToArray());
         UpdateWavesCount(nowCenterLevelData.roundDataList.Count);
+    }
+}
+
+public class SelectLevelPanelMediator : Mediator
+{
+    public static new string NAME = "SelectLevelPanelMediator";
+
+    public SelectLevelPanel Panel
+    {
+        get => ViewComponent as SelectLevelPanel;
+        set
+        {
+            ViewComponent = value;
+            (ViewComponent as SelectLevelPanel)?.BindMediator(this);
+        }
+    }
+
+    public SelectLevelPanelMediator() : base(NAME)
+    {
+    }
+
+    public override string[] ListNotificationInterests()
+    {
+        return new string[]
+        {
+            NotificationName.SHOW_SELECTLEVELPANEL,
+            NotificationName.LOADED_BIGLEVELDATA
+        };
+    }
+
+    public override void HandleNotification(INotification notification)
+    {
+        base.HandleNotification(notification);
+
+        switch (notification.Name)
+        {
+            case NotificationName.SHOW_SELECTLEVELPANEL:
+                Panel = UIManager.Instance.Show<SelectLevelPanel>(false);
+                // 获取当前选择的大关卡数据
+                SendNotification(NotificationName.LOAD_BIGLEVELDATA, notification.Body);
+                break;
+            case NotificationName.LOADED_BIGLEVELDATA:
+                Panel.CreateLevelButton(notification.Body as BigLevelData);
+                break;
+        }
     }
 }
