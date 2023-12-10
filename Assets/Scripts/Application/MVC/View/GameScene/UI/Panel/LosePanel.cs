@@ -7,6 +7,9 @@ using UnityEngine.UI;
 
 public class LosePanel : BasePanel
 {
+    public Text txWavesCount;
+    public Text txTotalWavesCount;
+    public Text txLevel;
     public Button btnSelect;
     public Button btnReStart;
     
@@ -20,8 +23,16 @@ public class LosePanel : BasePanel
         btnSelect.onClick.AddListener(() =>
         {
             PanelMediator.SendNotification(NotificationName.EXIT_GAME);
+            PanelMediator.SendNotification(NotificationName.SELECT_LEVEL);
             UIManager.Instance.Hide<LosePanel>(false);
         });
+    }
+    
+    public void UpdatePanelData(int wavesCount, int totalWavesCount, int levelID)
+    {
+        txWavesCount.text = wavesCount / 10 + "  " + wavesCount % 10;
+        txTotalWavesCount.text = totalWavesCount / 10 + "" + totalWavesCount % 10;
+        txLevel.text = (levelID + 1) / 10 + "" + (levelID + 1) % 10;
     }
 }
 
@@ -58,12 +69,15 @@ public class LosePanelMediator : Mediator
         switch (notification.Name)
         {
             case NotificationName.SHOW_LOSEPANEL:
+                // 先关闭菜单面板
+                SendNotification(NotificationName.HIDE_MENUPANEL);
                 // 停止游戏
                 SendNotification(NotificationName.STOP_GAME);
                 Panel = UIManager.Instance.Show<LosePanel>(false);
                 
-                // 先关闭菜单面板
-                SendNotification(NotificationName.HIDE_MENUPANEL);
+                // 更新数据
+                (int wavesCount, int totalWavesCount, int levelID) data = ((int, int, int))notification.Body;
+                Panel.UpdatePanelData(data.wavesCount, data.totalWavesCount, data.levelID);
                 
                 break;
         }

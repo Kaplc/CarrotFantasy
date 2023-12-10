@@ -139,6 +139,7 @@ public class SelectLevelPanel : BasePanel
     /// </summary>
     public void PageFlippingCompleted()
     {
+        if(btnsLevel.Count == 0)return;
         // 记录当前中间的关卡按钮
         nowCenterButton = btnsLevel[pageFlipping.pageIndex - 1];
         nowCenterLevelData = bigLevelData.levels[pageFlipping.pageIndex - 1];

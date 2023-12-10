@@ -51,7 +51,7 @@ public class Monster : BaseRole, IPoolObject
             if (pathIndex == GameManager.Instance.nowLevelData.mapData.pathList.Count-1)
             {
                 // 触发怪物到达终点事件
-                GameManager.Instance.EventCenter.TriggerEvent<int>(NotificationName.REACH_ENDPOINT, data.atk);
+                GameFacade.Instance.SendNotification(NotificationName.REACH_ENDPOINT, data.atk);
                 // 怪物死亡
                 Hp = 0;
                 return;
@@ -81,10 +81,10 @@ public class Monster : BaseRole, IPoolObject
 
     protected override void Dead()
     {
-        // 触发怪物死亡
-        GameManager.Instance.EventCenter.TriggerEvent(NotificationName.MONSTER_DEAD);
         // 回收
         GameManager.Instance.PoolManager.PushObject(gameObject);
+        // 触发怪物死亡
+        GameFacade.Instance.SendNotification(NotificationName.MONSTER_DEAD);
     }
 
     public override void OnPush()

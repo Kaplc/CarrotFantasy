@@ -9,6 +9,7 @@ public class NotificationName
     public const string INIT = "Init"; // 游戏初始化
     public const string INIT_GAMEMANAGERCONTROLLER = "InitGameManagerController";
     public const string INIT_GAMEDATAPROXY = "InitGameDataProxy";
+    public const string INIT_SPAWNERCONTROLLER = "InitSpawnerController";
     public const string INIT_GAMEDATA = "InitGameData"; // 初始化数据
     public const string INIT_END = "InitEnd"; // 游戏初始化结束
 
@@ -24,8 +25,10 @@ public class NotificationName
     public const string STOP_GAME = "StopGame";
     
     public const string START_SPAWN = "StartSpawn"; // 开始出怪
+    public const string STOP_SPAWN = "StopSpawn"; // 开始出怪
     public const string REACH_ENDPOINT = "ReachEndPoint"; // 怪物到达终点
     public const string MONSTER_DEAD = "MonsterDead"; // 怪物死亡
+    public const string CARROT_DEAD = "CarrotDead"; // 萝卜死亡
     public const string GAME_OVER = "GameOver"; // 游戏结束
     public const string JUDGING_WIN = "JudgingWin"; // 判断胜利
     public const string ALLOW_CLICKCELL = "AllowClickCell"; // 是否允许点击格子

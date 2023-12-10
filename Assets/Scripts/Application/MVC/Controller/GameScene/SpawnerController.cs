@@ -5,6 +5,47 @@ using PureMVC.Patterns.Command;
 using UnityEngine;
 
 /// <summary>
+/// 初始化controller
+/// </summary>
+public class InitSpawnerController : SimpleCommand
+{
+    public override void Execute(INotification notification)
+    {
+        base.Execute(notification);
+        
+        GameFacade.Instance.RegisterCommand(NotificationName.CREATE_TOWER, () => new CreateTowerCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.SELL_TOWER, () => new SellTowerCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.UPGRADE_TOWER, () => new UpGradeTowerCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.START_SPAWN, () => new StartSpawnCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.STOP_SPAWN, () => new StopSpawnCommand());
+    }
+}
+
+/// <summary>
+/// 开始出怪
+/// </summary>
+public class StartSpawnCommand : SimpleCommand
+{
+    public override void Execute(INotification notification)
+    {
+        base.Execute(notification);
+        GameManager.Instance.spawner.StartSpawn();
+    }
+}
+
+/// <summary>
+/// 停止出怪
+/// </summary>
+public class StopSpawnCommand : SimpleCommand
+{
+    public override void Execute(INotification notification)
+    {
+        base.Execute(notification);
+        GameManager.Instance.spawner.StopSpawn();
+    }
+}
+
+/// <summary>
 /// 创建塔命令
 /// </summary>
 public class CreateTowerCommand : SimpleCommand
@@ -32,7 +73,7 @@ public class SellTowerCommand : SimpleCommand
 /// <summary>
 /// 升级塔
 /// </summary>
-public class UpGradeTower : SimpleCommand
+public class UpGradeTowerCommand : SimpleCommand
 {
     public override void Execute(INotification notification)
     {

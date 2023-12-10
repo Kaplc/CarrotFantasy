@@ -860,5 +860,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeSpeed: 3
+  txWavesCount: {fileID: 6747693096887645759}
+  txTotalWavesCount: {fileID: 7722592232298753000}
+  txLevel: {fileID: 3343467977273948368}
   btnSelect: {fileID: 7628750547435223776}
   btnReStart: {fileID: 7628750546890402413}

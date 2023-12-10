@@ -26,15 +26,8 @@ public class GameFacade : Facade
         RegisterCommand(NotificationName.INIT, () => new InitCommand());
         RegisterCommand(NotificationName.INIT_GAMEMANAGERCONTROLLER, () => new InitGameManagerControllerCommand());
         RegisterCommand(NotificationName.INIT_GAMEDATAPROXY, () => new InitGameDataProxyCommand());
-        
+        RegisterCommand(NotificationName.INIT_SPAWNERCONTROLLER, () => new InitSpawnerController());
         RegisterCommand(NotificationName.INIT_END, () => new InitEndCommand());
-        
-        // SpawnerController
-        RegisterCommand(NotificationName.CREATE_TOWER, () => new CreateTowerCommand());
-        RegisterCommand(NotificationName.SELL_TOWER, () => new SellTowerCommand());
-        RegisterCommand(NotificationName.UPGRADE_TOWER, () => new UpGradeTower());
-        
-        
         RegisterCommand(NotificationName.LOAD_ATLAS, ()=> new LoadAtlasCommand());
     }
 

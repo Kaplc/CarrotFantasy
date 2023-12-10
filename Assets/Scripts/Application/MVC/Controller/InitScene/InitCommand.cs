@@ -14,6 +14,7 @@ public class InitCommand : SimpleCommand
         // 初始化Controller
         SendNotification(NotificationName.INIT_GAMEMANAGERCONTROLLER);
         SendNotification(NotificationName.INIT_GAMEDATAPROXY);
+        SendNotification(NotificationName.INIT_SPAWNERCONTROLLER);
         // 初始化游戏数据
         SendNotification(NotificationName.INIT_GAMEDATA);
         

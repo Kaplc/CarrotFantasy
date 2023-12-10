@@ -9,7 +9,6 @@ public class GameManager : BaseMonoSingleton<GameManager>
     public PoolManager PoolManager => PoolManager.Instance;
     public BinaryManager BinaryManager => BinaryManager.Instance;
     public MusicManger MusicManager => MusicManger.Instance;
-    public EventCenter EventCenter => EventCenter.Instance;
 
     private bool pause; // 暂停标识
     private bool stop; // 停止标识
@@ -31,13 +30,14 @@ public class GameManager : BaseMonoSingleton<GameManager>
             }
         }
     }
+
     public float PauseTime => pauseTime;
     public bool Stop => stop;
 
     public LevelData nowLevelData; // 当前Level数据
     public Map map;
     public Spawner spawner;
-    
+
     protected override void Awake()
     {
         base.Awake();
@@ -46,7 +46,7 @@ public class GameManager : BaseMonoSingleton<GameManager>
     }
 
     #region 游戏相关
-    
+
     /// <summary>
     /// 初始化游戏
     /// </summary>
@@ -67,11 +67,8 @@ public class GameManager : BaseMonoSingleton<GameManager>
         spawner.CreateStartBrand();
         // 刷新钱
         money = nowLevelData.money;
-        // 注册事件
-        EventCenter.AddEventListener(NotificationName.JUDGING_WIN, JudgingWin);
-        EventCenter.AddEventListener(NotificationName.GAME_OVER, GameOver);
     }
-    
+
     /// <summary>
     /// 读秒结束真正开始游戏
     /// </summary>
@@ -81,6 +78,7 @@ public class GameManager : BaseMonoSingleton<GameManager>
         allowClickCell = true;
         stop = false;
     }
+
     /// <summary>
     /// 游戏退出
     /// </summary>
@@ -89,10 +87,8 @@ public class GameManager : BaseMonoSingleton<GameManager>
         // 回收萝卜和怪物
         PoolManager.PushObject(spawner.carrot.gameObject);
         spawner.OnPushAllMonster();
-        // 清空事件中心
-        EventCenter.ClearAllEvent();
     }
-    
+
     /// <summary>
     /// 游戏暂停
     /// </summary>
@@ -100,7 +96,7 @@ public class GameManager : BaseMonoSingleton<GameManager>
     {
         Pause = true;
     }
-    
+
     /// <summary>
     /// 停止游戏
     /// </summary>
@@ -108,10 +104,10 @@ public class GameManager : BaseMonoSingleton<GameManager>
     {
         stop = true;
         // 暂停且禁止鼠标检测
-        Pause = true; 
+        Pause = true;
         allowClickCell = false;
     }
-    
+
     /// <summary>
     /// 游戏继续
     /// </summary>
@@ -123,26 +119,60 @@ public class GameManager : BaseMonoSingleton<GameManager>
 
     #endregion
 
-    #region 事件相关
-    
     /// <summary>
     /// 判断是否胜利
     /// </summary>
-    private void JudgingWin()
+    public void JudgingWin()
     {
-        // 1.出怪完成 2.萝卜没死 3.怪物全部死亡
-        if (spawner.carrot.isDead == false)
+        // 1.出怪完成
+        if (!spawner.spawnedComplete) return;
+
+        // 2.萝卜没死
+        if (spawner.carrot.isDead) return;
+
+        // 3.怪物全部死亡
+        for (int i = 0; i < spawner.monsters.Count; i++)
         {
-            GameFacade.Instance.SendNotification(NotificationName.SHOW_WINPANEL);
+            // 有一个没死亡都无效
+            if (spawner.monsters[i].isDead == false)
+            {
+                return;
+            }
         }
+
+        // 执行游戏胜利逻辑
+        GameWin();
     }
 
-    private void GameOver()
+    /// <summary>
+    /// 游戏胜利
+    /// </summary>
+    public void GameWin()
     {
-        // 显示失败面板
-        GameFacade.Instance.SendNotification(NotificationName.SHOW_LOSEPANEL);
+        // 显示胜利面板
+        GameFacade.Instance.SendNotification(NotificationName.SHOW_WINPANEL,
+            (
+                spawner.nowWavesCount,
+                nowLevelData.roundDataList.Count,
+                nowLevelData.levelId
+            )
+        );
     }
 
-    #endregion
-    
+    /// <summary>
+    /// 游戏失败
+    /// </summary>
+    public void GameOver()
+    {
+        // 停止出怪
+        GameFacade.Instance.SendNotification(NotificationName.STOP_SPAWN);
+        // 显示失败面板
+        GameFacade.Instance.SendNotification(NotificationName.SHOW_LOSEPANEL,
+            (
+                spawner.nowWavesCount,
+                nowLevelData.roundDataList.Count,
+                nowLevelData.levelId
+            )
+        );
+    }
 }

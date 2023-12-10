@@ -8,8 +8,9 @@ using UnityEngine;
 /// </summary>
 public class Spawner : MonoBehaviour
 {
-    private bool spawnedComplete; // 完成出怪
+    public bool spawnedComplete; // 完成出怪
     public float lastSpawnTime; // 上一只出怪时间
+    public int nowWavesCount; // 当前第几波
 
     public Carrot carrot; // 萝卜
     public Transform startPoint; // 开始路牌位置
@@ -24,10 +25,6 @@ public class Spawner : MonoBehaviour
 
         // 获取当前关卡数据
         levelData = GameManager.Instance.nowLevelData;
-        // 监听开始出怪事件
-        GameManager.Instance.EventCenter.AddEventListener(NotificationName.START_SPAWN, StartSpawn); // 开始出怪
-        GameManager.Instance.EventCenter.AddEventListener(NotificationName.GAME_OVER, StopSpawn); // 监听萝卜死亡停止出怪
-        GameManager.Instance.EventCenter.AddEventListener(NotificationName.MONSTER_DEAD, CheckMonstersSurvival); // 检查怪物存活情况
         // 更新面板波数显示
         GameFacade.Instance.SendNotification(NotificationName.UPDATE_WAVESCOUNT, (1, levelData.roundDataList.Count));
     }
@@ -135,35 +132,14 @@ public class Spawner : MonoBehaviour
     }
 
     /// <summary>
-    /// 检查怪物存活
-    /// </summary>
-    private void CheckMonstersSurvival()
-    {
-        // 未完成出怪
-        if (!spawnedComplete) return;
-
-        for (int i = 0; i < monsters.Count; i++)
-        {
-            // 有一个没死亡都无效
-            if (monsters[i].isDead == false)
-            {
-                return;
-            }
-        }
-
-        // 全部死亡判断是否胜利
-        GameManager.Instance.EventCenter.TriggerEvent(NotificationName.JUDGING_WIN);
-    }
-
-    /// <summary>
     /// 开启出怪协程
     /// </summary>
-    private void StartSpawn()
+    public void StartSpawn()
     {
         spawnCoroutine = StartCoroutine(SpawnCoroutine());
     }
 
-    private void StopSpawn()
+    public void StopSpawn()
     {
         if (spawnCoroutine != null)
         {
@@ -173,8 +149,10 @@ public class Spawner : MonoBehaviour
 
     private IEnumerator SpawnCoroutine()
     {
+        nowWavesCount = 0;
         for (int i = 0; i < levelData.roundDataList.Count; i++)
         {
+            nowWavesCount++;
             // 更新面板波数显示
             GameFacade.Instance.SendNotification(NotificationName.UPDATE_WAVESCOUNT, (i + 1, levelData.roundDataList.Count));
 
