@@ -8,9 +8,7 @@ public class GameDataProxy : Proxy
 {
     public new const string NAME = "GameDataProxy";
 
-    private StatisticalData statisticalData;
-    private ProcessData processData;
-    private MusicSettingData musicSettingData;
+    private PlayerData playerData;
 
     private Dictionary<int, LevelData> levelsData = new Dictionary<int, LevelData>();
     private Dictionary<int, MonsterData> monstersData = new Dictionary<int, MonsterData>();
@@ -26,9 +24,7 @@ public class GameDataProxy : Proxy
     /// </summary>
     public void LoadInitGameData()
     {
-        LoadStatisticalData();
-        LoadMusicSettingData();
-        LoadProcessData();
+        LoadPlayerData();
 
         // 加载关卡的所有怪物信息
         LoadMonstersData();
@@ -38,21 +34,29 @@ public class GameDataProxy : Proxy
         LoadBigLevelData();
     }
 
-    #region 游戏进程数据
+    #region 游戏数据
+
+    private void LoadPlayerData()
+    {
+        playerData = new PlayerData();
+        LoadStatisticalData();
+        LoadMusicSettingData();
+        LoadProcessData();
+    }
 
     public void GetStatisticalData()
     {
-        if (statisticalData != null)
+        if (playerData != null)
         {
-            SendNotification(NotificationName.LOADED_STATISTICALDATA, statisticalData);
+            SendNotification(NotificationName.LOADED_STATISTICALDATA, playerData);
         }
     }
 
     private void LoadStatisticalData()
     {
-        if (statisticalData != null) return;
+        if (playerData.statisticalData != null) return;
 
-        statisticalData = BinaryManager.Instance.Load<StatisticalData>("StatisticalData.zy");
+        playerData.statisticalData = BinaryManager.Instance.Load<StatisticalData>("StatisticalData.zy");
     }
 
     public void SaveStatisticalData(StatisticalData data)
@@ -62,17 +66,17 @@ public class GameDataProxy : Proxy
 
     public void GetProcessData()
     {
-        if (processData != null)
+        if (playerData.processData != null)
         {
-            SendNotification(NotificationName.LOADED_PROCESSDATA, processData);
+            SendNotification(NotificationName.LOADED_PROCESSDATA, playerData.processData);
         }
     }
 
     private void LoadProcessData()
     {
-        if (processData != null) return;
+        if (playerData.processData != null) return;
 
-        processData = BinaryManager.Instance.Load<ProcessData>("ProcessData.zy");
+        playerData.processData = BinaryManager.Instance.Load<ProcessData>("ProcessData.zy");
     }
 
     public void SaveProcessData(ProcessData data)
@@ -86,9 +90,9 @@ public class GameDataProxy : Proxy
 
     public void GetMusicSettingData()
     {
-        if (musicSettingData != null)
+        if (playerData.musicSettingData != null)
         {
-            SendNotification(NotificationName.LOADED_MUSICSETTINGDATA, musicSettingData);
+            SendNotification(NotificationName.LOADED_MUSICSETTINGDATA, playerData.musicSettingData);
         }
     }
 
@@ -97,9 +101,9 @@ public class GameDataProxy : Proxy
     /// </summary>
     private void LoadMusicSettingData()
     {
-        if (musicSettingData != null) return;
+        if (playerData.musicSettingData != null) return;
 
-        musicSettingData = BinaryManager.Instance.Load<MusicSettingData>("MusicSettingData.zy");
+        playerData.musicSettingData = BinaryManager.Instance.Load<MusicSettingData>("MusicSettingData.zy");
     }
 
     public void SaveMusicSettingData(MusicSettingData data)

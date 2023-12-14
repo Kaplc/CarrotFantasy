@@ -29,8 +29,6 @@ public class NotificationName
     public const string REACH_ENDPOINT = "ReachEndPoint"; // 怪物到达终点
     public const string MONSTER_DEAD = "MonsterDead"; // 怪物死亡
     public const string CARROT_DEAD = "CarrotDead"; // 萝卜死亡
-    public const string GAME_OVER = "GameOver"; // 游戏结束
-    public const string JUDGING_WIN = "JudgingWin"; // 判断胜利
     public const string ALLOW_CLICKCELL = "AllowClickCell"; // 是否允许点击格子
     
     #endregion

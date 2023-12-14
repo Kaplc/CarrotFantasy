@@ -8,6 +8,7 @@ using UnityEngine;
 /// </summary>
 public class Spawner : MonoBehaviour
 {
+    public bool startSpawn;
     public bool spawnedComplete; // 完成出怪
     public float lastSpawnTime; // 上一只出怪时间
     public int nowWavesCount; // 当前第几波
@@ -167,13 +168,8 @@ public class Spawner : MonoBehaviour
                     // 实现暂停
                     if (GameManager.Instance.Pause)
                     {
-                        while (GameManager.Instance.Pause)
-                        {
-                            yield return null;
-                        }
-
-                        // 取消暂停继续时间
-                        yield return new WaitForSeconds(roundData.intervalTimeEach + lastSpawnTime - GameManager.Instance.PauseTime); // 还应继续读多少秒才下一个
+                        yield return new WaitWhile(() => GameManager.Instance.Pause);
+                        yield return new WaitForSeconds(roundData.intervalTimeEach + lastSpawnTime - GameManager.Instance.PauseTime);
                     }
 
                     // 缓存池取出
@@ -181,7 +177,7 @@ public class Spawner : MonoBehaviour
                     // 保存出生的怪物
                     monsters.Add(monster);
                     // 记录时间
-                    lastSpawnTime = Time.time;
+                    lastSpawnTime = Time.realtimeSinceStartup;
                     // 最后一组怪最后一只跳过等待
                     if (!(j == roundData.group.Count - 1 && k == groupData.count - 1))
                     {

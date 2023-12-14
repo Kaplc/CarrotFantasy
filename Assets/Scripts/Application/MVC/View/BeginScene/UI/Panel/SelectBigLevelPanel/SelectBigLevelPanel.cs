@@ -17,7 +17,10 @@ public class SelectBigLevelPanel : BasePanel
 
     public Button btnLeft;
     public Button btnRight;
+
     public BasePageFlipping pageFlipping;
+
+    public ProcessData processData;
 
     protected override void Init()
     {
@@ -91,9 +94,24 @@ public class SelectBigLevelPanel : BasePanel
                 btnRight.gameObject.SetActive(true);
             }
         });
-        
+
         // 开始为第一页自动隐藏左边按钮
         btnLeft.gameObject.SetActive(false);
+        // 获取关卡解锁数据
+        if (processData.passedLevelsDic.ContainsKey(0))
+        {
+            btnBigLevel0.GetComponent<BigLevelButton>().UpdateUnlockMapCount(processData.passedLevelsDic[0].Count);
+        }
+
+        if (processData.passedLevelsDic.ContainsKey(1))
+        {
+            btnBigLevel1.GetComponent<BigLevelButton>().UpdateUnlockMapCount(processData.passedLevelsDic[1].Count);
+        }
+
+        if (processData.passedLevelsDic.ContainsKey(2))
+        {
+            btnBigLevel2.GetComponent<BigLevelButton>().UpdateUnlockMapCount(processData.passedLevelsDic[2].Count);
+        }
     }
 
     #region 接受ScrollView的消息
@@ -116,8 +134,8 @@ public class SelectBigLevelPanel : BasePanel
         btnLeft.gameObject.SetActive(true);
         btnRight.gameObject.SetActive(true);
     }
+
     #endregion
-    
 }
 
 public class SelectBigLevelPanelMediator : Mediator
@@ -143,8 +161,8 @@ public class SelectBigLevelPanelMediator : Mediator
         return new string[]
         {
             NotificationName.SHOW_SELECTBIGLEVELPANEL,
+            NotificationName.LOAD_PROCESSDATA
         };
-
     }
 
     public override void HandleNotification(INotification notification)
@@ -155,8 +173,11 @@ public class SelectBigLevelPanelMediator : Mediator
         {
             case NotificationName.SHOW_SELECTBIGLEVELPANEL:
                 Panel = UIManager.Instance.Show<SelectBigLevelPanel>(false);
+                SendNotification(NotificationName.LOAD_PROCESSDATA);
+                break;
+            case NotificationName.LOADED_PROCESSDATA:
+                Panel.processData = notification.Body as ProcessData;
                 break;
         }
-        
     }
 }

@@ -8,7 +8,7 @@ public class GameManager : BaseMonoSingleton<GameManager>
 {
     public PoolManager PoolManager => PoolManager.Instance;
     public BinaryManager BinaryManager => BinaryManager.Instance;
-    public MusicManger MusicManager => MusicManger.Instance;
+    public PlayerData playerData;
 
     private bool pause; // 暂停标识
     private bool stop; // 停止标识
@@ -26,7 +26,7 @@ public class GameManager : BaseMonoSingleton<GameManager>
             if (value)
             {
                 // 记录暂停时间
-                pauseTime = Time.time;
+                pauseTime = Time.realtimeSinceStartup;
             }
         }
     }
