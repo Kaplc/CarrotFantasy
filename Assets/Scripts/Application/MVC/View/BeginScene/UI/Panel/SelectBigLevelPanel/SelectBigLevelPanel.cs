@@ -18,9 +18,9 @@ public class SelectBigLevelPanel : BasePanel
     public Button btnLeft;
     public Button btnRight;
 
-    public BasePageFlipping pageFlipping;
-
-    public ProcessData processData;
+    public BasePageFlipping pageFlipping; // 翻页效果脚本
+    public ProcessData processData; // 游戏进度数据
+    public ItemLockPanel itemLockPanel; // 提示主题锁定子面板
 
     protected override void Init()
     {
@@ -35,6 +35,15 @@ public class SelectBigLevelPanel : BasePanel
         });
         btnBigLevel1.onClick.AddListener(() =>
         {
+            // 判断是否解锁
+            if (!processData.passedLevelsDic.ContainsKey(1))
+            {
+                // 未解锁
+                itemLockPanel.gameObject.SetActive(true);
+                itemLockPanel.ShowItem0 = true;
+                return;
+            }
+            
             GameManager.Instance.nowBigLevelId = 1;
             PanelMediator.SendNotification(NotificationName.SHOW_SELECTLEVELPANEL, GameManager.Instance.nowBigLevelId);
 
@@ -42,6 +51,14 @@ public class SelectBigLevelPanel : BasePanel
         });
         btnBigLevel2.onClick.AddListener(() =>
         {
+            if (!processData.passedLevelsDic.ContainsKey(2))
+            {
+                // 未解锁
+                itemLockPanel.gameObject.SetActive(true);
+                itemLockPanel.ShowItem1 = true;
+                return;
+            }
+            
             GameManager.Instance.nowBigLevelId = 2;
             PanelMediator.SendNotification(NotificationName.SHOW_SELECTLEVELPANEL, GameManager.Instance.nowBigLevelId);
 
