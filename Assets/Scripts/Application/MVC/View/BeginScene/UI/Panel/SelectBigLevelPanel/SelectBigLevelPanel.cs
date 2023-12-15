@@ -36,7 +36,7 @@ public class SelectBigLevelPanel : BasePanel
         btnBigLevel1.onClick.AddListener(() =>
         {
             // 判断是否解锁
-            if (!processData.passedLevelsDic.ContainsKey(1))
+            if (!processData.passedBigLevelsDic.ContainsKey(1))
             {
                 // 未解锁
                 itemLockPanel.gameObject.SetActive(true);
@@ -51,7 +51,7 @@ public class SelectBigLevelPanel : BasePanel
         });
         btnBigLevel2.onClick.AddListener(() =>
         {
-            if (!processData.passedLevelsDic.ContainsKey(2))
+            if (!processData.passedBigLevelsDic.ContainsKey(2))
             {
                 // 未解锁
                 itemLockPanel.gameObject.SetActive(true);
@@ -115,19 +115,19 @@ public class SelectBigLevelPanel : BasePanel
         // 开始为第一页自动隐藏左边按钮
         btnLeft.gameObject.SetActive(false);
         // 获取关卡解锁数据
-        if (processData.passedLevelsDic.ContainsKey(0))
+        if (processData.passedBigLevelsDic.ContainsKey(0))
         {
-            btnBigLevel0.GetComponent<BigLevelButton>().UpdateUnlockMapCount(processData.passedLevelsDic[0].Count);
+            btnBigLevel0.GetComponent<BigLevelButton>().UpdateUnlockMapCount(processData.passedBigLevelsDic[0].passedLevelDic.Count);
         }
 
-        if (processData.passedLevelsDic.ContainsKey(1))
+        if (processData.passedBigLevelsDic.ContainsKey(1))
         {
-            btnBigLevel1.GetComponent<BigLevelButton>().UpdateUnlockMapCount(processData.passedLevelsDic[1].Count);
+            btnBigLevel1.GetComponent<BigLevelButton>().UpdateUnlockMapCount(processData.passedBigLevelsDic[1].passedLevelDic.Count);
         }
 
-        if (processData.passedLevelsDic.ContainsKey(2))
+        if (processData.passedBigLevelsDic.ContainsKey(2))
         {
-            btnBigLevel2.GetComponent<BigLevelButton>().UpdateUnlockMapCount(processData.passedLevelsDic[2].Count);
+            btnBigLevel2.GetComponent<BigLevelButton>().UpdateUnlockMapCount(processData.passedBigLevelsDic[2].passedLevelDic.Count);
         }
     }
 

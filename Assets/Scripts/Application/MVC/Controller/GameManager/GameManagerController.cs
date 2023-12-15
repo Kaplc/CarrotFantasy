@@ -69,6 +69,9 @@ public class NextLevelCommand : SimpleCommand
     {
         base.Execute(notification);
         SendNotification(NotificationName.EXIT_GAME);
+        // 保存游戏进度
+        SendNotification(NotificationName.SAVE_PROCESSDATA, (GameManager.Instance.nowLevelData.levelId, EPassedGrade.Gold)); // 保存通关等级数据
+        SendNotification(NotificationName.SAVE_PROCESSDATA, (GameManager.Instance.nowLevelData.levelId + 1, EPassedGrade.None)); // 解锁下一关卡
         // 加载下一关
         SendNotification(NotificationName.LOAD_GAME, GameManager.Instance.nowLevelData.levelId + 1);
     }
@@ -106,7 +109,6 @@ public class AcceptLevelDataCommand : SimpleCommand
     public override void Execute(INotification notification)
     {
         base.Execute(notification);
-
         GameManager.Instance.nowLevelData = notification.Body as LevelData;
     }
 }

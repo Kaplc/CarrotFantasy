@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class SelectLevelPanel : BasePanel
 {
     public int pageIndex; // 当前选择的页码
-    
+
     public Button btnBack;
     public Button btnHelp;
     public Button btnStart;
@@ -18,7 +18,7 @@ public class SelectLevelPanel : BasePanel
     public Transform transformCreateTowerIcon;
     private List<Image> towerIcons = new List<Image>();
     private List<Button> btnsLevel = new List<Button>();
-    
+
     private LevelData nowCenterLevelData; // 当前中间的关卡数据
     public SelectLevelPanelPageFlipping pageFlipping;
     private BigLevelData bigLevelData;
@@ -53,7 +53,7 @@ public class SelectLevelPanel : BasePanel
 
     private void ToPage()
     {
-        if (!GameManager.Instance.nowLevelData)return;
+        if (!GameManager.Instance.nowLevelData) return;
 
         for (int i = 0; i < bigLevelData.levels.Count; i++)
         {
@@ -96,36 +96,35 @@ public class SelectLevelPanel : BasePanel
                     pageFlipping.ToPage(btnsLevel.IndexOf(button) + 1);
                     return;
                 }
-                
-                Debug.Log(button.GetComponent<ButtonLevel>().IsLock);
+
                 if (button.GetComponent<ButtonLevel>().IsLock)
                 {
                     // 关卡锁定状态显示提示面板
                     levelLockPanel.gameObject.SetActive(true);
                     return;
                 }
-                
+
                 UIManager.Instance.Hide<SelectLevelPanel>(false);
                 GameFacade.Instance.SendNotification(NotificationName.LOAD_GAME, levelData.levelId);
             });
         }
+
         // 显隐锁定图标和更新通关等级体图片
-        List<PassedLevelData> passedLevelDataList = processData.passedLevelsDic[GameManager.Instance.nowBigLevelId];
+        PassedLevelData passedLevelData = processData.passedBigLevelsDic[GameManager.Instance.nowBigLevelId];
         for (int i = 0; i < btnsLevel.Count; i++)
         {
-            for (int j = 0; j < passedLevelDataList.Count; j++)
+            int levelID = btnsLevel[i].GetComponent<ButtonLevel>().levelID;
+            
+            if (passedLevelData.passedLevelDic.ContainsKey(levelID))
             {
-                if (passedLevelDataList[j].id == btnsLevel[i].GetComponent<ButtonLevel>().levelID)
-                {
-                    // 设置通关等级图片
-                    btnsLevel[i].GetComponent<ButtonLevel>().passedGrade = passedLevelDataList[j].grade;
-                    // 取消锁定
-                    btnsLevel[i].GetComponent<ButtonLevel>().IsLock = false;
-                }
+                // 设置通关等级
+                btnsLevel[i].GetComponent<ButtonLevel>().passedGrade = passedLevelData.passedLevelDic[levelID];
+                // 取消锁定
+                btnsLevel[i].GetComponent<ButtonLevel>().IsLock = false;
             }
         }
-        
-        
+
+
         // 初始化翻页效果脚本
         pageFlipping.totalPageIndex = data.levels.Count;
 
@@ -165,7 +164,7 @@ public class SelectLevelPanel : BasePanel
     /// </summary>
     public void PageFlippingCompleted()
     {
-        if(btnsLevel.Count == 0)return;
+        if (btnsLevel.Count == 0) return;
         // 记录当前中间的关卡按钮
         nowCenterButton = btnsLevel[pageFlipping.pageIndex - 1];
         nowCenterLevelData = bigLevelData.levels[pageFlipping.pageIndex - 1];
@@ -182,13 +181,13 @@ public class SelectLevelPanel : BasePanel
             Color imgLockColor = buttonLevel.imgMap.color;
             buttonLevel.imgLock.color = new Color(100 / 255f, 100 / 255f, 100 / 255f, imgLockColor.a);
         }
-        
+
         // 选中按钮为正常颜色
         ButtonLevel nowCenterButtonLevel = nowCenterButton.GetComponent<ButtonLevel>();
         nowCenterButtonLevel.imgMap.color = new Color(1f, 1f, 1f, 1f);
         nowCenterButtonLevel.imgGarde.color = new Color(1f, 1f, 1f, 1f);
         nowCenterButtonLevel.imgLock.color = new Color(1f, 1f, 1f, 1f);
-        
+
         // 获取icons
         List<Sprite> towerIconSprites = new List<Sprite>();
         for (int i = 0; i < nowCenterLevelData.towersData.Count; i++)
@@ -247,8 +246,8 @@ public class SelectLevelPanelMediator : Mediator
                 Panel.CreateLevelButton(notification.Body as BigLevelData);
                 break;
             case NotificationName.LOADED_PROCESSDATA:
-                if (!Panel)break;
-                
+                if (!Panel) break;
+
                 Panel.processData = notification.Body as ProcessData;
                 break;
         }

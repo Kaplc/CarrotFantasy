@@ -10,10 +10,10 @@ public class GameDataProxy : Proxy
 
     private PlayerData playerData;
 
-    private Dictionary<int, LevelData> levelsData = new Dictionary<int, LevelData>();
-    private Dictionary<int, MonsterData> monstersData = new Dictionary<int, MonsterData>();
-    private Dictionary<int, TowerData> towersData = new Dictionary<int, TowerData>();
-    private Dictionary<int, BigLevelData> bigLevelsData = new Dictionary<int, BigLevelData>();
+    private Dictionary<int, LevelData> loadedLevelsData = new Dictionary<int, LevelData>(); // 已经加载过的关卡缓存
+    private Dictionary<int, MonsterData> loadedMonstersData = new Dictionary<int, MonsterData>();
+    private Dictionary<int, TowerData> loadedTowersData = new Dictionary<int, TowerData>();
+    private Dictionary<int, BigLevelData> loadedBigLevelsData = new Dictionary<int, BigLevelData>(); // 已经加载过的主题
 
     public GameDataProxy() : base(NAME)
     {
@@ -79,9 +79,16 @@ public class GameDataProxy : Proxy
         playerData.processData = BinaryManager.Instance.Load<ProcessData>("ProcessData.zy");
     }
 
-    public void SaveProcessData(ProcessData data)
+    public void SaveProcessData((int levelID, EPassedGrade garde) data)
     {
-        BinaryManager.Instance.Save("ProcessData.zy", data);
+        foreach (var item in playerData.processData.passedBigLevelsDic)
+        {
+            // 存在已经解锁的关卡更新通关等级
+            // 解锁新关卡
+            item.Value.passedLevelDic[data.levelID] = data.garde;
+        }
+        // 数据持久化
+        BinaryManager.Instance.Save("ProcessData.zy", playerData.processData);
     }
 
     #endregion
@@ -117,12 +124,12 @@ public class GameDataProxy : Proxy
 
     public void GetBigLevelData(int id)
     {
-        if (bigLevelsData.ContainsKey(id))
+        if (loadedBigLevelsData.ContainsKey(id))
         {
-            SendNotification(NotificationName.LOADED_BIGLEVELDATA, bigLevelsData[id]);
+            SendNotification(NotificationName.LOADED_BIGLEVELDATA, loadedBigLevelsData[id]);
         }
     }
-    
+
     /// <summary>
     /// 加载大关卡数据
     /// </summary>
@@ -132,45 +139,36 @@ public class GameDataProxy : Proxy
         BigLevelData[] datas = Resources.LoadAll<BigLevelData>(DataPath.LEVELRDATA_PATH);
         for (int i = 0; i < datas.Length; i++)
         {
-            bigLevelsData.Add(datas[i].id, datas[i]);
+            loadedBigLevelsData.Add(datas[i].id, datas[i]);
         }
     }
 
-    /// <summary>
-    /// 加载关卡的地图数据
-    /// </summary>
-    /// <param name="levelData">未加载地图数据的关卡数据</param>
-    private void LoadMapData(LevelData levelData)
-    {
-        // 已经加载过直接返回
-        if (levelsData.ContainsKey(levelData.levelId))
-        {
-            SendNotification(NotificationName.LOADED_LEVELDATA, levelsData[levelData.levelId]);
-            return;
-        }
-        
-        // 加载地图数据
-        levelData.mapData = GameManager.Instance.BinaryManager.Load<MapData>(DataPath.MAPDATA_PATH + $"{levelData.mapDataPath}.md");
-        levelsData.Add(levelData.levelId, levelData);
-
-        // 带出指定的关卡数据
-        SendNotification(NotificationName.LOADED_LEVELDATA, levelData);
-    }
-    
     /// <summary>
     /// 根据关卡id获取关卡数据
     /// </summary>
     /// <param name="id">关卡id</param>
-    public void LoadLevelData(int id)
+    public void LoadLevelData(int levelID)
     {
-        foreach (KeyValuePair<int,BigLevelData> item in bigLevelsData)
+        // 已经加载过直接返回
+        if (loadedLevelsData.ContainsKey(levelID))
+        {
+            SendNotification(NotificationName.LOADED_LEVELDATA, loadedLevelsData[levelID]);
+            return;
+        }
+        
+        // 遍历所有大关卡数据
+        foreach (KeyValuePair<int, BigLevelData> item in loadedBigLevelsData)
         {
             for (int i = 0; i < item.Value.levels.Count; i++)
             {
-                if (id == item.Value.levels[i].levelId)
+                if (levelID == item.Value.levels[i].levelId)
                 {
+                    LevelData levelData = item.Value.levels[i];
                     // 加载地图数据
-                    LoadMapData(item.Value.levels[i]);
+                    levelData.mapData = GameManager.Instance.BinaryManager.Load<MapData>(DataPath.MAPDATA_PATH + $"{levelData.mapDataPath}.md");
+                    // 缓存已加载过的关卡
+                    loadedLevelsData.Add(levelData.levelId, levelData);
+                    SendNotification(NotificationName.LOADED_LEVELDATA, item.Value.levels[i]);
                     return;
                 }
             }
@@ -186,9 +184,9 @@ public class GameDataProxy : Proxy
 
         for (int i = 0; i < data.Length; i++)
         {
-            if (!monstersData.ContainsKey(data[i].id))
+            if (!loadedMonstersData.ContainsKey(data[i].id))
             {
-                monstersData.Add(data[i].id, data[i]);
+                loadedMonstersData.Add(data[i].id, data[i]);
             }
         }
     }
@@ -202,20 +200,20 @@ public class GameDataProxy : Proxy
 
         for (int i = 0; i < data.Length; i++)
         {
-            if (!towersData.ContainsKey(data[i].id))
+            if (!loadedTowersData.ContainsKey(data[i].id))
             {
-                towersData.Add(data[i].id, data[i]);
+                loadedTowersData.Add(data[i].id, data[i]);
             }
         }
     }
 
     #endregion
-    
+
     /// <summary>
     /// 清空数据
     /// </summary>
     public void ClearData()
     {
-        levelsData.Clear();
+        loadedLevelsData.Clear();
     }
 }

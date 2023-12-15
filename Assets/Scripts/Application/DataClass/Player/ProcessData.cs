@@ -6,13 +6,14 @@ using UnityEngine;
 [Serializable]
 public class ProcessData
 {
-    public Dictionary<int, List<PassedLevelData>> passedLevelsDic = new Dictionary<int, List<PassedLevelData>>(); // 各大关卡下已通关的关卡
+    // 数据结构 bigLevelID - levelID - Grade
+    public Dictionary<int, PassedLevelData> passedBigLevelsDic = new Dictionary<int, PassedLevelData>(); // 各大关卡下已通关的关卡
 
     public ProcessData()
     {
         // 默认解锁的关卡
-        List<PassedLevelData> passedLevel = new List<PassedLevelData>();
-        passedLevel.Add(new PassedLevelData(){id = 0, grade = -1});
-        passedLevelsDic.Add(0, passedLevel);
+        PassedLevelData passedLevelData = new PassedLevelData();
+        passedLevelData.passedLevelDic.Add(0, EPassedGrade.None);
+        passedBigLevelsDic.Add(0, passedLevelData);
     }
 }

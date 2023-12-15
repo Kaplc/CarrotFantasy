@@ -98,6 +98,8 @@ public class NotificationName
     // 图集
     public const string LOAD_ATLAS = "LoadAtlas"; 
     public const string LOADED_ATLAS = "LoadedAtlas"; 
+    // 保存游戏进度数据
+    public const string SAVE_PROCESSDATA = "SaveProcessData";
 
     #endregion
 }

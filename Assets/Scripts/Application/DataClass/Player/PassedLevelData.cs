@@ -3,9 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum EPassedGrade
+{
+    Copper,
+    Sliver,
+    Gold,
+    None
+}
+
 [Serializable]
 public class PassedLevelData
 {
-    public int id; // 关卡ID
-    public int grade; // 通关等级
+    // ID - Grade
+    public Dictionary<int, EPassedGrade> passedLevelDic = new Dictionary<int, EPassedGrade>();
 }

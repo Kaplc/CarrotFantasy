@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class ButtonLevel : MonoBehaviour
 {
     public int levelID;
-    public int passedGrade;
+    public EPassedGrade passedGrade;
     private bool isLock = true; // 默认锁定
     public Image imgLock;
     public Image imgMap;
@@ -29,11 +29,12 @@ public class ButtonLevel : MonoBehaviour
             {
                 isLock = false;
                 imgLock.gameObject.SetActive(false);
-                // 未通关的已解锁的为-1
-                if (passedGrade == -1) return;
+                // 未通关的已解锁
+                if (passedGrade == EPassedGrade.None) return;
+                
                 // 根据通关等级选择图片
                 imgGarde.gameObject.SetActive(true);
-                imgGarde.sprite = gardeSprites[passedGrade];
+                imgGarde.sprite = gardeSprites[(int)passedGrade];
             }
         }
     }
