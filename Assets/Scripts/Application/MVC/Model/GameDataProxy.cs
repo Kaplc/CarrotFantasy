@@ -48,7 +48,7 @@ public class GameDataProxy : Proxy
     {
         if (playerData != null)
         {
-            SendNotification(NotificationName.LOADED_STATISTICALDATA, playerData);
+            SendNotification(NotificationName.LOADED_STATISTICALDATA, playerData.statisticalData);
         }
     }
 
