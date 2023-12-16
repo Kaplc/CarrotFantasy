@@ -84,9 +84,16 @@ public class GameDataProxy : Proxy
         foreach (var item in playerData.processData.passedBigLevelsDic)
         {
             // 存在已经解锁的关卡更新通关等级
-            // 解锁新关卡
             item.Value.passedLevelDic[data.levelID] = data.garde;
+
+            // 判断下一关是否解锁
+            if (!item.Value.passedLevelDic.ContainsKey(data.levelID + 1))
+            {
+                // 未解锁下一关则解锁
+                item.Value.passedLevelDic[data.levelID + 1] = EPassedGrade.None;
+            }
         }
+
         // 数据持久化
         BinaryManager.Instance.Save("ProcessData.zy", playerData.processData);
     }
@@ -155,7 +162,7 @@ public class GameDataProxy : Proxy
             SendNotification(NotificationName.LOADED_LEVELDATA, loadedLevelsData[levelID]);
             return;
         }
-        
+
         // 遍历所有大关卡数据
         foreach (KeyValuePair<int, BigLevelData> item in loadedBigLevelsData)
         {
