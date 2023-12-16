@@ -145,12 +145,32 @@ public class GameManager : BaseMonoSingleton<GameManager>
     /// </summary>
     private void GameWin()
     {
+        int hp = spawner.carrot.Hp;
+        // 结算通关等级
+        EPassedGrade grade;
+        if (1 <= hp && hp <= 3)
+        {
+            // 铜
+            grade = EPassedGrade.Copper;
+        }else if (4 <= hp && hp <= 6)
+        {
+            // 银
+            grade = EPassedGrade.Sliver;
+        }
+        else
+        {
+            // 金
+            grade = EPassedGrade.Gold;
+        }
+        // 保存游戏进度
+        GameFacade.Instance.SendNotification(NotificationName.SAVE_PROCESSDATA, (nowLevelData.levelId, grade));
         // 显示胜利面板
         GameFacade.Instance.SendNotification(NotificationName.SHOW_WINPANEL,
             (
                 spawner.nowWavesCount,
                 nowLevelData.roundDataList.Count,
-                nowLevelData.levelId
+                nowLevelData.levelId,
+                grade
             )
         );
     }

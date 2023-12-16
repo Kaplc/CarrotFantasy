@@ -84,7 +84,12 @@ public class GameDataProxy : Proxy
         foreach (var item in playerData.processData.passedBigLevelsDic)
         {
             // 存在已经解锁的关卡更新通关等级
-            item.Value.passedLevelDic[data.levelID] = data.garde;
+            EPassedGrade grade =item.Value.passedLevelDic[data.levelID];
+            // 仅刷新最高记录
+            if ((int)data.garde > (int)grade)
+            {
+                item.Value.passedLevelDic[data.levelID] = data.garde;
+            }
 
             // 判断下一关是否解锁
             if (!item.Value.passedLevelDic.ContainsKey(data.levelID + 1))

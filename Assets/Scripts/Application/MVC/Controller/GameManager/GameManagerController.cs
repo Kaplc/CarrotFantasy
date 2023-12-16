@@ -224,8 +224,6 @@ public class JudgeWinCommand : SimpleCommand
     {
         base.Execute(notification);
         GameManager.Instance.JudgingWin();
-        // 保存游戏进度
-        SendNotification(NotificationName.SAVE_PROCESSDATA, (GameManager.Instance.nowLevelData.levelId, EPassedGrade.Gold));
     }
 }
 

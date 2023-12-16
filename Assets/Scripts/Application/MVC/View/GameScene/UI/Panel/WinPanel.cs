@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using PureMVC.Interfaces;
 using PureMVC.Patterns.Mediator;
@@ -12,6 +13,9 @@ public class WinPanel : BasePanel
     public Text txLevel;
     public Button btnSelect;
     public Button btnContinue;
+    public Image imgGrade;
+
+    public List<Sprite> gradeSprites;
 
     protected override void Init()
     {
@@ -33,6 +37,22 @@ public class WinPanel : BasePanel
         txWavesCount.text = wavesCount / 10 + "  " + wavesCount % 10;
         txTotalWavesCount.text = totalWavesCount / 10 + "" + totalWavesCount % 10;
         txLevel.text = (levelID + 1) / 10 + "" + (levelID + 1) % 10;
+    }
+
+    public void UpdateGradeImage(EPassedGrade grade)
+    {
+        switch (grade)
+        {
+            case EPassedGrade.Copper:
+                imgGrade.sprite = gradeSprites[0];
+                break;
+            case EPassedGrade.Sliver:
+                imgGrade.sprite = gradeSprites[1];
+                break;
+            case EPassedGrade.Gold:
+                imgGrade.sprite = gradeSprites[2];
+                break;
+        }
     }
 }
 
@@ -74,8 +94,9 @@ public class WinPanelMediator : Mediator
 
                 Panel = UIManager.Instance.Show<WinPanel>(false);
                 // 更新数据
-                (int wavesCount, int totalWavesCount, int levelID) data = ((int, int, int))notification.Body;
+                (int wavesCount, int totalWavesCount, int levelID, EPassedGrade grade) data = ((int, int, int, EPassedGrade))notification.Body;
                 Panel.UpdatePanelData(data.wavesCount, data.totalWavesCount, data.levelID);
+                Panel.UpdateGradeImage(data.grade);
                 break;
         }
     }

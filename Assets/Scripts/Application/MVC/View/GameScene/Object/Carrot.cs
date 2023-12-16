@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class Carrot : BaseRole, IPoolObject
 {
-    public int hp;
+    private int hp;
 
     public CarrotData data;
     public List<Sprite> sprites; // 各血量萝卜Sprite
@@ -15,7 +15,7 @@ public class Carrot : BaseRole, IPoolObject
     public Animator animator;
     private Coroutine idleAnimaCoroutine; // 待机动画协程
 
-    private int Hp
+    public int Hp
     {
         get => hp;
         set
