@@ -13,7 +13,7 @@ public class Carrot : BaseRole, IPoolObject
     public List<Sprite> sprites; // 各血量萝卜Sprite
     public SpriteRenderer spriteRenderer;
     public Animator animator;
-    public Coroutine idleAnimaCoroutine; // 待机动画协程
+    private Coroutine idleAnimaCoroutine; // 待机动画协程
 
     private int Hp
     {
@@ -28,18 +28,16 @@ public class Carrot : BaseRole, IPoolObject
                 Dead();
             }
             
+            // 关闭animator
+            if (animator.enabled && hp != data.maxHp)
+            {
+                animator.enabled = false;
+            }
             // 更改萝卜图片
             spriteRenderer.sprite = sprites[hp];
         }
     }
-
-    protected void Awake()
-    {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        
-        
-    }
-
+    
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
@@ -51,9 +49,6 @@ public class Carrot : BaseRole, IPoolObject
     public override void Wound(int woundHp)
     {
         Hp -= woundHp;
-
-        // 播放受伤动画
-        animator.SetTrigger("Wound");
     }
 
     protected override void Dead()
@@ -63,6 +58,17 @@ public class Carrot : BaseRole, IPoolObject
         // 萝卜死亡触发游戏结束
         GameFacade.Instance.SendNotification(NotificationName.CARROT_DEAD);
     }
+    
+    /// <summary>
+    /// 被点击回调
+    /// </summary>
+    public void OnMouseDown()
+    {
+        // 播放Idle动画
+        animator.SetTrigger("Idle");
+    }
+
+    #region 缓存池回收回调
 
     public override void OnPush()
     {
@@ -82,6 +88,8 @@ public class Carrot : BaseRole, IPoolObject
         idleAnimaCoroutine = StartCoroutine(IdleAnimaCoroutine());
     }
 
+    #endregion
+    
     /// <summary>
     /// 定时播放Idle动画协程
     /// </summary>
