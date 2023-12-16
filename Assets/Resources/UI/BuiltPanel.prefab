@@ -479,6 +479,7 @@ MonoBehaviour:
   btnSell: {fileID: 715858687015639477}
   txSellMoney: {fileID: 7569990324330593943}
   imgAttackRange: {fileID: 8012294187425884722}
+  cellWorldPos: {x: 0, y: 0, z: 0}
 --- !u!1 &6504928405261853950
 GameObject:
   m_ObjectHideFlags: 0

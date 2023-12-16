@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1273241216140422240}
   - component: {fileID: 5901309570911178279}
   - component: {fileID: 263683609617213938}
+  - component: {fileID: 5167587718386083584}
   m_Layer: 0
   m_Name: Map
   m_TagString: Untagged
@@ -97,6 +98,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapBgSpriteRenderer: {fileID: 5901309570911178279}
   roadSpriteRenderer: {fileID: 6611210825532551183}
+  nowEditorMapData:
+    mapBgSpritePath: Map/BigLevel0/BG0
+    roadSpritePath: Map/BigLevel0/Road1
+    pathList: []
+    towerList: []
   drawGizmos: 0
   drawTowerPos: 0
   drawPath: 0
@@ -105,6 +111,32 @@ MonoBehaviour:
     roadSpritePath: 
     pathList: []
     towerList: []
+--- !u!61 &5167587718386083584
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2224654290508203992}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 9.6, y: 6.4}
+    newSize: {x: 9.6, y: 6.4}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 9.6, y: 6.4}
+  m_EdgeRadius: 0
 --- !u!1 &5537695587247249322
 GameObject:
   m_ObjectHideFlags: 0

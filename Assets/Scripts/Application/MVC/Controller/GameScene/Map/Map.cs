@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 /// <summary>
 /// 地图格子索引
@@ -53,6 +55,8 @@ public class Map : MonoBehaviour
 
     #region 游戏相关字段
 
+    public bool showBuiltPanel; // 打开建造面板已打开
+
     [HideInInspector] public MapData nowMapData; // 当前游戏的关卡地图信息
     private Cell lastClickCell; // 上一次点击的格子
 
@@ -70,10 +74,7 @@ public class Map : MonoBehaviour
         if (drawGizmos)
         {
             EditorCheckMouseEvent();
-            return;
         }
-        
-        CheckMouseEvent();
     }
 
     #region 编辑器相关
@@ -267,7 +268,7 @@ public class Map : MonoBehaviour
         // 设置路径背景
         roadSpriteRenderer.sprite = Resources.Load<Sprite>(nowMapData.roadSpritePath);
     }
-    
+
     /// <summary>
     /// 用地图数据刷新格子数据
     /// </summary>
@@ -281,72 +282,77 @@ public class Map : MonoBehaviour
     }
 
     /// <summary>
-    /// 开始游戏时鼠标点击事件
+    /// 点击格子回调
     /// </summary>
-    private void CheckMouseEvent()
+    public void OnMouseDown()
     {
-        // 左键打开升级或者建造面板
-        if (Input.GetMouseButtonDown(0) && GameManager.Instance.allowClickCell)
+        if (GameManager.Instance.Stop)
         {
-            Vector3 mouseWorldPos = Camera.main.ViewportToWorldPoint(Camera.main.ScreenToViewportPoint(Input.mousePosition));
-            Cell cell = GetCell(mouseWorldPos);
+            return;
+        }
+        
+        // 射线检测判断是否被UI遮挡
+        GraphicRaycaster gr = UIManager.Instance.canvas.GetComponent<GraphicRaycaster>();
+        PointerEventData eventData = new PointerEventData(EventSystem.current) { position = Input.mousePosition };
+        List<RaycastResult> results = new List<RaycastResult>();
+        gr.Raycast(eventData, results);
+        if (results.Count > 0) return;
 
-            // 是放塔点
-            if (cell.IsTowerPos)
+        // 获取点击的格子
+        Vector3 mouseWorldPos = Camera.main.ViewportToWorldPoint(Camera.main.ScreenToViewportPoint(Input.mousePosition));
+        Cell cell = GetCell(mouseWorldPos);
+
+        // 判断是否为放塔点
+        if (cell.IsTowerPos)
+        {
+            // 根据点击格子选择面板显示位置
+            EBuiltPanelShowDir showDir;
+            if (cell.X == 0)
             {
-                // 根据点击格子选择面板显示位置
-                EBuiltPanelShowDir showDir;
-                if (cell.X == 0)
-                {
-                    // 地图左边
-                    showDir = EBuiltPanelShowDir.Right;
-                }
-                else if (cell.X == ColumnNum - 1)
-                {
-                    // 地图右边
-                    showDir = EBuiltPanelShowDir.Left;
-                }
-                else if (cell.Y == 0)
-                {
-                    // 地图底边
-                    showDir = EBuiltPanelShowDir.Up;
-                }
-                else if (cell.Y == RowNum - 1)
-                {
-                    // 地图顶边
-                    showDir = EBuiltPanelShowDir.Down;
-                }
-                else
-                {
-                    showDir = EBuiltPanelShowDir.Up;
-                }
-
-                // 在显示下一次面板前先上次旧面板
+                // 地图左边
+                showDir = EBuiltPanelShowDir.Right;
+            }
+            else if (cell.X == ColumnNum - 1)
+            {
+                // 地图右边
+                showDir = EBuiltPanelShowDir.Left;
+            }
+            else if (cell.Y == 0)
+            {
+                // 地图底边
+                showDir = EBuiltPanelShowDir.Up;
+            }
+            else if (cell.Y == RowNum - 1)
+            {
+                // 地图顶边
+                showDir = EBuiltPanelShowDir.Down;
+            }
+            else
+            {
+                showDir = EBuiltPanelShowDir.Up;
+            }
+            
+            // 面板已经打开则该次点击为关闭面板
+            if (GameManager.Instance.openedBuiltPanel)
+            {
                 GameFacade.Instance.SendNotification(NotificationName.HIDE_BUILTPANEL);
+                return;
+            }
 
-                // 判断格子是否存在塔
-                if (cell.tower as BaseTower)
-                    // 显示升级塔面板
-                    ShowUpGradePanel(cell.tower as BaseTower, GetCellCenterPos(cell), showDir);
-                else
-                    // 显示创建塔面板
-                    ShowCreatePanel(GetCellCenterPos(cell), showDir);
-
-                // 面板打开禁止监测格子
-                GameManager.Instance.allowClickCell = false;
+            // 判断格子是否存在塔
+            if (cell.tower as BaseTower)
+            {
+                // 显示升级塔面板
+                ShowUpGradePanel(cell.tower as BaseTower, GetCellCenterPos(cell), showDir);
+            }
+            else
+            {
+                // 显示创建塔面板
+                ShowCreatePanel(GetCellCenterPos(cell), showDir);
             }
         }
-        else if (Input.GetMouseButtonDown(1))
-        {
-            // 完全停止时失效
-            if (GameManager.Instance.Stop)return;
-
-            // 右键关闭建造面板
-            GameFacade.Instance.SendNotification(NotificationName.HIDE_BUILTPANEL);
-            GameFacade.Instance.SendNotification(NotificationName.ALLOW_CLICKCELL, true);
-        }
     }
-
+    
     /// <summary>
     /// 显示升级塔面板
     /// </summary>
@@ -376,7 +382,7 @@ public class Map : MonoBehaviour
             body.icon = proxy?.GetSprite("Atlas/BuiltPanelAtlas", "Btn_CantUpLevel");
             body.upGradeMoney = towerData.prices[tower.level + 1];
         }
-        
+
         body.createPos = createPos;
         body.sellMoney = towerData.sellPrices[tower.level];
         body.attackRange = towerData.attackRange;

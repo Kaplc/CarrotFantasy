@@ -17,7 +17,6 @@ public class MenuPanel : BasePanel
         {
             UIManager.Instance.Hide<MenuPanel>(false);
             PanelMediator.SendNotification(NotificationName.CONTINUE_GAME);
-            PanelMediator.SendNotification(NotificationName.ALLOW_CLICKCELL, true);
         });
         
         btnReStart.onClick.AddListener(() =>

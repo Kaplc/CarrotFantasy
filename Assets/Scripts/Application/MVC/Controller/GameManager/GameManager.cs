@@ -15,7 +15,7 @@ public class GameManager : BaseMonoSingleton<GameManager>
     private float pauseTime; // 暂停时间
     public int nowBigLevelId; // 大关卡id
     public int money; // 金钱
-    public bool allowClickCell; // 允许点击格子
+    public bool openedBuiltPanel; // 建造面板已打开
 
     public bool Pause
     {
@@ -30,7 +30,6 @@ public class GameManager : BaseMonoSingleton<GameManager>
             }
         }
     }
-
     public float PauseTime => pauseTime;
     public bool Stop => stop;
 
@@ -54,7 +53,6 @@ public class GameManager : BaseMonoSingleton<GameManager>
     {
         stop = true;
         Pause = true;
-        allowClickCell = false;
         // 创建地图
         map = Instantiate(Resources.Load<GameObject>("Prefabs/Map")).GetComponent<Map>();
         // 地图初始化
@@ -75,7 +73,6 @@ public class GameManager : BaseMonoSingleton<GameManager>
     public void StartGame()
     {
         Pause = false;
-        allowClickCell = true;
         stop = false;
     }
 
@@ -105,7 +102,6 @@ public class GameManager : BaseMonoSingleton<GameManager>
         stop = true;
         // 暂停且禁止鼠标检测
         Pause = true;
-        allowClickCell = false;
     }
 
     /// <summary>
@@ -147,7 +143,7 @@ public class GameManager : BaseMonoSingleton<GameManager>
     /// <summary>
     /// 游戏胜利
     /// </summary>
-    public void GameWin()
+    private void GameWin()
     {
         // 显示胜利面板
         GameFacade.Instance.SendNotification(NotificationName.SHOW_WINPANEL,

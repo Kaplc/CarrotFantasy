@@ -22,7 +22,7 @@ public class InitGameManagerControllerCommand : SimpleCommand
         GameFacade.Instance.RegisterCommand(NotificationName.CONTINUE_GAME, () => new ContinueGameCommand());
         GameFacade.Instance.RegisterCommand(NotificationName.SELECT_LEVEL, () => new SelectLevelCommand());
         GameFacade.Instance.RegisterCommand(NotificationName.NEXT_LEVEL, () => new NextLevelCommand());
-        GameFacade.Instance.RegisterCommand(NotificationName.ALLOW_CLICKCELL, () => new AllowClickCellCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.OPENED_BUILTPANEL, () => new OpenedBuiltPanelCommand());
         GameFacade.Instance.RegisterCommand(NotificationName.STOP_GAME, () => new StopGameCommand());
         GameFacade.Instance.RegisterCommand(NotificationName.MONSTER_DEAD, () => new JudgeWinCommand());
         GameFacade.Instance.RegisterCommand(NotificationName.CARROT_DEAD, () => new GameOverCommand());
@@ -247,12 +247,12 @@ public class GameOverCommand : SimpleCommand
 /// <summary>
 /// 允许点击格子
 /// </summary>
-public class AllowClickCellCommand : SimpleCommand
+public class OpenedBuiltPanelCommand : SimpleCommand
 {
     public override void Execute(INotification notification)
     {
         base.Execute(notification);
-        GameManager.Instance.allowClickCell = (bool)notification.Body;
+        GameManager.Instance.openedBuiltPanel = (bool)notification.Body;
     }
 }
 

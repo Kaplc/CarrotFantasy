@@ -140,7 +140,7 @@ public class BuiltPanelMediator : Mediator
                     createPanelArgsBody.towersDataDic, 
                     createPanelArgsBody.showDir
                 );
-                
+                SendNotification(NotificationName.OPENED_BUILTPANEL, true);
                 break;
             case NotificationName.SHOW_UPGRADEPANEL:
 
@@ -154,10 +154,12 @@ public class BuiltPanelMediator : Mediator
                     upGradeTowerArgsBody.attackRange, 
                     upGradeTowerArgsBody.showDir
                 );
+                SendNotification(NotificationName.OPENED_BUILTPANEL, true);
                 break;
             case NotificationName.HIDE_BUILTPANEL:
                 UIManager.Instance.Hide<BuiltPanel>(false);
                 ViewComponent = null;
+                SendNotification(NotificationName.OPENED_BUILTPANEL, false);
                 break;
         }
     }

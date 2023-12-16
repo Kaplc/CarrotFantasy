@@ -19,7 +19,7 @@ public class UIManager
 
     private Dictionary<string, BasePanel> panelsDic = new Dictionary<string, BasePanel>();
 
-    private Canvas canvas;
+    public Canvas canvas;
     public Camera uiCamera;
 
     // 各层面板

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class NotificationName
 {
-    #region 游戏进程相关
+    #region 游戏逻辑相关
 
     public const string INIT = "Init"; // 游戏初始化
     public const string INIT_GAMEMANAGERCONTROLLER = "InitGameManagerController";
@@ -29,7 +29,7 @@ public class NotificationName
     public const string REACH_ENDPOINT = "ReachEndPoint"; // 怪物到达终点
     public const string MONSTER_DEAD = "MonsterDead"; // 怪物死亡
     public const string CARROT_DEAD = "CarrotDead"; // 萝卜死亡
-    public const string ALLOW_CLICKCELL = "AllowClickCell"; // 是否允许点击格子
+    public const string OPENED_BUILTPANEL = "OpenBuiltPanel"; // 建造面板已打开
     
     #endregion
     

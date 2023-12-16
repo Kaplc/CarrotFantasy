@@ -56,7 +56,6 @@ public class Spawner : MonoBehaviour
         tower.UpGrade();
         // 关闭建造面板
         GameFacade.Instance.SendNotification(NotificationName.HIDE_BUILTPANEL);
-        GameFacade.Instance.SendNotification(NotificationName.ALLOW_CLICKCELL, true);
     }
 
     /// <summary>
@@ -78,7 +77,6 @@ public class Spawner : MonoBehaviour
 
         // 关闭建造面板
         GameFacade.Instance.SendNotification(NotificationName.HIDE_BUILTPANEL);
-        GameFacade.Instance.SendNotification(NotificationName.ALLOW_CLICKCELL, true);
     }
 
     /// <summary>
@@ -102,8 +100,6 @@ public class Spawner : MonoBehaviour
 
             // 关闭建造面板
             GameFacade.Instance.SendNotification(NotificationName.HIDE_BUILTPANEL);
-            // 建造成功允许检测格子
-            GameFacade.Instance.SendNotification(NotificationName.ALLOW_CLICKCELL, true);
         }
     }
 
