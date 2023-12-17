@@ -10,10 +10,10 @@ public class GameDataProxy : Proxy
 
     private PlayerData playerData;
 
-    private Dictionary<int, LevelData> loadedLevelsData = new Dictionary<int, LevelData>(); // 已经加载过的关卡缓存
-    private Dictionary<int, MonsterData> loadedMonstersData = new Dictionary<int, MonsterData>();
-    private Dictionary<int, TowerData> loadedTowersData = new Dictionary<int, TowerData>();
-    private Dictionary<int, BigLevelData> loadedBigLevelsData = new Dictionary<int, BigLevelData>(); // 已经加载过的主题
+    private Dictionary<int, LevelData> loadedLevelsDataDic = new Dictionary<int, LevelData>(); // 已经加载过的关卡缓存
+    private Dictionary<int, MonsterData> loadedMonstersDataDic = new Dictionary<int, MonsterData>();
+    private Dictionary<int, TowerData> loadedTowersDataDic = new Dictionary<int, TowerData>();
+    private Dictionary<int, BigLevelData> loadedBigLevelsDataDic = new Dictionary<int, BigLevelData>(); // 已经加载过的主题
 
     public GameDataProxy() : base(NAME)
     {
@@ -25,11 +25,6 @@ public class GameDataProxy : Proxy
     public void LoadInitGameData()
     {
         LoadPlayerData();
-
-        // 加载关卡的所有怪物信息
-        LoadMonstersData();
-        // 加载获该关卡所有塔数据
-        LoadTowersData();
         // 加载大关卡数据
         LoadBigLevelData();
     }
@@ -81,22 +76,23 @@ public class GameDataProxy : Proxy
 
     public void SaveProcessData((int levelID, EPassedGrade garde) data)
     {
-        foreach (var item in playerData.processData.passedBigLevelsDic)
+        // 获取BigLevelID
+        int bigLevelID = loadedLevelsDataDic[data.levelID].bigLevelID;
+        // 缓存的通关数据
+        PassedLevelData passedLevelData = playerData.processData.passedBigLevelsDic[bigLevelID];
+        // 存在已经解锁的关卡更新通关等级
+        EPassedGrade grade = passedLevelData.passedLevelDic[data.levelID];
+        // 仅刷新最高记录
+        if ((int)data.garde > (int)grade)
         {
-            // 存在已经解锁的关卡更新通关等级
-            EPassedGrade grade =item.Value.passedLevelDic[data.levelID];
-            // 仅刷新最高记录
-            if ((int)data.garde > (int)grade)
-            {
-                item.Value.passedLevelDic[data.levelID] = data.garde;
-            }
+            passedLevelData.passedLevelDic[data.levelID] = data.garde;
+        }
 
-            // 判断下一关是否解锁
-            if (!item.Value.passedLevelDic.ContainsKey(data.levelID + 1))
-            {
-                // 未解锁下一关则解锁
-                item.Value.passedLevelDic[data.levelID + 1] = EPassedGrade.None;
-            }
+        // 判断下一关是否解锁
+        if (!passedLevelData.passedLevelDic.ContainsKey(data.levelID + 1))
+        {
+            // 未解锁下一关则解锁
+            passedLevelData.passedLevelDic[data.levelID + 1] = EPassedGrade.None;
         }
 
         // 数据持久化
@@ -136,50 +132,49 @@ public class GameDataProxy : Proxy
 
     public void GetBigLevelData(int id)
     {
-        if (loadedBigLevelsData.ContainsKey(id))
+        if (loadedBigLevelsDataDic.ContainsKey(id))
         {
-            SendNotification(NotificationName.LOADED_BIGLEVELDATA, loadedBigLevelsData[id]);
+            SendNotification(NotificationName.LOADED_BIGLEVELDATA, loadedBigLevelsDataDic[id]);
         }
     }
 
     /// <summary>
-    /// 加载大关卡数据
+    /// 加载所有大关卡数据
     /// </summary>
-    /// <param name="bigLevelID">大关卡id</param>
     private void LoadBigLevelData()
     {
         BigLevelData[] datas = Resources.LoadAll<BigLevelData>(DataPath.LEVELRDATA_PATH);
         for (int i = 0; i < datas.Length; i++)
         {
-            loadedBigLevelsData.Add(datas[i].id, datas[i]);
+            loadedBigLevelsDataDic.Add(datas[i].id, datas[i]);
         }
     }
 
     /// <summary>
     /// 根据关卡id获取关卡数据
     /// </summary>
-    /// <param name="id">关卡id</param>
     public void LoadLevelData(int levelID)
     {
+        LevelData levelData;
         // 已经加载过直接返回
-        if (loadedLevelsData.ContainsKey(levelID))
+        if (loadedLevelsDataDic.TryGetValue(levelID, out levelData))
         {
-            SendNotification(NotificationName.LOADED_LEVELDATA, loadedLevelsData[levelID]);
+            SendNotification(NotificationName.LOADED_LEVELDATA, levelData);
             return;
         }
 
         // 遍历所有大关卡数据
-        foreach (KeyValuePair<int, BigLevelData> item in loadedBigLevelsData)
+        foreach (KeyValuePair<int, BigLevelData> item in loadedBigLevelsDataDic)
         {
             for (int i = 0; i < item.Value.levels.Count; i++)
             {
-                if (levelID == item.Value.levels[i].levelId)
+                if (levelID == item.Value.levels[i].levelID)
                 {
-                    LevelData levelData = item.Value.levels[i];
+                    levelData = item.Value.levels[i];
                     // 加载地图数据
                     levelData.mapData = GameManager.Instance.BinaryManager.Load<MapData>(DataPath.MAPDATA_PATH + $"{levelData.mapDataPath}.md");
                     // 缓存已加载过的关卡
-                    loadedLevelsData.Add(levelData.levelId, levelData);
+                    loadedLevelsDataDic.Add(levelData.levelID, levelData);
                     SendNotification(NotificationName.LOADED_LEVELDATA, item.Value.levels[i]);
                     return;
                 }
@@ -196,9 +191,9 @@ public class GameDataProxy : Proxy
 
         for (int i = 0; i < data.Length; i++)
         {
-            if (!loadedMonstersData.ContainsKey(data[i].id))
+            if (!loadedMonstersDataDic.ContainsKey(data[i].id))
             {
-                loadedMonstersData.Add(data[i].id, data[i]);
+                loadedMonstersDataDic.Add(data[i].id, data[i]);
             }
         }
     }
@@ -212,9 +207,9 @@ public class GameDataProxy : Proxy
 
         for (int i = 0; i < data.Length; i++)
         {
-            if (!loadedTowersData.ContainsKey(data[i].id))
+            if (!loadedTowersDataDic.ContainsKey(data[i].id))
             {
-                loadedTowersData.Add(data[i].id, data[i]);
+                loadedTowersDataDic.Add(data[i].id, data[i]);
             }
         }
     }
@@ -226,6 +221,6 @@ public class GameDataProxy : Proxy
     /// </summary>
     public void ClearData()
     {
-        loadedLevelsData.Clear();
+        loadedLevelsDataDic.Clear();
     }
 }

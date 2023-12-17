@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -29,12 +30,24 @@ public class ButtonLevel : MonoBehaviour
             {
                 isLock = false;
                 imgLock.gameObject.SetActive(false);
-                // 未通关的已解锁
-                if (passedGrade == EPassedGrade.None) return;
-                
                 // 根据通关等级选择图片
                 imgGarde.gameObject.SetActive(true);
-                imgGarde.sprite = gardeSprites[(int)passedGrade];
+                switch (passedGrade)
+                {
+                    case EPassedGrade.None:
+                        // 未通关的已解锁
+                        imgGarde.gameObject.SetActive(false);
+                        break;
+                    case EPassedGrade.Copper:
+                        imgGarde.sprite = gardeSprites[0];
+                        break;
+                    case EPassedGrade.Sliver:
+                        imgGarde.sprite = gardeSprites[1];
+                        break;
+                    case EPassedGrade.Gold:
+                        imgGarde.sprite = gardeSprites[2];
+                        break;
+                }
             }
         }
     }

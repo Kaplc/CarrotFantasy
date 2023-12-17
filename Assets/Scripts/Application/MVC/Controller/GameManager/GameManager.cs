@@ -163,13 +163,13 @@ public class GameManager : BaseMonoSingleton<GameManager>
             grade = EPassedGrade.Gold;
         }
         // 保存游戏进度
-        GameFacade.Instance.SendNotification(NotificationName.SAVE_PROCESSDATA, (nowLevelData.levelId, grade));
+        GameFacade.Instance.SendNotification(NotificationName.SAVE_PROCESSDATA, (nowLevelData.levelID, grade));
         // 显示胜利面板
         GameFacade.Instance.SendNotification(NotificationName.SHOW_WINPANEL,
             (
                 spawner.nowWavesCount,
                 nowLevelData.roundDataList.Count,
-                nowLevelData.levelId,
+                nowLevelData.levelID,
                 grade
             )
         );
@@ -187,7 +187,7 @@ public class GameManager : BaseMonoSingleton<GameManager>
             (
                 spawner.nowWavesCount,
                 nowLevelData.roundDataList.Count,
-                nowLevelData.levelId
+                nowLevelData.levelID
             )
         );
     }

@@ -5,15 +5,15 @@ using UnityEngine;
 
 public enum EPassedGrade
 {
+    None,
     Copper,
     Sliver,
     Gold,
-    None
 }
 
 [Serializable]
 public class PassedLevelData
 {
-    // ID - Grade
-    public Dictionary<int, EPassedGrade> passedLevelDic = new Dictionary<int, EPassedGrade>();
+    public Dictionary<int, EPassedGrade> passedLevelDic = new Dictionary<int, EPassedGrade>(); // 关卡ID和 通关等级
+    public int passedLevelCount; // 已通关关卡数不包含已解锁
 }

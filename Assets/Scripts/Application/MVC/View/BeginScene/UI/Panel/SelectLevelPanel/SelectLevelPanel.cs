@@ -57,7 +57,7 @@ public class SelectLevelPanel : BasePanel
 
         for (int i = 0; i < bigLevelData.levels.Count; i++)
         {
-            if (GameManager.Instance.nowLevelData.levelId == bigLevelData.levels[i].levelId)
+            if (GameManager.Instance.nowLevelData.levelID == bigLevelData.levels[i].levelID)
             {
                 pageFlipping.ToPage(i + 1);
                 // 仅自动滑动一次退出选择关卡界面就无效
@@ -83,7 +83,7 @@ public class SelectLevelPanel : BasePanel
             // 获取脚本
             ButtonLevel buttonLevel = button.GetComponent<ButtonLevel>();
             // 设置信息
-            buttonLevel.levelID = data.levels[i].levelId;
+            buttonLevel.levelID = data.levels[i].levelID;
             // 修改图片
             buttonLevel.imgMap.sprite = data.levels[i].image;
             // 添加事件
@@ -105,7 +105,7 @@ public class SelectLevelPanel : BasePanel
                 }
 
                 UIManager.Instance.Hide<SelectLevelPanel>(false);
-                GameFacade.Instance.SendNotification(NotificationName.LOAD_GAME, levelData.levelId);
+                GameFacade.Instance.SendNotification(NotificationName.LOAD_GAME, levelData.levelID);
             });
         }
 

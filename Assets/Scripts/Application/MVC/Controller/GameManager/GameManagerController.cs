@@ -70,7 +70,7 @@ public class NextLevelCommand : SimpleCommand
         base.Execute(notification);
         SendNotification(NotificationName.EXIT_GAME);
         // 加载下一关
-        SendNotification(NotificationName.LOAD_GAME, GameManager.Instance.nowLevelData.levelId + 1);
+        SendNotification(NotificationName.LOAD_GAME, GameManager.Instance.nowLevelData.levelID + 1);
     }
 }
 
@@ -175,7 +175,7 @@ public class RestartGameCommand : SimpleCommand
 
         SendNotification(NotificationName.EXIT_GAME);
         // 重新加载游戏
-        SendNotification(NotificationName.LOAD_GAME, GameManager.Instance.nowLevelData.levelId);
+        SendNotification(NotificationName.LOAD_GAME, GameManager.Instance.nowLevelData.levelID);
     }
 }
 

@@ -8,7 +8,8 @@ using UnityEngine;
 [Serializable]
 public class LevelData : ScriptableObject
 {
-    public int levelId; // 关卡id
+    public int levelID; // 关卡id
+    public int bigLevelID; // 属于哪个主题ID
     public int money; // 初始的钱
     public string mapDataPath; // 加载的地图数据的文件名
     public float intervalTimePerWave; // 每波间隔时间
