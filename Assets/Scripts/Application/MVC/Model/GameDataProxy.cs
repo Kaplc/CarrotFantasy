@@ -72,6 +72,31 @@ public class GameDataProxy : Proxy
         if (playerData.processData != null) return;
 
         playerData.processData = BinaryManager.Instance.Load<ProcessData>("ProcessData.zy");
+        CalPassedLevelCount();
+    }
+    
+    /// <summary>
+    /// 计算通关关卡数
+    /// </summary>
+    private void CalPassedLevelCount()
+    {
+        // 遍历每个主题
+        foreach (var passedBigLevelItem in playerData.processData.passedBigLevelsDic)
+        {
+            // 计数
+            int count = 0;
+            // 遍历每个主题下的小关卡
+            foreach (var passedLevelItem in passedBigLevelItem.Value.passedLevelDic)
+            {
+                if (passedLevelItem.Value != EPassedGrade.None)
+                {
+                    count++;
+                }
+            }
+
+            passedBigLevelItem.Value.passedLevelCount = count;
+        }
+         
     }
 
     public void SaveProcessData((int levelID, EPassedGrade garde) data)
@@ -94,6 +119,8 @@ public class GameDataProxy : Proxy
             // 未解锁下一关则解锁
             passedLevelData.passedLevelDic[data.levelID + 1] = EPassedGrade.None;
         }
+        
+        CalPassedLevelCount();
 
         // 数据持久化
         BinaryManager.Instance.Save("ProcessData.zy", playerData.processData);

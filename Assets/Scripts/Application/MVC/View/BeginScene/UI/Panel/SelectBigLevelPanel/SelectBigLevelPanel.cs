@@ -117,17 +117,17 @@ public class SelectBigLevelPanel : BasePanel
         // 获取关卡解锁数据
         if (processData.passedBigLevelsDic.ContainsKey(0))
         {
-            btnBigLevel0.GetComponent<BigLevelButton>().UpdateUnlockMapCount(processData.passedBigLevelsDic[0].passedLevelDic.Count);
+            btnBigLevel0.GetComponent<BigLevelButton>().UpdateUnlockMapCount(processData.passedBigLevelsDic[0].passedLevelCount);
         }
 
         if (processData.passedBigLevelsDic.ContainsKey(1))
         {
-            btnBigLevel1.GetComponent<BigLevelButton>().UpdateUnlockMapCount(processData.passedBigLevelsDic[1].passedLevelDic.Count);
+            btnBigLevel1.GetComponent<BigLevelButton>().UpdateUnlockMapCount(processData.passedBigLevelsDic[1].passedLevelCount);
         }
 
         if (processData.passedBigLevelsDic.ContainsKey(2))
         {
-            btnBigLevel2.GetComponent<BigLevelButton>().UpdateUnlockMapCount(processData.passedBigLevelsDic[2].passedLevelDic.Count);
+            btnBigLevel2.GetComponent<BigLevelButton>().UpdateUnlockMapCount(processData.passedBigLevelsDic[2].passedLevelCount);
         }
     }
 
@@ -178,7 +178,7 @@ public class SelectBigLevelPanelMediator : Mediator
         return new string[]
         {
             NotificationName.SHOW_SELECTBIGLEVELPANEL,
-            NotificationName.LOAD_PROCESSDATA
+            NotificationName.LOADED_PROCESSDATA
         };
     }
 
