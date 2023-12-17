@@ -4,7 +4,7 @@ using PureMVC.Interfaces;
 using PureMVC.Patterns.Mediator;
 using UnityEngine;
 
-public class InitPanel : BasePanel
+public class LoadingPanel : BasePanel
 {
     protected override void Init()
     {
