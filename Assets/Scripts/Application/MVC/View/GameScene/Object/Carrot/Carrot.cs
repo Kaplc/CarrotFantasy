@@ -73,12 +73,15 @@ public class Carrot : BaseRole, IPoolObject
     public override void OnPush()
     {
         StopCoroutine(idleAnimaCoroutine);
+        // 停止所有动画
+        animator.enabled = false;
         // 移除Mediator
         GameFacade.Instance.RemoveMediator(nameof(CarrotMediator));
     }
 
     public override void OnGet()
     {
+        animator.enabled = true;
         // 注册Mediator
         GameFacade.Instance.RegisterMediator(new CarrotMediator(this));
         // 刷新血量

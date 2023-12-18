@@ -27,6 +27,8 @@ public class GameFacade : Facade
         RegisterCommand(NotificationName.INIT_GAMEMANAGERCONTROLLER, () => new InitGameManagerControllerCommand());
         RegisterCommand(NotificationName.INIT_GAMEDATAPROXY, () => new InitGameDataProxyCommand());
         RegisterCommand(NotificationName.INIT_SPAWNERCONTROLLER, () => new InitSpawnerController());
+        RegisterCommand(NotificationName.INIT_LOADSCENECONTROLLER, () => new InitLoadSceneController());
+        
         RegisterCommand(NotificationName.INIT_END, () => new InitEndCommand());
         RegisterCommand(NotificationName.LOAD_ATLAS, ()=> new LoadAtlasCommand());
     }
@@ -35,16 +37,7 @@ public class GameFacade : Facade
     {
         base.InitializeView();
         // 注册View
-        RegisterMediator(new InitPanelMediator());
-        RegisterMediator(new BeginPanelMediator());
-        RegisterMediator(new SelectBigLevelPanelMediator());
-        RegisterMediator(new SelectLevelPanelMediator());
-        RegisterMediator(new GamePanelMediator());
-        RegisterMediator(new MenuPanelMediator());
         RegisterMediator(new LoadingPanelMediator());
-        RegisterMediator(new WinPanelMediator());
-        RegisterMediator(new LosePanelMediator());
-        RegisterMediator(new BuiltPanelMediator());
     }
 
     protected override void InitializeModel()

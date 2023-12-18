@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BigLevelButton : MonoBehaviour
+public class ItemButton : MonoBehaviour
 {
     public Image imgLock;
     public Image imgUnlockMapCount;

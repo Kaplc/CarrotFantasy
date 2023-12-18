@@ -11,9 +11,7 @@ public class GameDataProxy : Proxy
     private PlayerData playerData;
 
     private Dictionary<int, LevelData> loadedLevelsDataDic = new Dictionary<int, LevelData>(); // 已经加载过的关卡缓存
-    private Dictionary<int, MonsterData> loadedMonstersDataDic = new Dictionary<int, MonsterData>();
-    private Dictionary<int, TowerData> loadedTowersDataDic = new Dictionary<int, TowerData>();
-    private Dictionary<int, BigLevelData> loadedBigLevelsDataDic = new Dictionary<int, BigLevelData>(); // 已经加载过的主题
+    private Dictionary<int, ItemData> loadedItemsDataDic = new Dictionary<int, ItemData>(); // 已经加载过的主题
 
     public GameDataProxy() : base(NAME)
     {
@@ -81,7 +79,7 @@ public class GameDataProxy : Proxy
     private void CalPassedLevelCount()
     {
         // 遍历每个主题
-        foreach (var passedBigLevelItem in playerData.processData.passedBigLevelsDic)
+        foreach (var passedBigLevelItem in playerData.processData.passedItemsDic)
         {
             // 计数
             int count = 0;
@@ -102,9 +100,9 @@ public class GameDataProxy : Proxy
     public void SaveProcessData((int levelID, EPassedGrade garde) data)
     {
         // 获取BigLevelID
-        int bigLevelID = loadedLevelsDataDic[data.levelID].bigLevelID;
+        int bigLevelID = loadedLevelsDataDic[data.levelID].itemID;
         // 缓存的通关数据
-        PassedLevelData passedLevelData = playerData.processData.passedBigLevelsDic[bigLevelID];
+        PassedLevelData passedLevelData = playerData.processData.passedItemsDic[bigLevelID];
         // 存在已经解锁的关卡更新通关等级
         EPassedGrade grade = passedLevelData.passedLevelDic[data.levelID];
         // 仅刷新最高记录
@@ -159,9 +157,9 @@ public class GameDataProxy : Proxy
 
     public void GetBigLevelData(int id)
     {
-        if (loadedBigLevelsDataDic.ContainsKey(id))
+        if (loadedItemsDataDic.ContainsKey(id))
         {
-            SendNotification(NotificationName.LOADED_BIGLEVELDATA, loadedBigLevelsDataDic[id]);
+            SendNotification(NotificationName.LOADED_ITEMDATA, loadedItemsDataDic[id]);
         }
     }
 
@@ -170,10 +168,10 @@ public class GameDataProxy : Proxy
     /// </summary>
     private void LoadBigLevelData()
     {
-        BigLevelData[] datas = Resources.LoadAll<BigLevelData>(DataPath.LEVELRDATA_PATH);
+        ItemData[] datas = Resources.LoadAll<ItemData>(DataPath.LEVELRDATA_PATH);
         for (int i = 0; i < datas.Length; i++)
         {
-            loadedBigLevelsDataDic.Add(datas[i].id, datas[i]);
+            loadedItemsDataDic.Add(datas[i].id, datas[i]);
         }
     }
 
@@ -191,7 +189,7 @@ public class GameDataProxy : Proxy
         }
 
         // 遍历所有大关卡数据
-        foreach (KeyValuePair<int, BigLevelData> item in loadedBigLevelsDataDic)
+        foreach (KeyValuePair<int, ItemData> item in loadedItemsDataDic)
         {
             for (int i = 0; i < item.Value.levels.Count; i++)
             {
@@ -209,45 +207,5 @@ public class GameDataProxy : Proxy
         }
     }
 
-    /// <summary>
-    /// 加载该关卡所有怪物数据
-    /// </summary>
-    private void LoadMonstersData()
-    {
-        MonsterData[] data = Resources.LoadAll<MonsterData>(DataPath.MONSTERDATA_PATH);
-
-        for (int i = 0; i < data.Length; i++)
-        {
-            if (!loadedMonstersDataDic.ContainsKey(data[i].id))
-            {
-                loadedMonstersDataDic.Add(data[i].id, data[i]);
-            }
-        }
-    }
-
-    /// <summary>
-    /// 加载获该关卡所有塔数据
-    /// </summary>
-    private void LoadTowersData()
-    {
-        TowerData[] data = Resources.LoadAll<TowerData>(DataPath.TOWERDATA_PATH);
-
-        for (int i = 0; i < data.Length; i++)
-        {
-            if (!loadedTowersDataDic.ContainsKey(data[i].id))
-            {
-                loadedTowersDataDic.Add(data[i].id, data[i]);
-            }
-        }
-    }
-
     #endregion
-
-    /// <summary>
-    /// 清空数据
-    /// </summary>
-    public void ClearData()
-    {
-        loadedLevelsDataDic.Clear();
-    }
 }

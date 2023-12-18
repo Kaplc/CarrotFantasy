@@ -16,15 +16,14 @@ public class BeginPanel : BasePanel
     
     public Animator animator;
     // 作为子面板
-    public SettingPanel settingPanel; 
-    public HelpPanel helpPanel;
+    public SettingPanel settingPanel;
 
     protected override void Init()
     {
         btnAdventure.onClick.AddListener(() =>
         {
             // 发送打开选择大关卡的消息
-            PanelMediator.SendNotification(NotificationName.SHOW_SELECTBIGLEVELPANEL);
+            PanelMediator.SendNotification(NotificationName.LOADSCENE_BEGIN_TO_SELECTITEM);
             // 隐藏自己
             UIManager.Instance.Hide<BeginPanel>(false);
         });

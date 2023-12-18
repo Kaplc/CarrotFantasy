@@ -11,13 +11,15 @@ public class InitCommand : SimpleCommand
     {
         base.Execute(notification);
         SendNotification(NotificationName.SHOW_INITPANEL);
+        
         // 初始化Controller
         SendNotification(NotificationName.INIT_GAMEMANAGERCONTROLLER);
         SendNotification(NotificationName.INIT_GAMEDATAPROXY);
         SendNotification(NotificationName.INIT_SPAWNERCONTROLLER);
+        SendNotification(NotificationName.INIT_LOADSCENECONTROLLER);
         // 初始化游戏数据
         SendNotification(NotificationName.INIT_GAMEDATA);
-        
-        SendNotification(NotificationName.INIT_END);
+        // 初始化完成跳转开始场景
+        SendNotification(NotificationName.LOADSCENE_INIT_TO_BEGIN);
     }
 }

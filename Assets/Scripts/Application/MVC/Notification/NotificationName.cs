@@ -10,6 +10,7 @@ public class NotificationName
     public const string INIT_GAMEMANAGERCONTROLLER = "InitGameManagerController";
     public const string INIT_GAMEDATAPROXY = "InitGameDataProxy";
     public const string INIT_SPAWNERCONTROLLER = "InitSpawnerController";
+    public const string INIT_LOADSCENECONTROLLER = "InitLoadSceneController";
     public const string INIT_GAMEDATA = "InitGameData"; // 初始化数据
     public const string INIT_END = "InitEnd"; // 游戏初始化结束
 
@@ -39,7 +40,7 @@ public class NotificationName
     public const string SHOW_INITPANEL = "ShowInitPanel"; // 初始化界面
     public const string HIDE_INIPANEL = "HideInitPanel";
     
-    public const string SHOW_SELECTBIGLEVELPANEL = "ShowSelectBigLevelPanel"; // 选择大关卡
+    public const string SHOW_SELECTITEMPANEL = "ShowSelectBigLevelPanel"; // 选择大关卡
     public const string SHOW_SELECTLEVELPANEL = "ShowSelectLevelPanel"; // 选择小关卡
     public const string SHOW_HELPPANEL = "ShowHelpPanel"; // 帮助面板
     public const string SHOW_BEGINPANEL = "ShowBeginPanel"; // 开始面板
@@ -83,8 +84,8 @@ public class NotificationName
     public const string LOAD_LEVELDATA = "LoadLevelData";
     public const string LOADED_LEVELDATA = "LoadedLevelMapData"; // 加载完成关卡
     // 大关卡数据
-    public const string LOAD_BIGLEVELDATA = "LoadBigLevelData";
-    public const string LOADED_BIGLEVELDATA = "LoadedBigLevelData";
+    public const string LOAD_ITEMDATA = "LoadItemData";
+    public const string LOADED_ITEMDATA = "LoadedItemData";
     // 音乐设置
     public const string LOAD_MUSICSETTINGDATA = "LoadMusciSettingData";
     public const string LOADED_MUSICSETTINGDATA = "LoadedMusicSettingData";
@@ -100,6 +101,30 @@ public class NotificationName
     public const string LOADED_ATLAS = "LoadedAtlas"; 
     // 保存游戏进度数据
     public const string SAVE_PROCESSDATA = "SaveProcessData";
+
+    #endregion
+
+    #region 场景状态相关
+    
+    // 加载场景
+    public const string LOADSCENE_BEGIN = "LoadScne_Begin";
+    public const string LOADSCENE_SELECTITEM = "LoadScne_SelectItem";
+    public const string LOADSCENE_SELECTLEVEL = "LoadScne_SelectLevel";
+    public const string LOADSCENE_GAME = "LoadScne_Game";
+    public const string LOADSCENE_END = "LoadScne_End";
+
+    // 场景跳转
+    public const string LOADSCENE_INIT_TO_BEGIN = "LoadScene_InitToBegin";
+    public const string LOADSCENE_BEGIN_TO_SELECTITEM = "LoadScene_BeginToSelectItem";
+    public const string LOADSCENE_SELECTITEM_TO_SELECTLEVEL = "LoadScene_SelectItemToSelectLevel";
+    public const string LOADSCENE_SELECTITEM_TO_HELP = "LoadScene_SelectItemToHelp";
+    public const string LOADSCENE_SELECTITEM_TO_BEGIN = "LoadScene_SelectItemToBegin";
+    public const string LOADSCENE_SELECTLEVEL_TO_GAME = "LoadScene_SelectLevelToGame";
+    public const string LOADSCENE_SELECTLEVEL_TO_SELECTITEM = "LoadScene_SelectLevelToSelectItem";
+    public const string LOADSCENE_SELECTLEVEL_TO_HELP = "LoadScene_SelectLevelToHelp";
+    public const string LOADSCENE_GAME_TO_END = "LoadScene_GameToEnd";
+    public const string LOADSCENE_GAME_TO_SELECTLEVEL = "LoadScene_GameToSelect";
+    public const string LOADSCENE_GAME_TO_GAME = "LoadScene_GameToGame";
 
     #endregion
 }

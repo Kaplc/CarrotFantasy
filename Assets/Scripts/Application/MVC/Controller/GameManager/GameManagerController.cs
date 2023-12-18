@@ -11,8 +11,7 @@ public class InitGameManagerControllerCommand : SimpleCommand
 
         // 初始化GameController注册命令
         GameFacade.Instance.RegisterCommand(NotificationName.LOADED_LEVELDATA, () => new AcceptLevelDataCommand());
-
-        GameFacade.Instance.RegisterCommand(NotificationName.SELECT_BIGLEVEL, () => new SelectBigLevelCommand());
+        
         GameFacade.Instance.RegisterCommand(NotificationName.LOAD_GAME, () => new LoadGameCommand());
         GameFacade.Instance.RegisterCommand(NotificationName.START_GAME, () => new StartGameCommand());
         GameFacade.Instance.RegisterCommand(NotificationName.INIT_GAME, () => new InitGameCommand());
@@ -31,18 +30,7 @@ public class InitGameManagerControllerCommand : SimpleCommand
 
 #region 关卡选择相关
 
-/// <summary>
-/// 选择大关卡命令
-/// </summary>
-public class SelectBigLevelCommand : SimpleCommand
-{
-    public override void Execute(INotification notification)
-    {
-        base.Execute(notification);
-        GameManager.Instance.nowBigLevelId = (int)notification.Body;
-        SendNotification(NotificationName.SHOW_SELECTLEVELPANEL, GameManager.Instance.nowBigLevelId);
-    }
-}
+
 
 /// <summary>
 /// 菜单点击选择关卡
@@ -54,9 +42,8 @@ public class SelectLevelCommand : SimpleCommand
         base.Execute(notification);
         // 回到选择界面完全退出游戏 销毁缓存池
         GameManager.Instance.PoolManager.Clear();
-
-        ZFrameWorkSceneManager.Instance.LoadSceneAsync("2.BeginScene",
-            () => { SendNotification(NotificationName.SHOW_SELECTLEVELPANEL, GameManager.Instance.nowBigLevelId); });
+        
+        SendNotification(NotificationName.LOADSCENE_GAME_TO_SELECTLEVEL);
     }
 }
 
@@ -70,7 +57,7 @@ public class NextLevelCommand : SimpleCommand
         base.Execute(notification);
         SendNotification(NotificationName.EXIT_GAME);
         // 加载下一关
-        SendNotification(NotificationName.LOAD_GAME, GameManager.Instance.nowLevelData.levelID + 1);
+        SendNotification(NotificationName.LOADSCENE_GAME_TO_GAME, GameManager.Instance.nowLevelData.levelID + 1);
     }
 }
 
@@ -86,15 +73,9 @@ public class LoadGameCommand : SimpleCommand
     public override void Execute(INotification notification)
     {
         base.Execute(notification);
-        SendNotification(NotificationName.SHOW_LOADINGPANEL);
-        // 加载场景
-        ZFrameWorkSceneManager.Instance.LoadSceneAsync("3.GameScene", () =>
-        {
-            // 加载当前关卡数据
-            SendNotification(NotificationName.LOAD_LEVELDATA, (int)notification.Body);
-            SendNotification(NotificationName.INIT_GAME);
-            SendNotification(NotificationName.HIDE_LOADINGPANEL);
-        });
+        // 加载当前关卡数据
+        SendNotification(NotificationName.LOAD_LEVELDATA, (int)notification.Body);
+        SendNotification(NotificationName.INIT_GAME);
     }
 }
 
@@ -175,7 +156,7 @@ public class RestartGameCommand : SimpleCommand
 
         SendNotification(NotificationName.EXIT_GAME);
         // 重新加载游戏
-        SendNotification(NotificationName.LOAD_GAME, GameManager.Instance.nowLevelData.levelID);
+        SendNotification(NotificationName.LOADSCENE_GAME_TO_GAME, GameManager.Instance.nowLevelData.levelID);
     }
 }
 

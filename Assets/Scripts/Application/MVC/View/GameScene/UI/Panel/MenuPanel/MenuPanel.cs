@@ -31,7 +31,7 @@ public class MenuPanel : BasePanel
             // 退出游戏
             PanelMediator.SendNotification(NotificationName.EXIT_GAME);
             // 进入选择面板
-            PanelMediator.SendNotification(NotificationName.SELECT_LEVEL);;
+            PanelMediator.SendNotification(NotificationName.LOADSCENE_GAME_TO_SELECTLEVEL);;
         });
     }
     

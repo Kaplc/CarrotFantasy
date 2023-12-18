@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 
 [CreateAssetMenu]
@@ -9,7 +10,7 @@ using UnityEngine;
 public class LevelData : ScriptableObject
 {
     public int levelID; // 关卡id
-    public int bigLevelID; // 属于哪个主题ID
+    public int itemID; // 属于哪个主题ID
     public int money; // 初始的钱
     public string mapDataPath; // 加载的地图数据的文件名
     public float intervalTimePerWave; // 每波间隔时间

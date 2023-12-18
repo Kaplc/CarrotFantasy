@@ -1,21 +1,21 @@
 using PureMVC.Interfaces;
 using PureMVC.Patterns.Mediator;
 
-public class SelectBigLevelPanelMediator : Mediator
+public class SelectItemPanelMediator : Mediator
 {
-    public static new string NAME = "SelectBigLevelPanelMediator";
+    public static new string NAME = "SelectItemPanelMediator";
 
-    public SelectBigLevelPanel Panel
+    public SelectItemPanel Panel
     {
-        get => ViewComponent as SelectBigLevelPanel;
+        get => ViewComponent as SelectItemPanel;
         set
         {
             ViewComponent = value;
-            (ViewComponent as SelectBigLevelPanel)?.BindMediator(this);
+            (ViewComponent as SelectItemPanel)?.BindMediator(this);
         }
     }
 
-    public SelectBigLevelPanelMediator() : base(NAME)
+    public SelectItemPanelMediator() : base(NAME)
     {
     }
 
@@ -23,7 +23,7 @@ public class SelectBigLevelPanelMediator : Mediator
     {
         return new string[]
         {
-            NotificationName.SHOW_SELECTBIGLEVELPANEL,
+            NotificationName.SHOW_SELECTITEMPANEL,
             NotificationName.LOADED_PROCESSDATA
         };
     }
@@ -34,8 +34,8 @@ public class SelectBigLevelPanelMediator : Mediator
 
         switch (notification.Name)
         {
-            case NotificationName.SHOW_SELECTBIGLEVELPANEL:
-                Panel = UIManager.Instance.Show<SelectBigLevelPanel>(false);
+            case NotificationName.SHOW_SELECTITEMPANEL:
+                Panel = UIManager.Instance.Show<SelectItemPanel>(false);
                 SendNotification(NotificationName.LOAD_PROCESSDATA);
                 break;
             case NotificationName.LOADED_PROCESSDATA:

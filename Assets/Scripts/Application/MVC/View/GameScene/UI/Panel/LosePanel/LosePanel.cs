@@ -23,7 +23,7 @@ public class LosePanel : BasePanel
         btnSelect.onClick.AddListener(() =>
         {
             PanelMediator.SendNotification(NotificationName.EXIT_GAME);
-            PanelMediator.SendNotification(NotificationName.SELECT_LEVEL);
+            PanelMediator.SendNotification(NotificationName.LOADSCENE_GAME_TO_SELECTLEVEL);
             UIManager.Instance.Hide<LosePanel>(false);
         });
     }

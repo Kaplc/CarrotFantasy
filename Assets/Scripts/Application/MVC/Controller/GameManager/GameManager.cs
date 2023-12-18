@@ -40,8 +40,8 @@ public class GameManager : BaseMonoSingleton<GameManager>
     protected override void Awake()
     {
         base.Awake();
-        GameFacade.Instance.SendNotification(NotificationName.INIT);
         DontDestroyOnLoad(gameObject);
+        GameFacade.Instance.SendNotification(NotificationName.INIT);
     }
 
     #region 游戏相关

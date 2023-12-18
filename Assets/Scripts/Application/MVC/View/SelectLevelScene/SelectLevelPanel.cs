@@ -21,7 +21,7 @@ public class SelectLevelPanel : BasePanel
 
     private LevelData nowCenterLevelData; // 当前中间的关卡数据
     public SelectLevelPanelPageFlipping pageFlipping;
-    private BigLevelData bigLevelData;
+    private ItemData itemData;
     public LevelLockPanel levelLockPanel; // 提示关卡锁定的子面板
     public ProcessData processData; // 游戏进度数据
 
@@ -30,13 +30,12 @@ public class SelectLevelPanel : BasePanel
         btnBack.onClick.AddListener(() =>
         {
             UIManager.Instance.Hide<SelectLevelPanel>(false);
-            PanelMediator.SendNotification(NotificationName.SHOW_SELECTBIGLEVELPANEL);
+            PanelMediator.SendNotification(NotificationName.LOADSCENE_SELECTLEVEL_TO_SELECTITEM);
         });
         btnHelp.onClick.AddListener(() =>
         {
             UIManager.Instance.Hide<SelectLevelPanel>(false);
-            PanelMediator.SendNotification(NotificationName.SHOW_BEGINPANEL);
-            PanelMediator.SendNotification(NotificationName.SHOW_HELPPANEL, false);
+            PanelMediator.SendNotification(NotificationName.LOADSCENE_SELECTLEVEL_TO_HELP);
         });
         btnStart.onClick.AddListener(() =>
         {
@@ -55,9 +54,9 @@ public class SelectLevelPanel : BasePanel
     {
         if (!GameManager.Instance.nowLevelData) return;
 
-        for (int i = 0; i < bigLevelData.levels.Count; i++)
+        for (int i = 0; i < itemData.levels.Count; i++)
         {
-            if (GameManager.Instance.nowLevelData.levelID == bigLevelData.levels[i].levelID)
+            if (GameManager.Instance.nowLevelData.levelID == itemData.levels[i].levelID)
             {
                 pageFlipping.ToPage(i + 1);
                 // 仅自动滑动一次退出选择关卡界面就无效
@@ -70,7 +69,7 @@ public class SelectLevelPanel : BasePanel
     /// <summary>
     /// 创建关卡按钮
     /// </summary>
-    public void CreateLevelButton(BigLevelData data)
+    public void CreateLevelButton(ItemData data)
     {
         RectTransform content = scrollRect.content;
         // 设置滑动容器大小
@@ -105,12 +104,12 @@ public class SelectLevelPanel : BasePanel
                 }
 
                 UIManager.Instance.Hide<SelectLevelPanel>(false);
-                GameFacade.Instance.SendNotification(NotificationName.LOAD_GAME, levelData.levelID);
+                GameFacade.Instance.SendNotification(NotificationName.LOADSCENE_SELECTLEVEL_TO_GAME, levelData.levelID);
             });
         }
 
         // 显隐锁定图标和更新通关等级体图片
-        PassedLevelData passedLevelData = processData.passedBigLevelsDic[GameManager.Instance.nowBigLevelId];
+        PassedLevelData passedLevelData = processData.passedItemsDic[GameManager.Instance.nowBigLevelId];
         for (int i = 0; i < btnsLevel.Count; i++)
         {
             int levelID = btnsLevel[i].GetComponent<ButtonLevel>().levelID;
@@ -128,7 +127,7 @@ public class SelectLevelPanel : BasePanel
         // 初始化翻页效果脚本
         pageFlipping.totalPageIndex = data.levels.Count;
 
-        bigLevelData = data;
+        itemData = data;
     }
 
     /// <summary>
@@ -167,7 +166,7 @@ public class SelectLevelPanel : BasePanel
         if (btnsLevel.Count == 0) return;
         // 记录当前中间的关卡按钮
         nowCenterButton = btnsLevel[pageFlipping.pageIndex - 1];
-        nowCenterLevelData = bigLevelData.levels[pageFlipping.pageIndex - 1];
+        nowCenterLevelData = itemData.levels[pageFlipping.pageIndex - 1];
 
         // 设置黑色遮罩
         for (int i = 0; i < btnsLevel.Count; i++)

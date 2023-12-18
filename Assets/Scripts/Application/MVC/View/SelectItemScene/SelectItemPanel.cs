@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-public class SelectBigLevelPanel : BasePanel
+public class SelectItemPanel : BasePanel
 {
     public Button btnBigLevel0;
     public Button btnBigLevel1;
@@ -29,14 +29,14 @@ public class SelectBigLevelPanel : BasePanel
         {
             // 记录选择的大关卡索引
             GameManager.Instance.nowBigLevelId = 0;
-            PanelMediator.SendNotification(NotificationName.SHOW_SELECTLEVELPANEL, GameManager.Instance.nowBigLevelId);
-
-            UIManager.Instance.Hide<SelectBigLevelPanel>(false);
+            // 跳转场景
+            GameFacade.Instance.SendNotification(NotificationName.LOADSCENE_SELECTITEM_TO_SELECTLEVEL);
+            UIManager.Instance.Hide<SelectItemPanel>(false);
         });
         btnBigLevel1.onClick.AddListener(() =>
         {
             // 判断是否解锁
-            if (!processData.passedBigLevelsDic.ContainsKey(1))
+            if (!processData.passedItemsDic.ContainsKey(1))
             {
                 // 未解锁
                 itemLockPanel.gameObject.SetActive(true);
@@ -45,13 +45,12 @@ public class SelectBigLevelPanel : BasePanel
             }
             
             GameManager.Instance.nowBigLevelId = 1;
-            PanelMediator.SendNotification(NotificationName.SHOW_SELECTLEVELPANEL, GameManager.Instance.nowBigLevelId);
-
-            UIManager.Instance.Hide<SelectBigLevelPanel>(false);
+            GameFacade.Instance.SendNotification(NotificationName.LOADSCENE_SELECTITEM_TO_SELECTLEVEL);
+            UIManager.Instance.Hide<SelectItemPanel>(false);
         });
         btnBigLevel2.onClick.AddListener(() =>
         {
-            if (!processData.passedBigLevelsDic.ContainsKey(2))
+            if (!processData.passedItemsDic.ContainsKey(2))
             {
                 // 未解锁
                 itemLockPanel.gameObject.SetActive(true);
@@ -60,22 +59,19 @@ public class SelectBigLevelPanel : BasePanel
             }
             
             GameManager.Instance.nowBigLevelId = 2;
-            PanelMediator.SendNotification(NotificationName.SHOW_SELECTLEVELPANEL, GameManager.Instance.nowBigLevelId);
-
-            UIManager.Instance.Hide<SelectBigLevelPanel>(false);
+            GameFacade.Instance.SendNotification(NotificationName.LOADSCENE_SELECTITEM_TO_SELECTLEVEL);
+            UIManager.Instance.Hide<SelectItemPanel>(false);
         });
         btnHome.onClick.AddListener(() =>
         {
-            PanelMediator.SendNotification(NotificationName.SHOW_BEGINPANEL);
-            UIManager.Instance.Hide<SelectBigLevelPanel>(false);
+            PanelMediator.SendNotification(NotificationName.LOADSCENE_SELECTITEM_TO_BEGIN);
+            UIManager.Instance.Hide<SelectItemPanel>(false);
         });
         btnHelp.onClick.AddListener(() =>
         {
-            // 显示HelpPanel前先显示BeginPanel
-            PanelMediator.SendNotification(NotificationName.SHOW_BEGINPANEL);
-            // false当消息体传递标识显示helpPanel无动画过渡
-            PanelMediator.SendNotification(NotificationName.SHOW_HELPPANEL, false);
-            UIManager.Instance.Hide<SelectBigLevelPanel>(false);
+            // 跳转开始场景的HelpPanel
+            PanelMediator.SendNotification(NotificationName.LOADSCENE_SELECTITEM_TO_HELP);
+            UIManager.Instance.Hide<SelectItemPanel>(false);
         });
 
         btnLeft.onClick.AddListener(() =>
@@ -115,19 +111,19 @@ public class SelectBigLevelPanel : BasePanel
         // 开始为第一页自动隐藏左边按钮
         btnLeft.gameObject.SetActive(false);
         // 获取关卡解锁数据
-        if (processData.passedBigLevelsDic.ContainsKey(0))
+        if (processData.passedItemsDic.ContainsKey(0))
         {
-            btnBigLevel0.GetComponent<BigLevelButton>().UpdateUnlockMapCount(processData.passedBigLevelsDic[0].passedLevelCount);
+            btnBigLevel0.GetComponent<ItemButton>().UpdateUnlockMapCount(processData.passedItemsDic[0].passedLevelCount);
         }
 
-        if (processData.passedBigLevelsDic.ContainsKey(1))
+        if (processData.passedItemsDic.ContainsKey(1))
         {
-            btnBigLevel1.GetComponent<BigLevelButton>().UpdateUnlockMapCount(processData.passedBigLevelsDic[1].passedLevelCount);
+            btnBigLevel1.GetComponent<ItemButton>().UpdateUnlockMapCount(processData.passedItemsDic[1].passedLevelCount);
         }
 
-        if (processData.passedBigLevelsDic.ContainsKey(2))
+        if (processData.passedItemsDic.ContainsKey(2))
         {
-            btnBigLevel2.GetComponent<BigLevelButton>().UpdateUnlockMapCount(processData.passedBigLevelsDic[2].passedLevelCount);
+            btnBigLevel2.GetComponent<ItemButton>().UpdateUnlockMapCount(processData.passedItemsDic[2].passedLevelCount);
         }
     }
 

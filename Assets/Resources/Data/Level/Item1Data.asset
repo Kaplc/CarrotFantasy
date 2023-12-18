@@ -10,8 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2e61f55381ad5d046b6d4585d9e39a47, type: 3}
-  m_Name: BigLevel0Data
+  m_Name: Item1Data
   m_EditorClassIdentifier: 
-  levels:
-  - {fileID: 11400000, guid: 82dff2799c7ecfa4799981e7fc0c9996, type: 2}
-  - {fileID: 11400000, guid: 9acecfba26041a34a8f37f86d9bbd5ad, type: 2}
+  id: 1
+  levels: []
