@@ -264,9 +264,11 @@ public class Map : MonoBehaviour
         ReFlashCellData();
 
         // 设置地图背景
-        mapBgSpriteRenderer.sprite = Resources.Load<Sprite>(nowMapData.mapBgSpritePath);
+        mapBgSpriteRenderer.sprite = GameManager.Instance.FactoryManager.SpriteFactory.GetSprite(nowMapData.mapBgSpritePath);
+        // mapBgSpriteRenderer.sprite = Resources.Load<Sprite>(nowMapData.mapBgSpritePath);
         // 设置路径背景
-        roadSpriteRenderer.sprite = Resources.Load<Sprite>(nowMapData.roadSpritePath);
+        roadSpriteRenderer.sprite = GameManager.Instance.FactoryManager.SpriteFactory.GetSprite(nowMapData.roadSpritePath);
+        // roadSpriteRenderer.sprite = Resources.Load<Sprite>(nowMapData.roadSpritePath);
     }
 
     /// <summary>
@@ -361,25 +363,24 @@ public class Map : MonoBehaviour
         TowerData towerData = tower.data;
 
         UpGradeTowerArgsBody body = new UpGradeTowerArgsBody();
-
-        UIDataProxy proxy = GameFacade.Instance.RetrieveProxy("UIDataProxy") as UIDataProxy;
+        
         // 根据当前塔等级选择升级Icon和卖出Icon
         if (tower.level == 2)
         {
             // 最大等级
-            body.icon = proxy?.GetSprite("Atlas/BuiltPanelAtlas", "Btn_ReachHighestLevel");
+            body.icon = GameManager.Instance.FactoryManager.SpriteFactory.GetSprite("Atlas/BuiltPanelAtlas", "Btn_ReachHighestLevel");
         }
         else if (GameManager.Instance.money >= towerData.prices[tower.level + 1])
         {
             // 够钱升级
-            body.icon = proxy?.GetSprite("Atlas/BuiltPanelAtlas", "Btn_CanUpLevel");
+            body.icon = GameManager.Instance.FactoryManager.SpriteFactory.GetSprite("Atlas/BuiltPanelAtlas", "Btn_CanUpLevel");
             // 取下一级的价格
             body.upGradeMoney = towerData.prices[tower.level + 1];
         }
         else
         {
             // 不够钱升级
-            body.icon = proxy?.GetSprite("Atlas/BuiltPanelAtlas", "Btn_CantUpLevel");
+            body.icon = GameManager.Instance.FactoryManager.SpriteFactory.GetSprite("Atlas/BuiltPanelAtlas", "Btn_CantUpLevel");
             body.upGradeMoney = towerData.prices[tower.level + 1];
         }
 

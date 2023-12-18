@@ -9,6 +9,7 @@ public class GameManager : BaseMonoSingleton<GameManager>
     public PoolManager PoolManager => PoolManager.Instance;
     public BinaryManager BinaryManager => BinaryManager.Instance;
     public PlayerData playerData;
+    public FactoryManager FactoryManager => FactoryManager.Instance;
 
     private bool pause; // 暂停标识
     private bool stop; // 停止标识

@@ -45,6 +45,6 @@ public class GameFacade : Facade
         base.InitializeModel();
         
         RegisterProxy(new GameDataProxy());
-        RegisterProxy(new UIDataProxy());
+        // RegisterProxy(new SpriteFactory());
     }
 }

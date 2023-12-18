@@ -10,7 +10,7 @@ public class LoadAtlasCommand : SimpleCommand
     {
         base.Execute(notification);
         
-        UIDataProxy proxy = GameFacade.Instance.RetrieveProxy("UIDataProxy") as UIDataProxy;
+        SpriteFactory proxy = GameFacade.Instance.RetrieveProxy("UIDataProxy") as SpriteFactory;
         proxy.LoadAtlas(notification.Body as string);
         
     }

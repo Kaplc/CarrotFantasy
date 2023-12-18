@@ -4,12 +4,13 @@ using PureMVC.Patterns.Proxy;
 using UnityEngine;
 using UnityEngine.U2D;
 
-public class UIDataProxy : Proxy
+public class SpriteFactory : Proxy
 {
-    public new const string NAME = "UIDataProxy";
+    public new const string NAME = "SpriteFactory";
     private Dictionary<string, SpriteAtlas> atlasDataDic= new Dictionary<string, SpriteAtlas>();
+    private Dictionary<string, Sprite> spritesDataDic = new Dictionary<string, Sprite>();
 
-    public UIDataProxy() : base(NAME)
+    public SpriteFactory() : base(NAME)
     {
     }
 
@@ -38,4 +39,16 @@ public class UIDataProxy : Proxy
         }
         return atlasDataDic[atlasName].GetSprite(spriteName);
     }
+    
+    public Sprite GetSprite(string path)
+    {
+        if (!spritesDataDic.ContainsKey(path))
+        {
+            // 加载Sprite
+            return Resources.Load<Sprite>(path);
+        }
+
+        return spritesDataDic[path];
+    }
+    
 }
