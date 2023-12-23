@@ -12,6 +12,7 @@ public class Monster : BaseRole, IPoolObject
     
     public Cell nextCell;
     private Animator animator;
+    public Transform signFather; // 集火标志父对象
 
     #region 属性
     

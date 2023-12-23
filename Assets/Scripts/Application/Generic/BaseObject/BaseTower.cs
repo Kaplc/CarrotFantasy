@@ -102,6 +102,8 @@ public abstract class BaseTower : MonoBehaviour, IPoolObject
 
         // 切换状态机
         animator.runtimeAnimatorController = controllers[level];
+        // 升级动画
+        animator.SetTrigger("UpGrade");
     }
 
     public virtual void OnGet()

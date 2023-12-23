@@ -40,7 +40,7 @@ public class Spawner : MonoBehaviour
         // 设置集火标志
         collectingFiresTarget = monster;
         signTrans.gameObject.SetActive(true);
-        signTrans.SetParent(monster.transform);
+        signTrans.SetParent(monster.signFather.transform);
         signTrans.localPosition = new Vector3(0,0.7f,0);
         signTrans.localScale = Vector3.one;
     }

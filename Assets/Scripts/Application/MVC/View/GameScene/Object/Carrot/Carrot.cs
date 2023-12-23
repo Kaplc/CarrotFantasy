@@ -75,6 +75,8 @@ public class Carrot : BaseRole, IPoolObject
         StopCoroutine(idleAnimaCoroutine);
         // 停止所有动画
         animator.enabled = false;
+        // 恢复萝卜的图片
+        spriteRenderer.sprite = sprites[10];
         // 移除Mediator
         GameFacade.Instance.RemoveMediator(nameof(CarrotMediator));
     }
