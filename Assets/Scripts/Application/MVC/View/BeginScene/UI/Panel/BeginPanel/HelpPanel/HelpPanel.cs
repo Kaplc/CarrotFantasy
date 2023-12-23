@@ -79,7 +79,7 @@ public class HelpPanel : BasePanel
         btnHome.onClick.AddListener(() =>
         {
             // 通过MVC管理器发送显示BeginPanel的消息
-            GameFacade.Instance.SendNotification(NotificationName.SHOW_BEGINPANEL);
+            GameFacade.Instance.SendNotification(NotificationName.UI.SHOW_BEGINPANEL);
         });
         
         tgTower.onValueChanged.AddListener((isOn) =>

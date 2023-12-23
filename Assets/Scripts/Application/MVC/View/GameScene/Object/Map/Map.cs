@@ -338,7 +338,7 @@ public class Map : MonoBehaviour
             // 面板已经打开则该次点击为关闭面板
             if (GameManager.Instance.openedBuiltPanel)
             {
-                GameFacade.Instance.SendNotification(NotificationName.HIDE_BUILTPANEL);
+                GameFacade.Instance.SendNotification(NotificationName.UI.HIDE_BUILTPANEL);
                 return;
             }
 
@@ -391,7 +391,7 @@ public class Map : MonoBehaviour
         body.showDir = showDir;
 
         // 显示升级面板
-        GameFacade.Instance.SendNotification(NotificationName.SHOW_UPGRADEPANEL, body);
+        GameFacade.Instance.SendNotification(NotificationName.UI.SHOW_UPGRADEPANEL, body);
     }
 
     /// <summary>
@@ -418,7 +418,7 @@ public class Map : MonoBehaviour
         }
 
         // 不存在显示创建塔面板
-        GameFacade.Instance.SendNotification(NotificationName.SHOW_CREATEPANEL, new CreatePanelArgsBody()
+        GameFacade.Instance.SendNotification(NotificationName.UI.SHOW_CREATEPANEL, new CreatePanelArgsBody()
         {
             createPos = createPos,
             towersDataDic = towersDataDic,

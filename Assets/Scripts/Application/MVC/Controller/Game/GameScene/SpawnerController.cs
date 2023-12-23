@@ -11,14 +11,14 @@ public class InitSpawnerController : SimpleCommand
 {
     public override void Execute(INotification notification)
     {
-        GameFacade.Instance.RegisterCommand(NotificationName.CREATE_TOWER, () => new CreateTowerCommand());
-        GameFacade.Instance.RegisterCommand(NotificationName.SELL_TOWER, () => new SellTowerCommand());
-        GameFacade.Instance.RegisterCommand(NotificationName.UPGRADE_TOWER, () => new UpGradeTowerCommand());
-        GameFacade.Instance.RegisterCommand(NotificationName.START_SPAWN, () => new StartSpawnCommand());
-        GameFacade.Instance.RegisterCommand(NotificationName.STOP_SPAWN, () => new StopSpawnCommand());
-        GameFacade.Instance.RegisterCommand(NotificationName.SET_COLLECTINGFIRES, () => new SetCollectingFiresCommand());
-        GameFacade.Instance.RegisterCommand(NotificationName.CANEL_COLLECTINGFIRES, () => new CancelCollectingFiresCommand());
-        GameFacade.Instance.RegisterCommand(NotificationName.MONSTER_DEAD, () => new MonsterDeadCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.UIEvent.CREATE_TOWER, () => new CreateTowerCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.UIEvent.SELL_TOWER, () => new SellTowerCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.UIEvent.UPGRADE_TOWER, () => new UpGradeTowerCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.Game.START_SPAWN, () => new StartSpawnCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.Game.STOP_SPAWN, () => new StopSpawnCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.Game.SET_COLLECTINGFIRES, () => new SetCollectingFiresCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.Game.CANEL_COLLECTINGFIRES, () => new CancelCollectingFiresCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.Game.MONSTER_DEAD, () => new MonsterDeadCommand());
     }
 }
 
@@ -133,6 +133,6 @@ public class MonsterDeadCommand : SimpleCommand
             }
         }
         
-        SendNotification(NotificationName.GAME_WIN);
+        SendNotification(NotificationName.Game.GAME_WIN);
     }
 }

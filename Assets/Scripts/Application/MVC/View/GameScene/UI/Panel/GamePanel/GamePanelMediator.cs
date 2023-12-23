@@ -24,10 +24,10 @@ public class GamePanelMediator : Mediator
     {
         return new string[]
         {
-            NotificationName.SHOW_GAMEPANEL,
-            NotificationName.HIDE_GAMEPANEL,
-            NotificationName.UPDATE_MONEY,
-            NotificationName.UPDATE_WAVESCOUNT
+            NotificationName.UI.SHOW_GAMEPANEL,
+            NotificationName.UI.HIDE_GAMEPANEL,
+            NotificationName.UIEvent.UPDATE_MONEY,
+            NotificationName.UIEvent.UPDATE_WAVESCOUNT
         };
     }
 
@@ -37,7 +37,7 @@ public class GamePanelMediator : Mediator
 
         switch (notification.Name)
         {
-            case NotificationName.SHOW_GAMEPANEL:
+            case NotificationName.UI.SHOW_GAMEPANEL:
                 // 判断是否重新开始, 清空面板并重新生成, 让倒计时面板重新显示
                 if (Panel!=null)
                 {
@@ -46,14 +46,14 @@ public class GamePanelMediator : Mediator
                 Panel = UIManager.Instance.Show<GamePanel>(false);
                 
                 break;
-            case NotificationName.HIDE_GAMEPANEL:
+            case NotificationName.UI.HIDE_GAMEPANEL:
                 UIManager.Instance.Hide<GamePanel>(false);
                 
                 break;
-            case NotificationName.UPDATE_MONEY:
+            case NotificationName.UIEvent.UPDATE_MONEY:
                 Panel.UpdateMoney((int)notification.Body);
                 break;
-            case NotificationName.UPDATE_WAVESCOUNT:
+            case NotificationName.UIEvent.UPDATE_WAVESCOUNT:
                 Panel.UpdateWavesCount(((int, int))notification.Body);
                 break;
         }

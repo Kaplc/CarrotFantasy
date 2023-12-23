@@ -26,7 +26,7 @@ public class Monster : BaseRole, IPoolObject
             {
                 hp = 0;
                 isDead = true;
-                GameFacade.Instance.SendNotification(NotificationName.CANEL_COLLECTINGFIRES, this);
+                GameFacade.Instance.SendNotification(NotificationName.Game.CANEL_COLLECTINGFIRES, this);
                 // 播放死亡动画
                 animator.SetBool("Dead", true);
             }
@@ -51,7 +51,7 @@ public class Monster : BaseRole, IPoolObject
             if (pathIndex == GameManager.Instance.nowLevelData.mapData.pathList.Count-1)
             {
                 // 触发怪物到达终点事件
-                GameFacade.Instance.SendNotification(NotificationName.REACH_ENDPOINT, data.atk);
+                GameFacade.Instance.SendNotification(NotificationName.Game.REACH_ENDPOINT, data.atk);
                 // 怪物死亡
                 Hp = 0;
                 return;
@@ -70,7 +70,7 @@ public class Monster : BaseRole, IPoolObject
     private void OnMouseDown()
     {
         // 将自己的位置信息传出
-        GameFacade.Instance.SendNotification(NotificationName.SET_COLLECTINGFIRES, this);
+        GameFacade.Instance.SendNotification(NotificationName.Game.SET_COLLECTINGFIRES, this);
     }
 
     private void Move()
@@ -93,7 +93,7 @@ public class Monster : BaseRole, IPoolObject
         // 回收
         GameManager.Instance.PoolManager.PushObject(gameObject);
         // 触发怪物死亡
-        GameFacade.Instance.SendNotification(NotificationName.MONSTER_DEAD);
+        GameFacade.Instance.SendNotification(NotificationName.Game.MONSTER_DEAD);
     }
 
     public override void OnPush()

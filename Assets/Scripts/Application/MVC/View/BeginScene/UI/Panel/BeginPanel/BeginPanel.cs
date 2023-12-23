@@ -23,14 +23,14 @@ public class BeginPanel : BasePanel
         btnAdventure.onClick.AddListener(() =>
         {
             // 发送打开选择大关卡的消息
-            PanelMediator.SendNotification(NotificationName.LOADSCENE_BEGIN_TO_SELECTITEM);
+            PanelMediator.SendNotification(NotificationName.LoadScene.LOADSCENE_BEGIN_TO_SELECTITEM);
             // 隐藏自己
             UIManager.Instance.Hide<BeginPanel>(false);
         });
         btnBoss.onClick.AddListener(() => { });
         btnMonster.onClick.AddListener(() => { });
-        btnSetting.onClick.AddListener(() => { PanelMediator.SendNotification(NotificationName.SHOW_SETTINGPANEL); });
-        btnHelp.onClick.AddListener(() => { PanelMediator.SendNotification(NotificationName.SHOW_HELPPANEL, true); });
+        btnSetting.onClick.AddListener(() => { PanelMediator.SendNotification(NotificationName.UI.SHOW_SETTINGPANEL); });
+        btnHelp.onClick.AddListener(() => { PanelMediator.SendNotification(NotificationName.UI.SHOW_HELPPANEL, true); });
     }
 }
 

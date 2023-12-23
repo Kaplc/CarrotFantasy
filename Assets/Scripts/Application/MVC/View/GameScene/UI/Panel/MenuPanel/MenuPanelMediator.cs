@@ -23,8 +23,8 @@ public class MenuPanelMediator : Mediator
     {
         return new string[]
         {
-            NotificationName.SHOW_MENUPANEL,
-            NotificationName.HIDE_MENUPANEL
+            NotificationName.UI.SHOW_MENUPANEL,
+            NotificationName.UI.HIDE_MENUPANEL
         };
     }
 
@@ -33,13 +33,13 @@ public class MenuPanelMediator : Mediator
         base.HandleNotification(notification);
         switch (notification.Name)
         {
-            case NotificationName.SHOW_MENUPANEL:
+            case NotificationName.UI.SHOW_MENUPANEL:
                 Panel = UIManager.Instance.Show<MenuPanel>(false);
                 // 停止游戏
-                SendNotification(NotificationName.STOP_GAME);
+                SendNotification(NotificationName.Game.STOP_GAME);
                 
                 break;
-            case NotificationName.HIDE_MENUPANEL:
+            case NotificationName.UI.HIDE_MENUPANEL:
                 UIManager.Instance.Hide<MenuPanel>(false);
                 break;
         }

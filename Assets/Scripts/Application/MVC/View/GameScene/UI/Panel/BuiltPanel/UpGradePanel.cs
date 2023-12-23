@@ -15,8 +15,8 @@ public class UpGradePanel : MonoBehaviour
 
     private void Awake()
     {
-        btnUpGrade.onClick.AddListener(() => { GameFacade.Instance.SendNotification(NotificationName.UPGRADE_TOWER, cellWorldPos); });
-        btnSell.onClick.AddListener(() => { GameFacade.Instance.SendNotification(NotificationName.SELL_TOWER, cellWorldPos); });
+        btnUpGrade.onClick.AddListener(() => { GameFacade.Instance.SendNotification(NotificationName.UIEvent.UPGRADE_TOWER, cellWorldPos); });
+        btnSell.onClick.AddListener(() => { GameFacade.Instance.SendNotification(NotificationName.UIEvent.SELL_TOWER, cellWorldPos); });
     }
 
     public void Show(Vector2 uiPos, Sprite icon, int upGradeMoney, int sellMoney, float attackRange, EBuiltPanelShowDir showDir)

@@ -28,7 +28,7 @@ public class Spawner : MonoBehaviour
         // 获取当前关卡数据
         levelData = GameManager.Instance.nowLevelData;
         // 更新面板波数显示
-        GameFacade.Instance.SendNotification(NotificationName.UPDATE_WAVESCOUNT, (1, levelData.roundDataList.Count));
+        GameFacade.Instance.SendNotification(NotificationName.UIEvent.UPDATE_WAVESCOUNT, (1, levelData.roundDataList.Count));
     }
 
     public void SetCollectingFires(Monster monster)
@@ -62,11 +62,11 @@ public class Spawner : MonoBehaviour
         // 扣钱
         GameManager.Instance.money -= tower.data.prices[tower.level + 1];
         // 更新面板
-        GameFacade.Instance.SendNotification(NotificationName.UPDATE_MONEY, GameManager.Instance.money);
+        GameFacade.Instance.SendNotification(NotificationName.UIEvent.UPDATE_MONEY, GameManager.Instance.money);
         // 调用更新方法
         tower.UpGrade();
         // 关闭建造面板
-        GameFacade.Instance.SendNotification(NotificationName.HIDE_BUILTPANEL);
+        GameFacade.Instance.SendNotification(NotificationName.UI.HIDE_BUILTPANEL);
     }
 
     /// <summary>
@@ -81,14 +81,14 @@ public class Spawner : MonoBehaviour
         // 加钱
         GameManager.Instance.money += tower.data.sellPrices[tower.level];
         // 更新面板
-        GameFacade.Instance.SendNotification(NotificationName.UPDATE_MONEY, GameManager.Instance.money);
+        GameFacade.Instance.SendNotification(NotificationName.UIEvent.UPDATE_MONEY, GameManager.Instance.money);
         // 回收对象
         GameManager.Instance.PoolManager.PushObject(tower.gameObject);
         // 清空格子
         cell.tower = null;
 
         // 关闭建造面板
-        GameFacade.Instance.SendNotification(NotificationName.HIDE_BUILTPANEL);
+        GameFacade.Instance.SendNotification(NotificationName.UI.HIDE_BUILTPANEL);
         // 从列表移除
         towers.Remove(tower);
     }
@@ -108,12 +108,12 @@ public class Spawner : MonoBehaviour
             // 扣钱
             GameManager.Instance.money -= towerData.prices[0];
             // 更新面板
-            GameFacade.Instance.SendNotification(NotificationName.UPDATE_MONEY, GameManager.Instance.money);
+            GameFacade.Instance.SendNotification(NotificationName.UIEvent.UPDATE_MONEY, GameManager.Instance.money);
             // 记录该格子已经存在塔
             Map.GetCell(cellWorldPos).tower = tower;
 
             // 关闭建造面板
-            GameFacade.Instance.SendNotification(NotificationName.HIDE_BUILTPANEL);
+            GameFacade.Instance.SendNotification(NotificationName.UI.HIDE_BUILTPANEL);
             // 添加进列表
             if (!towers.Contains(tower))
             {
@@ -171,7 +171,7 @@ public class Spawner : MonoBehaviour
         {
             nowWavesCount++;
             // 更新面板波数显示
-            GameFacade.Instance.SendNotification(NotificationName.UPDATE_WAVESCOUNT, (i + 1, levelData.roundDataList.Count));
+            GameFacade.Instance.SendNotification(NotificationName.UIEvent.UPDATE_WAVESCOUNT, (i + 1, levelData.roundDataList.Count));
 
             RoundData roundData = levelData.roundDataList[i];
 

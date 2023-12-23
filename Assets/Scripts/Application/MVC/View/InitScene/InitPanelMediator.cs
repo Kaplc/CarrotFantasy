@@ -23,8 +23,8 @@ public class InitPanelMediator : Mediator
     {
         return new string[]
         {
-            NotificationName.SHOW_INITPANEL,
-            NotificationName.HIDE_INIPANEL
+            NotificationName.UI.SHOW_INITPANEL,
+            NotificationName.UI.HIDE_INIPANEL
         };
     }
 
@@ -34,10 +34,10 @@ public class InitPanelMediator : Mediator
 
         switch (notification.Name)
         {
-            case NotificationName.SHOW_INITPANEL:
+            case NotificationName.UI.SHOW_INITPANEL:
                 Panel = UIManager.Instance.Show<InitPanel>(false);
                 break;
-            case NotificationName.HIDE_INIPANEL:
+            case NotificationName.UI.HIDE_INIPANEL:
                 UIManager.Instance.Hide<InitPanel>(false);
                 break;
         }

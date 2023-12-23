@@ -42,7 +42,7 @@ public class GameManager : BaseMonoSingleton<GameManager>
     {
         base.Awake();
         DontDestroyOnLoad(gameObject);
-        GameFacade.Instance.SendNotification(NotificationName.INIT);
+        GameFacade.Instance.SendNotification(NotificationName.Init.INIT);
     }
 
     #region 游戏相关
@@ -140,9 +140,9 @@ public class GameManager : BaseMonoSingleton<GameManager>
             grade = EPassedGrade.Gold;
         }
         // 保存游戏进度
-        GameFacade.Instance.SendNotification(NotificationName.SAVE_PROCESSDATA, (nowLevelData.levelID, grade));
+        GameFacade.Instance.SendNotification(NotificationName.Data.SAVE_PROCESSDATA, (nowLevelData.levelID, grade));
         // 显示胜利面板
-        GameFacade.Instance.SendNotification(NotificationName.SHOW_WINPANEL,
+        GameFacade.Instance.SendNotification(NotificationName.UI.SHOW_WINPANEL,
             (
                 spawner.nowWavesCount,
                 nowLevelData.roundDataList.Count,
@@ -158,9 +158,9 @@ public class GameManager : BaseMonoSingleton<GameManager>
     public void GameOver()
     {
         // 停止出怪
-        GameFacade.Instance.SendNotification(NotificationName.STOP_SPAWN);
+        GameFacade.Instance.SendNotification(NotificationName.Game.STOP_SPAWN);
         // 显示失败面板
-        GameFacade.Instance.SendNotification(NotificationName.SHOW_LOSEPANEL,
+        GameFacade.Instance.SendNotification(NotificationName.UI.SHOW_LOSEPANEL,
             (
                 spawner.nowWavesCount,
                 nowLevelData.roundDataList.Count,

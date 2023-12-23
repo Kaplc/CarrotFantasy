@@ -23,8 +23,8 @@ public class LoadingPanelMediator : Mediator
     {
         return new string[]
         {
-            NotificationName.SHOW_LOADINGPANEL,
-            NotificationName.HIDE_LOADINGPANEL
+            NotificationName.UI.SHOW_LOADINGPANEL,
+            NotificationName.UI.HIDE_LOADINGPANEL
         };
 
     }
@@ -35,10 +35,10 @@ public class LoadingPanelMediator : Mediator
 
         switch (notification.Name)
         {
-            case NotificationName.SHOW_LOADINGPANEL:
+            case NotificationName.UI.SHOW_LOADINGPANEL:
                 Panel = UIManager.Instance.Show<LoadingPanel>(false);
                 break;
-            case NotificationName.HIDE_LOADINGPANEL:
+            case NotificationName.UI.HIDE_LOADINGPANEL:
                 UIManager.Instance.Hide<LoadingPanel>(false);
                 break;
         }

@@ -23,7 +23,7 @@ public class LosePanelMediator : Mediator
     {
         return new string[]
         {
-            NotificationName.SHOW_LOSEPANEL
+            NotificationName.UI.SHOW_LOSEPANEL
         };
     }
 
@@ -33,11 +33,11 @@ public class LosePanelMediator : Mediator
 
         switch (notification.Name)
         {
-            case NotificationName.SHOW_LOSEPANEL:
+            case NotificationName.UI.SHOW_LOSEPANEL:
                 // 先关闭菜单面板
-                SendNotification(NotificationName.HIDE_MENUPANEL);
+                SendNotification(NotificationName.UI.HIDE_MENUPANEL);
                 // 停止游戏
-                SendNotification(NotificationName.STOP_GAME);
+                SendNotification(NotificationName.Game.STOP_GAME);
                 Panel = UIManager.Instance.Show<LosePanel>(false);
                 
                 // 更新数据

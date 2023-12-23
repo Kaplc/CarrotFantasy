@@ -56,7 +56,7 @@ public class Carrot : BaseRole, IPoolObject
         // 回收
         GameManager.Instance.PoolManager.PushObject(gameObject);
         // 萝卜死亡触发游戏结束
-        GameFacade.Instance.SendNotification(NotificationName.CARROT_DEAD);
+        GameFacade.Instance.SendNotification(NotificationName.Game.CARROT_DEAD);
     }
     
     /// <summary>

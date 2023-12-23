@@ -32,17 +32,17 @@ public class GamePanel : BasePanel
         {
             if (isOn)
             {
-                PanelMediator.SendNotification(NotificationName.CONTINUE_GAME);
+                PanelMediator.SendNotification(NotificationName.Game.CONTINUE_GAME);
             }
             else
             {
-                PanelMediator.SendNotification(NotificationName.PAUSE_GAME);
+                PanelMediator.SendNotification(NotificationName.Game.PAUSE_GAME);
             }
             
         });
         btnMenu.onClick.AddListener(() =>
         {
-            PanelMediator.SendNotification(NotificationName.SHOW_MENUPANEL);
+            PanelMediator.SendNotification(NotificationName.UI.SHOW_MENUPANEL);
         });
         btnSpeed2.gameObject.SetActive(false);
         imgPause.gameObject.SetActive(false);
@@ -65,7 +65,7 @@ public class GamePanel : BasePanel
     /// </summary>
     public void SendStartGameNotification()
     {
-        PanelMediator.SendNotification(NotificationName.START_GAME);
+        PanelMediator.SendNotification(NotificationName.Game.START_GAME);
     }
 }
 

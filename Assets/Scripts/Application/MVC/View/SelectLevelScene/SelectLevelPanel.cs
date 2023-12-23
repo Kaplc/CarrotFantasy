@@ -30,12 +30,12 @@ public class SelectLevelPanel : BasePanel
         btnBack.onClick.AddListener(() =>
         {
             UIManager.Instance.Hide<SelectLevelPanel>(false);
-            PanelMediator.SendNotification(NotificationName.LOADSCENE_SELECTLEVEL_TO_SELECTITEM);
+            PanelMediator.SendNotification(NotificationName.LoadScene.LOADSCENE_SELECTLEVEL_TO_SELECTITEM);
         });
         btnHelp.onClick.AddListener(() =>
         {
             UIManager.Instance.Hide<SelectLevelPanel>(false);
-            PanelMediator.SendNotification(NotificationName.LOADSCENE_SELECTLEVEL_TO_HELP);
+            PanelMediator.SendNotification(NotificationName.LoadScene.LOADSCENE_SELECTLEVEL_TO_HELP);
         });
         btnStart.onClick.AddListener(() =>
         {
@@ -104,7 +104,7 @@ public class SelectLevelPanel : BasePanel
                 }
 
                 UIManager.Instance.Hide<SelectLevelPanel>(false);
-                GameFacade.Instance.SendNotification(NotificationName.LOADSCENE_SELECTLEVEL_TO_GAME, levelData.levelID);
+                GameFacade.Instance.SendNotification(NotificationName.LoadScene.LOADSCENE_SELECTLEVEL_TO_GAME, levelData.levelID);
             });
         }
 

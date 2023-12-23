@@ -22,13 +22,13 @@ public class SpriteFactory : Proxy
     {
         if (atlasDataDic.ContainsKey(path))
         {
-            SendNotification(NotificationName.LOADED_ATLAS, atlasDataDic[path]);
+            SendNotification(NotificationName.Data.LOADED_ATLAS, atlasDataDic[path]);
             return;
         }
 
         SpriteAtlas atlas = Resources.Load<SpriteAtlas>(path);
         atlasDataDic.Add(path, atlas);
-        SendNotification(NotificationName.LOADED_ATLAS, atlas);
+        SendNotification(NotificationName.Data.LOADED_ATLAS, atlas);
     }
 
     public Sprite GetSprite(string atlasName, string spriteName)

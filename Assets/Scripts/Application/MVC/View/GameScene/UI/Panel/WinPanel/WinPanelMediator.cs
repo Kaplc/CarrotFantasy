@@ -23,7 +23,7 @@ public class WinPanelMediator : Mediator
     {
         return new string[]
         {
-            NotificationName.SHOW_WINPANEL,
+            NotificationName.UI.SHOW_WINPANEL,
         };
     }
 
@@ -33,9 +33,9 @@ public class WinPanelMediator : Mediator
 
         switch (notification.Name)
         {
-            case NotificationName.SHOW_WINPANEL:
+            case NotificationName.UI.SHOW_WINPANEL:
                 // 停止游戏
-                SendNotification(NotificationName.STOP_GAME);
+                SendNotification(NotificationName.Game.STOP_GAME);
 
                 Panel = UIManager.Instance.Show<WinPanel>(false);
                 // 更新数据

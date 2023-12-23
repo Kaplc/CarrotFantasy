@@ -30,7 +30,7 @@ public class SelectItemPanel : BasePanel
             // 记录选择的大关卡索引
             GameManager.Instance.nowBigLevelId = 0;
             // 跳转场景
-            GameFacade.Instance.SendNotification(NotificationName.LOADSCENE_SELECTITEM_TO_SELECTLEVEL);
+            GameFacade.Instance.SendNotification(NotificationName.LoadScene.LOADSCENE_SELECTITEM_TO_SELECTLEVEL);
             UIManager.Instance.Hide<SelectItemPanel>(false);
         });
         btnBigLevel1.onClick.AddListener(() =>
@@ -45,7 +45,7 @@ public class SelectItemPanel : BasePanel
             }
             
             GameManager.Instance.nowBigLevelId = 1;
-            GameFacade.Instance.SendNotification(NotificationName.LOADSCENE_SELECTITEM_TO_SELECTLEVEL);
+            GameFacade.Instance.SendNotification(NotificationName.LoadScene.LOADSCENE_SELECTITEM_TO_SELECTLEVEL);
             UIManager.Instance.Hide<SelectItemPanel>(false);
         });
         btnBigLevel2.onClick.AddListener(() =>
@@ -59,18 +59,18 @@ public class SelectItemPanel : BasePanel
             }
             
             GameManager.Instance.nowBigLevelId = 2;
-            GameFacade.Instance.SendNotification(NotificationName.LOADSCENE_SELECTITEM_TO_SELECTLEVEL);
+            GameFacade.Instance.SendNotification(NotificationName.LoadScene.LOADSCENE_SELECTITEM_TO_SELECTLEVEL);
             UIManager.Instance.Hide<SelectItemPanel>(false);
         });
         btnHome.onClick.AddListener(() =>
         {
-            PanelMediator.SendNotification(NotificationName.LOADSCENE_SELECTITEM_TO_BEGIN);
+            PanelMediator.SendNotification(NotificationName.LoadScene.LOADSCENE_SELECTITEM_TO_BEGIN);
             UIManager.Instance.Hide<SelectItemPanel>(false);
         });
         btnHelp.onClick.AddListener(() =>
         {
             // 跳转开始场景的HelpPanel
-            PanelMediator.SendNotification(NotificationName.LOADSCENE_SELECTITEM_TO_HELP);
+            PanelMediator.SendNotification(NotificationName.LoadScene.LOADSCENE_SELECTITEM_TO_HELP);
             UIManager.Instance.Hide<SelectItemPanel>(false);
         });
 

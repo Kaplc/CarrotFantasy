@@ -16,7 +16,7 @@ public class CarrotMediator : Mediator
     {
         return new string[]
         {
-            NotificationName.REACH_ENDPOINT
+            NotificationName.Game.REACH_ENDPOINT
         };
     }
 

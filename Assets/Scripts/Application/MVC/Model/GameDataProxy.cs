@@ -41,7 +41,7 @@ public class GameDataProxy : Proxy
     {
         if (playerData != null)
         {
-            SendNotification(NotificationName.LOADED_STATISTICALDATA, playerData.statisticalData);
+            SendNotification(NotificationName.Data.LOADED_STATISTICALDATA, playerData.statisticalData);
         }
     }
 
@@ -61,7 +61,7 @@ public class GameDataProxy : Proxy
     {
         if (playerData.processData != null)
         {
-            SendNotification(NotificationName.LOADED_PROCESSDATA, playerData.processData);
+            SendNotification(NotificationName.Data.LOADED_PROCESSDATA, playerData.processData);
         }
     }
 
@@ -132,7 +132,7 @@ public class GameDataProxy : Proxy
     {
         if (playerData.musicSettingData != null)
         {
-            SendNotification(NotificationName.LOADED_MUSICSETTINGDATA, playerData.musicSettingData);
+            SendNotification(NotificationName.Data.LOADED_MUSICSETTINGDATA, playerData.musicSettingData);
         }
     }
 
@@ -159,7 +159,7 @@ public class GameDataProxy : Proxy
     {
         if (loadedItemsDataDic.ContainsKey(id))
         {
-            SendNotification(NotificationName.LOADED_ITEMDATA, loadedItemsDataDic[id]);
+            SendNotification(NotificationName.Data.LOADED_ITEMDATA, loadedItemsDataDic[id]);
         }
     }
 
@@ -184,7 +184,7 @@ public class GameDataProxy : Proxy
         // 已经加载过直接返回
         if (loadedLevelsDataDic.TryGetValue(levelID, out levelData))
         {
-            SendNotification(NotificationName.LOADED_LEVELDATA, levelData);
+            SendNotification(NotificationName.Data.LOADED_LEVELDATA, levelData);
             return;
         }
 
@@ -200,7 +200,7 @@ public class GameDataProxy : Proxy
                     levelData.mapData = GameManager.Instance.BinaryManager.Load<MapData>(DataPath.MAPDATA_PATH + $"{levelData.mapDataPath}.md");
                     // 缓存已加载过的关卡
                     loadedLevelsDataDic.Add(levelData.levelID, levelData);
-                    SendNotification(NotificationName.LOADED_LEVELDATA, item.Value.levels[i]);
+                    SendNotification(NotificationName.Data.LOADED_LEVELDATA, item.Value.levels[i]);
                     return;
                 }
             }

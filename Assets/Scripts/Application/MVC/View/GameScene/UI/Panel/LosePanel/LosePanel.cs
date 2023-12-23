@@ -17,13 +17,13 @@ public class LosePanel : BasePanel
     {
         btnReStart.onClick.AddListener(() =>
         {
-            PanelMediator.SendNotification(NotificationName.RESTART_GAME);
+            PanelMediator.SendNotification(NotificationName.Game.RESTART_GAME);
             UIManager.Instance.Hide<LosePanel>(false);
         });
         btnSelect.onClick.AddListener(() =>
         {
-            PanelMediator.SendNotification(NotificationName.EXIT_GAME);
-            PanelMediator.SendNotification(NotificationName.LOADSCENE_GAME_TO_SELECTLEVEL);
+            PanelMediator.SendNotification(NotificationName.Game.EXIT_GAME);
+            PanelMediator.SendNotification(NotificationName.LoadScene.LOADSCENE_GAME_TO_SELECTLEVEL);
             UIManager.Instance.Hide<LosePanel>(false);
         });
     }

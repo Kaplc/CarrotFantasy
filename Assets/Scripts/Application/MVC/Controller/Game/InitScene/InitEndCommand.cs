@@ -13,8 +13,8 @@ public class InitEndCommand : SimpleCommand
         
         ZFrameWorkSceneManager.Instance.LoadSceneAsync("2.BeginScene", () =>
         {
-            SendNotification(NotificationName.HIDE_INIPANEL);
-            SendNotification(NotificationName.SHOW_BEGINPANEL);
+            SendNotification(NotificationName.UI.HIDE_INIPANEL);
+            SendNotification(NotificationName.UI.SHOW_BEGINPANEL);
         });
     }
 }

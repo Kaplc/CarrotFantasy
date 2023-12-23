@@ -15,9 +15,9 @@ public class BuiltPanelMediator : Mediator
     {
         return new string[]
         {
-            NotificationName.SHOW_CREATEPANEL,
-            NotificationName.SHOW_UPGRADEPANEL,
-            NotificationName.HIDE_BUILTPANEL,
+            NotificationName.UI.SHOW_CREATEPANEL,
+            NotificationName.UI.SHOW_UPGRADEPANEL,
+            NotificationName.UI.HIDE_BUILTPANEL,
         };
     }
 
@@ -27,7 +27,7 @@ public class BuiltPanelMediator : Mediator
 
         switch (notification.Name)
         {
-            case NotificationName.SHOW_CREATEPANEL:
+            case NotificationName.UI.SHOW_CREATEPANEL:
 
                 ViewComponent = UIManager.Instance.Show<BuiltPanel>();
                 
@@ -37,9 +37,9 @@ public class BuiltPanelMediator : Mediator
                     createPanelArgsBody.towersDataDic, 
                     createPanelArgsBody.showDir
                 );
-                SendNotification(NotificationName.OPENED_BUILTPANEL, true);
+                SendNotification(NotificationName.Game.OPENED_BUILTPANEL, true);
                 break;
-            case NotificationName.SHOW_UPGRADEPANEL:
+            case NotificationName.UI.SHOW_UPGRADEPANEL:
 
                 ViewComponent = UIManager.Instance.Show<BuiltPanel>();
                 UpGradeTowerArgsBody upGradeTowerArgsBody = notification.Body as UpGradeTowerArgsBody;
@@ -51,12 +51,12 @@ public class BuiltPanelMediator : Mediator
                     upGradeTowerArgsBody.attackRange, 
                     upGradeTowerArgsBody.showDir
                 );
-                SendNotification(NotificationName.OPENED_BUILTPANEL, true);
+                SendNotification(NotificationName.Game.OPENED_BUILTPANEL, true);
                 break;
-            case NotificationName.HIDE_BUILTPANEL:
+            case NotificationName.UI.HIDE_BUILTPANEL:
                 UIManager.Instance.Hide<BuiltPanel>(false);
                 ViewComponent = null;
-                SendNotification(NotificationName.OPENED_BUILTPANEL, false);
+                SendNotification(NotificationName.Game.OPENED_BUILTPANEL, false);
                 break;
         }
     }

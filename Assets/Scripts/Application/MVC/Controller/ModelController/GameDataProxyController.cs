@@ -8,16 +8,16 @@ public class InitGameDataProxyCommand : SimpleCommand
     public override void Execute(INotification notification)
     {
         base.Execute(notification);
-        GameFacade.Instance.RegisterCommand(NotificationName.INIT_GAMEDATA, () => new LoadInitGameDataCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.Init.INIT_GAMEDATA, () => new LoadInitGameDataCommand());
         
-        GameFacade.Instance.RegisterCommand(NotificationName.LOAD_STATISTICALDATA, () => new GetStatisticalDataCommand());
-        GameFacade.Instance.RegisterCommand(NotificationName.LOAD_MUSICSETTINGDATA, () => new GetMusicSettingDataCommand());
-        GameFacade.Instance.RegisterCommand(NotificationName.LOAD_PROCESSDATA, () => new GetProcessDataCommand());
-        GameFacade.Instance.RegisterCommand(NotificationName.LOAD_ITEMDATA, () => new GetBigLevelDataCommand());
-        GameFacade.Instance.RegisterCommand(NotificationName.LOAD_LEVELDATA, () => new LoadLevelDataCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.Data.LOAD_STATISTICALDATA, () => new GetStatisticalDataCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.Data.LOAD_MUSICSETTINGDATA, () => new GetMusicSettingDataCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.Data.LOAD_PROCESSDATA, () => new GetProcessDataCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.Data.LOAD_ITEMDATA, () => new GetBigLevelDataCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.Data.LOAD_LEVELDATA, () => new LoadLevelDataCommand());
         
-        GameFacade.Instance.RegisterCommand(NotificationName.SAVE_PROCESSDATA, ()=> new SaveProcessDataCommand());
-        GameFacade.Instance.RegisterCommand(NotificationName.SAVE_MUSCISETTINGDATA, () => new SaveMusicSettingDataCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.Data.SAVE_PROCESSDATA, ()=> new SaveProcessDataCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.Data.SAVE_MUSCISETTINGDATA, () => new SaveMusicSettingDataCommand());
     }
 }
 

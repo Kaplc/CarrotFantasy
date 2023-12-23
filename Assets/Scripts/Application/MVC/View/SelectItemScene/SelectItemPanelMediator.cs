@@ -23,8 +23,8 @@ public class SelectItemPanelMediator : Mediator
     {
         return new string[]
         {
-            NotificationName.SHOW_SELECTITEMPANEL,
-            NotificationName.LOADED_PROCESSDATA
+            NotificationName.UI.SHOW_SELECTITEMPANEL,
+            NotificationName.Data.LOADED_PROCESSDATA
         };
     }
 
@@ -34,11 +34,11 @@ public class SelectItemPanelMediator : Mediator
 
         switch (notification.Name)
         {
-            case NotificationName.SHOW_SELECTITEMPANEL:
+            case NotificationName.UI.SHOW_SELECTITEMPANEL:
                 Panel = UIManager.Instance.Show<SelectItemPanel>(false);
-                SendNotification(NotificationName.LOAD_PROCESSDATA);
+                SendNotification(NotificationName.Data.LOAD_PROCESSDATA);
                 break;
-            case NotificationName.LOADED_PROCESSDATA:
+            case NotificationName.Data.LOADED_PROCESSDATA:
                 Panel.processData = notification.Body as ProcessData;
                 break;
         }

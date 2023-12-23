@@ -23,14 +23,14 @@ public class GameFacade : Facade
         base.InitializeController();
         
         // 初始化通知
-        RegisterCommand(NotificationName.INIT, () => new InitCommand());
-        RegisterCommand(NotificationName.INIT_GAMEMANAGERCONTROLLER, () => new InitGameManagerControllerCommand());
-        RegisterCommand(NotificationName.INIT_GAMEDATAPROXY, () => new InitGameDataProxyCommand());
-        RegisterCommand(NotificationName.INIT_SPAWNERCONTROLLER, () => new InitSpawnerController());
-        RegisterCommand(NotificationName.INIT_LOADSCENECONTROLLER, () => new InitLoadSceneController());
+        RegisterCommand(NotificationName.Init.INIT, () => new InitCommand());
+        RegisterCommand(NotificationName.Init.INIT_GAMEMANAGERCONTROLLER, () => new InitGameManagerControllerCommand());
+        RegisterCommand(NotificationName.Init.INIT_GAMEDATAPROXY, () => new InitGameDataProxyCommand());
+        RegisterCommand(NotificationName.Init.INIT_SPAWNERCONTROLLER, () => new InitSpawnerController());
+        RegisterCommand(NotificationName.Init.INIT_LOADSCENECONTROLLER, () => new InitLoadSceneController());
         
-        RegisterCommand(NotificationName.INIT_END, () => new InitEndCommand());
-        RegisterCommand(NotificationName.LOAD_ATLAS, ()=> new LoadAtlasCommand());
+        RegisterCommand(NotificationName.Init.INIT_END, () => new InitEndCommand());
+        RegisterCommand(NotificationName.Data.LOAD_ATLAS, ()=> new LoadAtlasCommand());
     }
 
     protected override void InitializeView()

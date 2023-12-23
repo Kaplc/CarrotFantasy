@@ -13,32 +13,32 @@ public class InitLoadSceneController : SimpleCommand
 
         #region 注册加载场景命令
 
-        GameFacade.Instance.RegisterCommand(NotificationName.LOADSCENE_BEGIN, () => new LoadBeginSceneCommand());
-        GameFacade.Instance.RegisterCommand(NotificationName.LOADSCENE_SELECTITEM, () => new LoadSelectItemSceneCommand());
-        GameFacade.Instance.RegisterCommand(NotificationName.LOADSCENE_SELECTLEVEL, () => new LoadSelectLevelSceneCommand());
-        GameFacade.Instance.RegisterCommand(NotificationName.LOADSCENE_GAME, () => new LoadGameSceneCommand());
-        GameFacade.Instance.RegisterCommand(NotificationName.LOADSCENE_END, () => new LoadEndSceneCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.LoadScene.LOADSCENE_BEGIN, () => new LoadBeginSceneCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.LoadScene.LOADSCENE_SELECTITEM, () => new LoadSelectItemSceneCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.LoadScene.LOADSCENE_SELECTLEVEL, () => new LoadSelectLevelSceneCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.LoadScene.LOADSCENE_GAME, () => new LoadGameSceneCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.LoadScene.LOADSCENE_END, () => new LoadEndSceneCommand());
 
         #endregion
 
         #region 注册场景跳转命令
 
-        GameFacade.Instance.RegisterCommand(NotificationName.LOADSCENE_INIT_TO_BEGIN, () => new LoadSceneInitToBeginCommand());
-        GameFacade.Instance.RegisterCommand(NotificationName.LOADSCENE_BEGIN_TO_SELECTITEM, () => new LoadSceneBeginToSelectItemCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.LoadScene.LOADSCENE_INIT_TO_BEGIN, () => new LoadSceneInitToBeginCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.LoadScene.LOADSCENE_BEGIN_TO_SELECTITEM, () => new LoadSceneBeginToSelectItemCommand());
         // 选择主题场景
-        GameFacade.Instance.RegisterCommand(NotificationName.LOADSCENE_SELECTITEM_TO_SELECTLEVEL,
+        GameFacade.Instance.RegisterCommand(NotificationName.LoadScene.LOADSCENE_SELECTITEM_TO_SELECTLEVEL,
             () => new LoadSceneSelectItemToSelectLevelCommand());
-        GameFacade.Instance.RegisterCommand(NotificationName.LOADSCENE_SELECTITEM_TO_HELP, () => new LoadSceneSelectItemToHelpPanelCommand());
-        GameFacade.Instance.RegisterCommand(NotificationName.LOADSCENE_SELECTITEM_TO_BEGIN, () => new LoadSceneSelectItemToBeginCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.LoadScene.LOADSCENE_SELECTITEM_TO_HELP, () => new LoadSceneSelectItemToHelpPanelCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.LoadScene.LOADSCENE_SELECTITEM_TO_BEGIN, () => new LoadSceneSelectItemToBeginCommand());
         // 选择关卡场景
-        GameFacade.Instance.RegisterCommand(NotificationName.LOADSCENE_SELECTLEVEL_TO_GAME, () => new LoadSceneSelectLevelToGameCommand());
-        GameFacade.Instance.RegisterCommand(NotificationName.LOADSCENE_SELECTLEVEL_TO_HELP, () => new LoadSceneSelectLevelToHelpPanelCommand());
-        GameFacade.Instance.RegisterCommand(NotificationName.LOADSCENE_SELECTLEVEL_TO_SELECTITEM,
+        GameFacade.Instance.RegisterCommand(NotificationName.LoadScene.LOADSCENE_SELECTLEVEL_TO_GAME, () => new LoadSceneSelectLevelToGameCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.LoadScene.LOADSCENE_SELECTLEVEL_TO_HELP, () => new LoadSceneSelectLevelToHelpPanelCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.LoadScene.LOADSCENE_SELECTLEVEL_TO_SELECTITEM,
             () => new LoadSceneSelectLevelToSelectItemCommand());
         // 游戏场景
-        GameFacade.Instance.RegisterCommand(NotificationName.LOADSCENE_GAME_TO_SELECTLEVEL, () => new LoadSceneGameToSelectLevelCommand());
-        GameFacade.Instance.RegisterCommand(NotificationName.LOADSCENE_GAME_TO_END, () => new LoadSceneGameToEndCommand());
-        GameFacade.Instance.RegisterCommand(NotificationName.LOADSCENE_GAME_TO_GAME, () => new LoadSceneGameToGameCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.LoadScene.LOADSCENE_GAME_TO_SELECTLEVEL, () => new LoadSceneGameToSelectLevelCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.LoadScene.LOADSCENE_GAME_TO_END, () => new LoadSceneGameToEndCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.LoadScene.LOADSCENE_GAME_TO_GAME, () => new LoadSceneGameToGameCommand());
 
         #endregion
     }
@@ -53,7 +53,7 @@ public class LoadBeginSceneCommand : SimpleCommand
         GameFacade.Instance.RegisterMediator(new BeginPanelMediator());
         ZFrameWorkSceneManager.Instance.LoadSceneAsync("2.BeginScene", () =>
         {
-            SendNotification(NotificationName.SHOW_BEGINPANEL);
+            SendNotification(NotificationName.UI.SHOW_BEGINPANEL);
             // 执行回调
             (notification.Body as UnityAction)?.Invoke();
         });
@@ -67,7 +67,7 @@ public class LoadSelectItemSceneCommand : SimpleCommand
         GameFacade.Instance.RegisterMediator(new SelectItemPanelMediator());
         ZFrameWorkSceneManager.Instance.LoadSceneAsync("3.SelectItemScene", () =>
         {
-            SendNotification(NotificationName.SHOW_SELECTITEMPANEL);
+            SendNotification(NotificationName.UI.SHOW_SELECTITEMPANEL);
         });
     }
 }
@@ -81,7 +81,7 @@ public class LoadSelectLevelSceneCommand : SimpleCommand
         ZFrameWorkSceneManager.Instance.LoadSceneAsync("4.SelectLevelScene", () =>
         {
             // 根据记录的ID打开对应主题
-            SendNotification(NotificationName.SHOW_SELECTLEVELPANEL, GameManager.Instance.nowBigLevelId);
+            SendNotification(NotificationName.UI.SHOW_SELECTLEVELPANEL, GameManager.Instance.nowBigLevelId);
         });
     }
 }
@@ -90,7 +90,7 @@ public class LoadGameSceneCommand : SimpleCommand
 {
     public override void Execute(INotification notification)
     {
-        SendNotification(NotificationName.SHOW_LOADINGPANEL);
+        SendNotification(NotificationName.UI.SHOW_LOADINGPANEL);
         
         GameFacade.Instance.RegisterMediator(new GamePanelMediator());
         GameFacade.Instance.RegisterMediator(new BuiltPanelMediator());
@@ -101,8 +101,8 @@ public class LoadGameSceneCommand : SimpleCommand
         ZFrameWorkSceneManager.Instance.LoadSceneAsync("5.GameScene", () =>
         {
             // 传递LevelID
-            GameFacade.Instance.SendNotification(NotificationName.LOAD_GAME, (int)notification.Body);
-            SendNotification(NotificationName.HIDE_LOADINGPANEL);
+            GameFacade.Instance.SendNotification(NotificationName.Game.LOAD_GAME, (int)notification.Body);
+            SendNotification(NotificationName.UI.HIDE_LOADINGPANEL);
         });
     }
 }
@@ -126,9 +126,9 @@ public class LoadSceneInitToBeginCommand : SimpleCommand
 {
     public override void Execute(INotification notification)
     {
-        SendNotification(NotificationName.HIDE_INIPANEL);
+        SendNotification(NotificationName.UI.HIDE_INIPANEL);
         GameFacade.Instance.RemoveMediator(nameof(InitPanelMediator));
-        SendNotification(NotificationName.LOADSCENE_BEGIN);
+        SendNotification(NotificationName.LoadScene.LOADSCENE_BEGIN);
     }
 }
 
@@ -140,7 +140,7 @@ public class LoadSceneBeginToSelectItemCommand : SimpleCommand
     public override void Execute(INotification notification)
     {
         GameFacade.Instance.RemoveMediator(nameof(BeginPanelMediator));
-        SendNotification(NotificationName.LOADSCENE_SELECTITEM);
+        SendNotification(NotificationName.LoadScene.LOADSCENE_SELECTITEM);
     }
 }
 
@@ -154,7 +154,7 @@ public class LoadSceneSelectItemToBeginCommand : SimpleCommand
     public override void Execute(INotification notification)
     {
         GameFacade.Instance.RemoveMediator(nameof(SelectItemPanelMediator));
-        SendNotification(NotificationName.LOADSCENE_BEGIN);
+        SendNotification(NotificationName.LoadScene.LOADSCENE_BEGIN);
     }
 }
 
@@ -167,7 +167,7 @@ public class LoadSceneSelectItemToSelectLevelCommand : SimpleCommand
     {
         GameFacade.Instance.RemoveMediator(nameof(SelectItemPanelMediator));
         
-        SendNotification(NotificationName.LOADSCENE_SELECTLEVEL);
+        SendNotification(NotificationName.LoadScene.LOADSCENE_SELECTLEVEL);
     }
 }
 
@@ -182,9 +182,9 @@ public class LoadSceneSelectItemToHelpPanelCommand : SimpleCommand
         UnityAction ac = () =>
         {
             // false当消息体传递标识显示helpPanel无动画过渡
-            SendNotification(NotificationName.SHOW_HELPPANEL, false);
+            SendNotification(NotificationName.UI.SHOW_HELPPANEL, false);
         };
-        SendNotification(NotificationName.LOADSCENE_BEGIN, ac);
+        SendNotification(NotificationName.LoadScene.LOADSCENE_BEGIN, ac);
         
     }
 }
@@ -201,7 +201,7 @@ public class LoadSceneSelectLevelToGameCommand : SimpleCommand
     public override void Execute(INotification notification)
     {
         GameFacade.Instance.RemoveMediator(nameof(SelectLevelPanelMediator));
-        SendNotification(NotificationName.LOADSCENE_GAME, (int)notification.Body);
+        SendNotification(NotificationName.LoadScene.LOADSCENE_GAME, (int)notification.Body);
     }
 }
 
@@ -215,10 +215,10 @@ public class LoadSceneSelectLevelToHelpPanelCommand : SimpleCommand
         GameFacade.Instance.RemoveMediator(nameof(SelectLevelPanelMediator));
         UnityAction action = () =>
         {
-            SendNotification(NotificationName.SHOW_HELPPANEL, false);
+            SendNotification(NotificationName.UI.SHOW_HELPPANEL, false);
         };
 
-        SendNotification(NotificationName.LOADSCENE_BEGIN, action);
+        SendNotification(NotificationName.LoadScene.LOADSCENE_BEGIN, action);
         
     }
 }
@@ -231,7 +231,7 @@ public class LoadSceneSelectLevelToSelectItemCommand : SimpleCommand
     public override void Execute(INotification notification)
     {
         GameFacade.Instance.RemoveMediator(nameof(SelectLevelPanelMediator));
-        SendNotification(NotificationName.LOADSCENE_SELECTITEM);
+        SendNotification(NotificationName.LoadScene.LOADSCENE_SELECTITEM);
     }
 }
 
@@ -252,7 +252,7 @@ public class LoadSceneGameToSelectLevelCommand : SimpleCommand
         GameFacade.Instance.RemoveMediator(nameof(WinPanelMediator));
         GameFacade.Instance.RemoveMediator(nameof(LosePanelMediator));
         
-        SendNotification(NotificationName.LOADSCENE_SELECTLEVEL);
+        SendNotification(NotificationName.LoadScene.LOADSCENE_SELECTLEVEL);
     }
 }
 
@@ -269,7 +269,7 @@ public class LoadSceneGameToGameCommand : SimpleCommand
         GameFacade.Instance.RemoveMediator(nameof(WinPanelMediator));
         GameFacade.Instance.RemoveMediator(nameof(LosePanelMediator));
 
-        SendNotification(NotificationName.LOADSCENE_GAME, (int)notification.Body);
+        SendNotification(NotificationName.LoadScene.LOADSCENE_GAME, (int)notification.Body);
     }
 }
 
@@ -286,7 +286,7 @@ public class LoadSceneGameToEndCommand : SimpleCommand
         GameFacade.Instance.RemoveMediator(nameof(WinPanelMediator));
         GameFacade.Instance.RemoveMediator(nameof(LosePanelMediator));
         
-        SendNotification(NotificationName.LOADSCENE_END);
+        SendNotification(NotificationName.LoadScene.LOADSCENE_END);
     }
 }
 

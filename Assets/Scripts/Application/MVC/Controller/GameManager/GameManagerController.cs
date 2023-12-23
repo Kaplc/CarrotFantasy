@@ -8,21 +8,21 @@ public class InitGameManagerControllerCommand : SimpleCommand
     public override void Execute(INotification notification)
     {
         // 初始化GameController注册命令
-        GameFacade.Instance.RegisterCommand(NotificationName.LOADED_LEVELDATA, () => new AcceptLevelDataCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.Data.LOADED_LEVELDATA, () => new AcceptLevelDataCommand());
         
-        GameFacade.Instance.RegisterCommand(NotificationName.LOAD_GAME, () => new LoadGameCommand());
-        GameFacade.Instance.RegisterCommand(NotificationName.START_GAME, () => new StartGameCommand());
-        GameFacade.Instance.RegisterCommand(NotificationName.INIT_GAME, () => new InitGameCommand());
-        GameFacade.Instance.RegisterCommand(NotificationName.EXIT_GAME, () => new ExitGameCommand());
-        GameFacade.Instance.RegisterCommand(NotificationName.RESTART_GAME, () => new RestartGameCommand());
-        GameFacade.Instance.RegisterCommand(NotificationName.PAUSE_GAME, () => new PauseGameCommand());
-        GameFacade.Instance.RegisterCommand(NotificationName.CONTINUE_GAME, () => new ContinueGameCommand());
-        GameFacade.Instance.RegisterCommand(NotificationName.SELECT_LEVEL, () => new SelectLevelCommand());
-        GameFacade.Instance.RegisterCommand(NotificationName.NEXT_LEVEL, () => new NextLevelCommand());
-        GameFacade.Instance.RegisterCommand(NotificationName.OPENED_BUILTPANEL, () => new OpenedBuiltPanelCommand());
-        GameFacade.Instance.RegisterCommand(NotificationName.STOP_GAME, () => new StopGameCommand());
-        GameFacade.Instance.RegisterCommand(NotificationName.GAME_WIN, () => new GameWinCommand());
-        GameFacade.Instance.RegisterCommand(NotificationName.CARROT_DEAD, () => new GameOverCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.Game.LOAD_GAME, () => new LoadGameCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.Game.START_GAME, () => new StartGameCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.Game.INIT_GAME, () => new InitGameCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.Game.EXIT_GAME, () => new ExitGameCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.Game.RESTART_GAME, () => new RestartGameCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.Game.PAUSE_GAME, () => new PauseGameCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.Game.CONTINUE_GAME, () => new ContinueGameCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.UIEvent.SELECT_LEVEL, () => new SelectLevelCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.Game.NEXT_LEVEL, () => new NextLevelCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.Game.OPENED_BUILTPANEL, () => new OpenedBuiltPanelCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.Game.STOP_GAME, () => new StopGameCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.Game.GAME_WIN, () => new GameWinCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.Game.CARROT_DEAD, () => new GameOverCommand());
     }
 }
 
@@ -40,7 +40,7 @@ public class SelectLevelCommand : SimpleCommand
         // 回到选择界面完全退出游戏 销毁缓存池
         GameManager.Instance.PoolManager.Clear();
         
-        SendNotification(NotificationName.LOADSCENE_GAME_TO_SELECTLEVEL);
+        SendNotification(NotificationName.LoadScene.LOADSCENE_GAME_TO_SELECTLEVEL);
     }
 }
 
@@ -51,9 +51,9 @@ public class NextLevelCommand : SimpleCommand
 {
     public override void Execute(INotification notification)
     {
-        SendNotification(NotificationName.EXIT_GAME);
+        SendNotification(NotificationName.Game.EXIT_GAME);
         // 加载下一关
-        SendNotification(NotificationName.LOADSCENE_GAME_TO_GAME, GameManager.Instance.nowLevelData.levelID + 1);
+        SendNotification(NotificationName.LoadScene.LOADSCENE_GAME_TO_GAME, GameManager.Instance.nowLevelData.levelID + 1);
     }
 }
 
@@ -69,8 +69,8 @@ public class LoadGameCommand : SimpleCommand
     public override void Execute(INotification notification)
     {
         // 加载当前关卡数据
-        SendNotification(NotificationName.LOAD_LEVELDATA, (int)notification.Body);
-        SendNotification(NotificationName.INIT_GAME);
+        SendNotification(NotificationName.Data.LOAD_LEVELDATA, (int)notification.Body);
+        SendNotification(NotificationName.Game.INIT_GAME);
     }
 }
 
@@ -93,11 +93,11 @@ public class InitGameCommand : SimpleCommand
     public override void Execute(INotification notification)
     {
         // 显示游戏面板
-        SendNotification(NotificationName.SHOW_GAMEPANEL);
+        SendNotification(NotificationName.UI.SHOW_GAMEPANEL);
         // 游戏初始化
         GameManager.Instance.InitGame();
         // 更新面板
-        SendNotification(NotificationName.UPDATE_MONEY, GameManager.Instance.money);
+        SendNotification(NotificationName.UIEvent.UPDATE_MONEY, GameManager.Instance.money);
     }
 }
 
@@ -114,7 +114,7 @@ public class StartGameCommand : SimpleCommand
     {
         GameManager.Instance.StartGame();
         // 开始出怪
-        SendNotification(NotificationName.START_SPAWN);
+        SendNotification(NotificationName.Game.START_SPAWN);
     }
 }
 
@@ -129,9 +129,9 @@ public class ExitGameCommand : SimpleCommand
         GameManager.Instance.ExitGame();
 
         // 关闭相关面板
-        SendNotification(NotificationName.HIDE_BUILTPANEL);
-        SendNotification(NotificationName.HIDE_MENUPANEL);
-        SendNotification(NotificationName.HIDE_GAMEPANEL);
+        SendNotification(NotificationName.UI.HIDE_BUILTPANEL);
+        SendNotification(NotificationName.UI.HIDE_MENUPANEL);
+        SendNotification(NotificationName.UI.HIDE_GAMEPANEL);
     }
 }
 
@@ -142,9 +142,9 @@ public class RestartGameCommand : SimpleCommand
 {
     public override void Execute(INotification notification)
     {
-        SendNotification(NotificationName.EXIT_GAME);
+        SendNotification(NotificationName.Game.EXIT_GAME);
         // 重新加载游戏
-        SendNotification(NotificationName.LOADSCENE_GAME_TO_GAME, GameManager.Instance.nowLevelData.levelID);
+        SendNotification(NotificationName.LoadScene.LOADSCENE_GAME_TO_GAME, GameManager.Instance.nowLevelData.levelID);
     }
 }
 

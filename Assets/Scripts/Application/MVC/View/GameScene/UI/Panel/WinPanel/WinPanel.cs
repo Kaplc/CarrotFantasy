@@ -21,13 +21,13 @@ public class WinPanel : BasePanel
     {
         btnContinue.onClick.AddListener(() =>
         {
-            PanelMediator.SendNotification(NotificationName.NEXT_LEVEL);
+            PanelMediator.SendNotification(NotificationName.Game.NEXT_LEVEL);
             UIManager.Instance.Hide<WinPanel>(false);
         });
         btnSelect.onClick.AddListener(() =>
         {
-            PanelMediator.SendNotification(NotificationName.EXIT_GAME);
-            PanelMediator.SendNotification(NotificationName.LOADSCENE_GAME_TO_SELECTLEVEL);
+            PanelMediator.SendNotification(NotificationName.Game.EXIT_GAME);
+            PanelMediator.SendNotification(NotificationName.LoadScene.LOADSCENE_GAME_TO_SELECTLEVEL);
             UIManager.Instance.Hide<WinPanel>(false);
         });
     }

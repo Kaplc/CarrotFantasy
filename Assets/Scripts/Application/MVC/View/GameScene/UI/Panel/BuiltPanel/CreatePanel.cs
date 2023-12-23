@@ -54,7 +54,7 @@ public class CreatePanel : MonoBehaviour
             // 监听点击事件
             button.onClick.AddListener(() =>
             {
-                GameFacade.Instance.SendNotification(NotificationName.CREATE_TOWER, new CreateTowerArgsBogy()
+                GameFacade.Instance.SendNotification(NotificationName.UIEvent.CREATE_TOWER, new CreateTowerArgsBogy()
                 {
                     towerData = item.Key,
                     cellWorldPos = cellWorldPos

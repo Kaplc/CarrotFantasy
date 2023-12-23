@@ -23,9 +23,9 @@ public class SelectLevelPanelMediator : Mediator
     {
         return new string[]
         {
-            NotificationName.SHOW_SELECTLEVELPANEL,
-            NotificationName.LOADED_ITEMDATA,
-            NotificationName.LOADED_PROCESSDATA
+            NotificationName.UI.SHOW_SELECTLEVELPANEL,
+            NotificationName.Data.LOADED_ITEMDATA,
+            NotificationName.Data.LOADED_PROCESSDATA
         };
     }
 
@@ -35,17 +35,17 @@ public class SelectLevelPanelMediator : Mediator
 
         switch (notification.Name)
         {
-            case NotificationName.SHOW_SELECTLEVELPANEL:
+            case NotificationName.UI.SHOW_SELECTLEVELPANEL:
                 Panel = UIManager.Instance.Show<SelectLevelPanel>(false);
                 // 获取游戏进度数据
-                SendNotification(NotificationName.LOAD_PROCESSDATA);
+                SendNotification(NotificationName.Data.LOAD_PROCESSDATA);
                 // 获取当前选择的大关卡数据
-                SendNotification(NotificationName.LOAD_ITEMDATA, notification.Body);
+                SendNotification(NotificationName.Data.LOAD_ITEMDATA, notification.Body);
                 break;
-            case NotificationName.LOADED_ITEMDATA:
+            case NotificationName.Data.LOADED_ITEMDATA:
                 Panel.CreateLevelButton(notification.Body as ItemData);
                 break;
-            case NotificationName.LOADED_PROCESSDATA:
+            case NotificationName.Data.LOADED_PROCESSDATA:
                 if (!Panel) break;
 
                 Panel.processData = notification.Body as ProcessData;
