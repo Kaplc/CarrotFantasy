@@ -192,9 +192,12 @@ public class Map : MonoBehaviour
     /// </summary>
     public static void GenerateCell()
     {
-        for (int y = 0; y < Map.RowNum; y++)
+        // 清空上一次的数据
+        cellsList.Clear();
+        
+        for (int y = 0; y < RowNum; y++)
         {
-            for (int x = 0; x < Map.ColumnNum; x++)
+            for (int x = 0; x < ColumnNum; x++)
             {
                 cellsList.Add(new Cell(new Point(x, y)));
             }
@@ -265,10 +268,8 @@ public class Map : MonoBehaviour
 
         // 设置地图背景
         mapBgSpriteRenderer.sprite = GameManager.Instance.FactoryManager.SpriteFactory.GetSprite(nowMapData.mapBgSpritePath);
-        // mapBgSpriteRenderer.sprite = Resources.Load<Sprite>(nowMapData.mapBgSpritePath);
         // 设置路径背景
         roadSpriteRenderer.sprite = GameManager.Instance.FactoryManager.SpriteFactory.GetSprite(nowMapData.roadSpritePath);
-        // roadSpriteRenderer.sprite = Resources.Load<Sprite>(nowMapData.roadSpritePath);
     }
 
     /// <summary>

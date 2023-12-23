@@ -82,9 +82,10 @@ public class GameManager : BaseMonoSingleton<GameManager>
     /// </summary>
     public void ExitGame()
     {
-        // 回收萝卜和怪物
+        // 回收所有对象
         PoolManager.PushObject(spawner.carrot.gameObject);
-        spawner.OnPushAllMonster();
+        spawner.OnPushAllMonsters();
+        spawner.OnPushAllTowers();
     }
 
     /// <summary>

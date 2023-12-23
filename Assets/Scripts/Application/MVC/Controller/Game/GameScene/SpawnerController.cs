@@ -11,13 +11,12 @@ public class InitSpawnerController : SimpleCommand
 {
     public override void Execute(INotification notification)
     {
-        base.Execute(notification);
-        
         GameFacade.Instance.RegisterCommand(NotificationName.CREATE_TOWER, () => new CreateTowerCommand());
         GameFacade.Instance.RegisterCommand(NotificationName.SELL_TOWER, () => new SellTowerCommand());
         GameFacade.Instance.RegisterCommand(NotificationName.UPGRADE_TOWER, () => new UpGradeTowerCommand());
         GameFacade.Instance.RegisterCommand(NotificationName.START_SPAWN, () => new StartSpawnCommand());
         GameFacade.Instance.RegisterCommand(NotificationName.STOP_SPAWN, () => new StopSpawnCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.COLLECTING_FIRES, () => new CollectingFiresCommand());
     }
 }
 
@@ -28,7 +27,6 @@ public class StartSpawnCommand : SimpleCommand
 {
     public override void Execute(INotification notification)
     {
-        base.Execute(notification);
         GameManager.Instance.spawner.StartSpawn();
     }
 }
@@ -40,7 +38,6 @@ public class StopSpawnCommand : SimpleCommand
 {
     public override void Execute(INotification notification)
     {
-        base.Execute(notification);
         GameManager.Instance.spawner.StopSpawn();
     }
 }
@@ -52,7 +49,6 @@ public class CreateTowerCommand : SimpleCommand
 {
     public override void Execute(INotification notification)
     {
-        base.Execute(notification);
         CreateTowerArgsBogy body = notification.Body as CreateTowerArgsBogy;
         GameManager.Instance.spawner.CreateTowerObject(body.towerData, body.cellWorldPos);
     }
@@ -65,7 +61,6 @@ public class SellTowerCommand : SimpleCommand
 {
     public override void Execute(INotification notification)
     {
-        base.Execute(notification);
         GameManager.Instance.spawner.SellTower((Vector3)notification.Body);
     }
 }
@@ -77,7 +72,17 @@ public class UpGradeTowerCommand : SimpleCommand
 {
     public override void Execute(INotification notification)
     {
-        base.Execute(notification);
         GameManager.Instance.spawner.UpGradeTower((Vector3)notification.Body);
+    }
+}
+
+/// <summary>
+/// 集火目标
+/// </summary>
+public class CollectingFiresCommand : SimpleCommand
+{
+    public override void Execute(INotification notification)
+    {
+        GameManager.Instance.spawner.CollectingFires(notification.Body as Monster);
     }
 }

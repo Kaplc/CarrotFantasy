@@ -63,6 +63,15 @@ public class Monster : BaseRole, IPoolObject
             nextCell = GameManager.Instance.nowLevelData.mapData.pathList[pathIndex];
         }
     }
+    
+    /// <summary>
+    /// 点击触发集火
+    /// </summary>
+    private void OnMouseDown()
+    {
+        // 将自己的位置信息传出
+        GameFacade.Instance.SendNotification(NotificationName.COLLECTING_FIRES, this);
+    }
 
     private void Move()
     {

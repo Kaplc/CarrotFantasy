@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,7 +7,6 @@ using UnityEngine;
 /// </summary>
 public class Spawner : MonoBehaviour
 {
-    public bool startSpawn;
     public bool spawnedComplete; // 完成出怪
     public float lastSpawnTime; // 上一只出怪时间
     public int nowWavesCount; // 当前第几波
@@ -18,6 +16,7 @@ public class Spawner : MonoBehaviour
     private LevelData levelData;
     private Coroutine spawnCoroutine;
     public List<Monster> monsters = new List<Monster>(); // 已经出生的怪物
+    public List<BaseTower> towers = new List<BaseTower>(); // 已创建的塔
 
 
     private void Awake()
@@ -30,23 +29,27 @@ public class Spawner : MonoBehaviour
         GameFacade.Instance.SendNotification(NotificationName.UPDATE_WAVESCOUNT, (1, levelData.roundDataList.Count));
     }
 
+    public void CollectingFires(Monster monster)
+    {
+        for (int i = 0; i < towers.Count; i++)
+        {
+            towers[i].target = monster;
+        }
+    }
+
     /// <summary>
     /// 升级塔
     /// </summary>
     public void UpGradeTower(Vector3 cellWorldPos)
     {
         BaseTower tower = Map.GetCell(cellWorldPos).tower as BaseTower;
+        if(!tower)return;
+        
         // 最大等级直接返回
-        if (tower.level == 2)
-        {
-            return;
-        }
+        if (tower.level == 2)return;
 
         // 够钱才升级
-        if (GameManager.Instance.money < tower.data.prices[tower.level + 1])
-        {
-            return;
-        }
+        if (GameManager.Instance.money < tower.data.prices[tower.level + 1])return;
 
         // 扣钱
         GameManager.Instance.money -= tower.data.prices[tower.level + 1];
@@ -65,7 +68,8 @@ public class Spawner : MonoBehaviour
     {
         Cell cell = Map.GetCell(cellWorldPos);
         BaseTower tower = cell.tower as BaseTower;
-
+        if(!tower)return;
+        
         // 加钱
         GameManager.Instance.money += tower.data.sellPrices[tower.level];
         // 更新面板
@@ -77,6 +81,8 @@ public class Spawner : MonoBehaviour
 
         // 关闭建造面板
         GameFacade.Instance.SendNotification(NotificationName.HIDE_BUILTPANEL);
+        // 从列表移除
+        towers.Remove(tower);
     }
 
     /// <summary>
@@ -100,6 +106,12 @@ public class Spawner : MonoBehaviour
 
             // 关闭建造面板
             GameFacade.Instance.SendNotification(NotificationName.HIDE_BUILTPANEL);
+            // 添加进列表
+            if (!towers.Contains(tower))
+            {
+                towers.Add(tower);
+            }
+            
         }
     }
 
@@ -197,7 +209,7 @@ public class Spawner : MonoBehaviour
     /// <summary>
     /// 回收未死亡的怪物
     /// </summary>
-    public void OnPushAllMonster()
+    public void OnPushAllMonsters()
     {
         for (int i = 0; i < monsters.Count; i++)
         {
@@ -208,5 +220,13 @@ public class Spawner : MonoBehaviour
         }
 
         monsters.Clear();
+    }
+
+    public void OnPushAllTowers()
+    {
+        for (int i = 0; i < towers.Count; i++)
+        {
+            GameManager.Instance.PoolManager.PushObject(towers[i].gameObject);
+        }
     }
 }
