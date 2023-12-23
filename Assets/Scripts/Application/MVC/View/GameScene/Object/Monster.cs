@@ -14,8 +14,7 @@ public class Monster : BaseRole, IPoolObject
     private Animator animator;
 
     #region 属性
-
-    public int ID => data.id;
+    
     private float Speed => data.speed;
     private int Hp
     {
@@ -27,6 +26,7 @@ public class Monster : BaseRole, IPoolObject
             {
                 hp = 0;
                 isDead = true;
+                GameFacade.Instance.SendNotification(NotificationName.CANEL_COLLECTINGFIRES, this);
                 // 播放死亡动画
                 animator.SetBool("Dead", true);
             }
@@ -70,7 +70,7 @@ public class Monster : BaseRole, IPoolObject
     private void OnMouseDown()
     {
         // 将自己的位置信息传出
-        GameFacade.Instance.SendNotification(NotificationName.COLLECTING_FIRES, this);
+        GameFacade.Instance.SendNotification(NotificationName.SET_COLLECTINGFIRES, this);
     }
 
     private void Move()

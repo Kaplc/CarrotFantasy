@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 出怪脚本
+/// 对象生成器
 /// </summary>
 public class Spawner : MonoBehaviour
 {
@@ -18,7 +18,9 @@ public class Spawner : MonoBehaviour
     public List<Monster> monsters = new List<Monster>(); // 已经出生的怪物
     public List<BaseTower> towers = new List<BaseTower>(); // 已创建的塔
 
-
+    public Monster collectingFiresTarget; // 集火目标
+    public Transform signTrans; // 集火标志
+    
     private void Awake()
     {
         spawnedComplete = false;
@@ -29,12 +31,18 @@ public class Spawner : MonoBehaviour
         GameFacade.Instance.SendNotification(NotificationName.UPDATE_WAVESCOUNT, (1, levelData.roundDataList.Count));
     }
 
-    public void CollectingFires(Monster monster)
+    public void SetCollectingFires(Monster monster)
     {
         for (int i = 0; i < towers.Count; i++)
         {
             towers[i].target = monster;
         }
+        // 设置集火标志
+        collectingFiresTarget = monster;
+        signTrans.gameObject.SetActive(true);
+        signTrans.SetParent(monster.transform);
+        signTrans.localPosition = new Vector3(0,0.7f,0);
+        signTrans.localScale = Vector3.one;
     }
 
     /// <summary>
@@ -211,6 +219,9 @@ public class Spawner : MonoBehaviour
     /// </summary>
     public void OnPushAllMonsters()
     {
+        // 销毁标志
+        Destroy(signTrans.gameObject);
+        
         for (int i = 0; i < monsters.Count; i++)
         {
             if (monsters[i].isDead == false)

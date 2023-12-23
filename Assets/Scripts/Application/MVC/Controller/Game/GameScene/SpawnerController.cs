@@ -16,7 +16,9 @@ public class InitSpawnerController : SimpleCommand
         GameFacade.Instance.RegisterCommand(NotificationName.UPGRADE_TOWER, () => new UpGradeTowerCommand());
         GameFacade.Instance.RegisterCommand(NotificationName.START_SPAWN, () => new StartSpawnCommand());
         GameFacade.Instance.RegisterCommand(NotificationName.STOP_SPAWN, () => new StopSpawnCommand());
-        GameFacade.Instance.RegisterCommand(NotificationName.COLLECTING_FIRES, () => new CollectingFiresCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.SET_COLLECTINGFIRES, () => new SetCollectingFiresCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.CANEL_COLLECTINGFIRES, () => new CancelCollectingFiresCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.MONSTER_DEAD, () => new MonsterDeadCommand());
     }
 }
 
@@ -79,10 +81,58 @@ public class UpGradeTowerCommand : SimpleCommand
 /// <summary>
 /// 集火目标
 /// </summary>
-public class CollectingFiresCommand : SimpleCommand
+public class SetCollectingFiresCommand : SimpleCommand
 {
     public override void Execute(INotification notification)
     {
-        GameManager.Instance.spawner.CollectingFires(notification.Body as Monster);
+        GameManager.Instance.spawner.SetCollectingFires(notification.Body as Monster);
+    }
+}
+
+/// <summary>
+/// 取消集火
+/// </summary>
+public class CancelCollectingFiresCommand : SimpleCommand
+{
+    public override void Execute(INotification notification)
+    {
+        Spawner spawner = GameManager.Instance.spawner;
+        // 判断是否是集火目标
+        if (spawner.collectingFiresTarget == notification.Body as Monster)
+        {
+            spawner.collectingFiresTarget = null;
+            // 隐藏集火标志
+            spawner.signTrans.gameObject.SetActive(false);
+            spawner.signTrans.transform.SetParent(spawner.transform);
+        }
+    }
+}
+
+/// <summary>
+/// 怪物死亡消息
+/// </summary>
+public class MonsterDeadCommand : SimpleCommand
+{
+    public override void Execute(INotification notification)
+    {
+        Spawner spawner = GameManager.Instance.spawner;
+        
+        // 1.出怪完成
+        if (!spawner.spawnedComplete) return;
+
+        // 2.萝卜没死
+        if (spawner.carrot.isDead) return;
+
+        // 3.怪物全部死亡
+        for (int i = 0; i < spawner.monsters.Count; i++)
+        {
+            // 有一个没死亡都无效
+            if (spawner.monsters[i].isDead == false)
+            {
+                return;
+            }
+        }
+        
+        SendNotification(NotificationName.GAME_WIN);
     }
 }

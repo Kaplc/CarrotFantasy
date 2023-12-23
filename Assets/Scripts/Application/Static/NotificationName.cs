@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NotificationName
+public static class NotificationName
 {
     #region 游戏逻辑相关
 
@@ -13,8 +13,7 @@ public class NotificationName
     public const string INIT_LOADSCENECONTROLLER = "InitLoadSceneController";
     public const string INIT_GAMEDATA = "InitGameData"; // 初始化数据
     public const string INIT_END = "InitEnd"; // 游戏初始化结束
-
-    public const string SELECT_BIGLEVEL = "SelectBigLevel";
+    
     public const string LOAD_GAME = "LoadGame"; // 开始加载游戏
     public const string START_GAME = "StartGame"; // 开始游戏
     public const string RESTART_GAME = "RestartGame"; // 重新开始
@@ -24,6 +23,7 @@ public class NotificationName
     public const string CONTINUE_GAME = "ContinueGame"; // 继续游戏
     public const string NEXT_LEVEL = "NextLevel"; // 下一关
     public const string STOP_GAME = "StopGame";
+    public const string GAME_WIN = "GameWin";
     
     public const string START_SPAWN = "StartSpawn"; // 开始出怪
     public const string STOP_SPAWN = "StopSpawn"; // 开始出怪
@@ -31,8 +31,9 @@ public class NotificationName
     public const string MONSTER_DEAD = "MonsterDead"; // 怪物死亡
     public const string CARROT_DEAD = "CarrotDead"; // 萝卜死亡
     public const string OPENED_BUILTPANEL = "OpenBuiltPanel"; // 建造面板已打开
-    public const string COLLECTING_FIRES = "CollectingFires"; // 集火目标
-    
+    public const string SET_COLLECTINGFIRES = "CollectingFires"; // 设置集火目标
+    public const string CANEL_COLLECTINGFIRES = "CanelCollectingFires"; // 取消集火
+
     #endregion
     
 
@@ -106,6 +107,28 @@ public class NotificationName
     #endregion
 
     #region 场景状态相关
+    public static class LoadScene
+    {
+        // 加载场景
+        public const string BEGINSCENE = "LoadScne.BeginScene";
+        public const string SELECTITEMSCENE = "LoadScne.SelectItemScene";
+        public const string SELECTLEVELSCENE = "LoadScne.SelectLevelScene";
+        public const string GAMESCENE = "LoadScne.GameScene";
+        public const string ENDSCENE = "LoadScne.EndScene";
+
+        // 场景跳转
+        public const string INIT_TO_BEGIN = "LoadScene.InitToBegin";
+        public const string BEGIN_TO_SELECTITEM = "LoadScene.BeginToSelectItem";
+        public const string SELECTITEM_TO_SELECTLEVEL = "LoadScene.SelectItemToSelectLevel";
+        public const string SELECTITEM_TO_HELP = "LoadScene.SelectItemToHelp";
+        public const string SELECTITEM_TO_BEGIN = "LoadScene.SelectItemToBegin";
+        public const string SELECTLEVEL_TO_GAME = "LoadScene.SelectLevelToGame";
+        public const string SELECTLEVEL_TO_SELECTITEM = "LoadScene.SelectLevelToSelectItem";
+        public const string SELECTLEVEL_TO_HELP = "LoadScene.SelectLevelToHelp";
+        public const string GAME_TO_END = "LoadScene.GameToEnd";
+        public const string GAME_TO_SELECTLEVEL = "LoadScene.GameToSelect";
+        public const string GAME_TO_GAME = "LoadScene.GameToGame";
+    }
     
     // 加载场景
     public const string LOADSCENE_BEGIN = "LoadScne_Begin";
@@ -113,7 +136,7 @@ public class NotificationName
     public const string LOADSCENE_SELECTLEVEL = "LoadScne_SelectLevel";
     public const string LOADSCENE_GAME = "LoadScne_Game";
     public const string LOADSCENE_END = "LoadScne_End";
-
+    
     // 场景跳转
     public const string LOADSCENE_INIT_TO_BEGIN = "LoadScene_InitToBegin";
     public const string LOADSCENE_BEGIN_TO_SELECTITEM = "LoadScene_BeginToSelectItem";

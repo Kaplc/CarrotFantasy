@@ -7,8 +7,6 @@ public class InitGameManagerControllerCommand : SimpleCommand
 {
     public override void Execute(INotification notification)
     {
-        base.Execute(notification);
-
         // 初始化GameController注册命令
         GameFacade.Instance.RegisterCommand(NotificationName.LOADED_LEVELDATA, () => new AcceptLevelDataCommand());
         
@@ -23,7 +21,7 @@ public class InitGameManagerControllerCommand : SimpleCommand
         GameFacade.Instance.RegisterCommand(NotificationName.NEXT_LEVEL, () => new NextLevelCommand());
         GameFacade.Instance.RegisterCommand(NotificationName.OPENED_BUILTPANEL, () => new OpenedBuiltPanelCommand());
         GameFacade.Instance.RegisterCommand(NotificationName.STOP_GAME, () => new StopGameCommand());
-        GameFacade.Instance.RegisterCommand(NotificationName.MONSTER_DEAD, () => new JudgeWinCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.GAME_WIN, () => new GameWinCommand());
         GameFacade.Instance.RegisterCommand(NotificationName.CARROT_DEAD, () => new GameOverCommand());
     }
 }
@@ -39,7 +37,6 @@ public class SelectLevelCommand : SimpleCommand
 {
     public override void Execute(INotification notification)
     {
-        base.Execute(notification);
         // 回到选择界面完全退出游戏 销毁缓存池
         GameManager.Instance.PoolManager.Clear();
         
@@ -54,7 +51,6 @@ public class NextLevelCommand : SimpleCommand
 {
     public override void Execute(INotification notification)
     {
-        base.Execute(notification);
         SendNotification(NotificationName.EXIT_GAME);
         // 加载下一关
         SendNotification(NotificationName.LOADSCENE_GAME_TO_GAME, GameManager.Instance.nowLevelData.levelID + 1);
@@ -72,7 +68,6 @@ public class LoadGameCommand : SimpleCommand
 {
     public override void Execute(INotification notification)
     {
-        base.Execute(notification);
         // 加载当前关卡数据
         SendNotification(NotificationName.LOAD_LEVELDATA, (int)notification.Body);
         SendNotification(NotificationName.INIT_GAME);
@@ -86,7 +81,6 @@ public class AcceptLevelDataCommand : SimpleCommand
 {
     public override void Execute(INotification notification)
     {
-        base.Execute(notification);
         GameManager.Instance.nowLevelData = notification.Body as LevelData;
     }
 }
@@ -98,7 +92,6 @@ public class InitGameCommand : SimpleCommand
 {
     public override void Execute(INotification notification)
     {
-        base.Execute(notification);
         // 显示游戏面板
         SendNotification(NotificationName.SHOW_GAMEPANEL);
         // 游戏初始化
@@ -119,7 +112,6 @@ public class StartGameCommand : SimpleCommand
 {
     public override void Execute(INotification notification)
     {
-        base.Execute(notification);
         GameManager.Instance.StartGame();
         // 开始出怪
         SendNotification(NotificationName.START_SPAWN);
@@ -133,8 +125,6 @@ public class ExitGameCommand : SimpleCommand
 {
     public override void Execute(INotification notification)
     {
-        base.Execute(notification);
-
         // 退出游戏
         GameManager.Instance.ExitGame();
 
@@ -152,8 +142,6 @@ public class RestartGameCommand : SimpleCommand
 {
     public override void Execute(INotification notification)
     {
-        base.Execute(notification);
-
         SendNotification(NotificationName.EXIT_GAME);
         // 重新加载游戏
         SendNotification(NotificationName.LOADSCENE_GAME_TO_GAME, GameManager.Instance.nowLevelData.levelID);
@@ -167,7 +155,6 @@ public class PauseGameCommand : SimpleCommand
 {
     public override void Execute(INotification notification)
     {
-        base.Execute(notification);
         GameManager.Instance.PauseGame();
     }
 }
@@ -179,7 +166,6 @@ public class StopGameCommand : SimpleCommand
 {
     public override void Execute(INotification notification)
     {
-        base.Execute(notification);
         GameManager.Instance.StopGame();
     }
 }
@@ -191,20 +177,18 @@ public class ContinueGameCommand : SimpleCommand
 {
     public override void Execute(INotification notification)
     {
-        base.Execute(notification);
         GameManager.Instance.ContinueGame();
     }
 }
 
 /// <summary>
-/// 判断游戏胜利
+/// 游戏胜利
 /// </summary>
-public class JudgeWinCommand : SimpleCommand
+public class GameWinCommand : SimpleCommand
 {
     public override void Execute(INotification notification)
     {
-        base.Execute(notification);
-        GameManager.Instance.JudgingWin();
+        GameManager.Instance.GameWin();
     }
 }
 
@@ -212,8 +196,6 @@ public class GameOverCommand : SimpleCommand
 {
     public override void Execute(INotification notification)
     {
-        base.Execute(notification);
-
         GameManager.Instance.GameOver();
     }
 }
@@ -229,7 +211,6 @@ public class OpenedBuiltPanelCommand : SimpleCommand
 {
     public override void Execute(INotification notification)
     {
-        base.Execute(notification);
         GameManager.Instance.openedBuiltPanel = (bool)notification.Body;
     }
 }

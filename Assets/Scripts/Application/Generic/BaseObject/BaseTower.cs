@@ -41,8 +41,30 @@ public abstract class BaseTower : MonoBehaviour, IPoolObject
                 target = null;
             }
         }
+        
+        // 集火目标
+        if (GameManager.Instance.spawner.collectingFiresTarget)
+        {
+            CollectingFiresTarget();
+        }
     }
-    
+
+    /// <summary>
+    /// 集火目标
+    /// </summary>
+    private void CollectingFiresTarget()
+    {
+        // 有集火目标直接锁定
+        Monster monster = GameManager.Instance.spawner.collectingFiresTarget;
+        float distance = Vector3.Distance(transform.position, monster.transform.position);
+
+        // 处于攻击范围
+        if (distance < data.attackRange && !monster.isDead)
+        {
+            target = monster;
+        }
+    }
+
     /// <summary>
     /// 查找目标
     /// </summary>
@@ -82,7 +104,15 @@ public abstract class BaseTower : MonoBehaviour, IPoolObject
         animator.runtimeAnimatorController = controllers[level];
     }
 
-    public abstract void OnGet();
+    public virtual void OnGet()
+    {
+    }
 
-    public abstract void OnPush();
+    public virtual void OnPush()
+    {
+        // 复原数据
+        target = null;
+        level = 0;
+        animator.runtimeAnimatorController = controllers[0];
+    }
 }

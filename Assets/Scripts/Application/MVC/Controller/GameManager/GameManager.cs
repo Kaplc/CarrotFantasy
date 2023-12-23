@@ -118,34 +118,9 @@ public class GameManager : BaseMonoSingleton<GameManager>
     #endregion
 
     /// <summary>
-    /// 判断是否胜利
-    /// </summary>
-    public void JudgingWin()
-    {
-        // 1.出怪完成
-        if (!spawner.spawnedComplete) return;
-
-        // 2.萝卜没死
-        if (spawner.carrot.isDead) return;
-
-        // 3.怪物全部死亡
-        for (int i = 0; i < spawner.monsters.Count; i++)
-        {
-            // 有一个没死亡都无效
-            if (spawner.monsters[i].isDead == false)
-            {
-                return;
-            }
-        }
-
-        // 执行游戏胜利逻辑
-        GameWin();
-    }
-
-    /// <summary>
     /// 游戏胜利
     /// </summary>
-    private void GameWin()
+    public void GameWin()
     {
         int hp = spawner.carrot.Hp;
         // 结算通关等级

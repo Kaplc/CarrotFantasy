@@ -50,12 +50,11 @@ public class BottleTower : BaseTower
 
     public override void OnGet()
     {
+        base.OnPush();
     }
 
     public override void OnPush()
     {
-        // 复原
-        animator.runtimeAnimatorController = controllers[0];
-        level = 0;
+        base.OnPush();
     }
 }
