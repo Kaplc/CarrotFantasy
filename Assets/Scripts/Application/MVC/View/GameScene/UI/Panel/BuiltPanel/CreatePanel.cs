@@ -25,16 +25,15 @@ public class CreatePanel : MonoBehaviour
         // 创建按钮
         foreach (KeyValuePair<TowerData, Sprite> item in towersDataDic)
         {
-            Button button =Instantiate(Resources.Load<GameObject>("UI/Button/ButtonCreateTower"), iconsRect).GetComponent<Button>();
-            // ButtonTower button = Instantiate(Resources.Load<GameObject>("UI/Button/ButtonCreateTower"), iconsRect).GetComponent<ButtonTower>();
+            // Button button =Instantiate(Resources.Load<GameObject>("UI/Button/ButtonCreateTower"), iconsRect).GetComponent<Button>();
+            Button button =GameManager.Instance.FactoryManager.UIControlFactory.CreateControl("ButtonCreateTower").GetComponent<Button>();
             // 设置信息
             button.GetComponent<Image>().sprite = item.Value;
-            // button.towerID = item.Key;
-            // button.icon.sprite = item.Value;
-            // button.cellWorldPos = cellWorldPos;
 
             // 设置位置
             RectTransform buttonRect = button.transform as RectTransform;
+            buttonRect.SetParent(iconsRect);
+            buttonRect.localScale = Vector3.one;
             switch (showDir)
             {
                 case EBuiltPanelShowDir.Up:
