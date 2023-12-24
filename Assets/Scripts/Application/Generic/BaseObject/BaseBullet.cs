@@ -32,7 +32,13 @@ public abstract class BaseBullet : MonoBehaviour, IPoolObject
                 target.Wound(atk + data.baseAtk);
                 // 播放爆炸动画
                 animator.SetTrigger("Explode");
-            } 
+            }
+            
+            // 怪物死亡立刻回收
+            if (target.isDead)
+            {
+                GameManager.Instance.PoolManager.PushObject(gameObject);
+            }
         }
     }
 

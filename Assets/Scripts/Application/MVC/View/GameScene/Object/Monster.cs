@@ -1,22 +1,28 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class Monster : BaseRole, IPoolObject
 {
     public MonsterData data;
-    
+
     private int hp;
     public int pathIndex;
-    
+    private float lastWoundTime; // 上次扣血时间
+
     public Cell nextCell;
     private Animator animator;
     public Transform signFather; // 集火标志父对象
+    public Transform hpImageBg; // 血条背景图片
+    public Transform hpImageFg; // 血条前景图片
+    public Transform deadEffect;
 
     #region 属性
-    
+
     private float Speed => data.speed;
+
     private int Hp
     {
         get => hp;
@@ -34,6 +40,12 @@ public class Monster : BaseRole, IPoolObject
                 // 播放死亡动画
                 animator.SetBool("Dead", true);
             }
+
+            // 更新血条图片
+            hpImageBg.gameObject.SetActive(true);
+            hpImageFg.localScale = new Vector3(hp / (data.maxHp * 1f), 1, 1);
+
+            lastWoundTime = Time.realtimeSinceStartup;
         }
     }
 
@@ -47,12 +59,12 @@ public class Monster : BaseRole, IPoolObject
     private void Update()
     {
         Move();
-        
+
         // 判断是否到达目标格子
         if (Vector3.Distance(Map.GetCellCenterPos(nextCell), transform.position) < 0.1f && isDead == false)
         {
             // 到达终点格子, 触发死亡方法
-            if (pathIndex == GameManager.Instance.nowLevelData.mapData.pathList.Count-1)
+            if (pathIndex == GameManager.Instance.nowLevelData.mapData.pathList.Count - 1)
             {
                 // 触发怪物到达终点事件
                 GameFacade.Instance.SendNotification(NotificationName.Game.REACH_ENDPOINT, data.atk);
@@ -60,14 +72,20 @@ public class Monster : BaseRole, IPoolObject
                 Hp = 0;
                 return;
             }
-            
+
             // 到达换下个目标格子
             pathIndex++;
-            pathIndex = Mathf.Clamp(pathIndex, 0, GameManager.Instance.nowLevelData.mapData.pathList.Count-1);
+            pathIndex = Mathf.Clamp(pathIndex, 0, GameManager.Instance.nowLevelData.mapData.pathList.Count - 1);
             nextCell = GameManager.Instance.nowLevelData.mapData.pathList[pathIndex];
         }
+        
+        // 超过2秒没受到伤害或怪物死亡隐藏血条
+        if (Time.realtimeSinceStartup - lastWoundTime > 2 || isDead)
+        {
+            hpImageBg.gameObject.SetActive(false);
+        }
     }
-    
+
     /// <summary>
     /// 点击触发集火
     /// </summary>
@@ -79,8 +97,8 @@ public class Monster : BaseRole, IPoolObject
 
     private void Move()
     {
-        if(GameManager.Instance.Pause || isDead) return;
-        
+        if (GameManager.Instance.Pause || isDead) return;
+
         Vector3 dir = Map.GetCellCenterPos(nextCell) - transform.position;
         dir.Normalize();
         // 移动
@@ -105,7 +123,7 @@ public class Monster : BaseRole, IPoolObject
         // 清空数据
         nextCell = null;
     }
-    
+
     /// <summary>
     /// 每次从缓存池取出初始化数据
     /// </summary>
@@ -120,7 +138,7 @@ public class Monster : BaseRole, IPoolObject
         hp = data.maxHp;
         // 还原动画
         animator.SetBool("Dead", false);
-        
+
         isDead = false;
     }
 }
