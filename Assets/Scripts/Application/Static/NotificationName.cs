@@ -36,6 +36,7 @@ public static class NotificationName
         public const string OPENED_BUILTPANEL = "OpenBuiltPanel"; // 建造面板已打开
         public const string SET_COLLECTINGFIRES = "CollectingFires"; // 设置集火目标
         public const string CANEL_COLLECTINGFIRES = "CanelCollectingFires"; // 取消集火
+        public const string UPDATE_MONEY = "UpdateMoney"; // 更新钱
     }
     
     public static class UI
@@ -76,8 +77,8 @@ public static class NotificationName
         public const string UPGRADE_TOWER = "UpGradeTower"; // 升级塔
     
         // GamePanel
-        public const string UPDATE_MONEY = "UpdateMoney";
-        public const string UPDATE_WAVESCOUNT = "UpdateWavesCount";
+        public const string GAMEPANEL_UPDATE_MONEY = "GamePanelUpdateMoney";
+        public const string GAMEPANEL_UPDATE_WAVESCOUNT = "GamelPanelUpdateWavesCount";
     }
     
     public static class Data

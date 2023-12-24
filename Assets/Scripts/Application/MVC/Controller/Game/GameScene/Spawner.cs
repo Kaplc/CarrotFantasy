@@ -20,7 +20,7 @@ public class Spawner : MonoBehaviour
 
     public Monster collectingFiresTarget; // 集火目标
     public Transform signTrans; // 集火标志
-    
+
     private void Awake()
     {
         spawnedComplete = false;
@@ -28,7 +28,7 @@ public class Spawner : MonoBehaviour
         // 获取当前关卡数据
         levelData = GameManager.Instance.nowLevelData;
         // 更新面板波数显示
-        GameFacade.Instance.SendNotification(NotificationName.UIEvent.UPDATE_WAVESCOUNT, (1, levelData.roundDataList.Count));
+        GameFacade.Instance.SendNotification(NotificationName.UIEvent.GAMEPANEL_UPDATE_WAVESCOUNT, (1, levelData.roundDataList.Count));
     }
 
     public void SetCollectingFires(Monster monster)
@@ -37,11 +37,12 @@ public class Spawner : MonoBehaviour
         {
             towers[i].target = monster;
         }
+
         // 设置集火标志
         collectingFiresTarget = monster;
         signTrans.gameObject.SetActive(true);
         signTrans.SetParent(monster.signFather.transform);
-        signTrans.localPosition = new Vector3(0,0.7f,0);
+        signTrans.localPosition = new Vector3(0, 0.7f, 0);
         signTrans.localScale = Vector3.one;
     }
 
@@ -51,18 +52,15 @@ public class Spawner : MonoBehaviour
     public void UpGradeTower(Vector3 cellWorldPos)
     {
         BaseTower tower = Map.GetCell(cellWorldPos).tower as BaseTower;
-        if(!tower)return;
-        
+        if (!tower) return;
+
         // 最大等级直接返回
-        if (tower.level == 2)return;
+        if (tower.level == 2) return;
 
         // 够钱才升级
-        if (GameManager.Instance.money < tower.data.prices[tower.level + 1])return;
-
+        if (GameManager.Instance.money < tower.data.prices[tower.level + 1]) return;
         // 扣钱
-        GameManager.Instance.money -= tower.data.prices[tower.level + 1];
-        // 更新面板
-        GameFacade.Instance.SendNotification(NotificationName.UIEvent.UPDATE_MONEY, GameManager.Instance.money);
+        GameFacade.Instance.SendNotification(NotificationName.Game.UPDATE_MONEY, -tower.data.prices[tower.level + 1]);
         // 调用更新方法
         tower.UpGrade();
         // 关闭建造面板
@@ -76,12 +74,10 @@ public class Spawner : MonoBehaviour
     {
         Cell cell = Map.GetCell(cellWorldPos);
         BaseTower tower = cell.tower as BaseTower;
-        if(!tower)return;
-        
+        if (!tower) return;
+
         // 加钱
-        GameManager.Instance.money += tower.data.sellPrices[tower.level];
-        // 更新面板
-        GameFacade.Instance.SendNotification(NotificationName.UIEvent.UPDATE_MONEY, GameManager.Instance.money);
+        GameFacade.Instance.SendNotification(NotificationName.Game.UPDATE_MONEY, +tower.data.sellPrices[tower.level]);
         // 回收对象
         GameManager.Instance.PoolManager.PushObject(tower.gameObject);
         // 清空格子
@@ -106,9 +102,7 @@ public class Spawner : MonoBehaviour
             BaseTower tower = GameManager.Instance.PoolManager.GetObject(towerData.prefabsPath).GetComponent<BaseTower>();
             tower.transform.position = cellWorldPos;
             // 扣钱
-            GameManager.Instance.money -= towerData.prices[0];
-            // 更新面板
-            GameFacade.Instance.SendNotification(NotificationName.UIEvent.UPDATE_MONEY, GameManager.Instance.money);
+            GameFacade.Instance.SendNotification(NotificationName.Game.UPDATE_MONEY, -towerData.prices[0]);
             // 记录该格子已经存在塔
             Map.GetCell(cellWorldPos).tower = tower;
 
@@ -119,7 +113,6 @@ public class Spawner : MonoBehaviour
             {
                 towers.Add(tower);
             }
-            
         }
     }
 
@@ -171,7 +164,7 @@ public class Spawner : MonoBehaviour
         {
             nowWavesCount++;
             // 更新面板波数显示
-            GameFacade.Instance.SendNotification(NotificationName.UIEvent.UPDATE_WAVESCOUNT, (i + 1, levelData.roundDataList.Count));
+            GameFacade.Instance.SendNotification(NotificationName.UIEvent.GAMEPANEL_UPDATE_WAVESCOUNT, (i + 1, levelData.roundDataList.Count));
 
             RoundData roundData = levelData.roundDataList[i];
 
@@ -221,7 +214,7 @@ public class Spawner : MonoBehaviour
     {
         // 销毁标志
         Destroy(signTrans.gameObject);
-        
+
         for (int i = 0; i < monsters.Count; i++)
         {
             if (monsters[i].isDead == false)

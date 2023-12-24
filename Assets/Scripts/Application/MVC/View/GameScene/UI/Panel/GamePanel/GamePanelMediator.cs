@@ -26,8 +26,8 @@ public class GamePanelMediator : Mediator
         {
             NotificationName.UI.SHOW_GAMEPANEL,
             NotificationName.UI.HIDE_GAMEPANEL,
-            NotificationName.UIEvent.UPDATE_MONEY,
-            NotificationName.UIEvent.UPDATE_WAVESCOUNT
+            NotificationName.UIEvent.GAMEPANEL_UPDATE_MONEY,
+            NotificationName.UIEvent.GAMEPANEL_UPDATE_WAVESCOUNT
         };
     }
 
@@ -50,10 +50,10 @@ public class GamePanelMediator : Mediator
                 UIManager.Instance.Hide<GamePanel>(false);
                 
                 break;
-            case NotificationName.UIEvent.UPDATE_MONEY:
+            case NotificationName.UIEvent.GAMEPANEL_UPDATE_MONEY:
                 Panel.UpdateMoney((int)notification.Body);
                 break;
-            case NotificationName.UIEvent.UPDATE_WAVESCOUNT:
+            case NotificationName.UIEvent.GAMEPANEL_UPDATE_WAVESCOUNT:
                 Panel.UpdateWavesCount(((int, int))notification.Body);
                 break;
         }

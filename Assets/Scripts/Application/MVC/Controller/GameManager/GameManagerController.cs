@@ -23,6 +23,7 @@ public class InitGameManagerControllerCommand : SimpleCommand
         GameFacade.Instance.RegisterCommand(NotificationName.Game.STOP_GAME, () => new StopGameCommand());
         GameFacade.Instance.RegisterCommand(NotificationName.Game.GAME_WIN, () => new GameWinCommand());
         GameFacade.Instance.RegisterCommand(NotificationName.Game.CARROT_DEAD, () => new GameOverCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.Game.UPDATE_MONEY, () => new UpdateMoneyCommand());
     }
 }
 
@@ -97,7 +98,7 @@ public class InitGameCommand : SimpleCommand
         // 游戏初始化
         GameManager.Instance.InitGame();
         // 更新面板
-        SendNotification(NotificationName.UIEvent.UPDATE_MONEY, GameManager.Instance.money);
+        SendNotification(NotificationName.UIEvent.GAMEPANEL_UPDATE_MONEY, GameManager.Instance.money);
     }
 }
 
@@ -205,13 +206,23 @@ public class GameOverCommand : SimpleCommand
 #region 游戏内逻辑相关
 
 /// <summary>
-/// 允许点击格子
+/// 打开建造面板
 /// </summary>
 public class OpenedBuiltPanelCommand : SimpleCommand
 {
     public override void Execute(INotification notification)
     {
         GameManager.Instance.openedBuiltPanel = (bool)notification.Body;
+    }
+}
+
+public class UpdateMoneyCommand : SimpleCommand
+{
+    public override void Execute(INotification notification)
+    {
+        GameManager.Instance.money += (int)notification.Body;
+        // 更新面板
+        SendNotification(NotificationName.UIEvent.GAMEPANEL_UPDATE_MONEY, GameManager.Instance.money);
     }
 }
 

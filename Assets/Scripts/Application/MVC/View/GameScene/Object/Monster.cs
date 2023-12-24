@@ -27,7 +27,10 @@ public class Monster : BaseRole, IPoolObject
             {
                 hp = 0;
                 isDead = true;
+                // 取消集火
                 GameFacade.Instance.SendNotification(NotificationName.Game.CANEL_COLLECTINGFIRES, this);
+                // 加钱
+                GameFacade.Instance.SendNotification(NotificationName.Game.UPDATE_MONEY, +data.baseMoney);
                 // 播放死亡动画
                 animator.SetBool("Dead", true);
             }

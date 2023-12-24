@@ -10,5 +10,6 @@ public class MonsterData: ScriptableObject
     public int hp;
     public int maxHp;
     public int atk;
+    public int baseMoney;
     public string prefabsPath;
 }
