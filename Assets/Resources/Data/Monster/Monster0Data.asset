@@ -17,4 +17,5 @@ MonoBehaviour:
   hp: 10
   maxHp: 10
   atk: 1
+  baseMoney: 14
   prefabsPath: Object/Monster/Monster0

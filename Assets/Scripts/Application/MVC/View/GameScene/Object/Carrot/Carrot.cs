@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using PureMVC.Interfaces;
 using PureMVC.Patterns.Mediator;
+using TMPro;
 using UnityEngine;
 
 public class Carrot : BaseRole, IPoolObject
@@ -14,6 +15,7 @@ public class Carrot : BaseRole, IPoolObject
     public SpriteRenderer spriteRenderer;
     public Animator animator;
     private Coroutine idleAnimaCoroutine; // 待机动画协程
+    public TextMeshPro textMeshPro;
 
     public int Hp
     {
@@ -35,6 +37,8 @@ public class Carrot : BaseRole, IPoolObject
             }
             // 更改萝卜图片
             spriteRenderer.sprite = sprites[hp];
+            // 更改血量数值
+            textMeshPro.text = hp.ToString();
         }
     }
     

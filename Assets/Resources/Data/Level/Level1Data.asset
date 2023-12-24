@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Level1Data
   m_EditorClassIdentifier: 
   levelID: 1
-  bigLevelID: 0
-  money: 9000
+  itemID: 0
+  money: 200
   mapDataPath: Level1MapData
   intervalTimePerWave: 5
   towersData:
