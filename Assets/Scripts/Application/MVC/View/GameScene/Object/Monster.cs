@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using DG.Tweening;
 using UnityEngine;
 
 public class Monster : BaseRole, IPoolObject
@@ -17,7 +18,6 @@ public class Monster : BaseRole, IPoolObject
     public Transform signFather; // 集火标志父对象
     public Transform hpImageBg; // 血条背景图片
     public Transform hpImageFg; // 血条前景图片
-    public Transform deadEffect;
 
     #region 属性
 
@@ -37,6 +37,11 @@ public class Monster : BaseRole, IPoolObject
                 GameFacade.Instance.SendNotification(NotificationName.Game.CANEL_COLLECTINGFIRES, this);
                 // 加钱
                 GameFacade.Instance.SendNotification(NotificationName.Game.UPDATE_MONEY, +data.baseMoney);
+                // 生成加钱UI
+                AddMoney addMoney = GameManager.Instance.PoolManager.GetObject("Object/AddMoney").GetComponent<AddMoney>();
+                addMoney.textMeshPro.text = "+" +data.baseMoney;
+                addMoney.transform.position = transform.position;
+                addMoney.transform.DOMoveY( addMoney.transform.position.y + 2f, 0.5f); // 上移动画
                 // 播放死亡动画
                 animator.SetBool("Dead", true);
             }
