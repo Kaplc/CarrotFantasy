@@ -299,7 +299,8 @@ public class Map : MonoBehaviour
         PointerEventData eventData = new PointerEventData(EventSystem.current) { position = Input.mousePosition };
         List<RaycastResult> results = new List<RaycastResult>();
         gr.Raycast(eventData, results);
-        if (results.Count > 0) return;
+        // 被显示范围的Ui遮挡除外
+        if (results.Count > 0 && results[0].gameObject.name != "ImageAttackRange") return;
 
         // 获取点击的格子
         Vector3 mouseWorldPos = Camera.main.ViewportToWorldPoint(Camera.main.ScreenToViewportPoint(Input.mousePosition));
