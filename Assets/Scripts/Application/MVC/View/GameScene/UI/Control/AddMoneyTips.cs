@@ -10,7 +10,7 @@ public class AddMoneyTips : MonoBehaviour, IPoolObject
 
     public void PushSelf()
     {
-        GameManager.Instance.PoolManager.PushObject(gameObject);
+        GameManager.Instance.FactoryManager.UIControlFactory.PushControl(gameObject);
     }
     
     public void OnGet()

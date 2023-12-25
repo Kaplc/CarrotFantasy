@@ -13,7 +13,7 @@ public abstract class BaseTower : MonoBehaviour, IPoolObject
     public Animator animator;
     public List<RuntimeAnimatorController> controllers;
     public Monster target; // 当前目标
-    public GameObject upGradeTips;
+    private GameObject upGradeTips;
 
     protected virtual void Update()
     {
@@ -49,7 +49,22 @@ public abstract class BaseTower : MonoBehaviour, IPoolObject
             CollectingFiresTarget();
         }
         
-        // 
+        // 显示升级提醒
+        if (level != 2 && GameManager.Instance.money > data.prices[level + 1])
+        {
+            if (upGradeTips)return;
+         
+           upGradeTips =  GameManager.Instance.FactoryManager.UIControlFactory.CreateControl("UpGradeTips");
+           upGradeTips.transform.position = transform.position + Vector3.up;
+        }
+        else
+        {
+            if (upGradeTips)
+            {
+                GameManager.Instance.FactoryManager.UIControlFactory.PushControl(upGradeTips);
+                upGradeTips = null;
+            }
+        }
     }
 
     /// <summary>
