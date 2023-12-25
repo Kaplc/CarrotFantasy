@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelID: 0
   itemID: 0
-  money: 200
+  money: 800
   mapDataPath: Level0MapData
   intervalTimePerWave: 5
   towersData:
@@ -22,9 +22,7 @@ MonoBehaviour:
   roundDataList:
   - group:
     - monsterData: {fileID: 11400000, guid: eea0463a05e335f42801b8c62937d482, type: 2}
-      count: 3
-    - monsterData: {fileID: 11400000, guid: bbcd0d4dc615e4e43891da72f72db3b4, type: 2}
-      count: 3
+      count: 6
     intervalTimeEach: 1
   - group:
     - monsterData: {fileID: 11400000, guid: eea0463a05e335f42801b8c62937d482, type: 2}

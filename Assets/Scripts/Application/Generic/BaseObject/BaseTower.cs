@@ -134,5 +134,11 @@ public abstract class BaseTower : MonoBehaviour, IPoolObject
         target = null;
         level = 0;
         animator.runtimeAnimatorController = controllers[0];
+        // 有升级标记同时回收
+        if (upGradeTips)
+        {
+            GameManager.Instance.FactoryManager.UIControlFactory.PushControl(upGradeTips.gameObject);
+            upGradeTips = null;
+        }
     }
 }
