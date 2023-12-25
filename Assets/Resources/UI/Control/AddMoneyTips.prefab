@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2028884415153208369}
   - component: {fileID: 5832799267608217613}
   m_Layer: 0
-  m_Name: AddMoney
+  m_Name: AddMoneyTips
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -25,7 +25,6 @@ public class CreatePanel : MonoBehaviour
         // 创建按钮
         foreach (KeyValuePair<TowerData, Sprite> item in towersDataDic)
         {
-            // Button button =Instantiate(Resources.Load<GameObject>("UI/Button/ButtonCreateTower"), iconsRect).GetComponent<Button>();
             Button button =GameManager.Instance.FactoryManager.UIControlFactory.CreateControl("ButtonCreateTower").GetComponent<Button>();
             // 设置信息
             button.GetComponent<Image>().sprite = item.Value;

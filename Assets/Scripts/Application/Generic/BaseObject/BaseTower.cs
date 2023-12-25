@@ -13,6 +13,7 @@ public abstract class BaseTower : MonoBehaviour, IPoolObject
     public Animator animator;
     public List<RuntimeAnimatorController> controllers;
     public Monster target; // 当前目标
+    public GameObject upGradeTips;
 
     protected virtual void Update()
     {
@@ -47,6 +48,8 @@ public abstract class BaseTower : MonoBehaviour, IPoolObject
         {
             CollectingFiresTarget();
         }
+        
+        // 
     }
 
     /// <summary>

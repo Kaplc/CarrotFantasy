@@ -77,7 +77,9 @@ public class SelectLevelPanel : BasePanel
 
         for (int i = 0; i < data.levels.Count; i++)
         {
-            Button button = Instantiate(Resources.Load<GameObject>("UI/Button/ButtonLevel"), content).GetComponent<Button>();
+            // Button button = Instantiate(Resources.Load<GameObject>("UI/Button/ButtonLevel"), content).GetComponent<Button>();
+            Button button = GameManager.Instance.FactoryManager.UIControlFactory.CreateControl("ButtonLevel").GetComponent<Button>();
+            button.transform.SetParent(content, false);
             btnsLevel.Add(button);
             // 获取脚本
             ButtonLevel buttonLevel = button.GetComponent<ButtonLevel>();
@@ -144,7 +146,9 @@ public class SelectLevelPanel : BasePanel
 
         for (int i = 0; i < icons.Length; i++)
         {
-            Image icon = Instantiate(Resources.Load<GameObject>("UI/Image/ImageTowerIcon"), transformCreateTowerIcon).GetComponent<Image>();
+            // Image icon = Instantiate(Resources.Load<GameObject>("UI/Image/ImageTowerIcon"), transformCreateTowerIcon).GetComponent<Image>();
+            Image icon = GameManager.Instance.FactoryManager.UIControlFactory.CreateControl("ImageTowerIcon").GetComponent<Image>();
+            icon.transform.SetParent(transformCreateTowerIcon, false);
             icon.sprite = icons[i];
             towerIcons.Add(icon);
         }

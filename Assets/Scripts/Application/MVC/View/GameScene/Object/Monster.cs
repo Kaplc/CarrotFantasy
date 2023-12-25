@@ -38,10 +38,10 @@ public class Monster : BaseRole, IPoolObject
                 // 加钱
                 GameFacade.Instance.SendNotification(NotificationName.Game.UPDATE_MONEY, +data.baseMoney);
                 // 生成加钱UI
-                AddMoney addMoney = GameManager.Instance.PoolManager.GetObject("Object/AddMoney").GetComponent<AddMoney>();
-                addMoney.textMeshPro.text = "+" +data.baseMoney;
-                addMoney.transform.position = transform.position;
-                addMoney.transform.DOMoveY( addMoney.transform.position.y + 2f, 0.5f); // 上移动画
+                AddMoneyTips addMoneyTips = GameManager.Instance.FactoryManager.UIControlFactory.CreateControl("AddMoneyTips").GetComponent<AddMoneyTips>();
+                addMoneyTips.textMeshPro.text = "+" +data.baseMoney;
+                addMoneyTips.transform.position = transform.position;
+                addMoneyTips.transform.DOMoveY( addMoneyTips.transform.position.y + 2f, 0.5f); // 上移动画
                 // 播放死亡动画
                 animator.SetBool("Dead", true);
             }
