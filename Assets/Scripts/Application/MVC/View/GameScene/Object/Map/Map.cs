@@ -355,6 +355,11 @@ public class Map : MonoBehaviour
                 ShowCreatePanel(GetCellCenterPos(cell), showDir);
             }
         }
+        else
+        {
+            // 显示禁止建造图标
+            GameFacade.Instance.SendNotification(NotificationName.UI.SHOW_CANTBUILTICON, Map.GetCellCenterPos(cell));
+        }
     }
     
     /// <summary>

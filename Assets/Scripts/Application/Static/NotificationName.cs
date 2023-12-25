@@ -62,11 +62,13 @@ public static class NotificationName
     
         public const string SHOW_CREATEPANEL = "ShowCreatePanel"; // 建造面板
         public const string SHOW_UPGRADEPANEL = "ShowUpGradePanel"; // 升级面板
+        public const string SHOW_CANTBUILTICON = "ShowCantBuiltIcon"; // 显示禁止建造图标
         public const string HIDE_BUILTPANEL = "HideBuiltPanel"; // 隐藏所有建造面板
     
         public const string HIDE_LOADINGPANEL = "HideLoadingPanel"; // 隐藏加载面板
 
         public const string SHOW_ENDPANEL = "ShowEndPanel"; // 显示通关面板
+        
     }
 
     public static class UIEvent

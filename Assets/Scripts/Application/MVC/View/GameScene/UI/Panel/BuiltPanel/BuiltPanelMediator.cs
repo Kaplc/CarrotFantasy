@@ -1,5 +1,6 @@
 using PureMVC.Interfaces;
 using PureMVC.Patterns.Mediator;
+using UnityEngine;
 
 public class BuiltPanelMediator : Mediator
 {
@@ -18,6 +19,7 @@ public class BuiltPanelMediator : Mediator
             NotificationName.UI.SHOW_CREATEPANEL,
             NotificationName.UI.SHOW_UPGRADEPANEL,
             NotificationName.UI.HIDE_BUILTPANEL,
+            NotificationName.UI.SHOW_CANTBUILTICON
         };
     }
 
@@ -57,6 +59,10 @@ public class BuiltPanelMediator : Mediator
                 UIManager.Instance.Hide<BuiltPanel>(false);
                 ViewComponent = null;
                 SendNotification(NotificationName.Game.OPENED_BUILTPANEL, false);
+                break;
+            case NotificationName.UI.SHOW_CANTBUILTICON:
+                ViewComponent = UIManager.Instance.Show<BuiltPanel>();
+                Panel.ShowCantBuiltIcon((Vector3)notification.Body);
                 break;
         }
     }

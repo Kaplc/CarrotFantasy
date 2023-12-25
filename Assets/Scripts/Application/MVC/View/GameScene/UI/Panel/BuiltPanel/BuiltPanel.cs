@@ -12,6 +12,8 @@ public class BuiltPanel : BasePanel
     private bool showUpGradePanel;
     public CreatePanel createPanel; // 创建面板
     public UpGradePanel upGradePanel; // 升级面板
+    public RectTransform cantBuiltIconRectTransform; // 禁止建造图标
+    private float lastShowCantBuiltIconTime; // 上次显示禁止建造图标时间
 
     public bool IsShowCreatePanel
     {
@@ -22,7 +24,9 @@ public class BuiltPanel : BasePanel
             if (value)
             {
                 // 创建面板出现升级面板就隐藏
+                createPanel.gameObject.SetActive(true);
                 upGradePanel.gameObject.SetActive(false);
+                cantBuiltIconRectTransform.gameObject.SetActive(false);
             }
         }
     }
@@ -35,13 +39,24 @@ public class BuiltPanel : BasePanel
             showUpGradePanel = value;
             if (value)
             {
+                upGradePanel.gameObject.SetActive(true);
                 createPanel.gameObject.SetActive(false);
+                cantBuiltIconRectTransform.gameObject.SetActive(false);
             }
         }
     }
 
     protected override void Init()
     {
+    }
+
+    public override void Update()
+    {
+        base.Update();
+        if (Time.realtimeSinceStartup - lastShowCantBuiltIconTime > 1)
+        {
+            cantBuiltIconRectTransform.gameObject.SetActive(false);
+        }
     }
 
     /// <summary>
@@ -83,5 +98,15 @@ public class BuiltPanel : BasePanel
         upGradePanel.cellWorldPos = cellWorldPos;
         Vector2 uiPos = WorldPosToUIPos(cellWorldPos);
         upGradePanel.Show(uiPos, icon, upGradeMoney, sellMoney, attackRange, showDir);
+    }
+
+    public void ShowCantBuiltIcon(Vector3 pos)
+    {
+        cantBuiltIconRectTransform.gameObject.SetActive(true);
+        createPanel.gameObject.SetActive(false);
+        upGradePanel.gameObject.SetActive(false);
+        
+        cantBuiltIconRectTransform.anchoredPosition = WorldPosToUIPos(pos);
+        lastShowCantBuiltIconTime = Time.realtimeSinceStartup;
     }
 }
