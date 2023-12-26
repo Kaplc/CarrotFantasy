@@ -279,18 +279,73 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
         type: 3}
+      propertyPath: drawItem
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
       propertyPath: drawGizmos
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: drawTowerPos
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: obstacleList.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: obstacleList.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: obstacleList.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: obstacleList.Array.data[2]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: obstacleList.Array.data[3]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: obstacleList.Array.data[4]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: obstacleList.Array.data[5]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: obstacleList.Array.data[6]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: obstacleList.Array.data[7]
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
         type: 3}
       propertyPath: nowEditorMapData.roadSpritePath
-      value: 
+      value: Map/Item0/Road1
       objectReference: {fileID: 0}
     - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
         type: 3}
       propertyPath: nowEditorMapData.mapBgSpritePath
-      value: 
+      value: Map/Item0/BG0
       objectReference: {fileID: 0}
     - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
         type: 3}
@@ -301,6 +356,226 @@ PrefabInstance:
         type: 3}
       propertyPath: nowEditorMapData.towerList.Array.size
       value: 62
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: nowEditorMapData.obstacleList.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: nowEditorMapData.towerList.Array.data[4].hasObstacle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: nowEditorMapData.towerList.Array.data[6].hasObstacle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: nowEditorMapData.towerList.Array.data[13].hasObstacle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: nowEditorMapData.towerList.Array.data[21].hasObstacle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: nowEditorMapData.towerList.Array.data[25].hasObstacle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: nowEditorMapData.towerList.Array.data[28].hasObstacle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: nowEditorMapData.towerList.Array.data[33].hasObstacle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: nowEditorMapData.towerList.Array.data[36].hasObstacle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: nowEditorMapData.towerList.Array.data[42].hasObstacle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: nowEditorMapData.towerList.Array.data[44].hasObstacle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: nowEditorMapData.towerList.Array.data[46].hasObstacle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: nowEditorMapData.towerList.Array.data[21].obstacleName
+      value: Obstacle6
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: nowEditorMapData.towerList.Array.data[25].obstacleName
+      value: Obstacle2
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: nowEditorMapData.towerList.Array.data[28].obstacleName
+      value: Obstacle2
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: nowEditorMapData.towerList.Array.data[33].obstacleName
+      value: Obstacle1
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: nowEditorMapData.towerList.Array.data[36].obstacleName
+      value: Obstacle1
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: nowEditorMapData.towerList.Array.data[42].obstacleName
+      value: Obstacle3
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: nowEditorMapData.towerList.Array.data[44].obstacleName
+      value: Obstacle7
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: nowEditorMapData.towerList.Array.data[46].obstacleName
+      value: Obstacle3
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: nowEditorMapData.obstacleList.Array.data[0].hasObstacle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: nowEditorMapData.obstacleList.Array.data[1].hasObstacle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: nowEditorMapData.obstacleList.Array.data[2].hasObstacle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: nowEditorMapData.obstacleList.Array.data[3].hasObstacle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: nowEditorMapData.obstacleList.Array.data[4].hasObstacle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: nowEditorMapData.obstacleList.Array.data[5].hasObstacle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: nowEditorMapData.obstacleList.Array.data[6].hasObstacle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: nowEditorMapData.obstacleList.Array.data[7].hasObstacle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: nowEditorMapData.obstacleList.Array.data[0].obstacleName
+      value: Obstacle6
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: nowEditorMapData.obstacleList.Array.data[0].obstacleType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: nowEditorMapData.obstacleList.Array.data[1].obstacleName
+      value: Obstacle2
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: nowEditorMapData.obstacleList.Array.data[1].obstacleType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: nowEditorMapData.obstacleList.Array.data[2].obstacleName
+      value: Obstacle2
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: nowEditorMapData.obstacleList.Array.data[2].obstacleType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: nowEditorMapData.obstacleList.Array.data[3].obstacleName
+      value: Obstacle1
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: nowEditorMapData.obstacleList.Array.data[3].obstacleType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: nowEditorMapData.obstacleList.Array.data[4].obstacleName
+      value: Obstacle1
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: nowEditorMapData.obstacleList.Array.data[4].obstacleType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: nowEditorMapData.obstacleList.Array.data[5].obstacleName
+      value: Obstacle3
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: nowEditorMapData.obstacleList.Array.data[5].obstacleType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: nowEditorMapData.obstacleList.Array.data[6].obstacleName
+      value: Obstacle7
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: nowEditorMapData.obstacleList.Array.data[6].obstacleType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: nowEditorMapData.obstacleList.Array.data[7].obstacleName
+      value: Obstacle3
+      objectReference: {fileID: 0}
+    - target: {fileID: 263683609617213938, guid: 84cb90b3880a3ff4ea7a80c84606488c,
+        type: 3}
+      propertyPath: nowEditorMapData.obstacleList.Array.data[7].obstacleType
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1273241216140422240, guid: 84cb90b3880a3ff4ea7a80c84606488c,
         type: 3}

@@ -14,14 +14,18 @@ public class MapEditor : Editor
     public int nowMapIndex = 0; // 默认选中第一个文件
     private string[] fileNames; // 加载到的地图信息文件名集合
     private string fileReName = "必须填写新地图文件的文件名.md";
-    private string default_MapBgSpritePath = "Map/BigLevel0/BG0";
-    private string default_RoadSpritePath = "Map/BigLevel0/Road1";
+    private string[] obstacleNames;
+    private string defaultMapBgSpritePath = "Map/BigLevel0/BG0";
+    private string defaultRoadSpritePath = "Map/BigLevel0/Road1";
 
     private void Awake()
     {
         map = target as Map; // 关联mono脚本
+        
         // 加载文件名
-        LoadAllLevelFileName();
+        LoadAllLevelFileNames();
+        // 加载障碍物名称
+        LoadAllObstacleNames();
         // 默认加载第一个文件数据
         LoadMapData();
     }
@@ -29,7 +33,20 @@ public class MapEditor : Editor
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
+        
+        //===================================
+        EditorGUILayout.Space();
+        EditorGUILayout.BeginHorizontal();
+        if (GUILayout.Button("启动地图编辑器"))
+        {
+            map.drawGizmos = true;
+        }
 
+        EditorGUILayout.EndHorizontal();
+        // 
+        
+        if(!map.drawGizmos)return;
+        
         EditorGUILayout.Space();
 
         #region 选择地图文件
@@ -71,7 +88,7 @@ public class MapEditor : Editor
             File.Copy(BinaryManager.BINARYFILE_PATH + DataPath.MAPDATA_PATH + fileNames[nowMapIndex],
                 BinaryManager.BINARYFILE_PATH + DataPath.MAPDATA_PATH + fileReName);
 
-            LoadAllLevelFileName();
+            LoadAllLevelFileNames();
             Repaint();
             AssetDatabase.Refresh();
         }
@@ -87,6 +104,7 @@ public class MapEditor : Editor
         }
 
         EditorGUILayout.EndHorizontal();
+        
         //===================================
         EditorGUILayout.Space();
         EditorGUILayout.BeginHorizontal();
@@ -94,6 +112,7 @@ public class MapEditor : Editor
         {
             map.drawTowerPos = true;
             map.drawPath = false;
+            map.drawObstacle = false;
         }
 
         if (GUILayout.Button("清除"))
@@ -108,11 +127,40 @@ public class MapEditor : Editor
         {
             map.drawTowerPos = false;
             map.drawPath = true;
+            map.drawObstacle = false;
         }
 
         if (GUILayout.Button("清除"))
         {
             ClearAllPath();
+        }
+
+        EditorGUILayout.EndHorizontal();
+        //===================================
+        EditorGUILayout.BeginHorizontal();
+        if (GUILayout.Button("绘制障碍物"))
+        {
+            map.drawTowerPos = false;
+            map.drawPath = false;
+            map.drawObstacle = true;
+        }
+
+        map.obstacleIndex = EditorGUILayout.Popup(map.obstacleIndex, obstacleNames);
+
+        if (GUILayout.Button("清除"))
+        {
+            for (int i = 0; i < Map.cellsList.Count; i++)
+            {
+                if (Map.cellsList[i].hasObstacle)
+                {
+                    // 删除格子上有关障碍物的数据
+                    Cell cell = Map.cellsList[i];
+                    Destroy(cell.obstacle as GameObject);
+                    cell.hasObstacle = false;
+                    cell.obstacleName = null;
+                    map.obstacleList.Clear();
+                }
+            }
         }
 
         EditorGUILayout.EndHorizontal();
@@ -136,7 +184,7 @@ public class MapEditor : Editor
     /// 加载所有MapData文件
     /// </summary>
     /// <returns></returns>
-    private void LoadAllLevelFileName()
+    private void LoadAllLevelFileNames()
     {
         DirectoryInfo directoryInfo = Directory.CreateDirectory(BinaryManager.BINARYFILE_PATH + DataPath.MAPDATA_PATH);
         FileInfo[] fileInfos = directoryInfo.GetFiles();
@@ -154,11 +202,24 @@ public class MapEditor : Editor
         fileNames = fileName.ToArray();
     }
 
+    private void LoadAllObstacleNames()
+    {
+        List<string> obstacleNamesList = new List<string>();
+        for (int i = 1; i <= 10; i++)
+        {
+            obstacleNamesList.Add(i.ToString());
+        }
+
+        obstacleNames = obstacleNamesList.ToArray();
+    }
+
     /// <summary>
     /// 读取数据文件加载绘制好的路径和放塔点
     /// </summary>
     private void LoadMapData()
     {
+        if (!map.drawGizmos) return;
+
         // 读取二进制文件
         map.nowEditorMapData = BinaryManager.Instance.Load<MapData>(DataPath.MAPDATA_PATH + fileNames[nowMapIndex]);
 
@@ -178,15 +239,32 @@ public class MapEditor : Editor
         {
             Map.pathList.Add(map.nowEditorMapData.pathList[i]);
         }
+
+        // 加载障碍物
+        for (int i = 0; i < map.nowEditorMapData.obstacleList.Count; i++)
+        {
+            // 地图数据的格子
+            Cell dataCell = map.nowEditorMapData.obstacleList[i];
+            if (dataCell.hasObstacle)
+            {
+                // 空数据的格子
+                Cell cell = Map.GetCell(dataCell.X, dataCell.Y);
+                // 
+                cell.hasObstacle = dataCell.hasObstacle;
+                cell.obstacleName = dataCell.obstacleName;
+            }
+        }
+        // 绘制杂物
+        map.EditorCreateObstacle();
         
         // 加载地图背景图片
         Sprite mapBgSprite = Resources.Load<Sprite>(map.nowEditorMapData.mapBgSpritePath);
         if (!mapBgSprite)
         {
             // 无地图背景图片使用默认
-            mapBgSprite = Resources.Load<Sprite>(default_MapBgSpritePath);
+            mapBgSprite = Resources.Load<Sprite>(defaultMapBgSpritePath);
         }
-        
+
         map.mapBgSpriteRenderer.sprite = mapBgSprite;
 
         // 加载路径图片
@@ -194,9 +272,9 @@ public class MapEditor : Editor
         if (!roadSprite)
         {
             // 无地图背景图片使用默认
-            roadSprite = Resources.Load<Sprite>(default_RoadSpritePath);
+            roadSprite = Resources.Load<Sprite>(defaultRoadSpritePath);
         }
-        
+
         map.roadSpriteRenderer.sprite = roadSprite;
     }
 
@@ -208,7 +286,7 @@ public class MapEditor : Editor
         // 创建新文件
         map.nowEditorMapData = new MapData();
         SaveData(fileName);
-        LoadAllLevelFileName();
+        LoadAllLevelFileNames();
         AssetDatabase.Refresh();
     }
 
@@ -219,6 +297,7 @@ public class MapEditor : Editor
         // 清空旧数据
         map.nowEditorMapData.pathList.Clear();
         map.nowEditorMapData.towerList.Clear();
+        map.nowEditorMapData.obstacleList.Clear();
 
         // 写入新数据
         for (int i = 0; i < Map.pathList.Count; i++)
@@ -233,23 +312,32 @@ public class MapEditor : Editor
                 map.nowEditorMapData.towerList.Add(Map.cellsList[i]);
             }
         }
-        
+
+        for (int i = 0; i < Map.cellsList.Count; i++)
+        {
+            if (Map.cellsList[i].hasObstacle)
+            {
+                Map.cellsList[i].obstacle = null; // GameObject対象不能保存
+                map.nowEditorMapData.obstacleList.Add(Map.cellsList[i]);
+            }
+        }
+
         // 没有设置地图图片自动保存默认路径
         if (map.nowEditorMapData.mapBgSpritePath == "")
         {
-            map.nowEditorMapData.mapBgSpritePath = default_MapBgSpritePath;
+            map.nowEditorMapData.mapBgSpritePath = defaultMapBgSpritePath;
         }
 
         if (map.nowEditorMapData.roadSpritePath == "")
         {
-            map.nowEditorMapData.roadSpritePath = default_RoadSpritePath;
+            map.nowEditorMapData.roadSpritePath = defaultRoadSpritePath;
         }
 
         BinaryManager.Instance.Save(DataPath.MAPDATA_PATH + fileName, map.nowEditorMapData);
-        
+
         // 保存后重新读取
         LoadMapData();
-        
+
         Repaint();
         AssetDatabase.Refresh();
     }
@@ -281,9 +369,16 @@ public class MapEditor : Editor
     /// 清空修改缓存
     /// </summary>
     public void Clear()
-    {   
+    {
         Map.cellsList.Clear();
         Map.pathList.Clear();
+        // 销毁地图上所有障碍物
+        for (int i = 0; i < map.obstacleList.Count; i++)
+        {
+            Destroy(map.obstacleList[i]);
+        }
+
+        map.obstacleList.Clear();
     }
 
     #endregion

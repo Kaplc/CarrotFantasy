@@ -7,25 +7,6 @@ using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-/// <summary>
-/// 地图格子索引
-/// </summary>
-[Serializable]
-public struct Point
-{
-    private int x;
-    private int y;
-
-    public int X => x;
-    public int Y => y;
-
-    public Point(int x, int y)
-    {
-        this.x = x;
-        this.y = y;
-    }
-}
-
 
 public class Map : MonoBehaviour
 {
@@ -47,15 +28,16 @@ public class Map : MonoBehaviour
 
     public MapData nowEditorMapData; // 当前编辑地图数据
 
-    public bool drawGizmos; // 开启绘制
+    [HideInInspector] public bool drawGizmos; // 开启绘制
     [HideInInspector] public bool drawTowerPos;
     [HideInInspector] public bool drawPath;
+    [HideInInspector] public bool drawObstacle;
+    [HideInInspector] public List<GameObject> obstacleList = new List<GameObject>();
+    [HideInInspector] public int obstacleIndex; // 默认选择第一种障碍物
 
     #endregion
 
     #region 游戏相关字段
-
-    public bool showBuiltPanel; // 打开建造面板已打开
 
     [HideInInspector] public MapData nowMapData; // 当前游戏的关卡地图信息
     private Cell lastClickCell; // 上一次点击的格子
@@ -86,31 +68,50 @@ public class Map : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            Cell cell = GetMousePositionCell();
             if (drawTowerPos)
             {
-                Cell cell = GetMousePositionCell();
                 cell.IsTowerPos = true;
             }
 
             if (drawPath)
             {
-                Cell cell = GetMousePositionCell();
                 pathList.Add(cell);
+            }
+
+            if (drawObstacle)
+            {
+                // 创建实例
+                GameObject obstacle = Instantiate(Resources.Load<GameObject>("Object/Obstacle/Obstacle" + (obstacleIndex + 1)));
+                obstacle.transform.position = GetCellCenterPos(cell);
+                // 记录
+                cell.hasObstacle = true;
+                cell.obstacleName = "Obstacle" + (obstacleIndex + 1);
+                cell.obstacle = obstacle;
+                obstacleList.Add(obstacle);
             }
         }
 
         if (Input.GetMouseButtonDown(1))
         {
+            Cell cell = GetMousePositionCell();
+
             if (drawTowerPos)
             {
-                Cell cell = GetMousePositionCell();
                 cell.IsTowerPos = false;
             }
 
             if (drawPath)
             {
-                Cell cell = GetMousePositionCell();
                 pathList.Remove(cell);
+            }
+
+            if (drawObstacle)
+            {
+                Destroy(cell.obstacle as GameObject);
+                cell.obstacle = null;
+                cell.hasObstacle = false;
+                cell.obstacleName = null;
             }
         }
     }
@@ -163,6 +164,24 @@ public class Map : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 编辑器模式根据保存的地图数据生成障碍物
+    /// </summary>
+    public void EditorCreateObstacle()
+    {
+        for (int i = 0; i < cellsList.Count; i++)
+        {
+            if (cellsList[i].hasObstacle)
+            {
+                // 创建实例
+                GameObject obstacle = Instantiate(Resources.Load<GameObject>($"Object/Obstacle/{cellsList[i].obstacleName}"));
+                obstacle.transform.position = GetCellCenterPos(cellsList[i]);
+                cellsList[i].obstacle = obstacle;
+                obstacleList.Add(obstacle);
+            }
+        }
+    }
+
     #endregion
 
     #region 计算
@@ -194,7 +213,7 @@ public class Map : MonoBehaviour
     {
         // 清空上一次的数据
         cellsList.Clear();
-        
+
         for (int y = 0; y < RowNum; y++)
         {
             for (int x = 0; x < ColumnNum; x++)
@@ -265,11 +284,31 @@ public class Map : MonoBehaviour
         GenerateCell();
         // 覆盖格子信息
         ReFlashCellData();
+        // 生成障碍物
+        CreateObstacle();
 
         // 设置地图背景
         mapBgSpriteRenderer.sprite = GameManager.Instance.FactoryManager.SpriteFactory.GetSprite(nowMapData.mapBgSpritePath);
         // 设置路径背景
         roadSpriteRenderer.sprite = GameManager.Instance.FactoryManager.SpriteFactory.GetSprite(nowMapData.roadSpritePath);
+    }
+
+    /// <summary>
+    /// 根据保存的地图数据生成障碍物
+    /// </summary>
+    public void CreateObstacle()
+    {
+        for (int i = 0; i < nowMapData.obstacleList.Count; i++)
+        {
+            Cell cell = nowMapData.obstacleList[i];
+
+            // 创建实例
+            // GameObject obstacle = Instantiate(Resources.Load<GameObject>($"Object/Obstacle/{cell.obstacleName}"));
+            GameObject obstacle = GameManager.Instance.PoolManager.GetObject($"Object/Obstacle/{cell.obstacleName}");
+            obstacle.transform.position = GetCellCenterPos(cell);
+            cell.obstacle = obstacle;
+            obstacleList.Add(obstacle);
+        }
     }
 
     /// <summary>
@@ -289,11 +328,8 @@ public class Map : MonoBehaviour
     /// </summary>
     public void OnMouseDown()
     {
-        if (GameManager.Instance.Stop)
-        {
-            return;
-        }
-        
+        if (drawGizmos || GameManager.Instance.Stop) return;
+
         // 射线检测判断是否被UI遮挡
         GraphicRaycaster gr = UIManager.Instance.canvas.GetComponent<GraphicRaycaster>();
         PointerEventData eventData = new PointerEventData(EventSystem.current) { position = Input.mousePosition };
@@ -335,7 +371,7 @@ public class Map : MonoBehaviour
             {
                 showDir = EBuiltPanelShowDir.Up;
             }
-            
+
             // 面板已经打开则该次点击为关闭面板
             if (GameManager.Instance.openedBuiltPanel)
             {
@@ -361,7 +397,7 @@ public class Map : MonoBehaviour
             GameFacade.Instance.SendNotification(NotificationName.UI.SHOW_CANTBUILTICON, Map.GetCellCenterPos(cell));
         }
     }
-    
+
     /// <summary>
     /// 显示升级塔面板
     /// </summary>
@@ -370,7 +406,7 @@ public class Map : MonoBehaviour
         TowerData towerData = tower.data;
 
         UpGradeTowerArgsBody body = new UpGradeTowerArgsBody();
-        
+
         // 根据当前塔等级选择升级Icon和卖出Icon
         if (tower.level == 2)
         {

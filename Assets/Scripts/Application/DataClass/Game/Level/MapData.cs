@@ -10,4 +10,5 @@ public class MapData
     public string roadSpritePath; // 路径Sprite路径
     [HideInInspector] public List<Cell> pathList = new List<Cell>();
     [HideInInspector] public List<Cell> towerList = new List<Cell>();
+    [HideInInspector] public List<Cell> obstacleList = new List<Cell>();
 }
