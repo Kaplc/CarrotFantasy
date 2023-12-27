@@ -9,6 +9,7 @@ public abstract class BaseTower : MonoBehaviour, IPoolObject
     public TowerData data;
     public int Atk => data.atkList[level];
     public int level;
+    public float growthCoefficient; // 成长系数
 
     public Animator animator;
     public List<RuntimeAnimatorController> controllers;
@@ -36,7 +37,7 @@ public abstract class BaseTower : MonoBehaviour, IPoolObject
             animator.SetBool("Attack", true);
 
             // 大于攻击距离解除锁定或打死怪物
-            if (Vector3.Distance(transform.position, target.transform.position) > data.attackRange || target.isDead)
+            if (Vector3.Distance(transform.position, target.transform.position) > data.attackRangesList[level] || target.isDead)
             {
                 animator.SetBool("Attack", false);
                 target = null;
@@ -77,7 +78,7 @@ public abstract class BaseTower : MonoBehaviour, IPoolObject
         float distance = Vector3.Distance(transform.position, monster.transform.position);
 
         // 处于攻击范围
-        if (distance < data.attackRange && !monster.isDead)
+        if (distance < data.attackRangesList[level] && !monster.isDead)
         {
             target = monster;
         }
@@ -96,7 +97,7 @@ public abstract class BaseTower : MonoBehaviour, IPoolObject
             float distance = Vector3.Distance(transform.position, monster.transform.position);
 
             // 处于攻击范围
-            if (distance < data.attackRange && !monster.isDead)
+            if (distance < data.attackRangesList[level] && !monster.isDead)
             {
                 if (closestDistance == 0f) closestDistance = distance;
 

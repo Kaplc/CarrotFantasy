@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class Monster : BaseRole, IPoolObject
 {
@@ -94,6 +97,14 @@ public class Monster : BaseRole, IPoolObject
     /// </summary>
     private void OnMouseDown()
     {
+        // 射线检测判断是否被UI遮挡
+        GraphicRaycaster gr = UIManager.Instance.canvas.GetComponent<GraphicRaycaster>();
+        PointerEventData eventData = new PointerEventData(EventSystem.current) { position = Input.mousePosition };
+        List<RaycastResult> results = new List<RaycastResult>();
+        gr.Raycast(eventData, results);
+        // 被显示范围的Ui遮挡除外
+        if (results.Count > 0 && results[0].gameObject.name != "ImageAttackRange") return;
+        
         // 将自己的位置信息传出
         GameFacade.Instance.SendNotification(NotificationName.Game.SET_COLLECTINGFIRES, this);
     }

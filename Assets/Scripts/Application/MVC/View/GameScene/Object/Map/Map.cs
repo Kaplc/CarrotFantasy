@@ -429,7 +429,7 @@ public class Map : MonoBehaviour
 
         body.createPos = createPos;
         body.sellMoney = towerData.sellPrices[tower.level];
-        body.attackRange = towerData.attackRange;
+        body.attackRange = towerData.attackRangesList[tower.level];
         body.showDir = showDir;
 
         // 显示升级面板
