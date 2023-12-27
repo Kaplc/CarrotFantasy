@@ -42,7 +42,7 @@ public class Spawner : MonoBehaviour
         collectingFiresTarget = monster;
         signTrans.gameObject.SetActive(true);
         signTrans.SetParent(monster.signFather.transform);
-        signTrans.localPosition = new Vector3(0, 0.7f, 0);
+        signTrans.localPosition = Vector3.zero;
         signTrans.localScale = Vector3.one;
     }
 

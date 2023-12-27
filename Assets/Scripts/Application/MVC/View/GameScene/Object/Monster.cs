@@ -1,19 +1,20 @@
-﻿using DG.Tweening;
+﻿using System;
+using DG.Tweening;
 using UnityEngine;
 
 public class Monster : BaseRole, IPoolObject
 {
     public MonsterData data;
 
-    private int hp;
-    public int pathIndex;
-    private float lastWoundTime; // 上次扣血时间
+    protected int hp;
+    private int pathIndex;
+    protected float lastWoundTime; // 上次扣血时间
 
-    public Cell nextCell;
-    private Animator animator;
-    public Transform signFather; // 集火标志父对象
+    private Cell nextCell;
+    public Animator animator;
     public Transform hpImageBg; // 血条背景图片
     public Transform hpImageFg; // 血条前景图片
+    public Transform signFather; // 集火标记父对象
 
     #region 属性
 
@@ -34,10 +35,11 @@ public class Monster : BaseRole, IPoolObject
                 // 加钱
                 GameFacade.Instance.SendNotification(NotificationName.Game.UPDATE_MONEY, +data.baseMoney);
                 // 生成加钱UI
-                AddMoneyTips addMoneyTips = GameManager.Instance.FactoryManager.UIControlFactory.CreateControl("AddMoneyTips").GetComponent<AddMoneyTips>();
-                addMoneyTips.textMeshPro.text = "+" +data.baseMoney;
+                AddMoneyTips addMoneyTips = GameManager.Instance.FactoryManager.UIControlFactory.CreateControl("AddMoneyTips")
+                    .GetComponent<AddMoneyTips>();
+                addMoneyTips.textMeshPro.text = "+" + data.baseMoney;
                 addMoneyTips.transform.position = transform.position;
-                addMoneyTips.transform.DOMoveY( addMoneyTips.transform.position.y + 2f, 0.5f); // 上移动画
+                addMoneyTips.transform.DOMoveY(addMoneyTips.transform.position.y + 2f, 0.5f); // 上移动画
                 // 播放死亡动画
                 animator.SetBool("Dead", true);
             }
@@ -57,7 +59,7 @@ public class Monster : BaseRole, IPoolObject
         animator = GetComponent<Animator>();
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         Move();
 
@@ -79,7 +81,7 @@ public class Monster : BaseRole, IPoolObject
             pathIndex = Mathf.Clamp(pathIndex, 0, GameManager.Instance.nowLevelData.mapData.pathList.Count - 1);
             nextCell = GameManager.Instance.nowLevelData.mapData.pathList[pathIndex];
         }
-        
+
         // 超过2秒没受到伤害或怪物死亡隐藏血条
         if (Time.realtimeSinceStartup - lastWoundTime > 2 || isDead)
         {
