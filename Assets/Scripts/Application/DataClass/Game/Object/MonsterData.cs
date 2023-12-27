@@ -7,8 +7,8 @@ public class MonsterData: ScriptableObject
 {
     public int id;
     public float speed;
-    public int maxHp;
-    public int atk;
+    public float maxHp;
+    public float atk;
     public int baseMoney;
     public string prefabsPath;
 }

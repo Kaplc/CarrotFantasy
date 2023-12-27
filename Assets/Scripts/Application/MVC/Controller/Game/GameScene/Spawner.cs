@@ -183,10 +183,12 @@ public class Spawner : MonoBehaviour
 
                     // 缓存池取出
                     Monster monster = GameManager.Instance.PoolManager.GetObject(groupData.monsterData.prefabsPath).GetComponent<Monster>();
+                    // 赋值成长系数
+                    monster.Growth = roundData.growth;
                     // 保存出生的怪物
                     monsters.Add(monster);
                     // 记录时间
-                    lastSpawnTime = Time.realtimeSinceStartup;
+                    lastSpawnTime = Time.time;
                     // 最后一组怪最后一只跳过等待
                     if (!(j == roundData.group.Count - 1 && k == groupData.count - 1))
                     {

@@ -9,7 +9,6 @@ public abstract class BaseTower : MonoBehaviour, IPoolObject
     public TowerData data;
     public int Atk => data.atkList[level];
     public int level;
-    public float growthCoefficient; // 成长系数
 
     public Animator animator;
     public List<RuntimeAnimatorController> controllers;

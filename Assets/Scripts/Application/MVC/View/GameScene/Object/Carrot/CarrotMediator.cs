@@ -1,3 +1,4 @@
+using System;
 using PureMVC.Interfaces;
 using PureMVC.Patterns.Mediator;
 
@@ -23,7 +24,6 @@ public class CarrotMediator : Mediator
     public override void HandleNotification(INotification notification)
     {
         base.HandleNotification(notification);
-        
-        carrot.Wound((int)notification.Body);
+        carrot.Wound((int)(float)notification.Body);
     }
 }

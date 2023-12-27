@@ -9,9 +9,10 @@ public class Monster : BaseRole, IPoolObject
 {
     public MonsterData data;
 
-    protected int hp;
+    public float hp;
     private int pathIndex;
     protected float lastWoundTime; // 上次扣血时间
+    private float growth = 1.0f; // 成长系数
 
     private Cell nextCell;
     public Animator animator;
@@ -23,7 +24,7 @@ public class Monster : BaseRole, IPoolObject
 
     private float Speed => data.speed;
 
-    private int Hp
+    private float Hp
     {
         get => hp;
         set
@@ -36,22 +37,33 @@ public class Monster : BaseRole, IPoolObject
                 // 取消集火
                 GameFacade.Instance.SendNotification(NotificationName.Game.CANEL_COLLECTINGFIRES, this);
                 // 加钱
-                GameFacade.Instance.SendNotification(NotificationName.Game.UPDATE_MONEY, +data.baseMoney);
+                GameFacade.Instance.SendNotification(NotificationName.Game.UPDATE_MONEY, +(int)(data.baseMoney * growth));
                 // 生成加钱UI
                 AddMoneyTips addMoneyTips = GameManager.Instance.FactoryManager.UIControlFactory.CreateControl("AddMoneyTips")
                     .GetComponent<AddMoneyTips>();
-                addMoneyTips.textMeshPro.text = "+" + data.baseMoney;
+                addMoneyTips.textMeshPro.text = "+" + (int)(data.baseMoney * growth);
                 addMoneyTips.transform.position = transform.position;
                 addMoneyTips.transform.DOMoveY(addMoneyTips.transform.position.y + 2f, 0.5f); // 上移动画
                 // 播放死亡动画
                 animator.SetBool("Dead", true);
             }
-
+            
             // 更新血条图片
             hpImageBg.gameObject.SetActive(true);
-            hpImageFg.localScale = new Vector3(hp / (data.maxHp * 1f), 1, 1);
+            hpImageFg.localScale = new Vector3(hp / (data.maxHp * growth), 1, 1);
+            // 记录显示血条的时间
+            lastWoundTime = Time.time;
+        }
+    }
 
-            lastWoundTime = Time.realtimeSinceStartup;
+    public float Growth
+    {
+        get => growth;
+        set
+        {
+            growth = value;
+            // 修改成长系数时自动修改属性值
+            hp *= growth;
         }
     }
 
@@ -86,7 +98,7 @@ public class Monster : BaseRole, IPoolObject
         }
 
         // 超过2秒没受到伤害或怪物死亡隐藏血条
-        if (Time.realtimeSinceStartup - lastWoundTime > 2 || isDead)
+        if (Time.time - lastWoundTime > 2 || isDead)
         {
             hpImageBg.gameObject.SetActive(false);
         }
@@ -104,7 +116,6 @@ public class Monster : BaseRole, IPoolObject
         gr.Raycast(eventData, results);
         // 被显示范围的Ui遮挡除外
         if (results.Count > 0 && results[0].gameObject.name != "ImageAttackRange") return;
-        
         // 将自己的位置信息传出
         GameFacade.Instance.SendNotification(NotificationName.Game.SET_COLLECTINGFIRES, this);
     }

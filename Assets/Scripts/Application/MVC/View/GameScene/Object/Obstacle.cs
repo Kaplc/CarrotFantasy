@@ -14,7 +14,7 @@ public class Obstacle : Monster
     protected override void Update()
     {
         // 超过2秒没受到伤害或怪物死亡隐藏血条
-        if (Time.realtimeSinceStartup - lastWoundTime > 2 || isDead)
+        if (Time.time - lastWoundTime > 2 || isDead)
         {
             hpImageBg.gameObject.SetActive(false);
         }

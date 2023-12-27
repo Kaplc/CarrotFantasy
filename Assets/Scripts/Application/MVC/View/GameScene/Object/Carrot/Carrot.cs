@@ -8,7 +8,7 @@ using UnityEngine;
 
 public class Carrot : BaseRole, IPoolObject
 {
-    private int hp;
+    private float hp;
 
     public CarrotData data;
     public List<Sprite> sprites; // 各血量萝卜Sprite
@@ -17,7 +17,7 @@ public class Carrot : BaseRole, IPoolObject
     private Coroutine idleAnimaCoroutine; // 待机动画协程
     public TextMeshPro textMeshPro;
 
-    public int Hp
+    public float Hp
     {
         get => hp;
         set
@@ -36,7 +36,7 @@ public class Carrot : BaseRole, IPoolObject
                 animator.enabled = false;
             }
             // 更改萝卜图片
-            spriteRenderer.sprite = sprites[hp];
+            spriteRenderer.sprite = sprites[(int)hp];
             // 更改血量数值
             textMeshPro.text = hp.ToString();
         }

@@ -27,7 +27,7 @@ public class GameManager : BaseMonoSingleton<GameManager>
             if (value)
             {
                 // 记录暂停时间
-                pauseTime = Time.realtimeSinceStartup;
+                pauseTime = Time.time;
             }
         }
     }
@@ -122,7 +122,7 @@ public class GameManager : BaseMonoSingleton<GameManager>
     /// </summary>
     public void GameWin()
     {
-        int hp = spawner.carrot.Hp;
+        float hp = spawner.carrot.Hp;
         // 结算通关等级
         EPassedGrade grade;
         if (1 <= hp && hp <= 3)
