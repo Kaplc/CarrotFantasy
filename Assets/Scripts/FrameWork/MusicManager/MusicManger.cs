@@ -62,6 +62,7 @@ namespace Script.FrameWork.MusicManager
             {
                 musicObject = new GameObject("Music");
                 musicAudioSource = musicObject.AddComponent<AudioSource>();
+                GameObject.DontDestroyOnLoad(musicObject);
             }
             // 异步加载音乐文件并播放
             ResourcesFrameWork.Instance.LoadAsync<AudioClip>(path, ac =>

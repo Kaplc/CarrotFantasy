@@ -51,6 +51,7 @@ public class LoadBeginSceneCommand : SimpleCommand
     public override void Execute(INotification notification)
     {
         GameFacade.Instance.RegisterMediator(new BeginPanelMediator());
+        
         ZFrameWorkSceneManager.Instance.LoadSceneAsync("2.BeginScene", () =>
         {
             SendNotification(NotificationName.UI.SHOW_BEGINPANEL);
@@ -97,6 +98,8 @@ public class LoadGameSceneCommand : SimpleCommand
         GameFacade.Instance.RegisterMediator(new MenuPanelMediator());
         GameFacade.Instance.RegisterMediator(new WinPanelMediator());
         GameFacade.Instance.RegisterMediator(new LosePanelMediator());
+        // 停止背景音乐
+        GameFacade.Instance.SendNotification(NotificationName.Game.STOP_MUSIC);
         
         ZFrameWorkSceneManager.Instance.LoadSceneAsync("5.GameScene", () =>
         {
@@ -251,6 +254,8 @@ public class LoadSceneGameToSelectLevelCommand : SimpleCommand
         GameFacade.Instance.RemoveMediator(nameof(MenuPanelMediator));
         GameFacade.Instance.RemoveMediator(nameof(WinPanelMediator));
         GameFacade.Instance.RemoveMediator(nameof(LosePanelMediator));
+        // 开启背景音乐
+        SendNotification(NotificationName.Game.PLAY_MUSIC);
         
         SendNotification(NotificationName.LoadScene.LOADSCENE_SELECTLEVEL);
     }
@@ -285,7 +290,7 @@ public class LoadSceneGameToEndCommand : SimpleCommand
         GameFacade.Instance.RemoveMediator(nameof(MenuPanelMediator));
         GameFacade.Instance.RemoveMediator(nameof(WinPanelMediator));
         GameFacade.Instance.RemoveMediator(nameof(LosePanelMediator));
-        
+
         SendNotification(NotificationName.LoadScene.LOADSCENE_END);
     }
 }

@@ -38,6 +38,12 @@ public static class NotificationName
         public const string CANEL_COLLECTINGFIRES = "CanelCollectingFires"; // 取消集火
         public const string UPDATE_MONEY = "UpdateMoney"; // 更新钱
         public const string TWOSPEED = "TwoSpeed"; // 两倍速
+        // 声音相关
+        public const string PLAY_MUSIC = "PlayMusic";
+        public const string MUTE_MUSIC = "MuteMusic";
+        public const string STOP_MUSIC = "StopMusic";
+        public const string PLAY_SOUND = "PlaySound";
+        public const string MUTE_SOUND = "MuteSound";
     }
     
     public static class UI

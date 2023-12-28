@@ -69,10 +69,12 @@ public class BeginPanelMediator : Mediator
                 Panel.animator.SetBool("ShowSettingPanel", true);
                 break;
             case NotificationName.Data.LOADED_MUSICSETTINGDATA:
+                if (!Panel)break;
                 // 刷新音乐设置数据
                 Panel.settingPanel.UpdateSelectPage(notification.Body as MusicSettingData);
                 break;
             case NotificationName.Data.LOADED_STATISTICALDATA:
+                if (!Panel)break;
                 // 刷新统计数据
                 Panel.settingPanel.UpdateStatisticalPage(notification.Body as StatisticalData);
                 break;

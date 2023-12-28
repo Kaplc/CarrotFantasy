@@ -9,7 +9,7 @@ public class InitGameManagerControllerCommand : SimpleCommand
     {
         // 初始化GameController注册命令
         GameFacade.Instance.RegisterCommand(NotificationName.Data.LOADED_LEVELDATA, () => new AcceptLevelDataCommand());
-        
+
         GameFacade.Instance.RegisterCommand(NotificationName.Game.LOAD_GAME, () => new LoadGameCommand());
         GameFacade.Instance.RegisterCommand(NotificationName.Game.START_GAME, () => new StartGameCommand());
         GameFacade.Instance.RegisterCommand(NotificationName.Game.INIT_GAME, () => new InitGameCommand());
@@ -25,12 +25,14 @@ public class InitGameManagerControllerCommand : SimpleCommand
         GameFacade.Instance.RegisterCommand(NotificationName.Game.CARROT_DEAD, () => new GameOverCommand());
         GameFacade.Instance.RegisterCommand(NotificationName.Game.UPDATE_MONEY, () => new UpdateMoneyCommand());
         GameFacade.Instance.RegisterCommand(NotificationName.Game.TWOSPEED, () => new TwoSpeedCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.Game.PLAY_MUSIC, () => new PlayMusicCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.Game.MUTE_MUSIC, () => new MuteMusicCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.Game.STOP_MUSIC, () => new StopMusicCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.Data.LOADED_MUSICSETTINGDATA, () => new AcceptMusicSettingDataCommand());
     }
 }
 
 #region 关卡选择相关
-
-
 
 /// <summary>
 /// 菜单点击选择关卡
@@ -41,7 +43,7 @@ public class SelectLevelCommand : SimpleCommand
     {
         // 回到选择界面完全退出游戏 销毁缓存池
         GameManager.Instance.PoolManager.Clear();
-        
+
         SendNotification(NotificationName.LoadScene.LOADSCENE_GAME_TO_SELECTLEVEL);
     }
 }
@@ -77,13 +79,24 @@ public class LoadGameCommand : SimpleCommand
 }
 
 /// <summary>
-/// 接受数据到关卡数据
+/// 接受关卡数据
 /// </summary>
 public class AcceptLevelDataCommand : SimpleCommand
 {
     public override void Execute(INotification notification)
     {
         GameManager.Instance.nowLevelData = notification.Body as LevelData;
+    }
+}
+
+/// <summary>
+/// 接受音乐数据
+/// </summary>
+public class AcceptMusicSettingDataCommand : SimpleCommand
+{
+    public override void Execute(INotification notification)
+    {
+        GameManager.Instance.musicSettingData = notification.Body as MusicSettingData;
     }
 }
 
@@ -234,8 +247,50 @@ public class TwoSpeedCommand : SimpleCommand
 {
     public override void Execute(INotification notification)
     {
-        base.Execute(notification);
         GameManager.Instance.TwoSpeed = (bool)notification.Body;
+    }
+}
+
+#endregion
+
+#region 声音相关
+
+/// <summary>
+/// 播放背景音乐
+/// </summary>
+public class PlayMusicCommand : SimpleCommand
+{
+    public override void Execute(INotification notification)
+    {
+        GameManager.Instance.MusicManger.PlayMusic("Music/BGMusic", 1, true);
+        if (GameManager.Instance.musicSettingData.musicOpen)
+        {
+            SendNotification(NotificationName.Game.MUTE_MUSIC, false);
+        }
+        else
+        {
+            SendNotification(NotificationName.Game.MUTE_MUSIC, true);
+        }
+        
+    }
+}
+
+/// <summary>
+/// 停止背景音乐
+/// </summary>
+public class StopMusicCommand : SimpleCommand
+{
+    public override void Execute(INotification notification)
+    {
+        GameManager.Instance.MusicManger.StopMusic();
+    }
+}
+
+public class MuteMusicCommand : SimpleCommand
+{
+    public override void Execute(INotification notification)
+    {
+        GameManager.Instance.MusicManger.MuteMusic((bool)notification.Body);
     }
 }
 

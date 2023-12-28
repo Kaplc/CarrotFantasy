@@ -12,12 +12,16 @@ public class SelectPage: MonoManager
         tgMusic.onValueChanged.AddListener((isOn) =>
         {
             musicSettingData.musicOpen = isOn;
-            GameFacade.Instance.SendNotification(NotificationName.Data.SAVE_MUSCISETTINGDATA, musicSettingData);
+            GameFacade.Instance.SendNotification(NotificationName.Data.SAVE_MUSCISETTINGDATA, musicSettingData); // 保存数据
+            GameFacade.Instance.SendNotification(NotificationName.Data.LOAD_MUSICSETTINGDATA); // 重新加载
+            GameFacade.Instance.SendNotification(NotificationName.Game.MUTE_MUSIC, !isOn); // 静音或播放
         });
         tgSound.onValueChanged.AddListener((isOn) =>
         {
             musicSettingData.soundOpen = isOn;
             GameFacade.Instance.SendNotification(NotificationName.Data.SAVE_MUSCISETTINGDATA, musicSettingData);
+            GameFacade.Instance.SendNotification(NotificationName.Data.LOAD_MUSICSETTINGDATA);
+            GameFacade.Instance.SendNotification(NotificationName.Game.MUTE_SOUND, isOn);
         });
     }
 

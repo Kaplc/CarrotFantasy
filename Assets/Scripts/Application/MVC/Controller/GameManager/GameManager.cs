@@ -9,6 +9,7 @@ public class GameManager : BaseMonoSingleton<GameManager>
     public PoolManager PoolManager => PoolManager.Instance;
     public BinaryManager BinaryManager => BinaryManager.Instance;
     public FactoryManager FactoryManager => FactoryManager.Instance;
+    public MusicManger MusicManger => MusicManger.Instance;
 
     private bool pause; // 暂停标识
     public bool stop; // 停止标识
@@ -31,7 +32,6 @@ public class GameManager : BaseMonoSingleton<GameManager>
             }
         }
     }
-
     public bool TwoSpeed
     {
         get => twoSpeed;
@@ -47,6 +47,7 @@ public class GameManager : BaseMonoSingleton<GameManager>
     }
 
     public LevelData nowLevelData; // 当前Level数据
+    public MusicSettingData musicSettingData; // 音乐数据
     public Map map;
     public Spawner spawner;
 
@@ -55,6 +56,9 @@ public class GameManager : BaseMonoSingleton<GameManager>
         base.Awake();
         DontDestroyOnLoad(gameObject);
         GameFacade.Instance.SendNotification(NotificationName.Init.INIT);
+        // 初始化音乐
+        GameFacade.Instance.SendNotification(NotificationName.Data.LOAD_MUSICSETTINGDATA);
+        GameFacade.Instance.SendNotification(NotificationName.Game.PLAY_MUSIC);
     }
 
     #region 游戏相关

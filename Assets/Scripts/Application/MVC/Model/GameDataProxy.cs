@@ -36,6 +36,7 @@ public class GameDataProxy : Proxy
         LoadMusicSettingData();
         LoadProcessData();
     }
+    
 
     public void GetStatisticalData()
     {
