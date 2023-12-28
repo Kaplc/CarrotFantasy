@@ -35,10 +35,10 @@ public abstract class BaseBullet : MonoBehaviour, IPoolObject
             }
             
             // 怪物死亡立刻回收
-            if (target.isDead)
-            {
-                GameManager.Instance.PoolManager.PushObject(gameObject);
-            }
+            // if (target.isDead)
+            // {
+            //     GameManager.Instance.PoolManager.PushObject(gameObject);
+            // }
         }
     }
 

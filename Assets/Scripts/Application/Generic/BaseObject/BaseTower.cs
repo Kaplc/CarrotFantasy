@@ -9,6 +9,7 @@ public abstract class BaseTower : MonoBehaviour, IPoolObject
     public TowerData data;
     public int Atk => data.atkList[level];
     public int level;
+    public bool attacking; // 是否正在攻击标识
 
     public Animator animator;
     public List<RuntimeAnimatorController> controllers;
@@ -21,6 +22,7 @@ public abstract class BaseTower : MonoBehaviour, IPoolObject
         {
             // 游戏暂停停止炮塔动画
             animator.SetBool("Attack", false);
+            attacking = false;
             return;
         }
 
@@ -30,32 +32,36 @@ public abstract class BaseTower : MonoBehaviour, IPoolObject
             FindTargets();
         }
 
-        if (target != null)
+        if (target)
         {
-            // 攻击
-            animator.SetBool("Attack", true);
-
             // 大于攻击距离解除锁定或打死怪物
             if (Vector3.Distance(transform.position, target.transform.position) > data.attackRangesList[level] || target.isDead)
             {
                 animator.SetBool("Attack", false);
+                attacking = false;
                 target = null;
             }
         }
-        
+
+        // 攻击
+        if (target && !attacking)
+        {
+            animator.SetBool("Attack", true);
+        }
+
         // 集火目标
         if (GameManager.Instance.spawner.collectingFiresTarget)
         {
             CollectingFiresTarget();
         }
-        
+
         // 显示升级提醒
         if (level != 2 && GameManager.Instance.money > data.prices[level + 1])
         {
-            if (upGradeTips)return;
-         
-           upGradeTips =  GameManager.Instance.FactoryManager.UIControlFactory.CreateControl("UpGradeTips");
-           upGradeTips.transform.position = transform.position + Vector3.up;
+            if (upGradeTips) return;
+
+            upGradeTips = GameManager.Instance.FactoryManager.UIControlFactory.CreateControl("UpGradeTips");
+            upGradeTips.transform.position = transform.position + Vector3.up;
         }
         else
         {

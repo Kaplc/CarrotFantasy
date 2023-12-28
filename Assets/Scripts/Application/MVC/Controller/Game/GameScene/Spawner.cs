@@ -17,6 +17,7 @@ public class Spawner : MonoBehaviour
     private Coroutine spawnCoroutine;
     public List<Monster> monsters = new List<Monster>(); // 已经出生的怪物
     public List<BaseTower> towers = new List<BaseTower>(); // 已创建的塔
+    public List<Obstacle> obstaclesList = new List<Obstacle>(); // 已创建的障碍物
 
     public Monster collectingFiresTarget; // 集火目标
     public Transform signTrans; // 集火标志
@@ -29,6 +30,25 @@ public class Spawner : MonoBehaviour
         levelData = GameManager.Instance.nowLevelData;
         // 更新面板波数显示
         GameFacade.Instance.SendNotification(NotificationName.UIEvent.GAMEPANEL_UPDATE_WAVESCOUNT, (1, levelData.roundDataList.Count));
+    }
+    
+    /// <summary>
+    /// 根据保存的地图数据生成障碍物
+    /// </summary>
+    public void CreateObstacles()
+    {
+        MapData nowMapData = GameManager.Instance.nowLevelData.mapData;
+        
+        for (int i = 0; i < nowMapData.obstacleList.Count; i++)
+        {
+            Cell cell = nowMapData.obstacleList[i];
+
+            // 创建实例
+            Obstacle obstacle = GameManager.Instance.PoolManager.GetObject($"Object/Obstacle/{cell.obstacleName}").GetComponent<Obstacle>();
+            obstacle.transform.position = Map.GetCellCenterPos(cell);
+            cell.obstacle = obstacle.gameObject;
+            obstaclesList.Add(obstacle);
+        }
     }
 
     public void SetCollectingFires(Monster monster)
@@ -122,7 +142,6 @@ public class Spawner : MonoBehaviour
     public void CreateCarrot()
     {
         carrot = GameManager.Instance.PoolManager.GetObject("Object/Carrot").GetComponent<Carrot>();
-        // carrot.OnGet();
 
         // 设置萝卜位置
         Cell lastPathCell = levelData.mapData.pathList[levelData.mapData.pathList.Count - 1];
@@ -208,18 +227,28 @@ public class Spawner : MonoBehaviour
             yield return new WaitForSeconds(levelData.intervalTimePerWave);
         }
     }
+    
+    /// <summary>
+    /// 回收所有游戏対象
+    /// </summary>
+    public void OnPushAllGameObject()
+    {
+        // 销毁标志
+        Destroy(signTrans.gameObject);
+        
+        OnPushAllTowers();
+        OnPushAllMonsters();
+        OnPushAllObstacles();
+    }
 
     /// <summary>
     /// 回收未死亡的怪物
     /// </summary>
-    public void OnPushAllMonsters()
+    private void OnPushAllMonsters()
     {
-        // 销毁标志
-        Destroy(signTrans.gameObject);
-
         for (int i = 0; i < monsters.Count; i++)
         {
-            if (monsters[i].isDead == false)
+            if (!monsters[i].isDead)
             {
                 GameManager.Instance.PoolManager.PushObject(monsters[i].gameObject);
             }
@@ -228,11 +257,26 @@ public class Spawner : MonoBehaviour
         monsters.Clear();
     }
 
-    public void OnPushAllTowers()
+    private void OnPushAllTowers()
     {
         for (int i = 0; i < towers.Count; i++)
         {
             GameManager.Instance.PoolManager.PushObject(towers[i].gameObject);
         }
+        
+        towers.Clear();
+    }
+    
+    private void OnPushAllObstacles()
+    {
+        for (int i = 0; i < obstaclesList.Count; i++)
+        {
+            if (!obstaclesList[i].isDead)
+            {
+                GameManager.Instance.PoolManager.PushObject(obstaclesList[i].gameObject);
+            }
+        }
+        
+        obstaclesList.Clear();
     }
 }

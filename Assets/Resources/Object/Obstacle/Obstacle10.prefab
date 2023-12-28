@@ -100,6 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isDead: 0
   data: {fileID: 11400000, guid: b87dfb2e2b2b38942ab7933f061a220b, type: 2}
+  hp: 0
   animator: {fileID: 0}
   hpImageBg: {fileID: 7496715924403519831}
   hpImageFg: {fileID: 2464388963825016649}
@@ -175,7 +176,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3778342439831823484}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.39, y: 3.148, z: 0}
+  m_LocalPosition: {x: 0.34, y: 1.12, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5055801750243459605}

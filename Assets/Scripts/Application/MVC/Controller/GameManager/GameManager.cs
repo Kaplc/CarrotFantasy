@@ -80,6 +80,8 @@ public class GameManager : BaseMonoSingleton<GameManager>
         spawner.CreateCarrot();
         // 创建起点路牌
         spawner.CreateStartBrand();
+        // 创建障碍物
+        spawner.CreateObstacles();
         // 刷新钱
         money = nowLevelData.money;
     }
@@ -102,8 +104,7 @@ public class GameManager : BaseMonoSingleton<GameManager>
         TwoSpeed = false;
         // 回收所有对象
         PoolManager.PushObject(spawner.carrot.gameObject);
-        spawner.OnPushAllMonsters();
-        spawner.OnPushAllTowers();
+        spawner.OnPushAllGameObject();
     }
 
     /// <summary>

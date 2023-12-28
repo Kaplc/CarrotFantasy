@@ -284,30 +284,11 @@ public class Map : MonoBehaviour
         GenerateCell();
         // 覆盖格子信息
         ReFlashCellData();
-        // 生成障碍物
-        CreateObstacle();
 
         // 设置地图背景
         mapBgSpriteRenderer.sprite = GameManager.Instance.FactoryManager.SpriteFactory.GetSprite(nowMapData.mapBgSpritePath);
         // 设置路径背景
         roadSpriteRenderer.sprite = GameManager.Instance.FactoryManager.SpriteFactory.GetSprite(nowMapData.roadSpritePath);
-    }
-
-    /// <summary>
-    /// 根据保存的地图数据生成障碍物
-    /// </summary>
-    public void CreateObstacle()
-    {
-        for (int i = 0; i < nowMapData.obstacleList.Count; i++)
-        {
-            Cell cell = nowMapData.obstacleList[i];
-
-            // 创建实例
-            GameObject obstacle = GameManager.Instance.PoolManager.GetObject($"Object/Obstacle/{cell.obstacleName}");
-            obstacle.transform.position = GetCellCenterPos(cell);
-            cell.obstacle = obstacle;
-            obstacleList.Add(obstacle);
-        }
     }
 
     /// <summary>

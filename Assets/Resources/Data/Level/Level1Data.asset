@@ -20,7 +20,7 @@ MonoBehaviour:
   towersData:
   - {fileID: 11400000, guid: aab2e8cd34433054a981d09ecb22a4b3, type: 2}
   roundDataList:
-  - growth: 0
+  - growth: 1
     group:
     - monsterData: {fileID: 11400000, guid: eea0463a05e335f42801b8c62937d482, type: 2}
       count: 5

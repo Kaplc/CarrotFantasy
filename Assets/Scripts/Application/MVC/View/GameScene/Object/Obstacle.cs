@@ -36,5 +36,12 @@ public class Obstacle : Monster
         animator.enabled = false;
         // 还原Sprite
         spriteRenderer.sprite = originSprite;
+        // 标记死亡
+        isDead = true;
+    }
+
+    private void OnDestroy()
+    {
+        
     }
 }
