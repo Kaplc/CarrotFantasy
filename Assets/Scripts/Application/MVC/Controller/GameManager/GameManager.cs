@@ -8,15 +8,15 @@ public class GameManager : BaseMonoSingleton<GameManager>
 {
     public PoolManager PoolManager => PoolManager.Instance;
     public BinaryManager BinaryManager => BinaryManager.Instance;
-    public PlayerData playerData;
     public FactoryManager FactoryManager => FactoryManager.Instance;
 
     private bool pause; // 暂停标识
-    private bool stop; // 停止标识
-    private float pauseTime; // 暂停时间
+    public bool stop; // 停止标识
+    public float pauseTime; // 暂停时间
     public int nowBigLevelId; // 大关卡id
     public int money; // 金钱
     public bool openedBuiltPanel; // 建造面板已打开
+    public bool twoSpeed; // 开启两倍速标识
 
     public bool Pause
     {
@@ -31,8 +31,20 @@ public class GameManager : BaseMonoSingleton<GameManager>
             }
         }
     }
-    public float PauseTime => pauseTime;
-    public bool Stop => stop;
+
+    public bool TwoSpeed
+    {
+        get => twoSpeed;
+        set
+        {
+            twoSpeed = value;
+
+            if (value)
+                Time.timeScale = 2;
+            else
+                Time.timeScale = 1;
+        }
+    }
 
     public LevelData nowLevelData; // 当前Level数据
     public Map map;
@@ -82,6 +94,8 @@ public class GameManager : BaseMonoSingleton<GameManager>
     /// </summary>
     public void ExitGame()
     {
+        // 速度恢复
+        TwoSpeed = false;
         // 回收所有对象
         PoolManager.PushObject(spawner.carrot.gameObject);
         spawner.OnPushAllMonsters();
@@ -129,7 +143,8 @@ public class GameManager : BaseMonoSingleton<GameManager>
         {
             // 铜
             grade = EPassedGrade.Copper;
-        }else if (4 <= hp && hp <= 6)
+        }
+        else if (4 <= hp && hp <= 6)
         {
             // 银
             grade = EPassedGrade.Sliver;
@@ -139,6 +154,7 @@ public class GameManager : BaseMonoSingleton<GameManager>
             // 金
             grade = EPassedGrade.Gold;
         }
+
         // 保存游戏进度
         GameFacade.Instance.SendNotification(NotificationName.Data.SAVE_PROCESSDATA, (nowLevelData.levelID, grade));
         // 显示胜利面板

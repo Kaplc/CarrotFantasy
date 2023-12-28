@@ -50,7 +50,7 @@ public class Monster : BaseRole, IPoolObject
             
             // 更新血条图片
             hpImageBg.gameObject.SetActive(true);
-            hpImageFg.localScale = new Vector3(hp / (data.maxHp * growth), 1, 1);
+            hpImageFg.localScale = new Vector3(hp / (data.maxHp * (growth == 0 ? 1 : growth) ), 1, 1);
             // 记录显示血条的时间
             lastWoundTime = Time.time;
         }

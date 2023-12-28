@@ -37,6 +37,7 @@ public static class NotificationName
         public const string SET_COLLECTINGFIRES = "CollectingFires"; // 设置集火目标
         public const string CANEL_COLLECTINGFIRES = "CanelCollectingFires"; // 取消集火
         public const string UPDATE_MONEY = "UpdateMoney"; // 更新钱
+        public const string TWOSPEED = "TwoSpeed"; // 两倍速
     }
     
     public static class UI

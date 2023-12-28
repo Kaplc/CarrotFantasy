@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: BottleTowerData
   m_EditorClassIdentifier: 
   id: 0
-  atkCd: 1
-  rotaSpeed: 10
+  rotaSpeed: 5
   prefabsPath: Object/Tower/BottleTower/BottleTower
-  attackRange: 4
+  attackRangesList:
+  - 3
+  - 3.5
+  - 4
   atkList: 010000000200000003000000
   bulletsPrefabsPath:
   - Object/Tower/BottleTower/Bullet/0

@@ -20,19 +20,267 @@ MonoBehaviour:
   towersData:
   - {fileID: 11400000, guid: aab2e8cd34433054a981d09ecb22a4b3, type: 2}
   roundDataList:
-  - group:
+  - growth: 1
+    group:
     - monsterData: {fileID: 11400000, guid: eea0463a05e335f42801b8c62937d482, type: 2}
+      count: 10
+    intervalTimeEach: 1
+  - growth: 1.2
+    group:
+    - monsterData: {fileID: 11400000, guid: eea0463a05e335f42801b8c62937d482, type: 2}
+      count: 8
+    - monsterData: {fileID: 11400000, guid: bbcd0d4dc615e4e43891da72f72db3b4, type: 2}
+      count: 2
+    intervalTimeEach: 1
+  - growth: 1.2
+    group:
+    - monsterData: {fileID: 11400000, guid: eea0463a05e335f42801b8c62937d482, type: 2}
+      count: 5
+    - monsterData: {fileID: 11400000, guid: bbcd0d4dc615e4e43891da72f72db3b4, type: 2}
+      count: 5
+    intervalTimeEach: 1
+  - growth: 2
+    group:
+    - monsterData: {fileID: 11400000, guid: eea0463a05e335f42801b8c62937d482, type: 2}
+      count: 4
+    - monsterData: {fileID: 11400000, guid: bbcd0d4dc615e4e43891da72f72db3b4, type: 2}
       count: 6
     intervalTimeEach: 1
-  - group:
-    - monsterData: {fileID: 11400000, guid: eea0463a05e335f42801b8c62937d482, type: 2}
-      count: 3
+  - growth: 3
+    group:
     - monsterData: {fileID: 11400000, guid: bbcd0d4dc615e4e43891da72f72db3b4, type: 2}
-      count: 3
+      count: 8
+    - monsterData: {fileID: 11400000, guid: eea0463a05e335f42801b8c62937d482, type: 2}
+      count: 2
+    intervalTimeEach: 1
+  - growth: 1.5
+    group:
+    - monsterData: {fileID: 11400000, guid: bbcd0d4dc615e4e43891da72f72db3b4, type: 2}
+      count: 10
+    intervalTimeEach: 1
+  - growth: 3
+    group:
+    - monsterData: {fileID: 11400000, guid: eea0463a05e335f42801b8c62937d482, type: 2}
+      count: 8
+    - monsterData: {fileID: 11400000, guid: 34564392b9f940e48830bddc44c6f4c7, type: 2}
+      count: 2
+    intervalTimeEach: 1
+  - growth: 2
+    group:
+    - monsterData: {fileID: 11400000, guid: bbcd0d4dc615e4e43891da72f72db3b4, type: 2}
+      count: 6
+    - monsterData: {fileID: 11400000, guid: 34564392b9f940e48830bddc44c6f4c7, type: 2}
+      count: 4
+    intervalTimeEach: 1
+  - growth: 1.2
+    group:
+    - monsterData: {fileID: 11400000, guid: eea0463a05e335f42801b8c62937d482, type: 2}
+      count: 8
+    - monsterData: {fileID: 11400000, guid: bbcd0d4dc615e4e43891da72f72db3b4, type: 2}
+      count: 2
+    intervalTimeEach: 1
+  - growth: 1.2
+    group:
+    - monsterData: {fileID: 11400000, guid: eea0463a05e335f42801b8c62937d482, type: 2}
+      count: 8
+    - monsterData: {fileID: 11400000, guid: bbcd0d4dc615e4e43891da72f72db3b4, type: 2}
+      count: 2
+    intervalTimeEach: 1
+  - growth: 1.2
+    group:
+    - monsterData: {fileID: 11400000, guid: eea0463a05e335f42801b8c62937d482, type: 2}
+      count: 8
+    - monsterData: {fileID: 11400000, guid: bbcd0d4dc615e4e43891da72f72db3b4, type: 2}
+      count: 2
+    intervalTimeEach: 1
+  - growth: 1.2
+    group:
+    - monsterData: {fileID: 11400000, guid: eea0463a05e335f42801b8c62937d482, type: 2}
+      count: 8
+    - monsterData: {fileID: 11400000, guid: bbcd0d4dc615e4e43891da72f72db3b4, type: 2}
+      count: 2
+    intervalTimeEach: 1
+  - growth: 1.2
+    group:
+    - monsterData: {fileID: 11400000, guid: eea0463a05e335f42801b8c62937d482, type: 2}
+      count: 8
+    - monsterData: {fileID: 11400000, guid: bbcd0d4dc615e4e43891da72f72db3b4, type: 2}
+      count: 2
+    intervalTimeEach: 1
+  - growth: 1.2
+    group:
+    - monsterData: {fileID: 11400000, guid: eea0463a05e335f42801b8c62937d482, type: 2}
+      count: 8
+    - monsterData: {fileID: 11400000, guid: bbcd0d4dc615e4e43891da72f72db3b4, type: 2}
+      count: 2
+    intervalTimeEach: 1
+  - growth: 1.2
+    group:
+    - monsterData: {fileID: 11400000, guid: eea0463a05e335f42801b8c62937d482, type: 2}
+      count: 8
+    - monsterData: {fileID: 11400000, guid: bbcd0d4dc615e4e43891da72f72db3b4, type: 2}
+      count: 2
     intervalTimeEach: 1
   mapData:
-    mapBgSpritePath: Map/BigLevel0/BG0
-    roadSpritePath: Map/BigLevel0/Road1
-    pathList: []
-    towerList: []
+    mapBgSpritePath: Map/Item0/BG0
+    roadSpritePath: Map/Item0/Road1
+    pathList:
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    towerList:
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 1
+      obstacleName: Obstacle6
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 1
+      obstacleName: Obstacle2
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 1
+      obstacleName: Obstacle2
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 1
+      obstacleName: Obstacle1
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 1
+      obstacleName: Obstacle1
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 1
+      obstacleName: Obstacle3
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 1
+      obstacleName: Obstacle7
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 1
+      obstacleName: Obstacle3
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    obstacleList:
+    - hasObstacle: 1
+      obstacleName: Obstacle6
+    - hasObstacle: 1
+      obstacleName: Obstacle2
+    - hasObstacle: 1
+      obstacleName: Obstacle2
+    - hasObstacle: 1
+      obstacleName: Obstacle1
+    - hasObstacle: 1
+      obstacleName: Obstacle1
+    - hasObstacle: 1
+      obstacleName: Obstacle3
+    - hasObstacle: 1
+      obstacleName: Obstacle7
+    - hasObstacle: 1
+      obstacleName: Obstacle3
   image: {fileID: 21300000, guid: 36c2481e29204f94ea9c422958ee22f7, type: 3}

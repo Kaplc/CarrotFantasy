@@ -178,7 +178,7 @@ public class Spawner : MonoBehaviour
                     if (GameManager.Instance.Pause)
                     {
                         yield return new WaitWhile(() => GameManager.Instance.Pause);
-                        yield return new WaitForSeconds(roundData.intervalTimeEach + lastSpawnTime - GameManager.Instance.PauseTime);
+                        yield return new WaitForSeconds(roundData.intervalTimeEach + lastSpawnTime - GameManager.Instance.pauseTime);
                     }
 
                     // 缓存池取出

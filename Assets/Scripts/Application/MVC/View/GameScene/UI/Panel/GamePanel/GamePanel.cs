@@ -22,11 +22,13 @@ public class GamePanel : BasePanel
         {
             btnSpeed2.gameObject.SetActive(true);
             btnSpeed1.gameObject.SetActive(false);
+            GameFacade.Instance.SendNotification(NotificationName.Game.TWOSPEED, true);
         });
         btnSpeed2.onClick.AddListener(() =>
         {
             btnSpeed1.gameObject.SetActive(true);
             btnSpeed2.gameObject.SetActive(false);
+            GameFacade.Instance.SendNotification(NotificationName.Game.TWOSPEED, false);
         });
         tgPause.onValueChanged.AddListener(isOn =>
         {

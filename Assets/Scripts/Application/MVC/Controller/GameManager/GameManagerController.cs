@@ -24,6 +24,7 @@ public class InitGameManagerControllerCommand : SimpleCommand
         GameFacade.Instance.RegisterCommand(NotificationName.Game.GAME_WIN, () => new GameWinCommand());
         GameFacade.Instance.RegisterCommand(NotificationName.Game.CARROT_DEAD, () => new GameOverCommand());
         GameFacade.Instance.RegisterCommand(NotificationName.Game.UPDATE_MONEY, () => new UpdateMoneyCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.Game.TWOSPEED, () => new TwoSpeedCommand());
     }
 }
 
@@ -223,6 +224,18 @@ public class UpdateMoneyCommand : SimpleCommand
         GameManager.Instance.money += (int)notification.Body;
         // 更新面板
         SendNotification(NotificationName.UIEvent.GAMEPANEL_UPDATE_MONEY, GameManager.Instance.money);
+    }
+}
+
+/// <summary>
+/// 两倍速
+/// </summary>
+public class TwoSpeedCommand : SimpleCommand
+{
+    public override void Execute(INotification notification)
+    {
+        base.Execute(notification);
+        GameManager.Instance.TwoSpeed = (bool)notification.Body;
     }
 }
 

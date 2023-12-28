@@ -288,7 +288,7 @@ Animator:
   m_GameObject: {fileID: 9027201400053506196}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 3afadb7ea3ed1a04982013291402efd0, type: 2}
+  m_Controller: {fileID: 22100000, guid: 782019ff4e28c5f42b43cc705279bc21, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -313,6 +313,6 @@ MonoBehaviour:
   data: {fileID: 11400000, guid: 34564392b9f940e48830bddc44c6f4c7, type: 2}
   hp: 0
   animator: {fileID: 9091402886009652501}
-  hpImageBg: {fileID: 0}
-  hpImageFg: {fileID: 0}
-  signFather: {fileID: 0}
+  hpImageBg: {fileID: 224171447780275645}
+  hpImageFg: {fileID: 7675118343274285265}
+  signFather: {fileID: 3487957745096051507}

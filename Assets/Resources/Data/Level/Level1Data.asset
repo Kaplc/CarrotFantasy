@@ -14,19 +14,169 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelID: 1
   itemID: 0
-  money: 200
+  money: 800
   mapDataPath: Level1MapData
   intervalTimePerWave: 5
   towersData:
   - {fileID: 11400000, guid: aab2e8cd34433054a981d09ecb22a4b3, type: 2}
   roundDataList:
-  - group:
+  - growth: 0
+    group:
     - monsterData: {fileID: 11400000, guid: eea0463a05e335f42801b8c62937d482, type: 2}
       count: 5
     intervalTimeEach: 1
   mapData:
-    mapBgSpritePath: Map/BigLevel0/BG0
-    roadSpritePath: Map/BigLevel0/Road2
-    pathList: []
-    towerList: []
+    mapBgSpritePath: Map/Item0/BG0
+    roadSpritePath: Map/Item0/Road2
+    pathList:
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    towerList:
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 1
+      obstacleName: Obstacle6
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 1
+      obstacleName: Obstacle1
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 1
+      obstacleName: Obstacle2
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 1
+      obstacleName: Obstacle6
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 1
+      obstacleName: Obstacle7
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 1
+      obstacleName: Obstacle5
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 1
+      obstacleName: Obstacle2
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 1
+      obstacleName: Obstacle1
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 1
+      obstacleName: Obstacle10
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 1
+      obstacleName: Obstacle5
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    - hasObstacle: 0
+      obstacleName: 
+    obstacleList:
+    - hasObstacle: 1
+      obstacleName: Obstacle6
+    - hasObstacle: 1
+      obstacleName: Obstacle1
+    - hasObstacle: 1
+      obstacleName: Obstacle2
+    - hasObstacle: 1
+      obstacleName: Obstacle6
+    - hasObstacle: 1
+      obstacleName: Obstacle7
+    - hasObstacle: 1
+      obstacleName: Obstacle5
+    - hasObstacle: 1
+      obstacleName: Obstacle2
+    - hasObstacle: 1
+      obstacleName: Obstacle1
+    - hasObstacle: 1
+      obstacleName: Obstacle10
+    - hasObstacle: 1
+      obstacleName: Obstacle5
   image: {fileID: 21300000, guid: 0540fca785e750d43bb22fc4e937024d, type: 3}

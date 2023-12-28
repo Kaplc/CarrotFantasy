@@ -328,7 +328,7 @@ public class Map : MonoBehaviour
     /// </summary>
     public void OnMouseDown()
     {
-        if (drawGizmos || GameManager.Instance.Stop) return;
+        if (drawGizmos || GameManager.Instance.stop) return;
 
         // 射线检测判断是否被UI遮挡
         GraphicRaycaster gr = UIManager.Instance.canvas.GetComponent<GraphicRaycaster>();
