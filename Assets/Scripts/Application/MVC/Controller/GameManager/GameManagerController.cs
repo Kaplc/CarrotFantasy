@@ -28,6 +28,8 @@ public class InitGameManagerControllerCommand : SimpleCommand
         GameFacade.Instance.RegisterCommand(NotificationName.Game.PLAY_MUSIC, () => new PlayMusicCommand());
         GameFacade.Instance.RegisterCommand(NotificationName.Game.MUTE_MUSIC, () => new MuteMusicCommand());
         GameFacade.Instance.RegisterCommand(NotificationName.Game.STOP_MUSIC, () => new StopMusicCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.Game.PLAY_SOUND, () => new PlaySoundCommand());
+        GameFacade.Instance.RegisterCommand(NotificationName.Game.MUTE_SOUND, () => new MuteSoundCommand());
         GameFacade.Instance.RegisterCommand(NotificationName.Data.LOADED_MUSICSETTINGDATA, () => new AcceptMusicSettingDataCommand());
     }
 }
@@ -263,15 +265,8 @@ public class PlayMusicCommand : SimpleCommand
     public override void Execute(INotification notification)
     {
         GameManager.Instance.MusicManger.PlayMusic("Music/BGMusic", 1, true);
-        if (GameManager.Instance.musicSettingData.musicOpen)
-        {
-            SendNotification(NotificationName.Game.MUTE_MUSIC, false);
-        }
-        else
-        {
-            SendNotification(NotificationName.Game.MUTE_MUSIC, true);
-        }
-        
+
+        SendNotification(NotificationName.Game.MUTE_MUSIC, !GameManager.Instance.musicSettingData.musicOpen);
     }
 }
 
@@ -286,11 +281,47 @@ public class StopMusicCommand : SimpleCommand
     }
 }
 
+/// <summary>
+/// 静音背景音乐
+/// </summary>
 public class MuteMusicCommand : SimpleCommand
 {
     public override void Execute(INotification notification)
     {
         GameManager.Instance.MusicManger.MuteMusic((bool)notification.Body);
+    }
+}
+
+/// <summary>
+/// 播放音效
+/// </summary>
+public class PlaySoundCommand : SimpleCommand
+{
+    public override void Execute(INotification notification)
+    {
+        (string path, float volume, bool loop) data = ((string, float, bool))notification.Body;
+
+        if (GameManager.Instance.musicSettingData.soundOpen)
+        {
+            GameManager.Instance.MusicManger.PlaySound(data.path, 1, data.loop);
+        }
+        else
+        {
+            GameManager.Instance.MusicManger.PlaySound(data.path, 0, data.loop);
+        }
+        
+        SendNotification(NotificationName.Game.MUTE_SOUND, !GameManager.Instance.musicSettingData.soundOpen);
+    }
+}
+
+/// <summary>
+/// 静音音效
+/// </summary>
+public class MuteSoundCommand : SimpleCommand
+{
+    public override void Execute(INotification notification)
+    {
+        GameManager.Instance.MusicManger.MuteSound((bool)notification.Body);
     }
 }
 

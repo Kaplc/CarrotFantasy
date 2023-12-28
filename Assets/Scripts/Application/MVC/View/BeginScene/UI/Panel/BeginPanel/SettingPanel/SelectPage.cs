@@ -21,7 +21,7 @@ public class SelectPage: MonoManager
             musicSettingData.soundOpen = isOn;
             GameFacade.Instance.SendNotification(NotificationName.Data.SAVE_MUSCISETTINGDATA, musicSettingData);
             GameFacade.Instance.SendNotification(NotificationName.Data.LOAD_MUSICSETTINGDATA);
-            GameFacade.Instance.SendNotification(NotificationName.Game.MUTE_SOUND, isOn);
+            GameFacade.Instance.SendNotification(NotificationName.Game.MUTE_SOUND, !isOn);
         });
     }
 

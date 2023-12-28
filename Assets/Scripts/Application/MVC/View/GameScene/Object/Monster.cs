@@ -46,6 +46,12 @@ public class Monster : BaseRole, IPoolObject
                 addMoneyTips.transform.DOMoveY(addMoneyTips.transform.position.y + 2f, 0.5f); // 上移动画
                 // 播放死亡动画
                 animator.SetBool("Dead", true);
+                // 播放死亡音效
+                (string, float, bool) soundData;
+                soundData.Item1 = "Music/MonsterDead";
+                soundData.Item2 = 1;
+                soundData.Item3 = false;
+                GameFacade.Instance.SendNotification(NotificationName.Game.PLAY_SOUND, soundData);
             }
             
             // 更新血条图片

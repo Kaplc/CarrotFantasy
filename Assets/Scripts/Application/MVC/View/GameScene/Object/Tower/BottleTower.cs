@@ -46,6 +46,12 @@ public class BottleTower : BaseTower
         bullet.transform.position = firePos.position;
         bullet.target = target;
         bullet.atk = Atk;
+        // 播放攻击音效
+        (string, float, bool) soundData;
+        soundData.Item1 = "Music/Bottle";
+        soundData.Item2 = 1;
+        soundData.Item3 = false;
+        GameFacade.Instance.SendNotification(NotificationName.Game.PLAY_SOUND, soundData);
     }
 
     public override void OnGet()
