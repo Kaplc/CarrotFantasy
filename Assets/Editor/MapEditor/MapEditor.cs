@@ -21,15 +21,18 @@ public class MapEditor : Editor
     private void Awake()
     {
         map = target as Map; // 关联mono脚本
-        
         // 加载文件名
         LoadAllLevelFileNames();
         // 加载障碍物名称
         LoadAllObstacleNames();
+    }
+
+    private void Init()
+    {
         // 默认加载第一个文件数据
         LoadMapData();
     }
-
+    
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
@@ -40,6 +43,7 @@ public class MapEditor : Editor
         if (GUILayout.Button("启动地图编辑器"))
         {
             map.drawGizmos = true;
+            Init();
         }
 
         EditorGUILayout.EndHorizontal();

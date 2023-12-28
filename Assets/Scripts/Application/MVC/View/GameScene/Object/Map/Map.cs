@@ -303,7 +303,6 @@ public class Map : MonoBehaviour
             Cell cell = nowMapData.obstacleList[i];
 
             // 创建实例
-            // GameObject obstacle = Instantiate(Resources.Load<GameObject>($"Object/Obstacle/{cell.obstacleName}"));
             GameObject obstacle = GameManager.Instance.PoolManager.GetObject($"Object/Obstacle/{cell.obstacleName}");
             obstacle.transform.position = GetCellCenterPos(cell);
             cell.obstacle = obstacle;

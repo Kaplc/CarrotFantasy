@@ -197,7 +197,7 @@ public class GameDataProxy : Proxy
                 {
                     levelData = item.Value.levels[i];
                     // 加载地图数据
-                    levelData.mapData = GameManager.Instance.BinaryManager.Load<MapData>(DataPath.MAPDATA_PATH + $"{levelData.mapDataPath}.md");
+                    levelData.mapData = GameManager.Instance.BinaryManager.Load<MapData>(DataPath.MAPDATA_PATH + $"{levelData.mapDataFileName}.md");
                     // 缓存已加载过的关卡
                     loadedLevelsDataDic.Add(levelData.levelID, levelData);
                     SendNotification(NotificationName.Data.LOADED_LEVELDATA, item.Value.levels[i]);

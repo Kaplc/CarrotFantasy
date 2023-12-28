@@ -42,6 +42,8 @@ public class SpriteFactory : Proxy
     
     public Sprite GetSprite(string path)
     {
+        if (path == null) return null;
+        
         if (!spritesDataDic.ContainsKey(path))
         {
             // 加载Sprite

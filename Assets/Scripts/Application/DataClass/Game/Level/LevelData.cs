@@ -12,7 +12,7 @@ public class LevelData : ScriptableObject
     public int levelID; // 关卡id
     public int itemID; // 属于哪个主题ID
     public int money; // 初始的钱
-    public string mapDataPath; // 加载的地图数据的文件名
+    public string mapDataFileName; // 加载的地图数据的文件名
     public float intervalTimePerWave; // 每波间隔时间
     
     public List<TowerData> towersData; // 该关卡所有塔数据

@@ -15,7 +15,7 @@ MonoBehaviour:
   levelID: 0
   itemID: 0
   money: 800
-  mapDataPath: Level0MapData
+  mapDataFileName: Level0MapData
   intervalTimePerWave: 5
   towersData:
   - {fileID: 11400000, guid: aab2e8cd34433054a981d09ecb22a4b3, type: 2}
