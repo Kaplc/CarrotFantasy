@@ -6,15 +6,18 @@ public static class NotificationName
 {
     public static class Init
     {
-        public const string INIT = "Init"; // 游戏初始化
-        public const string INIT_GAMEMANAGERCONTROLLER = "InitGameManagerController";
-        public const string INIT_GAMEDATAPROXY = "InitGameDataProxy";
-        public const string INIT_SPAWNERCONTROLLER = "InitSpawnerController";
-        public const string INIT_LOADSCENECONTROLLER = "InitLoadSceneController";
-        public const string INIT_GAMEDATA = "InitGameData"; // 初始化数据
-        public const string INIT_END = "InitEnd"; // 游戏初始化结束
+        public const string INIT = "INIT"; // 游戏初始化
+        public const string INIT_GAMEMANAGER_CONTROLLER = "INIT_GAMEMANAGER_CONTROLLER";
+        public const string INIT_GAMEDATAPROXY_CONTROLLER = "INIT_GAMEDATAPROXY_CONTROLLER";
+        public const string INIT_SPAWNER_CONTROLLER = "INIT_SPAWNER_CONTROLLER";
+        public const string INIT_PROCESSDATAPROXY_CONTROLLER = "INIT_PROCESSDATAPROXY_CONTROLLER";
+        public const string INIT_MUSICDATAPROXY_CONTROLLER = "INIT_MUSICDATAPROXY_CONTROLLER";
+        public const string INIT_STATICALDATAPROXY_CONTROLLER = "INIT_STATICALDATAPROXY_CONTROLLER";
+        public const string INIT_LOADSCENE_CONTROLLER = "INIT_LOADSCENE_CONTROLLER";
+        public const string INIT_GAMEDATA = "INIT_GAMEDATA"; // 初始化数据
+        public const string INIT_END = "INIT_END"; // 游戏初始化结束
     }
-    
+
     public static class Game
     {
         public const string LOAD_GAME = "LoadGame"; // 开始加载游戏

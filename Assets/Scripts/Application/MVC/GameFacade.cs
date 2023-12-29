@@ -24,10 +24,15 @@ public class GameFacade : Facade
         
         // 初始化通知
         RegisterCommand(NotificationName.Init.INIT, () => new InitCommand());
-        RegisterCommand(NotificationName.Init.INIT_GAMEMANAGERCONTROLLER, () => new InitGameManagerControllerCommand());
-        RegisterCommand(NotificationName.Init.INIT_GAMEDATAPROXY, () => new InitGameDataProxyCommand());
-        RegisterCommand(NotificationName.Init.INIT_SPAWNERCONTROLLER, () => new InitSpawnerController());
-        RegisterCommand(NotificationName.Init.INIT_LOADSCENECONTROLLER, () => new InitLoadSceneController());
+        RegisterCommand(NotificationName.Init.INIT_GAMEMANAGER_CONTROLLER, () => new InitGameManagerControllerCommand());
+        RegisterCommand(NotificationName.Init.INIT_SPAWNER_CONTROLLER, () => new InitSpawnerController());
+        RegisterCommand(NotificationName.Init.INIT_LOADSCENE_CONTROLLER, () => new InitLoadSceneController());
+        // ModelController
+        RegisterCommand(NotificationName.Init.INIT_GAMEDATAPROXY_CONTROLLER, () => new InitGameDataProxyCommand());
+        RegisterCommand(NotificationName.Init.INIT_MUSICDATAPROXY_CONTROLLER, () => new InitMusicDataProxyControllerCommand());
+        RegisterCommand(NotificationName.Init.INIT_STATICALDATAPROXY_CONTROLLER, () => new InitStaticalDataProxyControllerCommand());
+        RegisterCommand(NotificationName.Init.INIT_PROCESSDATAPROXY_CONTROLLER, () => new InitProcessDataProxyControllerCommand());
+        
         
         RegisterCommand(NotificationName.Init.INIT_END, () => new InitEndCommand());
         RegisterCommand(NotificationName.Data.LOAD_ATLAS, ()=> new LoadAtlasCommand());
@@ -45,6 +50,9 @@ public class GameFacade : Facade
         base.InitializeModel();
         
         RegisterProxy(new GameDataProxy());
-        // RegisterProxy(new SpriteFactory());
+        RegisterProxy(new MusicDataProxy());
+        RegisterProxy(new StatisticalDataProxy());
+        RegisterProxy(new ProcessDataProxy());
+        
     }
 }

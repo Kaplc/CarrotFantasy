@@ -161,7 +161,7 @@ public class GameManager : BaseMonoSingleton<GameManager>
         }
 
         // 保存游戏进度
-        GameFacade.Instance.SendNotification(NotificationName.Data.SAVE_PROCESSDATA, (nowLevelData.levelID, grade));
+        GameFacade.Instance.SendNotification(NotificationName.Data.SAVE_PROCESSDATA, (nowBigLevelId, nowLevelData.levelID, grade));
         // 显示胜利面板
         GameFacade.Instance.SendNotification(NotificationName.UI.SHOW_WINPANEL,
             (
