@@ -105,6 +105,8 @@ public class GameManager : BaseMonoSingleton<GameManager>
         // 回收所有对象
         PoolManager.PushObject(spawner.carrot.gameObject);
         spawner.OnPushAllGameObject();
+        // 持久化统计信息
+        GameFacade.Instance.SendNotification(NotificationName.Data.SAVE_STATISTICALDATA);
     }
 
     /// <summary>

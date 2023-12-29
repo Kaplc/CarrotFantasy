@@ -21,6 +21,6 @@ public class StatisticalPage : MonoBehaviour
         txMoney.text = data.money.ToString();
         txKillMonsterCount.text = data.killMonsterCount.ToString();
         txKillBossCount.text = data.killBossCount.ToString();
-        txDestroyItemCount.text = data.destroyItemCount.ToString();
+        txDestroyItemCount.text = data.destroyObstacleCount.ToString();
     }
 }

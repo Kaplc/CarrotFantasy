@@ -6,11 +6,11 @@ using UnityEngine;
 [Serializable]
 public class StatisticalData
 {
-    public int adventureMapCount;
-    public int hideMapCount;
-    public int bossMapCount;
+    public int adventureMapCount = 5;
+    public int hideMapCount = 0;
+    public int bossMapCount = 0;
     public int money;
     public int killMonsterCount;
     public int killBossCount;
-    public int destroyItemCount;
+    public int destroyObstacleCount;
 }

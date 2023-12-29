@@ -20,6 +20,14 @@ public class Obstacle : Monster
         }
     }
 
+    protected override void Dead()
+    {
+        // 回收
+        GameManager.Instance.PoolManager.PushObject(gameObject);
+        // 记录到统计信息
+        GameFacade.Instance.SendNotification(NotificationName.Data.CHANGE_DESTROYOBSTACLE_COUNT, +1);
+    }
+
     public override void OnGet()
     {
         animator.enabled = true;
@@ -39,9 +47,5 @@ public class Obstacle : Monster
         // 标记死亡
         isDead = true;
     }
-
-    private void OnDestroy()
-    {
-        
-    }
+    
 }

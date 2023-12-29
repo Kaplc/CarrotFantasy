@@ -111,6 +111,12 @@ public static class NotificationName
         // 统计数据
         public const string LOAD_STATISTICALDATA = "LoadStatisticalData";
         public const string LOADED_STATISTICALDATA = "LoadedStatisticalData";
+        public const string SAVE_STATISTICALDATA = "SAVE_STATISTICALDATA";
+        public const string CHANGE_MONEY_COUNT = "CHANGE_MONEY_COUNT";
+        public const string CHANGE_DESTROYOBSTACLE_COUNT = "CHANGE_DESTROYOBSTACLE_COUNT";
+        public const string CHANGE_KILLMONSTER_COUNT = "CHANGE_KILLMONSTER_COUNT";
+        
+        
         // 图集
         public const string LOAD_ATLAS = "LoadAtlas"; 
         public const string LOADED_ATLAS = "LoadedAtlas"; 

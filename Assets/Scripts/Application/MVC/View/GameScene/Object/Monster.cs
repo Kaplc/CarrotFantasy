@@ -147,6 +147,8 @@ public class Monster : BaseRole, IPoolObject
         GameManager.Instance.PoolManager.PushObject(gameObject);
         // 触发怪物死亡
         GameFacade.Instance.SendNotification(NotificationName.Game.MONSTER_DEAD);
+        // 记录到统计信息
+        GameFacade.Instance.SendNotification(NotificationName.Data.CHANGE_KILLMONSTER_COUNT, +1);
     }
 
     public override void OnPush()

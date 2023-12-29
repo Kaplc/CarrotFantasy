@@ -236,9 +236,16 @@ public class UpdateMoneyCommand : SimpleCommand
 {
     public override void Execute(INotification notification)
     {
-        GameManager.Instance.money += (int)notification.Body;
+        int num = (int)notification.Body;
+        GameManager.Instance.money += num;
         // 更新面板
         SendNotification(NotificationName.UIEvent.GAMEPANEL_UPDATE_MONEY, GameManager.Instance.money);
+        if (num > 0)
+        {
+            // 记录到统计信息
+            SendNotification(NotificationName.Data.CHANGE_MONEY_COUNT, +num);
+        }
+        
     }
 }
 
