@@ -42,7 +42,7 @@ public class BottleTower : BaseTower
     {
         if (!target) return;
         // 创建子弹预设体并设置目标
-        BaseBullet bullet = GameManager.Instance.PoolManager.GetObject(data.bulletsPrefabsPath[level]).GetComponent<BaseBullet>();
+        BottleTowerBullet bullet = GameManager.Instance.PoolManager.GetObject(data.bulletsPrefabsPath[level]).GetComponent<BottleTowerBullet>();
         bullet.transform.position = firePos.position;
         bullet.target = target;
         bullet.atk = Atk;
@@ -53,14 +53,5 @@ public class BottleTower : BaseTower
         soundData.Item3 = false;
         GameFacade.Instance.SendNotification(NotificationName.Game.PLAY_SOUND, soundData);
     }
-
-    public override void OnGet()
-    {
-        base.OnPush();
-    }
-
-    public override void OnPush()
-    {
-        base.OnPush();
-    }
+    
 }

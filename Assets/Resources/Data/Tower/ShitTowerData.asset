@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 758f0040af967cc4b8dc9ab9395507fc, type: 3}
+  m_Name: ShitTowerData
+  m_EditorClassIdentifier: 
+  id: 1
+  rotaSpeed: 5
+  prefabsPath: Object/Tower/ShitTower
+  attackRangesList:
+  - 3
+  - 3.25
+  - 3.5
+  atkList: 010000000100000001000000
+  bulletsPrefabsPath:
+  - Object/Bullet/ShitTowerBullet/0
+  - Object/Bullet/ShitTowerBullet/1
+  - Object/Bullet/ShitTowerBullet/2
+  prices: 64000000b400000004010000
+  sellPrices: 50000000e0000000b0010000
+  icon: {fileID: 21300000, guid: ad07072d0f75e584da5c5fec72645385, type: 3}
+  greyIcon: {fileID: 21300000, guid: 3afa3941870a73c4dbac2b865565332a, type: 3}
+  selectLevelIcon: {fileID: 21300000, guid: 1edb903b95d66cb46bd0396d3c9003c6, type: 3}

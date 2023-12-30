@@ -26,20 +26,23 @@ public abstract class BaseBullet : MonoBehaviour, IPoolObject
             // 根据距离判断是否击中
             if (Vector3.Distance(transform.position, target.transform.position) < 0.3f && active)
             {
+                Hit();
+                // 播放爆炸动画
+                animator.SetTrigger("Explode");
                 // 只扣血一次
                 active = false;
                 // 怪物扣血
                 target.Wound(atk + data.baseAtk);
-                // 播放爆炸动画
-                animator.SetTrigger("Explode");
             }
-            
-            // 怪物死亡立刻回收
-            // if (target.isDead)
-            // {
-            //     GameManager.Instance.PoolManager.PushObject(gameObject);
-            // }
         }
+    }
+    
+    /// <summary>
+    /// 子弹击中回调
+    /// </summary>
+    protected virtual void Hit()
+    {
+        
     }
 
     protected virtual void Flying()

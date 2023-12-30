@@ -16,6 +16,7 @@ public class InitCommand : SimpleCommand
         SendNotification(NotificationName.Init.INIT_GAMEMANAGER_CONTROLLER);
         SendNotification(NotificationName.Init.INIT_SPAWNER_CONTROLLER);
         SendNotification(NotificationName.Init.INIT_LOADSCENE_CONTROLLER);
+        SendNotification(NotificationName.Init.INIT_BUFFMANAGER_CONTROLLER);
         // ModelController
         SendNotification(NotificationName.Init.INIT_GAMEDATAPROXY_CONTROLLER);
         SendNotification(NotificationName.Init.INIT_MUSICDATAPROXY_CONTROLLER);

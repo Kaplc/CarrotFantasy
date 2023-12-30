@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Obstacle
   layers:
   - Default
   - TransparentFX
@@ -49,6 +50,9 @@ TagManager:
     locked: 0
   - name: Role
     uniqueID: 315469461
+    locked: 0
+  - name: Buff
+    uniqueID: 746945059
     locked: 0
   - name: Bullet
     uniqueID: 1345092691

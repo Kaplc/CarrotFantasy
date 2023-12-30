@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: ShitTower0
+  m_Controller: {fileID: 9100000, guid: 00c9b508a164fb74e9e1a02879d404bd, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 938f49af4a8006043bfd2365ac700d30, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 938f49af4a8006043bfd2365ac700d30, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 0af6b8998ee081f4e9ea870755754d1a, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 7eaed14581ce10946813f9c1d9b64075, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: ea9b90c7aa6dd314ab733aa8ca93cd14, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: e4eba8b25c11ed84891a181a8f96aee0, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: b4b195e426bc9cd449740922d68d9ab2, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: b4b195e426bc9cd449740922d68d9ab2, type: 2}

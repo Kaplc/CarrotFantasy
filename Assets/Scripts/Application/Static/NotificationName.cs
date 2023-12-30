@@ -9,6 +9,7 @@ public static class NotificationName
         public const string INIT = "INIT"; // 游戏初始化
         public const string INIT_GAMEMANAGER_CONTROLLER = "INIT_GAMEMANAGER_CONTROLLER";
         public const string INIT_GAMEDATAPROXY_CONTROLLER = "INIT_GAMEDATAPROXY_CONTROLLER";
+        public const string INIT_BUFFMANAGER_CONTROLLER = "INIT_BUFFMANAGER_CONTROLLER";
         public const string INIT_SPAWNER_CONTROLLER = "INIT_SPAWNER_CONTROLLER";
         public const string INIT_PROCESSDATAPROXY_CONTROLLER = "INIT_PROCESSDATAPROXY_CONTROLLER";
         public const string INIT_MUSICDATAPROXY_CONTROLLER = "INIT_MUSICDATAPROXY_CONTROLLER";
@@ -47,6 +48,10 @@ public static class NotificationName
         public const string STOP_MUSIC = "StopMusic";
         public const string PLAY_SOUND = "PlaySound";
         public const string MUTE_SOUND = "MuteSound";
+        // Buff
+        public const string ADD_BUFF = "ADD_BUFF";
+        public const string REMOVE_BUFF = "REMOVE_BUFF";
+        public const string REMOVE_BUFFS = "REMOVE_BUFFS";
     }
     
     public static class UI

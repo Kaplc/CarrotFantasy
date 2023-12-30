@@ -23,7 +23,7 @@ AnimationClip:
       value: {fileID: 21300000, guid: 2e4ce7ec1bb698347a98b8508c6e9c73, type: 3}
     - time: 0.48333332
       value: {fileID: 21300000, guid: e7b8c428daae6ad4184170539ae4837d, type: 3}
-    - time: 0.5
+    - time: 0.55
       value: {fileID: 21300000, guid: 6aef0700934f01c40b81bf7270529398, type: 3}
     attribute: m_Sprite
     path: Weapon
@@ -52,7 +52,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.51666665
+    m_StopTime: 0.56666666
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0

@@ -27,6 +27,7 @@ public class GameFacade : Facade
         RegisterCommand(NotificationName.Init.INIT_GAMEMANAGER_CONTROLLER, () => new InitGameManagerControllerCommand());
         RegisterCommand(NotificationName.Init.INIT_SPAWNER_CONTROLLER, () => new InitSpawnerController());
         RegisterCommand(NotificationName.Init.INIT_LOADSCENE_CONTROLLER, () => new InitLoadSceneController());
+        RegisterCommand(NotificationName.Init.INIT_BUFFMANAGER_CONTROLLER, () => new InitBuffManagerControllerCommand());
         // ModelController
         RegisterCommand(NotificationName.Init.INIT_GAMEDATAPROXY_CONTROLLER, () => new InitGameDataProxyCommand());
         RegisterCommand(NotificationName.Init.INIT_MUSICDATAPROXY_CONTROLLER, () => new InitMusicDataProxyControllerCommand());

@@ -178,7 +178,7 @@ GameObject:
   - component: {fileID: -2086090203348294563}
   m_Layer: 0
   m_Name: Obstacle4
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -263,6 +263,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isDead: 0
   data: {fileID: 11400000, guid: 85537c9c886e0b544894f19ce58c5c55, type: 2}
+  hp: 0
+  speed: 0
   animator: {fileID: 0}
   hpImageBg: {fileID: 906888109636602081}
   hpImageFg: {fileID: 5277117055700530291}

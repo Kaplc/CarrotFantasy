@@ -13,6 +13,8 @@ public class Monster : BaseRole, IPoolObject
     private int pathIndex;
     protected float lastWoundTime; // 上次扣血时间
     private float growth = 1.0f; // 成长系数
+    public float speed;
+        
 
     private Cell nextCell;
     public Animator animator;
@@ -21,8 +23,6 @@ public class Monster : BaseRole, IPoolObject
     public Transform signFather; // 集火标记父对象
 
     #region 属性
-
-    private float Speed => data.speed;
 
     private float Hp
     {
@@ -44,6 +44,10 @@ public class Monster : BaseRole, IPoolObject
                 addMoneyTips.textMeshPro.text = "+" + (int)(data.baseMoney * growth);
                 addMoneyTips.transform.position = transform.position;
                 addMoneyTips.transform.DOMoveY(addMoneyTips.transform.position.y + 2f, 0.5f); // 上移动画
+                
+                // 移除所有Buff
+                ClearAllBuffs();
+                
                 // 播放死亡动画
                 animator.SetBool("Dead", true);
                 // 播放死亡音效
@@ -110,6 +114,17 @@ public class Monster : BaseRole, IPoolObject
         }
     }
 
+    private void ClearAllBuffs()
+    {
+        // 移除身上所有Buff
+        BaseBuffEffect[] buffEffects = transform.GetComponentsInChildren<BaseBuffEffect>();
+        for (int i = 0; i < buffEffects.Length; i++)
+        {
+            GameManager.Instance.PoolManager.PushObject(buffEffects[i].gameObject); ;
+        }
+        GameFacade.Instance.SendNotification(NotificationName.Game.REMOVE_BUFFS, this);
+    }
+
     /// <summary>
     /// 点击触发集火
     /// </summary>
@@ -133,7 +148,7 @@ public class Monster : BaseRole, IPoolObject
         Vector3 dir = Map.GetCellCenterPos(nextCell) - transform.position;
         dir.Normalize();
         // 移动
-        transform.Translate(dir * (Time.deltaTime * Speed));
+        transform.Translate(dir * (Time.deltaTime * speed));
     }
 
     public override void Wound(int woundHp)
@@ -167,8 +182,10 @@ public class Monster : BaseRole, IPoolObject
         // 设置第一个目标格子
         nextCell = GameManager.Instance.nowLevelData.mapData.pathList[0];
         pathIndex = 0;
-        // 刷新血
+        // 刷新属性
         hp = data.maxHp;
+        speed = data.speed;
+        
         // 还原动画
         animator.SetBool("Dead", false);
 

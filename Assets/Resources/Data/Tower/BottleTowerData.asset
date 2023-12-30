@@ -14,16 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 0
   rotaSpeed: 5
-  prefabsPath: Object/Tower/BottleTower/BottleTower
+  prefabsPath: Object/Tower/BottleTower
   attackRangesList:
   - 3
   - 3.5
   - 4
   atkList: 010000000200000003000000
   bulletsPrefabsPath:
-  - Object/Tower/BottleTower/Bullet/0
-  - Object/Tower/BottleTower/Bullet/1
-  - Object/Tower/BottleTower/Bullet/2
+  - Object/Bullet/BottleTowerBullet/0
+  - Object/Bullet/BottleTowerBullet/1
+  - Object/Bullet/BottleTowerBullet/2
   prices: 64000000b400000004010000
   sellPrices: 50000000e0000000b0010000
   icon: {fileID: 21300000, guid: 0346e09d7d1d10f43b62d65b776fd707, type: 3}
