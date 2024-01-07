@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 2
   speed: 4.5
-  maxHp: 0.8
+  maxHp: 1
   atk: 1
   baseMoney: 10
   prefabsPath: Object/Monster/Monster2
