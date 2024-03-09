@@ -191,7 +191,7 @@ Transform:
   m_GameObject: {fileID: 8628199633042941779}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1315073423192171977}
   - {fileID: 1559686082120317181}
@@ -262,6 +262,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: aab2e8cd34433054a981d09ecb22a4b3, type: 2}
   level: 0
+  attacking: 0
   animator: {fileID: 8049761517242303395}
   controllers:
   - {fileID: 9100000, guid: 00c9b508a164fb74e9e1a02879d404bd, type: 2}

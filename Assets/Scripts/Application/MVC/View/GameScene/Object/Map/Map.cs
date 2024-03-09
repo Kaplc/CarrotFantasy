@@ -25,9 +25,9 @@ public class Map : MonoBehaviour
     public static List<Cell> pathList = new List<Cell>(); // 所有路径拐点
 
     #region 编辑器相关字段
-
+    
     public MapData nowEditorMapData; // 当前编辑地图数据
-
+    [Header("地图编辑器相关字段")]
     [HideInInspector] public bool drawGizmos; // 开启绘制
     [HideInInspector] public bool drawTowerPos;
     [HideInInspector] public bool drawPath;
@@ -127,7 +127,7 @@ public class Map : MonoBehaviour
         for (int i = 0; i <= RowNum; i++)
         {
             Vector2 from = new Vector2(0 - mapWidth / 2f, i * cellHeight - mapHeight / 2f);
-            Vector2 to = new Vector2(mapWidth - mapWidth / 2f, i * cellWidth - mapHeight / 2f);
+            Vector2 to = new Vector2(mapWidth - mapWidth / 2f, i * cellHeight - mapHeight / 2f);
             Gizmos.DrawLine(from, to);
         }
 
@@ -175,6 +175,8 @@ public class Map : MonoBehaviour
             {
                 // 创建实例
                 GameObject obstacle = Instantiate(Resources.Load<GameObject>($"Object/Obstacle/{cellsList[i].obstacleName}"));
+                obstacle.transform.SetParent(transform);
+                obstacle.transform.localScale = Vector3.one;
                 obstacle.transform.position = GetCellCenterPos(cellsList[i]);
                 cellsList[i].obstacle = obstacle;
                 obstacleList.Add(obstacle);
@@ -192,11 +194,13 @@ public class Map : MonoBehaviour
     private void CalCellSize()
     {
         // 摄像机视口左下和右上转世界坐标
-        Vector3 bottomLeft = Camera.main.ViewportToWorldPoint(new Vector3(0, 0));
-        Vector3 topRight = Camera.main.ViewportToWorldPoint(new Vector3(1, 1));
+        // Vector3 bottomLeft = Camera.main.ViewportToWorldPoint(new Vector3(0, 0));
+        // Vector3 topRight = Camera.main.ViewportToWorldPoint(new Vector3(1, 1));
         // 地图大小
-        mapWidth = Mathf.Abs(topRight.x - bottomLeft.x);
-        mapHeight = Mathf.Abs(topRight.y - bottomLeft.y);
+        // mapWidth = Mathf.Abs(topRight.x - bottomLeft.x);
+        // mapHeight = Mathf.Abs(topRight.y - bottomLeft.y);
+        mapWidth = mapBgSpriteRenderer.size.x * mapBgSpriteRenderer.transform.localScale.x;
+        mapHeight = mapBgSpriteRenderer.size.y * mapBgSpriteRenderer.transform.localScale.y;
         // 格子大小
         cellWidth = mapWidth / ColumnNum;
         cellHeight = mapHeight / RowNum;

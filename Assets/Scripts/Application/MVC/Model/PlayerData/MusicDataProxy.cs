@@ -1,7 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using PureMVC.Patterns.Proxy;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class MusicDataProxy : Proxy
 {
@@ -16,9 +20,14 @@ public class MusicDataProxy : Proxy
 
     public void GetMusicSettingData()
     {
+        if (musicSettingData == null)
+        {
+            LoadMusicSettingData();
+        }
+
         // 复制一份防止外部直接通过引用修改
-        MusicSettingData newData = new MusicSettingData(){musicOpen = musicSettingData.musicOpen, soundOpen = musicSettingData.soundOpen};
-        
+        MusicSettingData newData = new MusicSettingData() { musicOpen = musicSettingData.musicOpen, soundOpen = musicSettingData.soundOpen };
+
         SendNotification(NotificationName.Data.LOADED_MUSICSETTINGDATA, newData);
     }
 
@@ -27,9 +36,36 @@ public class MusicDataProxy : Proxy
     /// </summary>
     private void LoadMusicSettingData()
     {
-        if (Data != null) return;
-
+#if UNITY_EDITOR_WIN
         musicSettingData = BinaryManager.Instance.Load<MusicSettingData>("MusicSettingData.zy");
+#endif
+#if UNITY_ANDROID
+        string path = Application.persistentDataPath + "/MusicSettingData.zy";
+        if (!File.Exists(path))
+        {
+            File.Create(path);
+            musicSettingData = new MusicSettingData();
+        }
+        else
+        {
+            try
+            {
+                using (FileStream fileStream = File.Open(path, FileMode.Open, FileAccess.Read))
+                {
+                    BinaryFormatter formatter = new BinaryFormatter();
+                    musicSettingData = formatter.Deserialize(fileStream) as MusicSettingData;
+                    fileStream.Close();
+                }
+            }
+            catch
+            {
+                // correct the file
+                File.Delete(path);
+                File.Create(path);
+                musicSettingData = new MusicSettingData();
+            }
+        }
+#endif
     }
 
     public void SaveMusicSettingData(MusicSettingData data)
@@ -38,6 +74,17 @@ public class MusicDataProxy : Proxy
         musicSettingData.musicOpen = data.musicOpen;
         musicSettingData.soundOpen = data.soundOpen;
         // 持久化
+#if UNITY_EDITOR_WIN
         BinaryManager.Instance.Save("MusicSettingData.zy", musicSettingData);
+#endif
+#if UNITY_ANDROID
+        using (FileStream fileStream = File.Open(Application.persistentDataPath + "/MusicSettingData.zy", FileMode.Open, FileAccess.Write))
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            formatter.Serialize(fileStream, musicSettingData);
+            fileStream.Flush();
+            fileStream.Close();
+        }
+#endif
     }
 }

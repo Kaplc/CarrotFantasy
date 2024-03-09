@@ -32,9 +32,10 @@ public class UIManager
     {
         // 获取canvas
         canvas = GameObject.Find("Canvas")?.GetComponent<Canvas>();
-
+        
         if (!canvas)
         {
+            Debug.Log("Canvas未获取成功自动创建");
             canvas = GameObject.Instantiate(Resources.Load<GameObject>("UI/Canvas")).GetComponent<Canvas>();
         }
         

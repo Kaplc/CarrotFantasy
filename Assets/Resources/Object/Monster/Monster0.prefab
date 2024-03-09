@@ -192,7 +192,7 @@ Transform:
   m_GameObject: {fileID: 5834347569967999753}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4169962346438412406}
   - {fileID: 3019357133872087010}
@@ -282,6 +282,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isDead: 0
   data: {fileID: 11400000, guid: eea0463a05e335f42801b8c62937d482, type: 2}
+  hp: 0
+  speed: 0
   animator: {fileID: 6877530162334749445}
   hpImageBg: {fileID: 4169962346438412406}
   hpImageFg: {fileID: 4082483868612744159}

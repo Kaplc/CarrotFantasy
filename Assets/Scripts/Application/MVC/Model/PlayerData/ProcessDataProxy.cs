@@ -1,5 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using PureMVC.Patterns.Proxy;
 using UnityEngine;
 
@@ -16,21 +19,56 @@ public class ProcessDataProxy : Proxy
 
     public void GetProcessData()
     {
-        if(processData is null)return;
+        if (processData is null)
+        {
+            LoadProcessData();
+        }
 
         ProcessData newData = new ProcessData()
         {
             passedItemsDic = new Dictionary<int, PassedLevelData>(processData.passedItemsDic)
         };
-        
+
         SendNotification(NotificationName.Data.LOADED_PROCESSDATA, newData);
     }
 
     private void LoadProcessData()
     {
         if (processData != null) return;
-            
+
+#if UNITY_EDITOR_WIN
         processData = BinaryManager.Instance.Load<ProcessData>("ProcessData.zy");
+#endif
+#if UNITY_ANDROID
+        string path = Application.persistentDataPath + "/ProcessData.zy";
+        if (!File.Exists(path))
+        {
+            File.Create(path);
+            processData = new ProcessData();
+        }
+        else
+        {
+            try
+            {
+                using (FileStream fileStream = File.Open(path, FileMode.Open, FileAccess.Read))
+                {
+                    BinaryFormatter formatter = new BinaryFormatter();
+                    processData = formatter.Deserialize(fileStream) as ProcessData;
+                    fileStream.Close();
+                }
+            }
+            catch
+            {
+                // correct the file
+                File.Delete(path);
+                File.Create(path);
+                processData = new ProcessData();
+            }
+
+        }
+
+#endif
+
         CalPassedLevelCount();
     }
 
@@ -79,6 +117,17 @@ public class ProcessDataProxy : Proxy
         CalPassedLevelCount();
 
         // 数据持久化
+#if UNITY_EDITOR_WIN
         BinaryManager.Instance.Save("ProcessData.zy", processData);
+#endif
+#if UNITY_ANDROID
+        using (FileStream fs = File.Open(Application.persistentDataPath +"/ProcessData.zy", FileMode.Open, FileAccess.Write))
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            formatter.Serialize(fs, processData);
+            fs.Flush();
+            fs.Close();
+        }
+#endif
     }
 }

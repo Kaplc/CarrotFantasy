@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 1891311104066969968}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.24, y: -2.21, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8585921539381430697}
   - {fileID: 8543211076119491857}
@@ -119,6 +119,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isDead: 0
   data: {fileID: 11400000, guid: bbcd0d4dc615e4e43891da72f72db3b4, type: 2}
+  hp: 0
+  speed: 0
   animator: {fileID: 483033688714845732}
   hpImageBg: {fileID: 8585921539381430697}
   hpImageFg: {fileID: 6596469630341483117}

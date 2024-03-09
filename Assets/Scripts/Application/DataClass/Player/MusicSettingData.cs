@@ -6,6 +6,6 @@ using UnityEngine;
 [Serializable]
 public class MusicSettingData
 {
-    public bool musicOpen;
-    public bool soundOpen;
+    public bool musicOpen = true;
+    public bool soundOpen = true;
 }

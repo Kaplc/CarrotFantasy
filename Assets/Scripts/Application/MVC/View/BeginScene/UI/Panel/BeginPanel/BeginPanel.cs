@@ -29,7 +29,12 @@ public class BeginPanel : BasePanel
         });
         btnBoss.onClick.AddListener(() => { });
         btnMonster.onClick.AddListener(() => { });
-        btnSetting.onClick.AddListener(() => { PanelMediator.SendNotification(NotificationName.UI.SHOW_SETTINGPANEL); });
+        btnSetting.onClick.AddListener(() =>
+        {
+            Debug.Log("1");
+            PanelMediator.SendNotification(NotificationName.UI.SHOW_SETTINGPANEL);
+            
+        });
         btnHelp.onClick.AddListener(() => { PanelMediator.SendNotification(NotificationName.UI.SHOW_HELPPANEL, true); });
     }
 }
