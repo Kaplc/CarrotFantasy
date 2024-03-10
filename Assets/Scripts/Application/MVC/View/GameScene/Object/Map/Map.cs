@@ -267,9 +267,10 @@ public class Map : MonoBehaviour
     /// <returns></returns>
     public static Cell GetMousePositionCell()
     {
-        Vector3 mouseViewPos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
-        Vector3 mouseWorldPos = Camera.main.ViewportToWorldPoint(mouseViewPos);
-
+        // Vector3 mouseViewPos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+        // Vector3 mouseWorldPos = Camera.main.ViewportToWorldPoint(mouseViewPos);
+        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        
         return GetCell(mouseWorldPos);
     }
 
@@ -323,9 +324,10 @@ public class Map : MonoBehaviour
         if (results.Count > 0 && results[0].gameObject.name != "ImageAttackRange") return;
 
         // 获取点击的格子
-        Vector3 mouseWorldPos = Camera.main.ViewportToWorldPoint(Camera.main.ScreenToViewportPoint(Input.mousePosition));
-        Cell cell = GetCell(mouseWorldPos);
-
+        // Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        // Cell cell = GetCell(mouseWorldPos);
+        Cell cell = GetMousePositionCell();
+        Debug.Log(cell + " " + GetCellCenterPos(cell));
         // 判断是否为放塔点
         if (cell.IsTowerPos)
         {

@@ -31,7 +31,6 @@ public class BeginPanel : BasePanel
         btnMonster.onClick.AddListener(() => { });
         btnSetting.onClick.AddListener(() =>
         {
-            Debug.Log("1");
             PanelMediator.SendNotification(NotificationName.UI.SHOW_SETTINGPANEL);
             
         });

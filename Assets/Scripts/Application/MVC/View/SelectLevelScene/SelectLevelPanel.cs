@@ -73,7 +73,7 @@ public class SelectLevelPanel : BasePanel
     {
         RectTransform content = scrollRect.content;
         // 设置滑动容器大小
-        content.sizeDelta = new Vector2(1035 * (data.levels.Count - 1), content.sizeDelta.y);
+        content.sizeDelta = new Vector2(534 * (data.levels.Count - 1) + 960, content.sizeDelta.y);
 
         for (int i = 0; i < data.levels.Count; i++)
         {

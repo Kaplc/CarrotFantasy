@@ -3,35 +3,11 @@
     "m_SelectedPackage": {
         "deviceId": "C7Y6R20521015808",
         "name": "com.Kaplc.CarrotFantasy",
-        "processId": 16246,
+        "processId": 17870,
         "exited": false
     },
     "m_SelectedPriority": 0,
     "m_KnownPackagesForSerialization": [
-        {
-            "deviceId": "C7Y6R20521015808",
-            "name": "com.Kaplc.CarrotFantasy",
-            "processId": 17824,
-            "exited": true
-        },
-        {
-            "deviceId": "C7Y6R20521015808",
-            "name": "com.unity3d.mobileremote",
-            "processId": 8973,
-            "exited": true
-        },
-        {
-            "deviceId": "C7Y6R20521015808",
-            "name": "com.Kaplc.CarrotFantasy",
-            "processId": 11650,
-            "exited": true
-        },
-        {
-            "deviceId": "C7Y6R20521015808",
-            "name": "com.Kaplc.CarrotFantasy",
-            "processId": 18968,
-            "exited": true
-        },
         {
             "deviceId": "C7Y6R20521015808",
             "name": "com.huawei.android.launcher",
@@ -41,25 +17,31 @@
         {
             "deviceId": "C7Y6R20521015808",
             "name": "com.Kaplc.CarrotFantasy",
-            "processId": 7769,
-            "exited": false
-        },
-        {
-            "deviceId": "C7Y6R20521015808",
-            "name": "com.Kaplc.CarrotFantasy",
-            "processId": 10542,
-            "exited": false
-        },
-        {
-            "deviceId": "C7Y6R20521015808",
-            "name": "com.Kaplc.CarrotFantasy",
             "processId": 12778,
-            "exited": false
+            "exited": true
         },
         {
             "deviceId": "C7Y6R20521015808",
             "name": "com.Kaplc.CarrotFantasy",
             "processId": 16246,
+            "exited": true
+        },
+        {
+            "deviceId": "C7Y6R20521015808",
+            "name": "com.Kaplc.CarrotFantasy",
+            "processId": 20545,
+            "exited": true
+        },
+        {
+            "deviceId": "C7Y6R20521015808",
+            "name": "com.Kaplc.CarrotFantasy",
+            "processId": 24256,
+            "exited": true
+        },
+        {
+            "deviceId": "C7Y6R20521015808",
+            "name": "com.Kaplc.CarrotFantasy",
+            "processId": 17870,
             "exited": false
         }
     ],
@@ -118,7 +100,24 @@
         "m_UseRegularExpressions": true,
         "m_MatchCase": false
     },
-    "m_SymbolPaths": [],
+    "m_SymbolPaths": [
+        {
+            "Name": "E:\\Develop\\Unity\\2019.4.40f1\\Editor\\Data\\PlaybackEngines\\AndroidPlayer\\Variations\\mono\\Development\\Symbols\\armeabi-v7a",
+            "Enabled": true
+        },
+        {
+            "Name": "E:\\Develop\\Unity\\2019.4.40f1\\Editor\\Data\\PlaybackEngines\\AndroidPlayer\\Variations\\mono\\Release\\Symbols\\armeabi-v7a",
+            "Enabled": true
+        },
+        {
+            "Name": "E:\\Develop\\Unity\\2019.4.40f1\\Editor\\Data\\PlaybackEngines\\AndroidPlayer\\Variations\\mono\\Development\\Symbols",
+            "Enabled": true
+        },
+        {
+            "Name": "E:\\Develop\\Unity\\2019.4.40f1\\Editor\\Data\\PlaybackEngines\\AndroidPlayer\\Variations\\mono\\Release\\Symbols",
+            "Enabled": true
+        }
+    ],
     "m_CaptureVideoSettings": {
         "TimeLimitEnabled": false,
         "TimeLimit": 180,

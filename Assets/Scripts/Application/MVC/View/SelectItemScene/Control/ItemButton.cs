@@ -22,6 +22,6 @@ public class ItemButton : MonoBehaviour
     public void UpdateUnlockMapCount(int unlockCount)
     {
         IsLock = true;
-        txUnlockMapCount.text = $"{unlockCount}/9";
+        txUnlockMapCount.text = $"{unlockCount + 1}/9";
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UpGradeTips : MonoBehaviour, IPoolObject
+public class UpGradeTips: MonoBehaviour, IPoolObject
 {
     public Animator animator;
     

@@ -64,7 +64,9 @@ public class BuiltPanel : BasePanel
     /// </summary>
     private Vector2 WorldPosToUIPos(Vector3 cellCenterPos)
     {
-        Vector2 screenPos = UIManager.Instance.uiCamera.ViewportToScreenPoint(UIManager.Instance.uiCamera.WorldToViewportPoint(cellCenterPos));
+        Vector2 viewportPos = UIManager.Instance.uiCamera.WorldToViewportPoint(cellCenterPos);
+        Vector2 screenPos = UIManager.Instance.uiCamera.ViewportToScreenPoint(viewportPos);
+        Debug.Log(screenPos);
         RectTransformUtility.ScreenPointToLocalPointInRectangle(transform as RectTransform, screenPos, UIManager.Instance.uiCamera,
             out Vector2 uiPos);
         return uiPos;

@@ -35,8 +35,10 @@ public class UpGradePanel : MonoBehaviour
 
         txSellMoney.text = sellMoney.ToString();
         // 缩放攻击访问大小
-        ((RectTransform)imgAttackRange.transform).localScale = new Vector3(attackRange, attackRange, attackRange);
-
+        // ((RectTransform)imgAttackRange.transform).localScale = new Vector3(attackRange, attackRange, attackRange);
+        Vector2 size = imgAttackRange.rectTransform.sizeDelta;
+        // attackRange need x2 because the attackRange is the radius
+        imgAttackRange.rectTransform.sizeDelta = new Vector2(attackRange* 2 * size.x , attackRange* 2 * size.y );
         // 设置位置
         ((RectTransform)transform).anchoredPosition = uiPos;
         // 显示方向

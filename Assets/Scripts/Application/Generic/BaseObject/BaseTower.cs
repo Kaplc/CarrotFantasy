@@ -61,7 +61,7 @@ public abstract class BaseTower : MonoBehaviour, IPoolObject
             if (upGradeTips) return;
 
             upGradeTips = GameManager.Instance.FactoryManager.UIControlFactory.CreateControl("UpGradeTips");
-            upGradeTips.transform.position = transform.position + Vector3.up;
+            upGradeTips.transform.position = transform.position + new Vector3(0, 0.436f, 0);
         }
         else
         {
@@ -71,6 +71,12 @@ public abstract class BaseTower : MonoBehaviour, IPoolObject
                 upGradeTips = null;
             }
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, data.attackRangesList[level]);
     }
 
     /// <summary>

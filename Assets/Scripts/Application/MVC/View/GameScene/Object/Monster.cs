@@ -44,18 +44,10 @@ public class Monster : BaseRole, IPoolObject
                 addMoneyTips.textMeshPro.text = "+" + (int)(data.baseMoney * growth);
                 addMoneyTips.transform.position = transform.position;
                 addMoneyTips.transform.DOMoveY(addMoneyTips.transform.position.y + 2f, 0.5f); // 上移动画
-                
                 // 移除所有Buff
                 ClearAllBuffs();
-                
                 // 播放死亡动画
                 animator.SetBool("Dead", true);
-                // 播放死亡音效
-                (string, float, bool) soundData;
-                soundData.Item1 = "Music/MonsterDead";
-                soundData.Item2 = 1;
-                soundData.Item3 = false;
-                GameFacade.Instance.SendNotification(NotificationName.Game.PLAY_SOUND, soundData);
             }
             
             // 更新血条图片
@@ -94,10 +86,8 @@ public class Monster : BaseRole, IPoolObject
             // 到达终点格子, 触发死亡方法
             if (pathIndex == GameManager.Instance.nowLevelData.mapData.pathList.Count - 1)
             {
-                // 触发怪物到达终点事件
-                GameFacade.Instance.SendNotification(NotificationName.Game.REACH_ENDPOINT, data.atk);
-                // 怪物死亡
-                Hp = 0;
+                // 终点怪物死亡
+                EndDead();
                 return;
             }
 
@@ -155,9 +145,32 @@ public class Monster : BaseRole, IPoolObject
     {
         Hp -= woundHp;
     }
+    
+    /// <summary>
+    /// 终点死亡
+    /// </summary>
+    private void EndDead()
+    {
+        hp = 0;
+        isDead = true;
+        // 触发怪物到达终点事件
+        GameFacade.Instance.SendNotification(NotificationName.Game.REACH_ENDPOINT, data.atk);
+        // 取消集火
+        GameFacade.Instance.SendNotification(NotificationName.Game.CANEL_COLLECTINGFIRES, this);
+        // 移除所有Buff
+        ClearAllBuffs();
+        // 播放死亡动画
+        animator.SetBool("Dead", true);
+    }
 
     protected override void Dead()
     {
+        // 播放死亡音效
+        (string, float, bool) soundData;
+        soundData.Item1 = "Music/MonsterDead";
+        soundData.Item2 = 1;
+        soundData.Item3 = false;
+        GameFacade.Instance.SendNotification(NotificationName.Game.PLAY_SOUND, soundData);
         // 回收
         GameManager.Instance.PoolManager.PushObject(gameObject);
         // 触发怪物死亡
