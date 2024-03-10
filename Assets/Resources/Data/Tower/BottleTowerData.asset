@@ -16,9 +16,9 @@ MonoBehaviour:
   rotaSpeed: 5
   prefabsPath: Object/Tower/BottleTower
   attackRangesList:
-  - 3
-  - 3.5
-  - 4
+  - 1.5
+  - 1.75
+  - 2
   atkList: 010000000200000003000000
   bulletsPrefabsPath:
   - Object/Bullet/BottleTowerBullet/0

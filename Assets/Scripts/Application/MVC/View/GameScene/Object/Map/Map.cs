@@ -327,7 +327,7 @@ public class Map : MonoBehaviour
         // Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         // Cell cell = GetCell(mouseWorldPos);
         Cell cell = GetMousePositionCell();
-        Debug.Log(cell + " " + GetCellCenterPos(cell));
+        // Debug.Log(cell + " " + GetCellCenterPos(cell));
         // 判断是否为放塔点
         if (cell.IsTowerPos)
         {

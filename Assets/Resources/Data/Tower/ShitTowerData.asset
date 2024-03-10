@@ -16,9 +16,9 @@ MonoBehaviour:
   rotaSpeed: 5
   prefabsPath: Object/Tower/ShitTower
   attackRangesList:
-  - 3
-  - 3.25
-  - 3.5
+  - 1.25
+  - 1.5
+  - 1.75
   atkList: 010000000100000001000000
   bulletsPrefabsPath:
   - Object/Bullet/ShitTowerBullet/0

@@ -76,7 +76,10 @@ public abstract class BaseTower : MonoBehaviour, IPoolObject
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, data.attackRangesList[level]);
+        if (target)
+        {
+            Gizmos.DrawLine(transform.position, target.transform.position);
+        }
     }
 
     /// <summary>
@@ -100,7 +103,7 @@ public abstract class BaseTower : MonoBehaviour, IPoolObject
     /// </summary>
     protected void FindTargets()
     {
-        float closestDistance = 0f;
+        // float closestDistance = 0f;
         // 查找目标
         for (int i = 0; i < GameManager.Instance.spawner.monsters.Count; i++)
         {
@@ -110,13 +113,14 @@ public abstract class BaseTower : MonoBehaviour, IPoolObject
             // 处于攻击范围
             if (distance < data.attackRangesList[level] && !monster.isDead)
             {
-                if (closestDistance == 0f) closestDistance = distance;
+                // if (closestDistance == 0f) closestDistance = distance;
 
-                if (distance <= closestDistance)
-                {
-                    closestDistance = distance;
-                    target = monster;
-                }
+                // if (distance <= closestDistance)
+                // {
+                //     closestDistance = distance;
+                //     target = monster;
+                // }
+                target = monster;
             }
         }
     }
