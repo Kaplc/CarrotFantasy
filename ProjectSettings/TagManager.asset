@@ -42,21 +42,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: MapBG
-    uniqueID: 1566667761
-    locked: 0
-  - name: Road
-    uniqueID: 3418214177
-    locked: 0
   - name: Role
-    uniqueID: 315469461
-    locked: 0
-  - name: Buff
-    uniqueID: 746945059
+    uniqueID: 4018159891
     locked: 0
   - name: Bullet
-    uniqueID: 1345092691
+    uniqueID: 1521714079
     locked: 0
   - name: UI
-    uniqueID: 1066937155
+    uniqueID: 866489947
     locked: 0

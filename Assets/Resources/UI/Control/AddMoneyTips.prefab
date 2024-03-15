@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4577079005544425749}
   - component: {fileID: 2028884415153208369}
   - component: {fileID: 5832799267608217613}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: AddMoneyTips
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1066937155
-  m_SortingLayer: 6
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 7f5197d9631a741449806582a2a2b0c2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -129,7 +129,7 @@ GameObject:
   - component: {fileID: 5344297543271578239}
   - component: {fileID: 977683847643893139}
   - component: {fileID: 1573733550402462868}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -192,7 +192,7 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1066937155
-  m_SortingLayer: 6
+  m_SortingLayer: 0
   m_SortingOrder: 0
 --- !u!222 &977683847643893139
 CanvasRenderer:

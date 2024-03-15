@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BottleTowerData
   m_EditorClassIdentifier: 
   id: 0
-  rotaSpeed: 5
+  rotaSpeed: 10
   prefabsPath: Object/Tower/BottleTower
   attackRangesList:
   - 1.5

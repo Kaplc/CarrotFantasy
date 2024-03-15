@@ -3,7 +3,7 @@
     "m_SelectedPackage": {
         "deviceId": "C7Y6R20521015808",
         "name": "com.Kaplc.CarrotFantasy",
-        "processId": 17870,
+        "processId": 27927,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -11,37 +11,229 @@
         {
             "deviceId": "C7Y6R20521015808",
             "name": "com.huawei.android.launcher",
-            "processId": 3231,
+            "processId": 2615,
             "exited": false
         },
         {
             "deviceId": "C7Y6R20521015808",
             "name": "com.Kaplc.CarrotFantasy",
-            "processId": 12778,
+            "processId": 16282,
+            "exited": true
+        },
+        {
+            "deviceId": "C7Y6R20521015808",
+            "name": "com.DefaultCompany.CarrotFantasy",
+            "processId": 26272,
+            "exited": true
+        },
+        {
+            "deviceId": "C7Y6R20521015808",
+            "name": "com.DefaultCompany.CarrotFantasy",
+            "processId": 29052,
+            "exited": true
+        },
+        {
+            "deviceId": "C7Y6R20521015808",
+            "name": "com.DefaultCompany.CarrotFantasy",
+            "processId": 29771,
             "exited": true
         },
         {
             "deviceId": "C7Y6R20521015808",
             "name": "com.Kaplc.CarrotFantasy",
-            "processId": 16246,
-            "exited": true
+            "processId": 32256,
+            "exited": false
         },
         {
             "deviceId": "C7Y6R20521015808",
             "name": "com.Kaplc.CarrotFantasy",
-            "processId": 20545,
-            "exited": true
+            "processId": 29015,
+            "exited": false
         },
         {
             "deviceId": "C7Y6R20521015808",
             "name": "com.Kaplc.CarrotFantasy",
-            "processId": 24256,
-            "exited": true
+            "processId": 32693,
+            "exited": false
         },
         {
             "deviceId": "C7Y6R20521015808",
             "name": "com.Kaplc.CarrotFantasy",
-            "processId": 17870,
+            "processId": 4067,
+            "exited": false
+        },
+        {
+            "deviceId": "C7Y6R20521015808",
+            "name": "com.Kaplc.CarrotFantasy",
+            "processId": 6687,
+            "exited": false
+        },
+        {
+            "deviceId": "C7Y6R20521015808",
+            "name": "com.Kaplc.CarrotFantasy",
+            "processId": 8004,
+            "exited": false
+        },
+        {
+            "deviceId": "C7Y6R20521015808",
+            "name": "com.Kaplc.CarrotFantasy",
+            "processId": 10241,
+            "exited": false
+        },
+        {
+            "deviceId": "C7Y6R20521015808",
+            "name": "com.Kaplc.CarrotFantasy",
+            "processId": 18426,
+            "exited": false
+        },
+        {
+            "deviceId": "C7Y6R20521015808",
+            "name": "com.Kaplc.CarrotFantasy",
+            "processId": 23087,
+            "exited": false
+        },
+        {
+            "deviceId": "C7Y6R20521015808",
+            "name": "com.Kaplc.CarrotFantasy",
+            "processId": 24701,
+            "exited": false
+        },
+        {
+            "deviceId": "C7Y6R20521015808",
+            "name": "com.Kaplc.CarrotFantasy",
+            "processId": 26747,
+            "exited": false
+        },
+        {
+            "deviceId": "C7Y6R20521015808",
+            "name": "com.Kaplc.CarrotFantasy",
+            "processId": 28358,
+            "exited": false
+        },
+        {
+            "deviceId": "C7Y6R20521015808",
+            "name": "com.Kaplc.CarrotFantasy",
+            "processId": 1586,
+            "exited": false
+        },
+        {
+            "deviceId": "C7Y6R20521015808",
+            "name": "com.Kaplc.CarrotFantasy",
+            "processId": 5107,
+            "exited": false
+        },
+        {
+            "deviceId": "C7Y6R20521015808",
+            "name": "com.Kaplc.CarrotFantasy",
+            "processId": 10197,
+            "exited": false
+        },
+        {
+            "deviceId": "C7Y6R20521015808",
+            "name": "com.Kaplc.CarrotFantasy",
+            "processId": 12308,
+            "exited": false
+        },
+        {
+            "deviceId": "C7Y6R20521015808",
+            "name": "com.Kaplc.CarrotFantasy",
+            "processId": 16585,
+            "exited": false
+        },
+        {
+            "deviceId": "C7Y6R20521015808",
+            "name": "com.Kaplc.CarrotFantasy",
+            "processId": 19711,
+            "exited": false
+        },
+        {
+            "deviceId": "C7Y6R20521015808",
+            "name": "com.Kaplc.CarrotFantasy",
+            "processId": 23060,
+            "exited": false
+        },
+        {
+            "deviceId": "C7Y6R20521015808",
+            "name": "com.Kaplc.CarrotFantasy",
+            "processId": 24808,
+            "exited": false
+        },
+        {
+            "deviceId": "C7Y6R20521015808",
+            "name": "com.Kaplc.CarrotFantasy",
+            "processId": 31484,
+            "exited": false
+        },
+        {
+            "deviceId": "C7Y6R20521015808",
+            "name": "com.Kaplc.CarrotFantasy",
+            "processId": 3880,
+            "exited": false
+        },
+        {
+            "deviceId": "C7Y6R20521015808",
+            "name": "com.Kaplc.CarrotFantasy",
+            "processId": 10964,
+            "exited": false
+        },
+        {
+            "deviceId": "C7Y6R20521015808",
+            "name": "com.Kaplc.CarrotFantasy",
+            "processId": 16910,
+            "exited": false
+        },
+        {
+            "deviceId": "C7Y6R20521015808",
+            "name": "com.Kaplc.CarrotFantasy",
+            "processId": 27927,
+            "exited": false
+        },
+        {
+            "deviceId": "3ef8f6f8",
+            "name": "com.Kaplc.CarrotFantasy",
+            "processId": 10014,
+            "exited": true
+        },
+        {
+            "deviceId": "3ef8f6f8",
+            "name": "com.android.settings",
+            "processId": 3486,
+            "exited": false
+        },
+        {
+            "deviceId": "3ef8f6f8",
+            "name": "com.Kaplc.CarrotFantasy",
+            "processId": 13796,
+            "exited": true
+        },
+        {
+            "deviceId": "3ef8f6f8",
+            "name": "com.Kaplc.CarrotFantasy",
+            "processId": 19148,
+            "exited": true
+        },
+        {
+            "deviceId": "3ef8f6f8",
+            "name": "com.Kaplc.CarrotFantasy",
+            "processId": 20740,
+            "exited": true
+        },
+        {
+            "deviceId": "3ef8f6f8",
+            "name": "com.Kaplc.CarrotFantasy",
+            "processId": 21705,
+            "exited": false
+        },
+        {
+            "deviceId": "3ef8f6f8",
+            "name": "com.Kaplc.CarrotFantasy",
+            "processId": 25644,
+            "exited": false
+        },
+        {
+            "deviceId": "3ef8f6f8",
+            "name": "com.Kaplc.CarrotFantasy",
+            "processId": 26126,
             "exited": false
         }
     ],
@@ -53,7 +245,7 @@
             },
             {
                 "m_Name": "No Filter",
-                "m_Selected": true
+                "m_Selected": false
             },
             {
                 "m_Name": "",
@@ -69,7 +261,7 @@
             },
             {
                 "m_Name": "Unity",
-                "m_Selected": false
+                "m_Selected": true
             },
             {
                 "m_Name": "CRASH",

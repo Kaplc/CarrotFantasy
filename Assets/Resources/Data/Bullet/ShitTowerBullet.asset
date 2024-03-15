@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: ShitTowerBullet
   m_EditorClassIdentifier: 
   type: 0
-  speed: 15
+  speed: 10
   baseAtk: 0
