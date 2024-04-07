@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using Script.FrameWork.MusicManager;
 using UnityEngine;
+using XLua;
 
 public class GameManager : BaseMonoSingleton<GameManager>
 {
@@ -54,6 +56,12 @@ public class GameManager : BaseMonoSingleton<GameManager>
 
     public SDKManager sdkManager;
 
+    #region xlua
+
+    private LuaEnv luaEnv;
+    
+    #endregion
+
     protected override void Awake()
     {
         base.Awake();
@@ -67,6 +75,24 @@ public class GameManager : BaseMonoSingleton<GameManager>
         GameObject sdkManagerObj = new GameObject(name:"SDKManager");
         sdkManager = sdkManagerObj.AddComponent<SDKManager>();
         DontDestroyOnLoad(sdkManagerObj);
+        
+        // init xLua
+        luaEnv = new LuaEnv();
+        
+        luaEnv.AddLoader((ref string fileName) =>
+        {
+            // custom loader
+            string path = Application.dataPath + "/Scripts/App/Lua/" + fileName + ".lua"; 
+            if (File.Exists(path))
+            {
+                return File.ReadAllBytes(path);
+            }
+            
+            Debug.Log("Lua文件不存在");
+            return null;
+        });
+        // invoke main.lua
+        luaEnv.DoString("require 'Main'");
     }
 
     #region 游戏相关
@@ -200,5 +226,10 @@ public class GameManager : BaseMonoSingleton<GameManager>
                 nowLevelData.levelID
             )
         );
+    }
+
+    private void OnDestroy()
+    {
+        luaEnv.Dispose();
     }
 }

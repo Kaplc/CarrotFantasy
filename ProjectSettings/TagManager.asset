@@ -45,6 +45,9 @@ TagManager:
   - name: Role
     uniqueID: 4018159891
     locked: 0
+  - name: Monster
+    uniqueID: 896647207
+    locked: 0
   - name: Bullet
     uniqueID: 1521714079
     locked: 0

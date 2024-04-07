@@ -51,6 +51,7 @@ MonoBehaviour:
   startPoint: {fileID: 0}
   monsters: []
   towers: []
+  obstaclesList: []
   collectingFiresTarget: {fileID: 0}
   signTrans: {fileID: 5691500022060507843}
 --- !u!1 &5295735793258050818
@@ -121,8 +122,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1066937155
-  m_SortingLayer: 5
+  m_SortingLayerID: 866489947
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b67fa669257ea2a41881e06c90a3c9f9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
