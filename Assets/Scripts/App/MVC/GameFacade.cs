@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using PureMVC.Patterns.Facade;
 using UnityEngine;
+using XLua;
 
+[LuaCallCSharp()]
 public class GameFacade : Facade
 {
     public static GameFacade Instance

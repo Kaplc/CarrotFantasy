@@ -5,7 +5,9 @@ using System.IO;
 using Script.FrameWork.MusicManager;
 using UnityEngine;
 using XLua;
+using ZFramework;
 
+[LuaCallCSharp]
 public class GameManager : BaseMonoSingleton<GameManager>
 {
     public PoolManager PoolManager => PoolManager.Instance;
@@ -58,7 +60,8 @@ public class GameManager : BaseMonoSingleton<GameManager>
 
     #region xlua
 
-    private LuaEnv luaEnv;
+    public XLuaManager XLuaManager => XLuaManager.Instance;
+    public UIManager UIManager => UIManager.Instance;
     
     #endregion
 
@@ -76,23 +79,14 @@ public class GameManager : BaseMonoSingleton<GameManager>
         sdkManager = sdkManagerObj.AddComponent<SDKManager>();
         DontDestroyOnLoad(sdkManagerObj);
         
-        // init xLua
-        luaEnv = new LuaEnv();
-        
-        luaEnv.AddLoader((ref string fileName) =>
-        {
-            // custom loader
-            string path = Application.dataPath + "/Scripts/App/Lua/" + fileName + ".lua"; 
-            if (File.Exists(path))
-            {
-                return File.ReadAllBytes(path);
-            }
-            
-            Debug.Log("Lua文件不存在");
-            return null;
-        });
+        // add lua loader 
+        // custom loader
+        string path = Application.dataPath + "/Scripts/App/Lua/"; 
+        XLuaManager.AddLuaFilePath(path);
         // invoke main.lua
-        luaEnv.DoString("require 'Main'");
+        XLuaManager.RunLua("Main");
+        
+        
     }
 
     #region 游戏相关
@@ -226,10 +220,5 @@ public class GameManager : BaseMonoSingleton<GameManager>
                 nowLevelData.levelID
             )
         );
-    }
-
-    private void OnDestroy()
-    {
-        luaEnv.Dispose();
     }
 }

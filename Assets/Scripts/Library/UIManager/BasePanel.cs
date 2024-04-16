@@ -5,7 +5,9 @@ using PureMVC.Patterns.Mediator;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.PlayerLoop;
+using XLua;
 
+[LuaCallCSharp()]
 public abstract class BasePanel : MonoBehaviour
 {
     private bool showFade;

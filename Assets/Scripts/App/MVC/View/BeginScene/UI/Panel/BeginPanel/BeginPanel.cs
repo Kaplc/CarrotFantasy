@@ -5,7 +5,9 @@ using PureMVC.Patterns.Mediator;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using XLua;
 
+[Hotfix()]
 public class BeginPanel : BasePanel
 {
     public Button btnAdventure;
@@ -33,11 +35,8 @@ public class BeginPanel : BasePanel
             UIManager.Instance.Hide<BeginPanel>(false);
         });
         btnBoss.onClick.AddListener(() => { 
-            // 打开android界面
-            // javaClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-            // javaObject = javaClass.GetStatic<AndroidJavaObject>("currentActivity");
-            // Debug.Log(javaObject.Call<int>("Fun"));
-            // javaObject.Call("OpenActivity");
+            // 热更新Boss模式
+            ShowBossPanel();
         });
         btnMonster.onClick.AddListener(() => { });
         btnSetting.onClick.AddListener(() =>
@@ -52,12 +51,13 @@ public class BeginPanel : BasePanel
             GameManager.Instance.sdkManager.StartPositioning();
         });
     }
+    
+    public void ShowBossPanel()
+    {
+        GameManager.Instance.XLuaManager.DoString("UIManager:ShowPanel('BossPanel')");
+    }
 
     private void OnDestroy() {
-        // javaClass.Dispose();
-        // javaObject.Dispose();
-        // javaClass = null;
-        // javaObject = null;
         GameManager.Instance.sdkManager.Dispose();
     }
 }

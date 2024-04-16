@@ -5,16 +5,20 @@ using UnityEngine.UI;
 
 public class BasePageFlipping : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
-    public float slidingThreshold; // 滑动像素阈值
+    public float slidingThreshold = 150; // 滑动像素阈值
     private float offSetMouseX; // 鼠标拖动的水平位移
-    public int pageIndex; // 当前页码
-    public int totalPageIndex; // 总共页码
-    public float speed; // 动画速度
-    private ScrollRect scrollRect;
+    public int pageIndex = 1; // 当前页码
+    public int totalPageIndex = 1; // 总共页码
+    public float speed = 0.2f; // 动画速度
+    public ScrollRect scrollRect;
 
     private void Awake()
     {
-        scrollRect = GetComponent<ScrollRect>();
+        if (!scrollRect)
+        {
+            scrollRect = GetComponent<ScrollRect>(); 
+        }
+        
         pageIndex = 1;
     }
 
