@@ -194,7 +194,7 @@ public class ContinueGameCommand : SimpleCommand
 {
     public override void Execute(INotification notification)
     {
-        GameManager.Instance.ContinueGame();
+        GameManager.Instance.StartGame();
     }
 }
 

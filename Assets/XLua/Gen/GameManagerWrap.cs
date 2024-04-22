@@ -21,14 +21,13 @@ namespace XLua.CSObjectWrap
         {
 			ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
 			System.Type type = typeof(GameManager);
-			Utils.BeginObjectRegister(type, L, translator, 0, 8, 20, 12);
+			Utils.BeginObjectRegister(type, L, translator, 0, 7, 20, 12);
 			
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "InitGame", _m_InitGame);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "StartGame", _m_StartGame);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "ExitGame", _m_ExitGame);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "PauseGame", _m_PauseGame);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "StopGame", _m_StopGame);
-			Utils.RegisterFunc(L, Utils.METHOD_IDX, "ContinueGame", _m_ContinueGame);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "GameWin", _m_GameWin);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "GameOver", _m_GameOver);
 			
@@ -234,33 +233,6 @@ namespace XLua.CSObjectWrap
                 {
                     
                     gen_to_be_invoked.StopGame(  );
-                    
-                    
-                    
-                    return 0;
-                }
-                
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _m_ContinueGame(RealStatePtr L)
-        {
-		    try {
-            
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-            
-            
-                GameManager gen_to_be_invoked = (GameManager)translator.FastGetCSObj(L, 1);
-            
-            
-                
-                {
-                    
-                    gen_to_be_invoked.ContinueGame(  );
                     
                     
                     

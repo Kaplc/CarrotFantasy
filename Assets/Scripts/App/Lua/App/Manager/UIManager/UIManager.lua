@@ -4,20 +4,35 @@
 --- DateTime: 2024/4/15 23:03
 ---
 
+
+require("App/Manager/UIManager/EUILayers")
+
 require("App/UI/BasePanel")
 require("App/UI/BeginPanel")
 require("App/UI/BossPanel")
-
 
 UIManager = Object:SubClass("UIManager")
 
 UIManager.panelDic = {}
 
-function UIManager:ShowPanel(panelName)
+function UIManager:ShowPanel(panelName, layerType)
     local panel
+    local layer
+    if layerType == EUILayers.Bottom then
+        layer = CS.UIManager.Instance.Bottom
+    elseif layerType == EUILayers.Middle then
+        layer = CS.UIManager.Instance.Middle
+    elseif layerType == EUILayers.Top then
+        layer = CS.UIManager.Instance.Top
+    elseif layerType == EUILayers.System then
+        layer = CS.UIManager.Instance.System
+    else
+        layer = CS.UIManager.Instance.Bottom
+    end
+
     -- 加载面板预设体
     if self.panelDic[panelName] == nil then
-        local panelObj = GameObject.Instantiate(Resources.Load("UI/" .. panelName), CS.UIManager.Instance.Bottom)
+        local panelObj = GameObject.Instantiate(Resources.Load("UI/" .. panelName), layer)
         -- 设置
         panelObj.transform.localScale = Vector3.one
         -- 绑定到lua脚本
@@ -38,7 +53,7 @@ function UIManager:HidePanel(panelName)
         local panel = self.panelDic[panelName]
         panel:Hide()
         GameObject.Destroy(panel.panelObj)
-        
+
         self.panelDic[panelName] = nil
     end
 end

@@ -83,10 +83,7 @@ public class GameManager : BaseMonoSingleton<GameManager>
         // custom loader
         string path = Application.dataPath + "/Scripts/App/Lua/"; 
         XLuaManager.AddLuaFilePath(path);
-        // invoke main.lua
-        XLuaManager.RunLua("Main");
-        
-        
+        XLuaManager.DoFile("Init");
     }
 
     #region 游戏相关
@@ -155,15 +152,6 @@ public class GameManager : BaseMonoSingleton<GameManager>
         stop = true;
         // 暂停且禁止鼠标检测
         Pause = true;
-    }
-
-    /// <summary>
-    /// 游戏继续
-    /// </summary>
-    public void ContinueGame()
-    {
-        Pause = false;
-        stop = false;
     }
 
     #endregion

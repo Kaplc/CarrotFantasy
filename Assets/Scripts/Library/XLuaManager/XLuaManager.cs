@@ -22,7 +22,7 @@ namespace ZFramework
             // luaEnv.AddLoader(AddABLuaFilePath); 
         }
 
-        public void RunLua(string fillName)
+        public void DoFile(string fillName)
         {
             luaEnv.DoString($"require(\"{ fillName}\")");
         }

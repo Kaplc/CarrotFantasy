@@ -54,7 +54,7 @@ public class BeginPanel : BasePanel
     
     public void ShowBossPanel()
     {
-        GameManager.Instance.XLuaManager.DoString("UIManager:ShowPanel('BossPanel')");
+        GameManager.Instance.XLuaManager.DoString("UIManager:ShowPanel('BossPanel', EUILayers.Middle)");
     }
 
     private void OnDestroy() {
