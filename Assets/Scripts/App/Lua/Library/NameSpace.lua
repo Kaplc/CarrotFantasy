@@ -4,6 +4,9 @@
 --- DateTime: 2024/4/13 23:41
 ---
 
+-- env
+CS = CS
+
 -- Components
 GameObject = CS.UnityEngine.GameObject
 Transform = CS.UnityEngine.Transform
@@ -31,3 +34,6 @@ InputField = CS.UnityEngine.UI.InputField
 ScrollRect = CS.UnityEngine.UI.ScrollRect
 
 -- Script
+UIInterfaceClass = CS.UIInterfaceClass
+MonoScript = CS.MonoScript
+Mathf = CS.CallMathf

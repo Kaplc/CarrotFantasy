@@ -12,10 +12,10 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{25998ef5-9d4b-11a1-167d-1071a08fc50a}</ProjectGuid>
+    <ProjectGuid>{a3b1b6e8-6541-9517-a055-2e7b72e9cd0a}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>Assembly-CSharp-player</AssemblyName>
+    <AssemblyName>DOTween.Modules-player</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>.</BaseDirectory>
@@ -50,283 +50,16 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\PureMVC\Core\Controller.cs" />
-     <Compile Include="Assets\PureMVC\Core\Model.cs" />
-     <Compile Include="Assets\PureMVC\Core\View.cs" />
-     <Compile Include="Assets\PureMVC\Interfaces\ICommand.cs" />
-     <Compile Include="Assets\PureMVC\Interfaces\IController.cs" />
-     <Compile Include="Assets\PureMVC\Interfaces\IFacade.cs" />
-     <Compile Include="Assets\PureMVC\Interfaces\IMediator.cs" />
-     <Compile Include="Assets\PureMVC\Interfaces\IModel.cs" />
-     <Compile Include="Assets\PureMVC\Interfaces\INotification.cs" />
-     <Compile Include="Assets\PureMVC\Interfaces\INotifier.cs" />
-     <Compile Include="Assets\PureMVC\Interfaces\IObserver.cs" />
-     <Compile Include="Assets\PureMVC\Interfaces\IProxy.cs" />
-     <Compile Include="Assets\PureMVC\Interfaces\IView.cs" />
-     <Compile Include="Assets\PureMVC\Patterns\Command\MacroCommand.cs" />
-     <Compile Include="Assets\PureMVC\Patterns\Command\SimpleCommand.cs" />
-     <Compile Include="Assets\PureMVC\Patterns\Facade\Facade.cs" />
-     <Compile Include="Assets\PureMVC\Patterns\Mediator\Mediator.cs" />
-     <Compile Include="Assets\PureMVC\Patterns\Observer\Notification.cs" />
-     <Compile Include="Assets\PureMVC\Patterns\Observer\Notifier.cs" />
-     <Compile Include="Assets\PureMVC\Patterns\Observer\Observer.cs" />
-     <Compile Include="Assets\PureMVC\Patterns\Proxy\Proxy.cs" />
-     <Compile Include="Assets\Scripts\App\DataClass\Game\Level\GroupData.cs" />
-     <Compile Include="Assets\Scripts\App\DataClass\Game\Level\ItemData.cs" />
-     <Compile Include="Assets\Scripts\App\DataClass\Game\Level\LevelData.cs" />
-     <Compile Include="Assets\Scripts\App\DataClass\Game\Level\MapData.cs" />
-     <Compile Include="Assets\Scripts\App\DataClass\Game\Level\RoundData.cs" />
-     <Compile Include="Assets\Scripts\App\DataClass\Game\Object\BulletData.cs" />
-     <Compile Include="Assets\Scripts\App\DataClass\Game\Object\CarrotData.cs" />
-     <Compile Include="Assets\Scripts\App\DataClass\Game\Object\MonsterData.cs" />
-     <Compile Include="Assets\Scripts\App\DataClass\Game\Object\TowerData.cs" />
-     <Compile Include="Assets\Scripts\App\DataClass\Player\MusicSettingData.cs" />
-     <Compile Include="Assets\Scripts\App\DataClass\Player\PassedLevelData.cs" />
-     <Compile Include="Assets\Scripts\App\DataClass\Player\PlayerData.cs" />
-     <Compile Include="Assets\Scripts\App\DataClass\Player\ProcessData.cs" />
-     <Compile Include="Assets\Scripts\App\DataClass\Player\StatisticalData.cs" />
-     <Compile Include="Assets\Scripts\App\Generic\BaseObject\BaseBuff.cs" />
-     <Compile Include="Assets\Scripts\App\Generic\BaseObject\BaseBuffEffect.cs" />
-     <Compile Include="Assets\Scripts\App\Generic\BaseObject\BaseBullet.cs" />
-     <Compile Include="Assets\Scripts\App\Generic\BaseObject\BaseRole.cs" />
-     <Compile Include="Assets\Scripts\App\Generic\BaseObject\BaseTower.cs" />
-     <Compile Include="Assets\Scripts\App\Generic\Cell.cs" />
-     <Compile Include="Assets\Scripts\App\Generic\LuaCallCsharp\CallMathf.cs" />
-     <Compile Include="Assets\Scripts\App\Generic\LuaCallCsharp\MonoScript.cs" />
-     <Compile Include="Assets\Scripts\App\Generic\LuaCallCsharp\UIInterfaceClass.cs" />
-     <Compile Include="Assets\Scripts\App\Generic\NotificationBody\CreatePanelArgsBody.cs" />
-     <Compile Include="Assets\Scripts\App\Generic\NotificationBody\CreateTowerArgsBogy.cs" />
-     <Compile Include="Assets\Scripts\App\Generic\NotificationBody\LevelDataBody.cs" />
-     <Compile Include="Assets\Scripts\App\Generic\NotificationBody\UpGradeTowerArgsBody.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\Controller\BuffManager.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\Controller\Commands\BuffManagerCommands.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\Controller\Commands\GameDataProxyCommands.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\Controller\Commands\GameManagerCommands.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\Controller\Commands\InitCommand.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\Controller\Commands\InitEndCommand.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\Controller\Commands\LoadAtlasCommand.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\Controller\Commands\LoadSceneCommands.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\Controller\Commands\MusicDataProxyCommands.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\Controller\Commands\ProcessDataProxyCommands.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\Controller\Commands\SpawnerCommands.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\Controller\Commands\StatisticalDataProxyCommands.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\Controller\FactoryManager.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\Controller\GameManager.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\Controller\Spawner.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\GameFacade.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\Model\Factory\SpriteFactory.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\Model\Factory\UIControlFactory.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\Model\GameData\GameDataProxy.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\Model\PlayerData\MusicDataProxy.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\Model\PlayerData\ProcessDataProxy.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\Model\PlayerData\StatisticalDataProxy.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\BeginScene\Object\Other\Bird.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\BeginScene\Object\Other\Cloud.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\BeginScene\UI\BaseControl\BasePageFlipping.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\BeginScene\UI\Panel\BeginPanel\BeginPanel.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\BeginScene\UI\Panel\BeginPanel\BeginPanelMediator.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\BeginScene\UI\Panel\BeginPanel\HelpPanel\HelpPanel.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\BeginScene\UI\Panel\BeginPanel\HelpPanel\HelpPanelPageFlipping.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\BeginScene\UI\Panel\BeginPanel\SettingPanel\SelectPage.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\BeginScene\UI\Panel\BeginPanel\SettingPanel\SettingPanel.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\BeginScene\UI\Panel\BeginPanel\SettingPanel\StatisticalPage.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\BeginScene\UI\Panel\BeginPanel\SettingPanel\ToggleExtend.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\EndScene\EndPanel.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\GameScene\Object\Buff\DecelerationBuff.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\GameScene\Object\Buff\DecelerationEffect.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\GameScene\Object\Bullet\BottleTowerBullet.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\GameScene\Object\Bullet\ShitTowerBullet.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\GameScene\Object\Carrot\Carrot.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\GameScene\Object\Carrot\CarrotMediator.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\GameScene\Object\Map\Map.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\GameScene\Object\Monster.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\GameScene\Object\Obstacle.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\GameScene\Object\Tower\BottleTower.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\GameScene\Object\Tower\ShitTower.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\GameScene\UI\Control\AddMoneyTips.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\GameScene\UI\Control\UpGradeTips.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\GameScene\UI\Panel\BuiltPanel\BuiltPanel.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\GameScene\UI\Panel\BuiltPanel\BuiltPanelMediator.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\GameScene\UI\Panel\BuiltPanel\CreatePanel.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\GameScene\UI\Panel\BuiltPanel\UpGradePanel.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\GameScene\UI\Panel\GamePanel\CountDownPanel.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\GameScene\UI\Panel\GamePanel\GamePanel.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\GameScene\UI\Panel\GamePanel\GamePanelMediator.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\GameScene\UI\Panel\LosePanel\LosePanel.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\GameScene\UI\Panel\LosePanel\LosePanelMediator.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\GameScene\UI\Panel\MenuPanel\MenuPanel.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\GameScene\UI\Panel\MenuPanel\MenuPanelMediator.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\GameScene\UI\Panel\WinPanel\WinPanel.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\GameScene\UI\Panel\WinPanel\WinPanelMediator.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\Generic\LoadingPanel\LoadingPanel.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\Generic\LoadingPanel\LoadingPanelMediator.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\Generic\TipsPanel\TipsPanel.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\Generic\TipsPanel\TipsPanelMediator.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\InitScene\InitPanel.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\InitScene\InitPanelMediator.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\SelectItemScene\Control\ItemButton.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\SelectItemScene\Control\SelectItemPanelPageFlipping.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\SelectItemScene\ItemLockPanel.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\SelectItemScene\SelectItemPanel.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\SelectItemScene\SelectItemPanelMediator.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\SelectLevelScene\Control\ButtonLevel.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\SelectLevelScene\Control\SelectLevelPanelPageFlipping.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\SelectLevelScene\LevelLockPanel.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\SelectLevelScene\SelectLevelPanel.cs" />
-     <Compile Include="Assets\Scripts\App\MVC\View\SelectLevelScene\SelectLevelPanelMediator.cs" />
-     <Compile Include="Assets\Scripts\App\SDK\CallJava.cs" />
-     <Compile Include="Assets\Scripts\App\SDK\CallKotlin.cs" />
-     <Compile Include="Assets\Scripts\App\SDK\SDKManager.cs" />
-     <Compile Include="Assets\Scripts\App\Static\DataPath.cs" />
-     <Compile Include="Assets\Scripts\App\Static\Enum\EBuiltPanelShowDir.cs" />
-     <Compile Include="Assets\Scripts\App\Static\NotificationName.cs" />
-     <Compile Include="Assets\Scripts\Library\ABManager\ABManager.cs" />
-     <Compile Include="Assets\Scripts\Library\BaseSingleton\BaseMonoAutoSingleton.cs" />
-     <Compile Include="Assets\Scripts\Library\BaseSingleton\BaseMonoSingleton.cs" />
-     <Compile Include="Assets\Scripts\Library\BaseSingleton\BaseSingleton.cs" />
-     <Compile Include="Assets\Scripts\Library\DataManager\Binary\BinaryManager.cs" />
-     <Compile Include="Assets\Scripts\Library\DataManager\Json\JsonManager.cs" />
-     <Compile Include="Assets\Scripts\Library\DataManager\Json\LitJson\IJsonWrapper.cs" />
-     <Compile Include="Assets\Scripts\Library\DataManager\Json\LitJson\JsonData.cs" />
-     <Compile Include="Assets\Scripts\Library\DataManager\Json\LitJson\JsonException.cs" />
-     <Compile Include="Assets\Scripts\Library\DataManager\Json\LitJson\JsonMapper.cs" />
-     <Compile Include="Assets\Scripts\Library\DataManager\Json\LitJson\JsonMockWrapper.cs" />
-     <Compile Include="Assets\Scripts\Library\DataManager\Json\LitJson\JsonReader.cs" />
-     <Compile Include="Assets\Scripts\Library\DataManager\Json\LitJson\JsonWriter.cs" />
-     <Compile Include="Assets\Scripts\Library\DataManager\Json\LitJson\Lexer.cs" />
-     <Compile Include="Assets\Scripts\Library\DataManager\Json\LitJson\Netstandard15Polyfill.cs" />
-     <Compile Include="Assets\Scripts\Library\DataManager\Json\LitJson\ParserToken.cs" />
-     <Compile Include="Assets\Scripts\Library\DataManager\Xml\SerializerDictionary.cs" />
-     <Compile Include="Assets\Scripts\Library\DataManager\Xml\XmlDataManager.cs" />
-     <Compile Include="Assets\Scripts\Library\EventCenter\EventCenter.cs" />
-     <Compile Include="Assets\Scripts\Library\InputManager\InputManger.cs" />
-     <Compile Include="Assets\Scripts\Library\MonoManager\MonoManager.cs" />
-     <Compile Include="Assets\Scripts\Library\MusicManager\MusicManger.cs" />
-     <Compile Include="Assets\Scripts\Library\PoolManager\PoolManager.cs" />
-     <Compile Include="Assets\Scripts\Library\ResourcesLoad\ResourcesFrameWork.cs" />
-     <Compile Include="Assets\Scripts\Library\SceneManager\SceneManagerFrameWork.cs" />
-     <Compile Include="Assets\Scripts\Library\UIManager\BasePanel.cs" />
-     <Compile Include="Assets\Scripts\Library\UIManager\UIManager.cs" />
-     <Compile Include="Assets\Scripts\Library\XLuaManager\XLuaManager.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark04.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ChatController.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ObjectSpin.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SimpleScript.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SkewTextExample.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_DigitValidator.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_FrameRateCounter.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_PhoneNumberValidator.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TeleType.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextConsoleSimulator.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexColorCycler.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
-     <Compile Include="Assets\XLua\Gen\BasePageFlippingWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\BasePanelWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\CallMathfWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\DelegatesGensBridge.cs" />
-     <Compile Include="Assets\XLua\Gen\EnumWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\GameFacadeWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\GameManagerWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\MonoScriptWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\PackUnpack.cs" />
-     <Compile Include="Assets\XLua\Gen\Tutorial_BaseClassWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\Tutorial_CSCallLua_ItfDBridge.cs" />
-     <Compile Include="Assets\XLua\Gen\Tutorial_DerivedClassExtensionsWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\Tutorial_DerivedClassWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\Tutorial_ICalcWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\UIInterfaceClassWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\UIManagerWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\WrapPusher.cs" />
-     <Compile Include="Assets\XLua\Gen\XLuaGenAutoRegister.cs" />
-     <Compile Include="Assets\XLua\Tutorial\CSharpCallLua\CSCallLua.cs" />
-     <Compile Include="Assets\XLua\Tutorial\LoadLuaScript\ByFile\ByFile.cs" />
-     <Compile Include="Assets\XLua\Tutorial\LoadLuaScript\ByString\ByString.cs" />
-     <Compile Include="Assets\XLua\Tutorial\LoadLuaScript\Loader\CustomLoader.cs" />
-     <Compile Include="Assets\XLua\Tutorial\LuaCallCSharp\LuaCallCs.cs" />
- <Reference Include="UnityEngine.Monetization">
- <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/UnityEngine.Monetization.dll</HintPath>
- </Reference>
- <Reference Include="Unity.2D.Animation.Runtime">
- <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/Unity.2D.Animation.Runtime.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Purchasing.Stores">
- <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/UnityEngine.Purchasing.Stores.dll</HintPath>
- </Reference>
- <Reference Include="Purchasing.Common">
- <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/Purchasing.Common.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Advertisements">
- <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/UnityEngine.Advertisements.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Purchasing.Security">
- <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/UnityEngine.Purchasing.Security.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Purchasing">
- <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/UnityEngine.Purchasing.dll</HintPath>
- </Reference>
+     <Compile Include="Assets\DOTween\Modules\DOTweenModuleAudio.cs" />
+     <Compile Include="Assets\DOTween\Modules\DOTweenModuleEPOOutline.cs" />
+     <Compile Include="Assets\DOTween\Modules\DOTweenModulePhysics.cs" />
+     <Compile Include="Assets\DOTween\Modules\DOTweenModulePhysics2D.cs" />
+     <Compile Include="Assets\DOTween\Modules\DOTweenModuleSprite.cs" />
+     <Compile Include="Assets\DOTween\Modules\DOTweenModuleUI.cs" />
+     <Compile Include="Assets\DOTween\Modules\DOTweenModuleUnityVersion.cs" />
+     <Compile Include="Assets\DOTween\Modules\DOTweenModuleUtils.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Timeline">
- <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Purchasing.Codeless">
- <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/UnityEngine.Purchasing.Codeless.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Purchasing.SecurityCore">
- <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/UnityEngine.Purchasing.SecurityCore.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.XR.LegacyInputHelpers">
- <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/UnityEngine.XR.LegacyInputHelpers.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Mathematics">
- <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
- </Reference>
- <Reference Include="Unity.InternalAPIEngineBridge.001">
- <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/Unity.InternalAPIEngineBridge.001.dll</HintPath>
- </Reference>
- <Reference Include="Unity.2D.Common.Runtime">
- <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/Unity.2D.Common.Runtime.dll</HintPath>
- </Reference>
- <Reference Include="Unity.2D.SpriteShape.Runtime">
- <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/Unity.2D.SpriteShape.Runtime.dll</HintPath>
- </Reference>
- <Reference Include="Unity.2D.PixelPerfect">
- <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/Unity.2D.PixelPerfect.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.SpatialTracking">
- <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/UnityEngine.SpatialTracking.dll</HintPath>
- </Reference>
- <Reference Include="Unity.TextMeshPro">
- <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Analytics.DataPrivacy">
- <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
- </Reference>
- <Reference Include="com.unity.multiplayer-hlapi.Runtime">
- <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/com.unity.multiplayer-hlapi.Runtime.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine">
  <HintPath>E:/Develop/Unity/2019.4.40f1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/mono/Managed/UnityEngine.dll</HintPath>
@@ -501,90 +234,6 @@
  </Reference>
  <Reference Include="UnityEngine.XRModule">
  <HintPath>E:/Develop/Unity/2019.4.40f1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/mono/Managed/UnityEngine.XRModule.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Timeline.Editor">
- <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.2D.PixelPerfect.Editor">
- <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/Unity.2D.PixelPerfect.Editor.dll</HintPath>
- </Reference>
- <Reference Include="com.unity.multiplayer-hlapi.Editor">
- <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/com.unity.multiplayer-hlapi.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.VSCode.Editor">
- <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.2D.SpriteShape.Editor">
- <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/Unity.2D.SpriteShape.Editor.dll</HintPath>
- </Reference>
- <Reference Include="UnityEditor.Purchasing">
- <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/UnityEditor.Purchasing.dll</HintPath>
- </Reference>
- <Reference Include="Unity.TextMeshPro.Editor">
- <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.2D.Path.Editor">
- <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/Unity.2D.Path.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.2D.Animation.Triangle.Editor">
- <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/Unity.2D.Animation.Triangle.Editor.dll</HintPath>
- </Reference>
- <Reference Include="PsdPlugin">
- <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/PsdPlugin.dll</HintPath>
- </Reference>
- <Reference Include="com.unity.multiplayer-weaver.Editor">
- <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/com.unity.multiplayer-weaver.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.AssetBundleBrowser.Editor">
- <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/Unity.AssetBundleBrowser.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Rider.Editor">
- <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Analytics">
- <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/Analytics.dll</HintPath>
- </Reference>
- <Reference Include="Unity.2D.Psdimporter.Editor">
- <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/Unity.2D.Psdimporter.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.2D.Sprite.Editor">
- <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Mobile.AndroidLogcat.Editor">
- <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/Unity.Mobile.AndroidLogcat.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.2D.Tilemap.Editor">
- <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.2D.Animation.Editor">
- <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/Unity.2D.Animation.Editor.dll</HintPath>
- </Reference>
- <Reference Include="UnityEditor.SpatialTracking">
- <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/UnityEditor.SpatialTracking.dll</HintPath>
- </Reference>
- <Reference Include="Unity.VisualStudio.Editor">
- <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Advertisements.Editor">
- <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/UnityEngine.Advertisements.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Mathematics.Editor">
- <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.2D.Common.Editor">
- <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/Unity.2D.Common.Editor.dll</HintPath>
- </Reference>
- <Reference Include="UnityEditor.XR.LegacyInputHelpers">
- <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/UnityEditor.XR.LegacyInputHelpers.dll</HintPath>
- </Reference>
- <Reference Include="Unity.InternalAPIEditorBridge.001">
- <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/Unity.InternalAPIEditorBridge.001.dll</HintPath>
- </Reference>
- <Reference Include="Unity.PlasticSCM.Editor">
- <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/Unity.PlasticSCM.Editor.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Purchasing.SecurityStub">
- <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/UnityEngine.Purchasing.SecurityStub.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.UI">
  <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
@@ -937,20 +586,6 @@
  <Reference Include="System.Xml.Serialization">
  <HintPath>E:/Develop/Unity/2019.4.40f1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Xml.Serialization.dll</HintPath>
  </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="DOTween.Modules.csproj">
-      <Project>{3a3399a4-8ade-2841-efa4-b73ae5b97a1b}</Project>
-      <Name>DOTween.Modules</Name>
-    </ProjectReference>
-    <ProjectReference Include="Xlua.Core.csproj">
-      <Project>{a674efb3-51f3-bc87-651d-19c99c9ab42c}</Project>
-      <Name>Xlua.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="Xlua.Core.Editor.csproj">
-      <Project>{5b9708c8-1da8-b2e4-3d34-1410116e6eaa}</Project>
-      <Name>Xlua.Core.Editor</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

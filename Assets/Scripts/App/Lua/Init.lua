@@ -3,9 +3,9 @@
 --- Created by Kapl.
 --- DateTime: 2024/4/22 13:21
 ---
-package.cpath = package.cpath .. ';C:/Users/Kapl/AppData/Roaming/JetBrains/Rider2023.1/plugins/EmmyLua/debugger/emmy/windows/x64/?.dll'
-local dbg = require('emmy_core')
-dbg.tcpConnect('localhost', 20888)
+-- package.cpath = package.cpath .. ';C:/Users/Kapl/AppData/Roaming/JetBrains/Rider2023.1/plugins/EmmyLua/debugger/emmy/windows/x64/?.dll'
+-- local dbg = require('emmy_core')
+-- dbg.tcpConnect('localhost', 1144)
 
 require("Library/Object")
 require("Library/NameSpace")

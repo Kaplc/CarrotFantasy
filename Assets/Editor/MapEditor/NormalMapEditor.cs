@@ -6,8 +6,8 @@ using Codice.Client.BaseCommands;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(Map))]
-public class MapEditor : Editor
+[CustomEditor(typeof(NormalMap))]
+public class NormalMapEditor : Editor
 {
     // 当前正在编辑的地图
     public Map map;

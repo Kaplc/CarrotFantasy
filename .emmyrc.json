@@ -1,0 +1,57 @@
+{
+  "$schema": "file:///c:/Users/Kapl/.vscode/extensions/tangzx.emmylua-0.7.2-win32-x64/server/win32-x64/win32-x64/Resources/schema.json",
+  "completion": {
+    "autoRequire": true,
+    "autoRequireFunction": "require",
+    "autoRequireNamingConvention": "snakeCase",
+    "callSnippet": false,
+    "postfix": "@"
+  },
+  "diagnostics": {
+    "disable": [
+      "undefined-global",
+      "undefined-global"
+    ],
+    "globals": [],
+    "globalsRegex": [],
+    "severity": {}
+  },
+  "hint": {
+    "paramHint": true,
+    "indexHint": true,
+    "localHint": false,
+    "overrideHint": true
+  },
+  "runtime": {
+    "version": "LuaLatest",
+    "requireLikeFunction": [],
+    "frameworkVersions": [],
+    "extensions": [],
+    "requirePattern": []
+  },
+  "workspace": {
+    "ignoreDir": [
+      ".idea",
+      ".vs",
+      ".vscode",
+      ".idea",
+      ".vs",
+      ".vscode"
+    ],
+    "library": [],
+    "workspaceRoots": [],
+    "preloadFileSize": 1048576
+  },
+  "resource": {
+    "paths": [
+      "e:\\Project\\Unity\\CarrotFantasy"
+    ]
+  },
+  "codeLens": {
+    "enable": true
+  },
+  "strict": {
+    "requirePath": true,
+    "typeCall": true
+  }
+}

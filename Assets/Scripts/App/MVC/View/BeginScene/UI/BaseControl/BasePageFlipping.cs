@@ -2,7 +2,9 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using XLua;
 
+[LuaCallCSharp]
 public class BasePageFlipping : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     public float slidingThreshold = 150; // 滑动像素阈值
@@ -16,17 +18,16 @@ public class BasePageFlipping : MonoBehaviour, IBeginDragHandler, IEndDragHandle
     {
         if (!scrollRect)
         {
-            scrollRect = GetComponent<ScrollRect>(); 
+            scrollRect = GetComponent<ScrollRect>();
         }
-        
+
         pageIndex = 1;
     }
 
     public void ToPage(int index)
     {
         // 直接跳转
-        if (index>totalPageIndex || index < 1)return;
-
+        if (index > totalPageIndex || index < 1) return;
         pageIndex = index;
         float newHorizontalNormalizedPosition = 1f / (totalPageIndex - 1) * (pageIndex - 1);
         SlideTween(newHorizontalNormalizedPosition);
@@ -83,23 +84,21 @@ public class BasePageFlipping : MonoBehaviour, IBeginDragHandler, IEndDragHandle
     /// </summary>
     protected virtual void SlideTween(float targetValue)
     {
-       Tween tween = DOTween.To(
+        Tween tween = DOTween.To(
             () => scrollRect.horizontalNormalizedPosition,
             value => scrollRect.horizontalNormalizedPosition = value,
             targetValue,
             speed
         ).SetEase(Ease.Linear);
-       // 添加动画完成的回调
-       tween.onComplete = () =>
-       {
-           SendMessageUpwards("PageFlippingCompleted", SendMessageOptions.DontRequireReceiver);
-       };
+        // 添加动画完成的回调
+        tween.onComplete = () => { SendMessageUpwards("PageFlippingCompleted", SendMessageOptions.DontRequireReceiver); };
 
         if (pageIndex == 1)
         {
             // 告诉父对象现在是第一页
             SendMessageUpwards("FirstPage", SendMessageOptions.DontRequireReceiver);
-        }else if (pageIndex == totalPageIndex)
+        }
+        else if (pageIndex == totalPageIndex)
         {
             SendMessageUpwards("FinallyPage", SendMessageOptions.DontRequireReceiver);
         }
@@ -107,7 +106,6 @@ public class BasePageFlipping : MonoBehaviour, IBeginDragHandler, IEndDragHandle
         {
             SendMessageUpwards("NormalPage", SendMessageOptions.DontRequireReceiver);
         }
-        
     }
 
     public void OnBeginDrag(PointerEventData eventData)

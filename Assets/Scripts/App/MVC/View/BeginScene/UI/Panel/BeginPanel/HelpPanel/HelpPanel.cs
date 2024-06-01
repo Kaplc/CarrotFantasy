@@ -99,5 +99,7 @@ public class HelpPanel : BasePanel
 
         // 初始显示HelpPage
         ShowHelpPage = true;
+
+        
     }
 }

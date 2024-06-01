@@ -49,7 +49,7 @@ public abstract class BasePanel : MonoBehaviour
                 return;
             }
             // 淡入
-            canvasGroup.alpha += Time.deltaTime * fadeSpeed;
+            canvasGroup.alpha += Time.deltaTime * fadeSpeed; 
         }
 
         if (hideFade)

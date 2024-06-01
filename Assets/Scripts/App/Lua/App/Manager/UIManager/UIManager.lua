@@ -9,7 +9,7 @@ require("App/Manager/UIManager/EUILayers")
 
 require("App/UI/BasePanel")
 require("App/UI/BeginPanel")
-require("App/UI/BossPanel")
+require("App/UI/BossPanel/BossPanel")
 
 UIManager = Object:SubClass("UIManager")
 

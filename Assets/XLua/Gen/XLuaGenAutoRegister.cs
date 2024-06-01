@@ -22,10 +22,22 @@ namespace XLua.CSObjectWrap
         static void wrapInit0(LuaEnv luaenv, ObjectTranslator translator)
         {
         
+            translator.DelayWrapLoader(typeof(CallMathf), CallMathfWrap.__Register);
+        
+        
+            translator.DelayWrapLoader(typeof(MonoScript), MonoScriptWrap.__Register);
+        
+        
+            translator.DelayWrapLoader(typeof(UIInterfaceClass), UIInterfaceClassWrap.__Register);
+        
+        
             translator.DelayWrapLoader(typeof(GameManager), GameManagerWrap.__Register);
         
         
             translator.DelayWrapLoader(typeof(GameFacade), GameFacadeWrap.__Register);
+        
+        
+            translator.DelayWrapLoader(typeof(BasePageFlipping), BasePageFlippingWrap.__Register);
         
         
             translator.DelayWrapLoader(typeof(BasePanel), BasePanelWrap.__Register);
