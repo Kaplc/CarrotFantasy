@@ -1,75 +1,78 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using App.DataClass.Player;
+using App.Static;
+using Library.UIManager;
 using UnityEngine.UI;
 
-public class SettingPanel : BasePanel
+namespace App.MVC.View.BeginScene.UI.Panel.BeginPanel.SettingPanel
 {
-    public Button btnHome;
-    public Toggle tgSelect;
-    public Toggle tgData;
-    public Toggle tgMaker;
-    public Image imgSelectPage;
-    public Image imgDataPage;
-    public Image imgMakerPage;
-    public StatisticalPage statisticalPage;
-    public SelectPage selectPage;
-
-    private bool ShowSelectPage
+    public class SettingPanel : BasePanel
     {
-        set
+        public Button btnHome;
+        public Toggle tgSelect;
+        public Toggle tgData;
+        public Toggle tgMaker;
+        public Image imgSelectPage;
+        public Image imgDataPage;
+        public Image imgMakerPage;
+        public StatisticalPage statisticalPage;
+        public SelectPage selectPage;
+
+        private bool ShowSelectPage
         {
-            imgSelectPage.gameObject.SetActive(value);
-            imgDataPage.gameObject.SetActive(!value);
-            imgMakerPage.gameObject.SetActive(!value);
+            set
+            {
+                imgSelectPage.gameObject.SetActive(value);
+                imgDataPage.gameObject.SetActive(!value);
+                imgMakerPage.gameObject.SetActive(!value);
+            }
         }
-    }
 
-    private bool ShowDataPage
-    {
-        set
+        private bool ShowDataPage
         {
-            imgSelectPage.gameObject.SetActive(!value);
-            imgDataPage.gameObject.SetActive(value);
-            imgMakerPage.gameObject.SetActive(!value);
+            set
+            {
+                imgSelectPage.gameObject.SetActive(!value);
+                imgDataPage.gameObject.SetActive(value);
+                imgMakerPage.gameObject.SetActive(!value);
+            }
         }
-    }
 
-    private bool ShowMakerPage
-    {
-        set
+        private bool ShowMakerPage
         {
-            imgSelectPage.gameObject.SetActive(!value);
-            imgDataPage.gameObject.SetActive(!value);
-            imgMakerPage.gameObject.SetActive(value);
+            set
+            {
+                imgSelectPage.gameObject.SetActive(!value);
+                imgDataPage.gameObject.SetActive(!value);
+                imgMakerPage.gameObject.SetActive(value);
+            }
         }
-    }
 
-    protected override void Init()
-    {
-        btnHome.onClick.AddListener(() =>
+        protected override void Init()
         {
-            // 通过MVC管理器发送显示BeginPanel的消息
-            GameFacade.Instance.SendNotification(NotificationName.UI.SHOW_BEGINPANEL);
-        });
+            btnHome.onClick.AddListener(() =>
+            {
+                // 通过MVC管理器发送显示BeginPanel的消息
+                GameFacade.Instance.SendNotification(NotificationName.UI.SHOW_BEGINPANEL);
+            });
 
-        tgSelect.onValueChanged.AddListener((isOn) => { ShowSelectPage = isOn; });
+            tgSelect.onValueChanged.AddListener((isOn) => { ShowSelectPage = isOn; });
 
-        tgData.onValueChanged.AddListener((isOn) => { ShowDataPage = isOn; });
+            tgData.onValueChanged.AddListener((isOn) => { ShowDataPage = isOn; });
 
-        tgMaker.onValueChanged.AddListener((isOn) => { ShowMakerPage = isOn; });
+            tgMaker.onValueChanged.AddListener((isOn) => { ShowMakerPage = isOn; });
 
-        // 默认是选择界面
-        ShowSelectPage = true;
-    }
+            // 默认是选择界面
+            ShowSelectPage = true;
+        }
 
-    public void UpdateSelectPage(MusicSettingData data)
-    {
-        selectPage.UpdateMusicSetting(data);
-    }
+        public void UpdateSelectPage(MusicSettingData data)
+        {
+            selectPage.UpdateMusicSetting(data);
+        }
 
-    public void UpdateStatisticalPage(StatisticalData data)
-    {
-        statisticalPage.UpdateDate(data);
+        public void UpdateStatisticalPage(StatisticalData data)
+        {
+            statisticalPage.UpdateDate(data);
+        }
     }
 }

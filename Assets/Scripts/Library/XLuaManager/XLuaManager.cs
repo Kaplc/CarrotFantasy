@@ -1,8 +1,9 @@
 ﻿using System.IO;
+using Library.BaseSingleton;
 using UnityEngine;
 using XLua;
 
-namespace ZFramework
+namespace Library.XLuaManager
 {
     public class XLuaManager : BaseSingleton<XLuaManager>
     {
@@ -65,7 +66,7 @@ namespace ZFramework
         private byte[] AddABLuaFilePath(ref string fileName)
         {
 
-            TextAsset lua = ABManager.Instance.Load<TextAsset>("lua", fileName);
+            TextAsset lua = ABManager.ABManager.Instance.Load<TextAsset>("lua", fileName);
 
             if (lua != null)
             {

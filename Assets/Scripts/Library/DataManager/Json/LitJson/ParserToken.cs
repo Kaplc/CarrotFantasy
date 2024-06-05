@@ -9,7 +9,7 @@
 #endregion
 
 
-namespace LitJson
+namespace Library.DataManager.Json.LitJson
 {
     internal enum ParserToken
     {

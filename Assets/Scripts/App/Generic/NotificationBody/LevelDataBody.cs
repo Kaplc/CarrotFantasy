@@ -1,10 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
+using App.DataClass.Game.Level;
+using App.DataClass.Game.Object;
 
-public class LevelDataBody
+namespace App.Generic.NotificationBody
 {
-    public LevelData levelData;
-    public Dictionary<int, MonsterData> monstersData;
-    public Dictionary<int, TowerData> towersData;
+    public class LevelDataBody
+    {
+        public LevelData levelData;
+        public Dictionary<int, MonsterData> monstersData;
+        public Dictionary<int, TowerData> towersData;
+    }
 }

@@ -1,14 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-[CreateAssetMenu]
-public class MonsterData: ScriptableObject
+namespace App.DataClass.Game.Object
 {
-    public int id;
-    public float speed;
-    public float maxHp;
-    public float atk;
-    public int baseMoney;
-    public string prefabsPath;
+    [CreateAssetMenu]
+    public class MonsterData: ScriptableObject
+    {
+        public int id;
+        public float speed;
+        public float maxHp;
+        public float atk;
+        public int baseMoney;
+        public string prefabsPath;
+    }
 }

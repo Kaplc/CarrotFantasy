@@ -11,8 +11,7 @@
 
 using System;
 
-
-namespace LitJson
+namespace Library.DataManager.Json.LitJson
 {
     public class JsonException :
 #if NETSTANDARD1_5

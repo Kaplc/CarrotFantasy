@@ -1,47 +1,52 @@
+using App.Static;
+using Library.UIManager;
 using PureMVC.Interfaces;
 using PureMVC.Patterns.Mediator;
 
-public class LoadingPanelMediator : Mediator
+namespace App.MVC.View.Generic.LoadingPanel
 {
-    public static new string NAME = "LoadingPanelMediator";
-
-    public LoadingPanel Panel
+    public class LoadingPanelMediator : Mediator
     {
-        get=>ViewComponent as LoadingPanel;
-        set
+        public static new string NAME = "LoadingPanelMediator";
+
+        public LoadingPanel Panel
         {
-            ViewComponent = value;
-            (ViewComponent as LoadingPanel)?.BindMediator(this);
+            get=>ViewComponent as LoadingPanel;
+            set
+            {
+                ViewComponent = value;
+                (ViewComponent as LoadingPanel)?.BindMediator(this);
+            }
         }
-    }
     
-    public LoadingPanelMediator() : base(NAME)
-    {
-    }
-
-    public override string[] ListNotificationInterests()
-    {
-        return new string[]
+        public LoadingPanelMediator() : base(NAME)
         {
-            NotificationName.UI.SHOW_LOADINGPANEL,
-            NotificationName.UI.HIDE_LOADINGPANEL
-        };
-
-    }
-
-    public override void HandleNotification(INotification notification)
-    {
-        base.HandleNotification(notification);
-
-        switch (notification.Name)
-        {
-            case NotificationName.UI.SHOW_LOADINGPANEL:
-                Panel = UIManager.Instance.Show<LoadingPanel>(false);
-                break;
-            case NotificationName.UI.HIDE_LOADINGPANEL:
-                UIManager.Instance.Hide<LoadingPanel>(false);
-                break;
         }
+
+        public override string[] ListNotificationInterests()
+        {
+            return new string[]
+            {
+                NotificationName.UI.SHOW_LOADINGPANEL,
+                NotificationName.UI.HIDE_LOADINGPANEL
+            };
+
+        }
+
+        public override void HandleNotification(INotification notification)
+        {
+            base.HandleNotification(notification);
+
+            switch (notification.Name)
+            {
+                case NotificationName.UI.SHOW_LOADINGPANEL:
+                    Panel = UIManager.Instance.Show<LoadingPanel>(false);
+                    break;
+                case NotificationName.UI.HIDE_LOADINGPANEL:
+                    UIManager.Instance.Hide<LoadingPanel>(false);
+                    break;
+            }
         
+        }
     }
 }

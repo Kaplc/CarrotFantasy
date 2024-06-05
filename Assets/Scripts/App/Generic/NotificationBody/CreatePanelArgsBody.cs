@@ -1,10 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using App.DataClass.Game.Object;
+using App.Static.Enum;
 using UnityEngine;
 
-public class CreatePanelArgsBody
+namespace App.Generic.NotificationBody
 {
-    public Vector3 createPos;
-    public Dictionary<TowerData, Sprite> towersDataDic;
-    public EBuiltPanelShowDir showDir;
+    public class CreatePanelArgsBody
+    {
+        public Vector3 createPos;
+        public Dictionary<TowerData, Sprite> towersDataDic;
+        public EBuiltPanelShowDir showDir;
+    }
 }

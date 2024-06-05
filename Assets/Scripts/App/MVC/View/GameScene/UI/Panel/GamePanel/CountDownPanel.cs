@@ -3,37 +3,40 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CountDownPanel : MonoBehaviour
+namespace App.MVC.View.GameScene.UI.Panel.GamePanel
 {
-    public float speed;
-    public Image imgCount;
-    public Transform imgFire;
-    public List<Sprite> countDownImage;
-    private int index;
-
-    private void Start()
+    public class CountDownPanel : MonoBehaviour
     {
-        index = countDownImage.Count - 1;
-        StartCoroutine(CountDownCoroutine());
-    }
+        public float speed;
+        public Image imgCount;
+        public Transform imgFire;
+        public List<Sprite> countDownImage;
+        private int index;
 
-    // Update is called once per frame
-    void Update()
-    {
-        imgFire.Rotate(Vector3.forward, Time.deltaTime * speed);
-    }
-
-    private IEnumerator CountDownCoroutine()
-    {
-        while (index >= 0)
+        private void Start()
         {
-            imgCount.sprite = countDownImage[index];
-
-            yield return new WaitForSeconds(1f);
-            index--;
+            index = countDownImage.Count - 1;
+            StartCoroutine(CountDownCoroutine());
         }
-        gameObject.SetActive(false);
-        // 开始游戏
-        SendMessageUpwards("SendStartGameNotification");
+
+        // Update is called once per frame
+        void Update()
+        {
+            imgFire.Rotate(Vector3.forward, Time.deltaTime * speed);
+        }
+
+        private IEnumerator CountDownCoroutine()
+        {
+            while (index >= 0)
+            {
+                imgCount.sprite = countDownImage[index];
+
+                yield return new WaitForSeconds(1f);
+                index--;
+            }
+            gameObject.SetActive(false);
+            // 开始游戏
+            SendMessageUpwards("SendStartGameNotification");
+        }
     }
 }

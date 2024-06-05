@@ -1,16 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Library.PoolManager;
 using UnityEngine;
 
-public class BaseBuffEffect : MonoBehaviour, IPoolObject
+namespace App.Generic.BaseObject
 {
-    public virtual void OnGet()
+    public class BaseBuffEffect : MonoBehaviour, IPoolObject
     {
+        public virtual void OnGet()
+        {
         
-    }
+        }
 
-    public virtual void OnPush()
-    {
+        public virtual void OnPush()
+        {
         
+        }
     }
 }

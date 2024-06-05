@@ -1,89 +1,94 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using App.DataClass.Game.Level;
+using App.MVC.Controller;
+using App.Static;
 using PureMVC.Patterns.Proxy;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class GameDataProxy : Proxy
+namespace App.MVC.Model.GameData
 {
-    public new const string NAME = "GameDataProxy";
-
-    private Dictionary<int, LevelData> loadedLevelsDataDic = new Dictionary<int, LevelData>(); // 已经加载过的关卡缓存
-    private Dictionary<int, ItemData> loadedItemsDataDic = new Dictionary<int, ItemData>(); // 已经加载过的主题
-
-    public GameDataProxy() : base(NAME)
+    public class GameDataProxy : Proxy
     {
-        // 加载大关卡数据
-        LoadBigLevelData();
-    }
+        public new const string NAME = "GameDataProxy";
 
-    public void GetBigLevelData(int itemID)
-    {
-        if (loadedItemsDataDic.ContainsKey(itemID))
+        private Dictionary<int, LevelData> loadedLevelsDataDic = new Dictionary<int, LevelData>(); // 已经加载过的关卡缓存
+        private Dictionary<int, ItemData> loadedItemsDataDic = new Dictionary<int, ItemData>(); // 已经加载过的主题
+
+        public GameDataProxy() : base(NAME)
         {
-            SendNotification(NotificationName.Data.LOADED_ITEMDATA, loadedItemsDataDic[itemID]);
-        }
-    }
-
-    /// <summary>
-    /// 加载所有大关卡数据
-    /// </summary>
-    private void LoadBigLevelData()
-    {
-        ItemData[] datas = Resources.LoadAll<ItemData>(DataPath.LEVELRDATA_PATH);
-        for (int i = 0; i < datas.Length; i++)
-        {
-            loadedItemsDataDic.Add(datas[i].id, datas[i]);
-        }
-    }
-
-    /// <summary>
-    /// 根据关卡id获取关卡数据
-    /// </summary>
-    public void LoadLevelData(int levelID)
-    {
-        LevelData levelData;
-        // 已经加载过直接返回
-        if (loadedLevelsDataDic.TryGetValue(levelID, out levelData))
-        {
-            SendNotification(NotificationName.Data.LOADED_LEVELDATA, levelData);
-            return;
+            // 加载大关卡数据
+            LoadBigLevelData();
         }
 
-        // 遍历所有大关卡数据
-        foreach (KeyValuePair<int, ItemData> item in loadedItemsDataDic)
+        public void GetBigLevelData(int itemID)
         {
-            for (int i = 0; i < item.Value.levels.Count; i++)
+            if (loadedItemsDataDic.ContainsKey(itemID))
             {
-                if (levelID == item.Value.levels[i].levelID)
+                SendNotification(NotificationName.Data.LOADED_ITEMDATA, loadedItemsDataDic[itemID]);
+            }
+        }
+
+        /// <summary>
+        /// 加载所有大关卡数据
+        /// </summary>
+        private void LoadBigLevelData()
+        {
+            ItemData[] datas = Resources.LoadAll<ItemData>(DataPath.LEVELRDATA_PATH);
+            for (int i = 0; i < datas.Length; i++)
+            {
+                loadedItemsDataDic.Add(datas[i].id, datas[i]);
+            }
+        }
+
+        /// <summary>
+        /// 根据关卡id获取关卡数据
+        /// </summary>
+        public void LoadLevelData(int levelID)
+        {
+            LevelData levelData;
+            // 已经加载过直接返回
+            if (loadedLevelsDataDic.TryGetValue(levelID, out levelData))
+            {
+                SendNotification(NotificationName.Data.LOADED_LEVELDATA, levelData);
+                return;
+            }
+
+            // 遍历所有大关卡数据
+            foreach (KeyValuePair<int, ItemData> item in loadedItemsDataDic)
+            {
+                for (int i = 0; i < item.Value.levels.Count; i++)
                 {
-                    levelData = item.Value.levels[i];
-                    // 加载地图数据
+                    if (levelID == item.Value.levels[i].levelID)
+                    {
+                        levelData = item.Value.levels[i];
+                        // 加载地图数据
 #if UNITY_EDITOR_WIN
-                    levelData.mapData = GameManager.Instance.BinaryManager.Load<MapData>(DataPath.MAPDATA_PATH + $"{levelData.mapDataFileName}.md");
+                        levelData.mapData = GameManager.Instance.BinaryManager.Load<MapData>(DataPath.MAPDATA_PATH + $"{levelData.mapDataFileName}.md");
 #endif
 #if UNITY_ANDROID
-                    // android load from streamingAssets
-                    UnityWebRequest request =
-                        UnityWebRequest.Get(Application.streamingAssetsPath + "/" + DataPath.MAPDATA_PATH + $"{levelData.mapDataFileName}.md");
-                    request.SendWebRequest();
-                    // wait for request
-                    while (!request.isDone)
-                    {
+                        // android load from streamingAssets
+                        UnityWebRequest request =
+                            UnityWebRequest.Get(Application.streamingAssetsPath + "/" + DataPath.MAPDATA_PATH + $"{levelData.mapDataFileName}.md");
+                        request.SendWebRequest();
+                        // wait for request
+                        while (!request.isDone)
+                        {
                         
-                    }
-                    // get bytes
-                    byte[] bytes = request.downloadHandler.data;
-                    // deserialize
-                    BinaryFormatter formatter = new BinaryFormatter();
-                    levelData.mapData = formatter.Deserialize(new MemoryStream(bytes)) as MapData;
+                        }
+                        // get bytes
+                        byte[] bytes = request.downloadHandler.data;
+                        // deserialize
+                        BinaryFormatter formatter = new BinaryFormatter();
+                        levelData.mapData = formatter.Deserialize(new MemoryStream(bytes)) as MapData;
 #endif
-                    // 缓存已加载过的关卡
-                    loadedLevelsDataDic.Add(levelData.levelID, levelData);
-                    SendNotification(NotificationName.Data.LOADED_LEVELDATA, item.Value.levels[i]);
-                    return;
+                        // 缓存已加载过的关卡
+                        loadedLevelsDataDic.Add(levelData.levelID, levelData);
+                        SendNotification(NotificationName.Data.LOADED_LEVELDATA, item.Value.levels[i]);
+                        return;
+                    }
                 }
             }
         }

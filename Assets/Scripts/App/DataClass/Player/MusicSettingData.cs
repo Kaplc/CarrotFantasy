@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
-[Serializable]
-public class MusicSettingData
+namespace App.DataClass.Player
 {
-    public bool musicOpen = true;
-    public bool soundOpen = true;
+    [Serializable]
+    public class MusicSettingData
+    {
+        public bool musicOpen = true;
+        public bool soundOpen = true;
+    }
 }

@@ -1,14 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using PureMVC.Interfaces;
-using PureMVC.Patterns.Mediator;
-using UnityEngine;
+﻿using Library.UIManager;
 
-public class LoadingPanel : BasePanel
+namespace App.MVC.View.Generic.LoadingPanel
 {
-    protected override void Init()
+    public class LoadingPanel : BasePanel
     {
+        protected override void Init()
+        {
         
+        }
     }
 }
 

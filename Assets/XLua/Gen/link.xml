@@ -3,19 +3,19 @@
 <linker>
 
 	<assembly fullname="Assembly-CSharp">
-	    <type fullname="CallMathf" preserve="all"/>
-		<type fullname="MonoScript" preserve="all"/>
-		<type fullname="UIInterfaceClass" preserve="all"/>
-		<type fullname="GameManager" preserve="all"/>
-		<type fullname="GameFacade" preserve="all"/>
-		<type fullname="BasePageFlipping" preserve="all"/>
-		<type fullname="BasePanel" preserve="all"/>
-		<type fullname="UIManager" preserve="all"/>
-		<type fullname="Tutorial.BaseClass" preserve="all"/>
+	    <type fullname="Tutorial.BaseClass" preserve="all"/>
 		<type fullname="Tutorial.TestEnum" preserve="all"/>
 		<type fullname="Tutorial.DerivedClass" preserve="all"/>
 		<type fullname="Tutorial.ICalc" preserve="all"/>
 		<type fullname="Tutorial.DerivedClassExtensions" preserve="all"/>
+		<type fullname="Library.UIManager.BasePanel" preserve="all"/>
+		<type fullname="Library.UIManager.UIManager" preserve="all"/>
+		<type fullname="App.MVC.GameFacade" preserve="all"/>
+		<type fullname="App.MVC.View.BeginScene.UI.BaseControl.BasePageFlipping" preserve="all"/>
+		<type fullname="App.MVC.Controller.GameManager" preserve="all"/>
+		<type fullname="App.Generic.LuaCallCsharp.CallMathf" preserve="all"/>
+		<type fullname="App.Generic.LuaCallCsharp.MonoScript" preserve="all"/>
+		<type fullname="App.Generic.LuaCallCsharp.UIInterfaceClass" preserve="all"/>
 		<type fullname="Tutorial.DerivedClass+TestEnumInner" preserve="all"/>
 		
 	</assembly>

@@ -1,38 +1,44 @@
+using App.Generic.BaseObject;
+using App.MVC.View.GameScene.Object;
+using App.Static;
 using PureMVC.Interfaces;
 using PureMVC.Patterns.Command;
 
-public class InitBuffManagerControllerCommand : SimpleCommand
+namespace App.MVC.Controller.Commands
 {
-    public override void Execute(INotification notification)
+    public class InitBuffManagerControllerCommand : SimpleCommand
     {
-        GameFacade.Instance.RegisterCommand(NotificationName.Game.ADD_BUFF, () => new AddBuffCommand());
-        GameFacade.Instance.RegisterCommand(NotificationName.Game.REMOVE_BUFF, () => new RemoveBuffCommand());
-        GameFacade.Instance.RegisterCommand(NotificationName.Game.REMOVE_BUFFS, () => new RemoveBuffsCommand());
+        public override void Execute(INotification notification)
+        {
+            GameFacade.Instance.RegisterCommand(NotificationName.Game.ADD_BUFF, () => new AddBuffCommand());
+            GameFacade.Instance.RegisterCommand(NotificationName.Game.REMOVE_BUFF, () => new RemoveBuffCommand());
+            GameFacade.Instance.RegisterCommand(NotificationName.Game.REMOVE_BUFFS, () => new RemoveBuffsCommand());
+        }
     }
-}
 
-public class AddBuffCommand : SimpleCommand
-{
-    public override void Execute(INotification notification)
+    public class AddBuffCommand : SimpleCommand
     {
-        (Monster monster, BaseBuff buff) data = ((Monster, BaseBuff))notification.Body;;
-        GameManager.Instance.BuffManager.ApplyBuff(data.monster, data.buff);
+        public override void Execute(INotification notification)
+        {
+            (Monster monster, BaseBuff buff) data = ((Monster, BaseBuff))notification.Body;;
+            GameManager.Instance.BuffManager.ApplyBuff(data.monster, data.buff);
+        }
     }
-}
 
-public class RemoveBuffCommand : SimpleCommand
-{
-    public override void Execute(INotification notification)
+    public class RemoveBuffCommand : SimpleCommand
     {
-        (Monster monster, BaseBuff buff) data = ((Monster, BaseBuff))notification.Body;
-        GameManager.Instance.BuffManager.RemoveBuff(data.monster, data.buff);
+        public override void Execute(INotification notification)
+        {
+            (Monster monster, BaseBuff buff) data = ((Monster, BaseBuff))notification.Body;
+            GameManager.Instance.BuffManager.RemoveBuff(data.monster, data.buff);
+        }
     }
-}
 
-public class RemoveBuffsCommand : SimpleCommand
-{
-    public override void Execute(INotification notification)
+    public class RemoveBuffsCommand : SimpleCommand
     {
-        GameManager.Instance.BuffManager.RemoveBuffs(notification.Body as Monster);
+        public override void Execute(INotification notification)
+        {
+            GameManager.Instance.BuffManager.RemoveBuffs(notification.Body as Monster);
+        }
     }
 }

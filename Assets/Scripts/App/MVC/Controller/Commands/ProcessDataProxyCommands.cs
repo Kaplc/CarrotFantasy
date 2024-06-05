@@ -1,39 +1,45 @@
+using App.DataClass.Player;
+using App.MVC.Model.PlayerData;
+using App.Static;
 using PureMVC.Interfaces;
 using PureMVC.Patterns.Command;
 
-public class InitProcessDataProxyControllerCommand: SimpleCommand
+namespace App.MVC.Controller.Commands
 {
-    ProcessDataProxy proxy = GameFacade.Instance.RetrieveProxy(nameof(ProcessDataProxy)) as ProcessDataProxy;
-    
-    public override void Execute(INotification notification)
+    public class InitProcessDataProxyControllerCommand: SimpleCommand
     {
-        GameFacade.Instance.RegisterCommand(NotificationName.Data.SAVE_PROCESSDATA, ()=> new SaveProcessDataCommand()
+        ProcessDataProxy proxy = GameFacade.Instance.RetrieveProxy(nameof(ProcessDataProxy)) as ProcessDataProxy;
+    
+        public override void Execute(INotification notification)
         {
-            proxy = proxy
-        });
-        GameFacade.Instance.RegisterCommand(NotificationName.Data.LOAD_PROCESSDATA, () => new GetProcessDataCommand()
+            GameFacade.Instance.RegisterCommand(NotificationName.Data.SAVE_PROCESSDATA, ()=> new SaveProcessDataCommand()
+            {
+                proxy = proxy
+            });
+            GameFacade.Instance.RegisterCommand(NotificationName.Data.LOAD_PROCESSDATA, () => new GetProcessDataCommand()
+            {
+                proxy = proxy
+            });
+        }
+    }
+
+    public class GetProcessDataCommand : SimpleCommand
+    {
+        public ProcessDataProxy proxy;
+    
+        public override void Execute(INotification notification)
         {
-            proxy = proxy
-        });
+            proxy?.GetProcessData();
+        }
+    }
+
+    public class SaveProcessDataCommand : SimpleCommand
+    {
+        public ProcessDataProxy proxy;
+    
+        public override void Execute(INotification notification)
+        {
+            proxy?.SaveProcessData(((int,int,EPassedGrade))notification.Body);
+        }
     }
 }
-
-public class GetProcessDataCommand : SimpleCommand
-{
-    public ProcessDataProxy proxy;
-    
-    public override void Execute(INotification notification)
-    {
-        proxy?.GetProcessData();
-    }
-}
-
-public class SaveProcessDataCommand : SimpleCommand
-{
-    public ProcessDataProxy proxy;
-    
-    public override void Execute(INotification notification)
-    {
-        proxy?.SaveProcessData(((int,int,EPassedGrade))notification.Body);
-    }
-}  

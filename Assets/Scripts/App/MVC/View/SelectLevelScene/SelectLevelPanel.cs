@@ -1,206 +1,212 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using PureMVC.Interfaces;
-using PureMVC.Patterns.Mediator;
+﻿using System.Collections.Generic;
+using App.DataClass.Game.Level;
+using App.DataClass.Player;
+using App.MVC.Controller;
+using App.MVC.View.SelectLevelScene.Control;
+using App.Static;
+using Library.UIManager;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SelectLevelPanel : BasePanel
+namespace App.MVC.View.SelectLevelScene
 {
-    public int pageIndex; // 当前选择的页码
-
-    public Button btnBack;
-    public Button btnHelp;
-    public Button btnStart;
-    private Button nowCenterButton; // 当前在中间的关卡按钮
-    public ScrollRect scrollRect;
-    public Text teWavesCount;
-    public Transform transformCreateTowerIcon;
-    private List<Image> towerIcons = new List<Image>();
-    private List<Button> btnsLevel = new List<Button>();
-
-    private LevelData nowCenterLevelData; // 当前中间的关卡数据
-    public SelectLevelPanelPageFlipping pageFlipping;
-    private ItemData itemData;
-    public LevelLockPanel levelLockPanel; // 提示关卡锁定的子面板
-    public ProcessData processData; // 游戏进度数据
-
-    protected override void Init()
+    public class SelectLevelPanel : BasePanel
     {
-        btnBack.onClick.AddListener(() =>
-        {
-            UIManager.Instance.Hide<SelectLevelPanel>(false);
-            PanelMediator.SendNotification(NotificationName.LoadScene.LOADSCENE_SELECTLEVEL_TO_SELECTITEM);
-        });
-        btnHelp.onClick.AddListener(() =>
-        {
-            UIManager.Instance.Hide<SelectLevelPanel>(false);
-            PanelMediator.SendNotification(NotificationName.LoadScene.LOADSCENE_SELECTLEVEL_TO_HELP);
-        });
-        btnStart.onClick.AddListener(() =>
-        {
-            // 触发当前选中的Level按钮
-            nowCenterButton.onClick.Invoke();
-        });
+        public int pageIndex; // 当前选择的页码
 
-        // 初始化更新
-        PageFlippingCompleted();
+        public Button btnBack;
+        public Button btnHelp;
+        public Button btnStart;
+        private Button nowCenterButton; // 当前在中间的关卡按钮
+        public ScrollRect scrollRect;
+        public Text teWavesCount;
+        public Transform transformCreateTowerIcon;
+        private List<Image> towerIcons = new List<Image>();
+        private List<Button> btnsLevel = new List<Button>();
 
-        // 滑动到上一次打开的关卡
-        ToPage();
-    }
+        private LevelData nowCenterLevelData; // 当前中间的关卡数据
+        public SelectLevelPanelPageFlipping pageFlipping;
+        private ItemData itemData;
+        public LevelLockPanel levelLockPanel; // 提示关卡锁定的子面板
+        public ProcessData processData; // 游戏进度数据
 
-    private void ToPage()
-    {
-        if (!GameManager.Instance.nowLevelData) return;
-
-        for (int i = 0; i < itemData.levels.Count; i++)
+        protected override void Init()
         {
-            if (GameManager.Instance.nowLevelData.levelID == itemData.levels[i].levelID)
+            btnBack.onClick.AddListener(() =>
             {
-                pageFlipping.ToPage(i + 1);
-                // 仅自动滑动一次退出选择关卡界面就无效
-                GameManager.Instance.nowLevelData = null;
-                return;
-            }
-        }
-    }
-
-    /// <summary>
-    /// 创建关卡按钮
-    /// </summary>
-    public void CreateLevelButton(ItemData data)
-    {
-        RectTransform content = scrollRect.content;
-        // 设置滑动容器大小
-        content.sizeDelta = new Vector2(534 * (data.levels.Count - 1) + 960, content.sizeDelta.y);
-
-        for (int i = 0; i < data.levels.Count; i++)
-        {
-            // Button button = Instantiate(Resources.Load<GameObject>("UI/Button/ButtonLevel"), content).GetComponent<Button>();
-            Button button = GameManager.Instance.FactoryManager.UIControlFactory.CreateControl("ButtonLevel").GetComponent<Button>();
-            button.transform.SetParent(content, false);
-            btnsLevel.Add(button);
-            // 获取脚本
-            ButtonLevel buttonLevel = button.GetComponent<ButtonLevel>();
-            // 设置信息
-            buttonLevel.levelID = data.levels[i].levelID;
-            // 修改图片
-            buttonLevel.imgMap.sprite = data.levels[i].image;
-            // 添加事件
-            LevelData levelData = data.levels[i];
-            button.onClick.AddListener(() =>
-            {
-                // 如果点击时并不是在中间选中状态，则自动滑动到中间
-                if (nowCenterButton != button)
-                {
-                    pageFlipping.ToPage(btnsLevel.IndexOf(button) + 1);
-                    return;
-                }
-
-                if (button.GetComponent<ButtonLevel>().IsLock)
-                {
-                    // 关卡锁定状态显示提示面板
-                    levelLockPanel.gameObject.SetActive(true);
-                    return;
-                }
-
                 UIManager.Instance.Hide<SelectLevelPanel>(false);
-                GameFacade.Instance.SendNotification(NotificationName.LoadScene.LOADSCENE_SELECTLEVEL_TO_GAME, levelData.levelID);
+                PanelMediator.SendNotification(NotificationName.LoadScene.LOADSCENE_SELECTLEVEL_TO_SELECTITEM);
             });
+            btnHelp.onClick.AddListener(() =>
+            {
+                UIManager.Instance.Hide<SelectLevelPanel>(false);
+                PanelMediator.SendNotification(NotificationName.LoadScene.LOADSCENE_SELECTLEVEL_TO_HELP);
+            });
+            btnStart.onClick.AddListener(() =>
+            {
+                // 触发当前选中的Level按钮
+                nowCenterButton.onClick.Invoke();
+            });
+
+            // 初始化更新
+            PageFlippingCompleted();
+
+            // 滑动到上一次打开的关卡
+            ToPage();
         }
 
-        // 显隐锁定图标和更新通关等级体图片
-        PassedLevelData passedLevelData = processData.passedItemsDic[GameManager.Instance.nowBigLevelId];
-        for (int i = 0; i < btnsLevel.Count; i++)
+        private void ToPage()
         {
-            int levelID = btnsLevel[i].GetComponent<ButtonLevel>().levelID;
-            
-            if (passedLevelData.passedLevelDic.ContainsKey(levelID))
+            if (!GameManager.Instance.nowLevelData) return;
+
+            for (int i = 0; i < itemData.levels.Count; i++)
             {
-                // 设置通关等级
-                btnsLevel[i].GetComponent<ButtonLevel>().passedGrade = passedLevelData.passedLevelDic[levelID];
-                // 取消锁定
-                btnsLevel[i].GetComponent<ButtonLevel>().IsLock = false;
+                if (GameManager.Instance.nowLevelData.levelID == itemData.levels[i].levelID)
+                {
+                    pageFlipping.ToPage(i + 1);
+                    // 仅自动滑动一次退出选择关卡界面就无效
+                    GameManager.Instance.nowLevelData = null;
+                    return;
+                }
             }
         }
 
-
-        // 初始化翻页效果脚本
-        pageFlipping.totalPageIndex = data.levels.Count;
-
-        itemData = data;
-    }
-
-    /// <summary>
-    /// 更新选中关卡的可使用塔的图标
-    /// </summary>
-    public void UpdateTowerIcon(Sprite[] icons)
-    {
-        for (int i = 0; i < towerIcons.Count; i++)
+        /// <summary>
+        /// 创建关卡按钮
+        /// </summary>
+        public void CreateLevelButton(ItemData data)
         {
-            Destroy(towerIcons[i].gameObject);
+            RectTransform content = scrollRect.content;
+            // 设置滑动容器大小
+            content.sizeDelta = new Vector2(534 * (data.levels.Count - 1) + 960, content.sizeDelta.y);
+
+            for (int i = 0; i < data.levels.Count; i++)
+            {
+                // Button button = Instantiate(Resources.Load<GameObject>("UI/Button/ButtonLevel"), content).GetComponent<Button>();
+                Button button = GameManager.Instance.FactoryManager.UIControlFactory.CreateControl("ButtonLevel").GetComponent<Button>();
+                button.transform.SetParent(content, false);
+                btnsLevel.Add(button);
+                // 获取脚本
+                ButtonLevel buttonLevel = button.GetComponent<ButtonLevel>();
+                // 设置信息
+                buttonLevel.levelID = data.levels[i].levelID;
+                // 修改图片
+                buttonLevel.imgMap.sprite = data.levels[i].image;
+                // 添加事件
+                LevelData levelData = data.levels[i];
+                button.onClick.AddListener(() =>
+                {
+                    // 如果点击时并不是在中间选中状态，则自动滑动到中间
+                    if (nowCenterButton != button)
+                    {
+                        pageFlipping.ToPage(btnsLevel.IndexOf(button) + 1);
+                        return;
+                    }
+
+                    if (button.GetComponent<ButtonLevel>().IsLock)
+                    {
+                        // 关卡锁定状态显示提示面板
+                        levelLockPanel.gameObject.SetActive(true);
+                        return;
+                    }
+
+                    UIManager.Instance.Hide<SelectLevelPanel>(false);
+                    GameFacade.Instance.SendNotification(NotificationName.LoadScene.LOADSCENE_SELECTLEVEL_TO_GAME, levelData.levelID);
+                });
+            }
+
+            // 显隐锁定图标和更新通关等级体图片
+            PassedLevelData passedLevelData = processData.passedItemsDic[GameManager.Instance.nowBigLevelId];
+            for (int i = 0; i < btnsLevel.Count; i++)
+            {
+                int levelID = btnsLevel[i].GetComponent<ButtonLevel>().levelID;
+            
+                if (passedLevelData.passedLevelDic.ContainsKey(levelID))
+                {
+                    // 设置通关等级
+                    btnsLevel[i].GetComponent<ButtonLevel>().passedGrade = passedLevelData.passedLevelDic[levelID];
+                    // 取消锁定
+                    btnsLevel[i].GetComponent<ButtonLevel>().IsLock = false;
+                }
+            }
+
+
+            // 初始化翻页效果脚本
+            pageFlipping.totalPageIndex = data.levels.Count;
+
+            itemData = data;
         }
 
-        towerIcons.Clear();
-
-        for (int i = 0; i < icons.Length; i++)
+        /// <summary>
+        /// 更新选中关卡的可使用塔的图标
+        /// </summary>
+        public void UpdateTowerIcon(Sprite[] icons)
         {
-            // Image icon = Instantiate(Resources.Load<GameObject>("UI/Image/ImageTowerIcon"), transformCreateTowerIcon).GetComponent<Image>();
-            Image icon = GameManager.Instance.FactoryManager.UIControlFactory.CreateControl("ImageTowerIcon").GetComponent<Image>();
-            icon.transform.SetParent(transformCreateTowerIcon, false);
-            icon.sprite = icons[i];
-            towerIcons.Add(icon);
-        }
-    }
+            for (int i = 0; i < towerIcons.Count; i++)
+            {
+                Destroy(towerIcons[i].gameObject);
+            }
 
-    /// <summary>
-    /// 更新选中关卡的怪物波数
-    /// </summary>
-    private void UpdateWavesCount(int count)
-    {
-        teWavesCount.text = count.ToString();
-    }
+            towerIcons.Clear();
 
-    /// <summary>
-    /// 翻页完成的回调
-    /// </summary>
-    public void PageFlippingCompleted()
-    {
-        if (btnsLevel.Count == 0) return;
-        // 记录当前中间的关卡按钮
-        nowCenterButton = btnsLevel[pageFlipping.pageIndex - 1];
-        nowCenterLevelData = itemData.levels[pageFlipping.pageIndex - 1];
-
-        // 设置黑色遮罩
-        for (int i = 0; i < btnsLevel.Count; i++)
-        {
-            ButtonLevel buttonLevel = btnsLevel[i].GetComponent<ButtonLevel>();
-            // 未选中的按钮设置黑色遮罩
-            Color imgMapColor = buttonLevel.imgMap.color;
-            buttonLevel.imgMap.color = new Color(100 / 255f, 100 / 255f, 100 / 255f, imgMapColor.a);
-            Color imgGardeColor = buttonLevel.imgMap.color;
-            buttonLevel.imgGarde.color = new Color(100 / 255f, 100 / 255f, 100 / 255f, imgGardeColor.a);
-            Color imgLockColor = buttonLevel.imgMap.color;
-            buttonLevel.imgLock.color = new Color(100 / 255f, 100 / 255f, 100 / 255f, imgLockColor.a);
+            for (int i = 0; i < icons.Length; i++)
+            {
+                // Image icon = Instantiate(Resources.Load<GameObject>("UI/Image/ImageTowerIcon"), transformCreateTowerIcon).GetComponent<Image>();
+                Image icon = GameManager.Instance.FactoryManager.UIControlFactory.CreateControl("ImageTowerIcon").GetComponent<Image>();
+                icon.transform.SetParent(transformCreateTowerIcon, false);
+                icon.sprite = icons[i];
+                towerIcons.Add(icon);
+            }
         }
 
-        // 选中按钮为正常颜色
-        ButtonLevel nowCenterButtonLevel = nowCenterButton.GetComponent<ButtonLevel>();
-        nowCenterButtonLevel.imgMap.color = new Color(1f, 1f, 1f, 1f);
-        nowCenterButtonLevel.imgGarde.color = new Color(1f, 1f, 1f, 1f);
-        nowCenterButtonLevel.imgLock.color = new Color(1f, 1f, 1f, 1f);
-
-        // 获取icons
-        List<Sprite> towerIconSprites = new List<Sprite>();
-        for (int i = 0; i < nowCenterLevelData.towersData.Count; i++)
+        /// <summary>
+        /// 更新选中关卡的怪物波数
+        /// </summary>
+        private void UpdateWavesCount(int count)
         {
-            towerIconSprites.Add(nowCenterLevelData.towersData[i].selectLevelIcon);
+            teWavesCount.text = count.ToString();
         }
 
-        // 更新面板
-        UpdateTowerIcon(towerIconSprites.ToArray());
-        UpdateWavesCount(nowCenterLevelData.roundDataList.Count);
+        /// <summary>
+        /// 翻页完成的回调
+        /// </summary>
+        public void PageFlippingCompleted()
+        {
+            if (btnsLevel.Count == 0) return;
+            // 记录当前中间的关卡按钮
+            nowCenterButton = btnsLevel[pageFlipping.pageIndex - 1];
+            nowCenterLevelData = itemData.levels[pageFlipping.pageIndex - 1];
+
+            // 设置黑色遮罩
+            for (int i = 0; i < btnsLevel.Count; i++)
+            {
+                ButtonLevel buttonLevel = btnsLevel[i].GetComponent<ButtonLevel>();
+                // 未选中的按钮设置黑色遮罩
+                Color imgMapColor = buttonLevel.imgMap.color;
+                buttonLevel.imgMap.color = new Color(100 / 255f, 100 / 255f, 100 / 255f, imgMapColor.a);
+                Color imgGardeColor = buttonLevel.imgMap.color;
+                buttonLevel.imgGarde.color = new Color(100 / 255f, 100 / 255f, 100 / 255f, imgGardeColor.a);
+                Color imgLockColor = buttonLevel.imgMap.color;
+                buttonLevel.imgLock.color = new Color(100 / 255f, 100 / 255f, 100 / 255f, imgLockColor.a);
+            }
+
+            // 选中按钮为正常颜色
+            ButtonLevel nowCenterButtonLevel = nowCenterButton.GetComponent<ButtonLevel>();
+            nowCenterButtonLevel.imgMap.color = new Color(1f, 1f, 1f, 1f);
+            nowCenterButtonLevel.imgGarde.color = new Color(1f, 1f, 1f, 1f);
+            nowCenterButtonLevel.imgLock.color = new Color(1f, 1f, 1f, 1f);
+
+            // 获取icons
+            List<Sprite> towerIconSprites = new List<Sprite>();
+            for (int i = 0; i < nowCenterLevelData.towersData.Count; i++)
+            {
+                towerIconSprites.Add(nowCenterLevelData.towersData[i].selectLevelIcon);
+            }
+
+            // 更新面板
+            UpdateTowerIcon(towerIconSprites.ToArray());
+            UpdateWavesCount(nowCenterLevelData.roundDataList.Count);
+        }
     }
 }
 

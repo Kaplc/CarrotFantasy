@@ -1,56 +1,58 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using App.MVC.Controller;
+using App.Static;
 using UnityEngine;
 
-/// <summary>
-/// 障碍物当成不会动的怪物处理
-/// </summary>
-public class Obstacle : Monster
+namespace App.MVC.View.GameScene.Object
 {
-    public SpriteRenderer spriteRenderer;
-    public Sprite originSprite; // 障碍物原图片
-
-    protected override void Update()
+    /// <summary>
+    /// 障碍物当成不会动的怪物处理
+    /// </summary>
+    public class Obstacle : Monster
     {
-        // 超过2秒没受到伤害或怪物死亡隐藏血条
-        if (Time.time - lastWoundTime > 2 || isDead)
+        public SpriteRenderer spriteRenderer;
+        public Sprite originSprite; // 障碍物原图片
+
+        protected override void Update()
         {
-            hpImageBg.gameObject.SetActive(false);
+            // 超过2秒没受到伤害或怪物死亡隐藏血条
+            if (Time.time - lastWoundTime > 2 || isDead)
+            {
+                hpImageBg.gameObject.SetActive(false);
+            }
         }
-    }
 
-    public override void Wound(int woundHp)
-    {
-        Hp -= woundHp;
-    }
+        public override void Wound(int woundHp)
+        {
+            Hp -= woundHp;
+        }
 
-    protected override void Dead()
-    {
-        // 回收
-        GameManager.Instance.PoolManager.PushObject(gameObject);
-        // 记录到统计信息
-        GameFacade.Instance.SendNotification(NotificationName.Data.CHANGE_DESTROYOBSTACLE_COUNT, +1);
-    }
+        protected override void Dead()
+        {
+            // 回收
+            GameManager.Instance.PoolManager.PushObject(gameObject);
+            // 记录到统计信息
+            GameFacade.Instance.SendNotification(NotificationName.Data.CHANGE_DESTROYOBSTACLE_COUNT, +1);
+        }
 
-    public override void OnGet()
-    {
-        animator.enabled = true;
-        // 刷新血
-        hp = data.maxHp;
-        // 还原动画参数
-        animator.SetBool("Dead", false);
+        public override void OnGet()
+        {
+            animator.enabled = true;
+            // 刷新血
+            hp = data.maxHp;
+            // 还原动画参数
+            animator.SetBool("Dead", false);
 
-        isDead = false;
-    }
+            isDead = false;
+        }
 
-    public override void OnPush()
-    {
-        animator.enabled = false;
-        // 还原Sprite
-        spriteRenderer.sprite = originSprite;
-        // 标记死亡
-        isDead = true;
-    }
+        public override void OnPush()
+        {
+            animator.enabled = false;
+            // 还原Sprite
+            spriteRenderer.sprite = originSprite;
+            // 标记死亡
+            isDead = true;
+        }
     
+    }
 }

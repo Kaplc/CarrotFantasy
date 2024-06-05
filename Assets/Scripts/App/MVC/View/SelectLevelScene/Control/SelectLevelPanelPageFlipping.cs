@@ -1,8 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using App.MVC.View.BeginScene.UI.BaseControl;
 
-public class SelectLevelPanelPageFlipping : BasePageFlipping
+namespace App.MVC.View.SelectLevelScene.Control
 {
+    public class SelectLevelPanelPageFlipping : BasePageFlipping
+    {
     
+    }
 }

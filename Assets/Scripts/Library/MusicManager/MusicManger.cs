@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using Library.BaseSingleton;
+using Library.ResourcesLoad;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Script.FrameWork.MusicManager
+namespace Library.MusicManager
 {
     public class MusicData
     {
@@ -25,7 +27,7 @@ namespace Script.FrameWork.MusicManager
 
         public MusicManger()
         {
-            MonoManager.Instance.AddUpdateEvent(UpdateSound);
+            MonoManager.MonoManager.Instance.AddUpdateEvent(UpdateSound);
             soundAudioSources = new List<AudioSource>();
         }
 

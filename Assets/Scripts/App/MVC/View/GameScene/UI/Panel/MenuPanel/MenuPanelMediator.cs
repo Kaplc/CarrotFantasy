@@ -1,48 +1,53 @@
+using App.Static;
+using Library.UIManager;
 using PureMVC.Interfaces;
 using PureMVC.Patterns.Mediator;
 
-public class MenuPanelMediator : Mediator
+namespace App.MVC.View.GameScene.UI.Panel.MenuPanel
 {
-    public static new string NAME = "MenuPanelMediator";
-
-    public MenuPanel Panel
+    public class MenuPanelMediator : Mediator
     {
-        get=>ViewComponent as MenuPanel;
-        set
+        public static new string NAME = "MenuPanelMediator";
+
+        public MenuPanel Panel
         {
-            ViewComponent = value;
-            (ViewComponent as MenuPanel)?.BindMediator(this);
+            get=>ViewComponent as MenuPanel;
+            set
+            {
+                ViewComponent = value;
+                (ViewComponent as MenuPanel)?.BindMediator(this);
+            }
         }
-    }
     
-    public MenuPanelMediator() : base(NAME)
-    {
-    }
-
-    public override string[] ListNotificationInterests()
-    {
-        return new string[]
+        public MenuPanelMediator() : base(NAME)
         {
-            NotificationName.UI.SHOW_MENUPANEL,
-            NotificationName.UI.HIDE_MENUPANEL
-        };
-    }
-
-    public override void HandleNotification(INotification notification)
-    {
-        base.HandleNotification(notification);
-        switch (notification.Name)
-        {
-            case NotificationName.UI.SHOW_MENUPANEL:
-                Panel = UIManager.Instance.Show<MenuPanel>(false);
-                // 停止游戏
-                SendNotification(NotificationName.Game.STOP_GAME);
-                
-                break;
-            case NotificationName.UI.HIDE_MENUPANEL:
-                UIManager.Instance.Hide<MenuPanel>(false);
-                break;
         }
+
+        public override string[] ListNotificationInterests()
+        {
+            return new string[]
+            {
+                NotificationName.UI.SHOW_MENUPANEL,
+                NotificationName.UI.HIDE_MENUPANEL
+            };
+        }
+
+        public override void HandleNotification(INotification notification)
+        {
+            base.HandleNotification(notification);
+            switch (notification.Name)
+            {
+                case NotificationName.UI.SHOW_MENUPANEL:
+                    Panel = UIManager.Instance.Show<MenuPanel>(false);
+                    // 停止游戏
+                    SendNotification(NotificationName.Game.STOP_GAME);
+                
+                    break;
+                case NotificationName.UI.HIDE_MENUPANEL:
+                    UIManager.Instance.Hide<MenuPanel>(false);
+                    break;
+            }
         
+        }
     }
 }

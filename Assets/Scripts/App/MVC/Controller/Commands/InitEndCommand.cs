@@ -1,20 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using App.Static;
+using Library.SceneManager;
 using PureMVC.Interfaces;
 using PureMVC.Patterns.Command;
-using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class InitEndCommand : SimpleCommand
+namespace App.MVC.Controller.Commands
 {
-    public override void Execute(INotification notification)
+    public class InitEndCommand : SimpleCommand
     {
-        base.Execute(notification);
-        
-        ZFrameWorkSceneManager.Instance.LoadSceneAsync("2.BeginScene", () =>
+        public override void Execute(INotification notification)
         {
-            SendNotification(NotificationName.UI.HIDE_INIPANEL);
-            SendNotification(NotificationName.UI.SHOW_BEGINPANEL);
-        });
+            base.Execute(notification);
+        
+            ZFrameWorkSceneManager.Instance.LoadSceneAsync("2.BeginScene", () =>
+            {
+                SendNotification(NotificationName.UI.HIDE_INIPANEL);
+                SendNotification(NotificationName.UI.SHOW_BEGINPANEL);
+            });
+        }
     }
 }

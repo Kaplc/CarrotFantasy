@@ -1,25 +1,28 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using App.MVC.Controller;
+using Library.PoolManager;
 using TMPro;
 using UnityEngine;
 
-public class AddMoneyTips : MonoBehaviour, IPoolObject
+namespace App.MVC.View.GameScene.UI.Control
 {
-    public Animator animator;
-    public TextMeshPro textMeshPro;
-
-    public void PushSelf()
+    public class AddMoneyTips : MonoBehaviour, IPoolObject
     {
-        GameManager.Instance.FactoryManager.UIControlFactory.PushControl(gameObject);
-    }
+        public Animator animator;
+        public TextMeshPro textMeshPro;
+
+        public void PushSelf()
+        {
+            GameManager.Instance.FactoryManager.UIControlFactory.PushControl(gameObject);
+        }
     
-    public void OnGet()
-    {
-        animator.enabled = true;
-    }
+        public void OnGet()
+        {
+            animator.enabled = true;
+        }
 
-    public void OnPush()
-    {
-        animator.enabled = false;
+        public void OnPush()
+        {
+            animator.enabled = false;
+        }
     }
 }

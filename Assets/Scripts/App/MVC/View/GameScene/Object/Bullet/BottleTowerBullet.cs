@@ -1,8 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using App.Generic.BaseObject;
 
-public class BottleTowerBullet : BaseBullet
+namespace App.MVC.View.GameScene.Object.Bullet
 {
+    public class BottleTowerBullet : BaseBullet
+    {
     
+    }
 }

@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2886ab1245834df0a9fc8f2c6e4cdf6c, type: 3}
+  m_Name: NewMap
+  m_EditorClassIdentifier: 
+  mapBgTexture: {fileID: 0}
+  mapFgTexture: {fileID: 0}
+  mapRoadTexture: {fileID: 0}
+  pathList:
+  - x: 1
+    y: 5
+  - x: 1
+    y: 2
+  - x: 4
+    y: 2
+  - x: 4
+    y: 3
+  - x: 7
+    y: 3
+  - x: 7
+    y: 2
+  - x: 10
+    y: 2
+  - x: 10
+    y: 5
+  towerList:
+  - x: 2
+    y: 5
+  - x: 2
+    y: 4
+  - x: 2
+    y: 3
+  - x: 3
+    y: 3
+  - x: 3
+    y: 4
+  - x: 4
+    y: 4
+  - x: 6
+    y: 4
+  - x: 5
+    y: 4
+  - x: 7
+    y: 4
+  - x: 8
+    y: 4
+  - x: 9
+    y: 3
+  - x: 8
+    y: 3
+  - x: 9
+    y: 4
+  - x: 9
+    y: 5
+  obstacleList: []
+  spawnData: []

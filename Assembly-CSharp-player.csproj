@@ -80,6 +80,8 @@
      <Compile Include="Assets\Scripts\App\DataClass\Game\Object\CarrotData.cs" />
      <Compile Include="Assets\Scripts\App\DataClass\Game\Object\MonsterData.cs" />
      <Compile Include="Assets\Scripts\App\DataClass\Game\Object\TowerData.cs" />
+     <Compile Include="Assets\Scripts\App\DataClass\Map\MapData.cs" />
+     <Compile Include="Assets\Scripts\App\DataClass\Map\SpawnData.cs" />
      <Compile Include="Assets\Scripts\App\DataClass\Player\MusicSettingData.cs" />
      <Compile Include="Assets\Scripts\App\DataClass\Player\PassedLevelData.cs" />
      <Compile Include="Assets\Scripts\App\DataClass\Player\PlayerData.cs" />
@@ -208,6 +210,8 @@
      <Compile Include="Assets\Scripts\Library\UIManager\BasePanel.cs" />
      <Compile Include="Assets\Scripts\Library\UIManager\UIManager.cs" />
      <Compile Include="Assets\Scripts\Library\XLuaManager\XLuaManager.cs" />
+     <Compile Include="Assets\Scripts\MapEditor\BossMap.cs" />
+     <Compile Include="Assets\Scripts\MapEditor\NormalMap.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />

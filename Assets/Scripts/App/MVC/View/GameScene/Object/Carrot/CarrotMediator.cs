@@ -1,29 +1,32 @@
-using System;
+using App.Static;
 using PureMVC.Interfaces;
 using PureMVC.Patterns.Mediator;
 
-public class CarrotMediator : Mediator
+namespace App.MVC.View.GameScene.Object.Carrot
 {
-    public new static string NAME = nameof(CarrotMediator);
+    public class CarrotMediator : Mediator
+    {
+        public new static string NAME = nameof(CarrotMediator);
 
-    private Carrot carrot;
+        private Carrot carrot;
     
-    public CarrotMediator(Carrot carrot) : base(NAME)
-    {
-        this.carrot = carrot;
-    }
-
-    public override string[] ListNotificationInterests()
-    {
-        return new string[]
+        public CarrotMediator(Carrot carrot) : base(NAME)
         {
-            NotificationName.Game.REACH_ENDPOINT
-        };
-    }
+            this.carrot = carrot;
+        }
 
-    public override void HandleNotification(INotification notification)
-    {
-        base.HandleNotification(notification);
-        carrot.Wound((int)(float)notification.Body);
+        public override string[] ListNotificationInterests()
+        {
+            return new string[]
+            {
+                NotificationName.Game.REACH_ENDPOINT
+            };
+        }
+
+        public override void HandleNotification(INotification notification)
+        {
+            base.HandleNotification(notification);
+            carrot.Wound((int)(float)notification.Body);
+        }
     }
 }

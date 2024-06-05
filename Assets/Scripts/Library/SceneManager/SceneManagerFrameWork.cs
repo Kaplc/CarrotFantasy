@@ -1,31 +1,33 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
+using Library.BaseSingleton;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SceneManagement;
 
-public class ZFrameWorkSceneManager : BaseSingleton<ZFrameWorkSceneManager>
+namespace Library.SceneManager
 {
-    public void LoadScene(string sceneName, UnityAction callBack = null)
+    public class ZFrameWorkSceneManager : BaseSingleton<ZFrameWorkSceneManager>
     {
-        SceneManager.LoadScene(sceneName);
-        callBack?.Invoke();
-    }
-
-    public void LoadSceneAsync(string sceneName, UnityAction callBack = null)
-    {
-        MonoManager.Instance.StartCoroutineFrameWork(LoadSceneAsyncCoroutine(sceneName, callBack));
-    }
-
-    private IEnumerator LoadSceneAsyncCoroutine(string sceneName, UnityAction callBack)
-    {
-        AsyncOperation ao = SceneManager.LoadSceneAsync(sceneName);
-        while (!ao.isDone)
+        public void LoadScene(string sceneName, UnityAction callBack = null)
         {
-            EventCenter.Instance.TriggerEvent<float>("进度条更新", ao.progress);
-            yield return ao;
+            UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+            callBack?.Invoke();
         }
 
-        callBack?.Invoke();
+        public void LoadSceneAsync(string sceneName, UnityAction callBack = null)
+        {
+            MonoManager.MonoManager.Instance.StartCoroutineFrameWork(LoadSceneAsyncCoroutine(sceneName, callBack));
+        }
+
+        private IEnumerator LoadSceneAsyncCoroutine(string sceneName, UnityAction callBack)
+        {
+            AsyncOperation ao = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneName);
+            while (!ao.isDone)
+            {
+                EventCenter.EventCenter.Instance.TriggerEvent<float>("进度条更新", ao.progress);
+                yield return ao;
+            }
+
+            callBack?.Invoke();
+        }
     }
 }

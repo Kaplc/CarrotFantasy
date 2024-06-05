@@ -1,9 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using App.DataClass.Game.Object;
 using UnityEngine;
 
-public class CreateTowerArgsBogy
+namespace App.Generic.NotificationBody
 {
-    public TowerData towerData;
-    public Vector3 cellWorldPos;
+    public class CreateTowerArgsBogy
+    {
+        public TowerData towerData;
+        public Vector3 cellWorldPos;
+    }
 }

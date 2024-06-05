@@ -1,17 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using App.MVC.Model.Factory;
 using PureMVC.Interfaces;
 using PureMVC.Patterns.Command;
-using UnityEngine;
 
-public class LoadAtlasCommand : SimpleCommand
+namespace App.MVC.Controller.Commands
 {
-    public override void Execute(INotification notification)
+    public class LoadAtlasCommand : SimpleCommand
     {
-        base.Execute(notification);
+        public override void Execute(INotification notification)
+        {
+            base.Execute(notification);
         
-        SpriteFactory proxy = GameFacade.Instance.RetrieveProxy("UIDataProxy") as SpriteFactory;
-        proxy.LoadAtlas(notification.Body as string);
+            SpriteFactory proxy = GameFacade.Instance.RetrieveProxy("UIDataProxy") as SpriteFactory;
+            proxy.LoadAtlas(notification.Body as string);
         
+        }
     }
 }

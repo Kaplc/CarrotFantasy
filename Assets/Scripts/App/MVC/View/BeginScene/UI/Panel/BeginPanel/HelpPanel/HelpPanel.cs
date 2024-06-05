@@ -1,105 +1,108 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using App.Static;
+using Library.UIManager;
 using UnityEngine;
 using UnityEngine.UI;
 
-/// <summary>
-/// BeginPanel的子Panel
-/// </summary>
-public class HelpPanel : BasePanel
+namespace App.MVC.View.BeginScene.UI.Panel.BeginPanel.HelpPanel
 {
-    private bool showHelpPage;
-    private bool showMonsterPage;
-    private bool showTowerPage;
-    private float oldValue;
+    /// <summary>
+    /// BeginPanel的子Panel
+    /// </summary>
+    public class HelpPanel : BasePanel
+    {
+        private bool showHelpPage;
+        private bool showMonsterPage;
+        private bool showTowerPage;
+        private float oldValue;
     
-    public Button btnHome;
-    public Toggle tgHelp;
-    public Toggle tgMonster;
-    public Toggle tgTower;
+        public Button btnHome;
+        public Toggle tgHelp;
+        public Toggle tgMonster;
+        public Toggle tgTower;
 
-    public Transform helpPage;
-    public Transform towerPage;
-    public Transform monsterPage;
-    public Transform bottomImage;
+        public Transform helpPage;
+        public Transform towerPage;
+        public Transform monsterPage;
+        public Transform bottomImage;
     
-    #region 页面属性
+        #region 页面属性
 
-    // 显示HelpPage
+        // 显示HelpPage
 
-    public bool ShowHelpPage
-    {
-        get => showHelpPage;
-        set
+        public bool ShowHelpPage
         {
-            showHelpPage = value;
+            get => showHelpPage;
+            set
+            {
+                showHelpPage = value;
 
-            bottomImage.gameObject.SetActive(value); // 底部页码
+                bottomImage.gameObject.SetActive(value); // 底部页码
 
-            helpPage.gameObject.SetActive(value); // help页面
-            monsterPage.gameObject.SetActive(!value); // 怪物页面
-            towerPage.gameObject.SetActive(!value); // tower页面
+                helpPage.gameObject.SetActive(value); // help页面
+                monsterPage.gameObject.SetActive(!value); // 怪物页面
+                towerPage.gameObject.SetActive(!value); // tower页面
+            }
         }
-    }
 
-    public bool ShowMonsterPage
-    {
-        get => showMonsterPage;
-        set
+        public bool ShowMonsterPage
         {
-            showMonsterPage = value;
+            get => showMonsterPage;
+            set
+            {
+                showMonsterPage = value;
 
-            bottomImage.gameObject.SetActive(!value);
+                bottomImage.gameObject.SetActive(!value);
 
-            helpPage.gameObject.SetActive(!value);
-            monsterPage.gameObject.SetActive(value);
-            towerPage.gameObject.SetActive(!value);
+                helpPage.gameObject.SetActive(!value);
+                monsterPage.gameObject.SetActive(value);
+                towerPage.gameObject.SetActive(!value);
+            }
         }
-    }
 
-    public bool ShowTowerPage
-    {
-        get => showTowerPage;
-        set
+        public bool ShowTowerPage
         {
-            showTowerPage = value;
+            get => showTowerPage;
+            set
+            {
+                showTowerPage = value;
 
-            bottomImage.gameObject.SetActive(value);
+                bottomImage.gameObject.SetActive(value);
 
-            helpPage.gameObject.SetActive(!value);
-            monsterPage.gameObject.SetActive(!value);
-            towerPage.gameObject.SetActive(value);
+                helpPage.gameObject.SetActive(!value);
+                monsterPage.gameObject.SetActive(!value);
+                towerPage.gameObject.SetActive(value);
+            }
         }
-    }
 
-    #endregion
+        #endregion
 
-    protected override void Init()
-    {
-        btnHome.onClick.AddListener(() =>
+        protected override void Init()
         {
-            // 通过MVC管理器发送显示BeginPanel的消息
-            GameFacade.Instance.SendNotification(NotificationName.UI.SHOW_BEGINPANEL);
-        });
+            btnHome.onClick.AddListener(() =>
+            {
+                // 通过MVC管理器发送显示BeginPanel的消息
+                GameFacade.Instance.SendNotification(NotificationName.UI.SHOW_BEGINPANEL);
+            });
         
-        tgTower.onValueChanged.AddListener((isOn) =>
-        {
-            ShowTowerPage = true;
-        });
+            tgTower.onValueChanged.AddListener((isOn) =>
+            {
+                ShowTowerPage = true;
+            });
         
-        tgMonster.onValueChanged.AddListener((isOn) =>
-        {
-            ShowMonsterPage = true;
-        });
+            tgMonster.onValueChanged.AddListener((isOn) =>
+            {
+                ShowMonsterPage = true;
+            });
         
-        tgHelp.onValueChanged.AddListener((isOn) =>
-        {
+            tgHelp.onValueChanged.AddListener((isOn) =>
+            {
+                ShowHelpPage = true;
+            });
+
+            // 初始显示HelpPage
             ShowHelpPage = true;
-        });
-
-        // 初始显示HelpPage
-        ShowHelpPage = true;
 
         
+        }
     }
 }

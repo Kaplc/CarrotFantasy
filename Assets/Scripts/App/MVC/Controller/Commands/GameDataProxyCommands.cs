@@ -1,42 +1,45 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using App.MVC.Model.GameData;
+using App.Static;
 using PureMVC.Interfaces;
 using PureMVC.Patterns.Command;
 
-public class InitGameDataProxyCommand : SimpleCommand
+namespace App.MVC.Controller.Commands
 {
-    GameDataProxy proxy = GameFacade.Instance.RetrieveProxy("GameDataProxy") as GameDataProxy;
-
-    public override void Execute(INotification notification)
+    public class InitGameDataProxyCommand : SimpleCommand
     {
-        GameFacade.Instance.RegisterCommand(NotificationName.Data.LOAD_ITEMDATA, () => new GetBigLevelDataCommand()
+        GameDataProxy proxy = GameFacade.Instance.RetrieveProxy("GameDataProxy") as GameDataProxy;
+
+        public override void Execute(INotification notification)
         {
-            proxy = proxy
-        });
-        GameFacade.Instance.RegisterCommand(NotificationName.Data.LOAD_LEVELDATA, () => new LoadLevelDataCommand()
+            GameFacade.Instance.RegisterCommand(NotificationName.Data.LOAD_ITEMDATA, () => new GetBigLevelDataCommand()
+            {
+                proxy = proxy
+            });
+            GameFacade.Instance.RegisterCommand(NotificationName.Data.LOAD_LEVELDATA, () => new LoadLevelDataCommand()
+            {
+                proxy = proxy
+            });
+        }
+    }
+
+
+    public class GetBigLevelDataCommand : SimpleCommand
+    {
+        public GameDataProxy proxy;
+
+        public override void Execute(INotification notification)
         {
-            proxy = proxy
-        });
+            proxy.GetBigLevelData((int)notification.Body);
+        }
     }
-}
 
-
-public class GetBigLevelDataCommand : SimpleCommand
-{
-    public GameDataProxy proxy;
-
-    public override void Execute(INotification notification)
+    public class LoadLevelDataCommand : SimpleCommand
     {
-        proxy.GetBigLevelData((int)notification.Body);
-    }
-}
+        public GameDataProxy proxy;
 
-public class LoadLevelDataCommand : SimpleCommand
-{
-    public GameDataProxy proxy;
-
-    public override void Execute(INotification notification)
-    {
-        proxy.LoadLevelData((int)notification.Body);
+        public override void Execute(INotification notification)
+        {
+            proxy.LoadLevelData((int)notification.Body);
+        }
     }
 }

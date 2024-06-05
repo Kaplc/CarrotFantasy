@@ -1,17 +1,17 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class LevelLockPanel : MonoBehaviour
+namespace App.MVC.View.SelectLevelScene
 {
-    public Button btnSure;
-    public Button btnClose;
-
-    private void Start()
+    public class LevelLockPanel : MonoBehaviour
     {
-        btnClose.onClick.AddListener(() => { gameObject.SetActive(false); });
-        btnSure.onClick.AddListener(() => { gameObject.SetActive(false); });
+        public Button btnSure;
+        public Button btnClose;
+
+        private void Start()
+        {
+            btnClose.onClick.AddListener(() => { gameObject.SetActive(false); });
+            btnSure.onClick.AddListener(() => { gameObject.SetActive(false); });
+        }
     }
 }

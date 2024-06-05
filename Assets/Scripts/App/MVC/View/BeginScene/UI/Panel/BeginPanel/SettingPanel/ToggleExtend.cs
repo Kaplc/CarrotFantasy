@@ -1,24 +1,24 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class ToggleExtend : MonoBehaviour
+namespace App.MVC.View.BeginScene.UI.Panel.BeginPanel.SettingPanel
 {
-    public Image imgBackGround;
-    private Toggle tg;
-
-    private void Start()
+    public class ToggleExtend : MonoBehaviour
     {
-        tg = GetComponent<Toggle>();
-        
-        tg.onValueChanged.AddListener((isOn)=>
+        public Image imgBackGround;
+        private Toggle tg;
+
+        private void Start()
         {
-            imgBackGround.enabled = !isOn;
-        });
+            tg = GetComponent<Toggle>();
         
-        // toggle默认为开启
-        imgBackGround.enabled = !tg.isOn;
+            tg.onValueChanged.AddListener((isOn)=>
+            {
+                imgBackGround.enabled = !isOn;
+            });
+        
+            // toggle默认为开启
+            imgBackGround.enabled = !tg.isOn;
+        }
     }
 }

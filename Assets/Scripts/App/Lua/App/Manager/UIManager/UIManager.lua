@@ -19,15 +19,15 @@ function UIManager:ShowPanel(panelName, layerType)
     local panel
     local layer
     if layerType == EUILayers.Bottom then
-        layer = CS.UIManager.Instance.Bottom
+        layer = CS.Library.UIManager.Instance.Bottom
     elseif layerType == EUILayers.Middle then
-        layer = CS.UIManager.Instance.Middle
+        layer = CS.Library.UIManager.Instance.Middle
     elseif layerType == EUILayers.Top then
-        layer = CS.UIManager.Instance.Top
+        layer = CS.Library.UIManager.Instance.Top
     elseif layerType == EUILayers.System then
-        layer = CS.UIManager.Instance.System
+        layer = CS.Library.UIManager.Instance.System
     else
-        layer = CS.UIManager.Instance.Bottom
+        layer = CS.Library.UIManager.Instance.Bottom
     end
 
     -- 加载面板预设体

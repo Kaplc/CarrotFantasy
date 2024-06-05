@@ -1,8 +1,11 @@
 using UnityEngine;
 
-[CreateAssetMenu]
-public class CarrotData: ScriptableObject
+namespace App.DataClass.Game.Object
 {
-    public int hp;
-    public int maxHp;
+    [CreateAssetMenu]
+    public class CarrotData: ScriptableObject
+    {
+        public int hp;
+        public int maxHp;
+    }
 }

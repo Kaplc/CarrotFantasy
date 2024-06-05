@@ -16,8 +16,7 @@ using System.Globalization;
 using System.IO;
 using System.Reflection;
 
-
-namespace LitJson
+namespace Library.DataManager.Json.LitJson
 {
     internal struct PropertyMetadata
     {

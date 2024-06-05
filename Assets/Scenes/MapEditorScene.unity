@@ -295,7 +295,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1791637894}
   - component: {fileID: 1791637893}
-  - component: {fileID: 1791637892}
   - component: {fileID: 1791637891}
   - component: {fileID: 1791637890}
   m_Layer: 0
@@ -304,7 +303,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1791637890
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -343,202 +342,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 9.6, y: 6.4}
   m_EdgeRadius: 0
---- !u!114 &1791637892
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1791637889}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df67da4778bdd54489fb61d519c84c72, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mapBgSpriteRenderer: {fileID: 1791637893}
-  roadSpriteRenderer: {fileID: 133368541}
-  nowEditorMapData:
-    mapBgSpritePath: Map/Item0/BG0
-    roadSpritePath: Map/Item0/Road1
-    pathList:
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    towerList:
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 1
-      obstacleName: Obstacle6
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 1
-      obstacleName: Obstacle2
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 1
-      obstacleName: Obstacle2
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 1
-      obstacleName: Obstacle1
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 1
-      obstacleName: Obstacle1
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 1
-      obstacleName: Obstacle3
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 1
-      obstacleName: Obstacle7
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 1
-      obstacleName: Obstacle3
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    - hasObstacle: 0
-      obstacleName: 
-    obstacleList:
-    - hasObstacle: 1
-      obstacleName: Obstacle6
-    - hasObstacle: 1
-      obstacleName: Obstacle2
-    - hasObstacle: 1
-      obstacleName: Obstacle2
-    - hasObstacle: 1
-      obstacleName: Obstacle1
-    - hasObstacle: 1
-      obstacleName: Obstacle1
-    - hasObstacle: 1
-      obstacleName: Obstacle3
-    - hasObstacle: 1
-      obstacleName: Obstacle7
-    - hasObstacle: 1
-      obstacleName: Obstacle3
-  drawGizmos: 0
-  drawTowerPos: 0
-  drawPath: 0
-  drawObstacle: 0
-  obstacleList:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  obstacleIndex: 0
-  nowMapData:
-    mapBgSpritePath: 
-    roadSpritePath: 
-    pathList: []
-    towerList: []
-    obstacleList: []
 --- !u!212 &1791637893
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -603,6 +406,36 @@ Transform:
   - {fileID: 133368542}
   m_Father: {fileID: 0}
   m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1876754318
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1876754319}
+  m_Layer: 0
+  m_Name: Obstacles
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1876754319
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1876754318}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4633887264276015708}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1925716474
 GameObject:
@@ -825,6 +658,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4942479102145157160}
+  - {fileID: 1876754319}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -873,3 +707,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85c9a0a41364a824b99ac9bf30ee863c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mapData: {fileID: 11400000, guid: c228133cd3088e84b9a015143eb47cdf, type: 2}
+  money: 0
+  towerTypeList: 
+  bgTexture: {fileID: 21300000, guid: 4ae06062bf9c04d4193371324a9af96d, type: 3}
+  fgTexture: {fileID: 21300000, guid: 4b1b3d55969940f43abca95ce5b03b45, type: 3}
+  drawType: 0
+  obstacleType: 5
+  obstaclesFarther: {fileID: 1876754319}

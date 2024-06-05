@@ -10,12 +10,10 @@
 
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-
-namespace LitJson
+namespace Library.DataManager.Json.LitJson
 {
     internal class FsmContext
     {

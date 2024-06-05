@@ -1,31 +1,34 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
+using Library.UIManager;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TipsPanel : BasePanel
+namespace App.MVC.View.Generic.TipsPanel
 {
-    public Text text;
-    public Button button;
-
-    protected override void Init()
+    public class TipsPanel : BasePanel
     {
-        button.onClick.AddListener(() =>
+        public Text text;
+        public Button button;
+
+        protected override void Init()
         {
+            button.onClick.AddListener(() =>
+            {
 
-            // GameManager.Instance.sdkManager.Dispose();
-        });
-    }
+                // GameManager.Instance.sdkManager.Dispose();
+            });
+        }
 
-    public void SetInfo(string info)
-    {
-        text.text = info;
-        StartCoroutine(ClosePanelCoroutine());
-    }
+        public void SetInfo(string info)
+        {
+            text.text = info;
+            StartCoroutine(ClosePanelCoroutine());
+        }
 
-    private IEnumerator ClosePanelCoroutine()
-    {
-        yield return new WaitForSeconds(1f);
-        UIManager.Instance.Hide<TipsPanel>();
+        private IEnumerator ClosePanelCoroutine()
+        {
+            yield return new WaitForSeconds(1f);
+            UIManager.Instance.Hide<TipsPanel>();
+        }
     }
 }

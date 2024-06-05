@@ -1,39 +1,45 @@
+using App.DataClass.Player;
+using App.MVC.Model.PlayerData;
+using App.Static;
 using PureMVC.Interfaces;
 using PureMVC.Patterns.Command;
 
-public class InitMusicDataProxyControllerCommand : SimpleCommand
+namespace App.MVC.Controller.Commands
 {
-    MusicDataProxy proxy = GameFacade.Instance.RetrieveProxy(nameof(MusicDataProxy)) as MusicDataProxy;
+    public class InitMusicDataProxyControllerCommand : SimpleCommand
+    {
+        MusicDataProxy proxy = GameFacade.Instance.RetrieveProxy(nameof(MusicDataProxy)) as MusicDataProxy;
     
-    public override void Execute(INotification notification)
-    {
-        GameFacade.Instance.RegisterCommand(NotificationName.Data.LOAD_MUSICSETTINGDATA, () => new GetMusicSettingDataCommand()
+        public override void Execute(INotification notification)
         {
-            proxy = proxy
-        });
-        GameFacade.Instance.RegisterCommand(NotificationName.Data.SAVE_MUSCISETTINGDATA, () => new SaveMusicSettingDataCommand()
+            GameFacade.Instance.RegisterCommand(NotificationName.Data.LOAD_MUSICSETTINGDATA, () => new GetMusicSettingDataCommand()
+            {
+                proxy = proxy
+            });
+            GameFacade.Instance.RegisterCommand(NotificationName.Data.SAVE_MUSCISETTINGDATA, () => new SaveMusicSettingDataCommand()
+            {
+                proxy = proxy
+            });
+        }
+    }
+
+    public class GetMusicSettingDataCommand : SimpleCommand
+    {
+        public MusicDataProxy proxy;
+
+        public override void Execute(INotification notification)
         {
-            proxy = proxy
-        });
+            proxy.GetMusicSettingData();
+        }
     }
-}
 
-public class GetMusicSettingDataCommand : SimpleCommand
-{
-    public MusicDataProxy proxy;
-
-    public override void Execute(INotification notification)
+    public class SaveMusicSettingDataCommand : SimpleCommand
     {
-        proxy.GetMusicSettingData();
-    }
-}
+        public MusicDataProxy proxy;
 
-public class SaveMusicSettingDataCommand : SimpleCommand
-{
-    public MusicDataProxy proxy;
-
-    public override void Execute(INotification notification)
-    {
-        proxy.SaveMusicSettingData(notification.Body as MusicSettingData);
+        public override void Execute(INotification notification)
+        {
+            proxy.SaveMusicSettingData(notification.Body as MusicSettingData);
+        }
     }
 }

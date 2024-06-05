@@ -22,30 +22,6 @@ namespace XLua.CSObjectWrap
         static void wrapInit0(LuaEnv luaenv, ObjectTranslator translator)
         {
         
-            translator.DelayWrapLoader(typeof(CallMathf), CallMathfWrap.__Register);
-        
-        
-            translator.DelayWrapLoader(typeof(MonoScript), MonoScriptWrap.__Register);
-        
-        
-            translator.DelayWrapLoader(typeof(UIInterfaceClass), UIInterfaceClassWrap.__Register);
-        
-        
-            translator.DelayWrapLoader(typeof(GameManager), GameManagerWrap.__Register);
-        
-        
-            translator.DelayWrapLoader(typeof(GameFacade), GameFacadeWrap.__Register);
-        
-        
-            translator.DelayWrapLoader(typeof(BasePageFlipping), BasePageFlippingWrap.__Register);
-        
-        
-            translator.DelayWrapLoader(typeof(BasePanel), BasePanelWrap.__Register);
-        
-        
-            translator.DelayWrapLoader(typeof(UIManager), UIManagerWrap.__Register);
-        
-        
             translator.DelayWrapLoader(typeof(Tutorial.BaseClass), TutorialBaseClassWrap.__Register);
         
         
@@ -59,6 +35,30 @@ namespace XLua.CSObjectWrap
         
         
             translator.DelayWrapLoader(typeof(Tutorial.DerivedClassExtensions), TutorialDerivedClassExtensionsWrap.__Register);
+        
+        
+            translator.DelayWrapLoader(typeof(Library.UIManager.BasePanel), LibraryUIManagerBasePanelWrap.__Register);
+        
+        
+            translator.DelayWrapLoader(typeof(Library.UIManager.UIManager), LibraryUIManagerUIManagerWrap.__Register);
+        
+        
+            translator.DelayWrapLoader(typeof(App.MVC.GameFacade), AppMVCGameFacadeWrap.__Register);
+        
+        
+            translator.DelayWrapLoader(typeof(App.MVC.View.BeginScene.UI.BaseControl.BasePageFlipping), AppMVCViewBeginSceneUIBaseControlBasePageFlippingWrap.__Register);
+        
+        
+            translator.DelayWrapLoader(typeof(App.MVC.Controller.GameManager), AppMVCControllerGameManagerWrap.__Register);
+        
+        
+            translator.DelayWrapLoader(typeof(App.Generic.LuaCallCsharp.CallMathf), AppGenericLuaCallCsharpCallMathfWrap.__Register);
+        
+        
+            translator.DelayWrapLoader(typeof(App.Generic.LuaCallCsharp.MonoScript), AppGenericLuaCallCsharpMonoScriptWrap.__Register);
+        
+        
+            translator.DelayWrapLoader(typeof(App.Generic.LuaCallCsharp.UIInterfaceClass), AppGenericLuaCallCsharpUIInterfaceClassWrap.__Register);
         
         
             translator.DelayWrapLoader(typeof(Tutorial.DerivedClass.TestEnumInner), TutorialDerivedClassTestEnumInnerWrap.__Register);

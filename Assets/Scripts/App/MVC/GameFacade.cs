@@ -1,62 +1,68 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using App.MVC.Controller.Commands;
+using App.MVC.Model.GameData;
+using App.MVC.Model.PlayerData;
+using App.MVC.View.Generic.LoadingPanel;
+using App.MVC.View.Generic.TipsPanel;
+using App.Static;
 using PureMVC.Patterns.Facade;
-using UnityEngine;
 using XLua;
 
-[LuaCallCSharp()]
-public class GameFacade : Facade
+namespace App.MVC
 {
-    public static GameFacade Instance
+    [LuaCallCSharp()]
+    public class GameFacade : Facade
     {
-        get
+        public static GameFacade Instance
         {
-            if (instance == null)
+            get
             {
-                instance = new GameFacade();
+                if (instance == null)
+                {
+                    instance = new GameFacade();
+                }
+                return instance as GameFacade;
             }
-            return instance as GameFacade;
         }
-    }
     
-    // controller注册绑定通知
-    protected override void InitializeController()
-    {
-        base.InitializeController();
+        // controller注册绑定通知
+        protected override void InitializeController()
+        {
+            base.InitializeController();
         
-        // 初始化通知
-        RegisterCommand(NotificationName.Init.INIT, () => new InitCommand());
-        RegisterCommand(NotificationName.Init.INIT_GAMEMANAGER_CONTROLLER, () => new InitGameManagerControllerCommand());
-        RegisterCommand(NotificationName.Init.INIT_SPAWNER_CONTROLLER, () => new InitSpawnerController());
-        RegisterCommand(NotificationName.Init.INIT_LOADSCENE_CONTROLLER, () => new InitLoadSceneController());
-        RegisterCommand(NotificationName.Init.INIT_BUFFMANAGER_CONTROLLER, () => new InitBuffManagerControllerCommand());
-        // ModelController
-        RegisterCommand(NotificationName.Init.INIT_GAMEDATAPROXY_CONTROLLER, () => new InitGameDataProxyCommand());
-        RegisterCommand(NotificationName.Init.INIT_MUSICDATAPROXY_CONTROLLER, () => new InitMusicDataProxyControllerCommand());
-        RegisterCommand(NotificationName.Init.INIT_STATICALDATAPROXY_CONTROLLER, () => new InitStaticalDataProxyControllerCommand());
-        RegisterCommand(NotificationName.Init.INIT_PROCESSDATAPROXY_CONTROLLER, () => new InitProcessDataProxyControllerCommand());
+            // 初始化通知
+            RegisterCommand(NotificationName.Init.INIT, () => new InitCommand());
+            RegisterCommand(NotificationName.Init.INIT_GAMEMANAGER_CONTROLLER, () => new InitGameManagerControllerCommand());
+            RegisterCommand(NotificationName.Init.INIT_SPAWNER_CONTROLLER, () => new InitSpawnerController());
+            RegisterCommand(NotificationName.Init.INIT_LOADSCENE_CONTROLLER, () => new InitLoadSceneController());
+            RegisterCommand(NotificationName.Init.INIT_BUFFMANAGER_CONTROLLER, () => new InitBuffManagerControllerCommand());
+            // ModelController
+            RegisterCommand(NotificationName.Init.INIT_GAMEDATAPROXY_CONTROLLER, () => new InitGameDataProxyCommand());
+            RegisterCommand(NotificationName.Init.INIT_MUSICDATAPROXY_CONTROLLER, () => new InitMusicDataProxyControllerCommand());
+            RegisterCommand(NotificationName.Init.INIT_STATICALDATAPROXY_CONTROLLER, () => new InitStaticalDataProxyControllerCommand());
+            RegisterCommand(NotificationName.Init.INIT_PROCESSDATAPROXY_CONTROLLER, () => new InitProcessDataProxyControllerCommand());
         
         
-        RegisterCommand(NotificationName.Init.INIT_END, () => new InitEndCommand());
-        RegisterCommand(NotificationName.Data.LOAD_ATLAS, ()=> new LoadAtlasCommand());
-    }
+            RegisterCommand(NotificationName.Init.INIT_END, () => new InitEndCommand());
+            RegisterCommand(NotificationName.Data.LOAD_ATLAS, ()=> new LoadAtlasCommand());
+        }
 
-    protected override void InitializeView()
-    {
-        base.InitializeView();
-        // 注册View
-        RegisterMediator(new LoadingPanelMediator());
-        RegisterMediator(new TipsPanelMediator());
-    }
+        protected override void InitializeView()
+        {
+            base.InitializeView();
+            // 注册View
+            RegisterMediator(new LoadingPanelMediator());
+            RegisterMediator(new TipsPanelMediator());
+        }
 
-    protected override void InitializeModel()
-    {
-        base.InitializeModel();
+        protected override void InitializeModel()
+        {
+            base.InitializeModel();
         
-        RegisterProxy(new GameDataProxy());
-        RegisterProxy(new MusicDataProxy());
-        RegisterProxy(new StatisticalDataProxy());
-        RegisterProxy(new ProcessDataProxy());
+            RegisterProxy(new GameDataProxy());
+            RegisterProxy(new MusicDataProxy());
+            RegisterProxy(new StatisticalDataProxy());
+            RegisterProxy(new ProcessDataProxy());
         
+        }
     }
 }

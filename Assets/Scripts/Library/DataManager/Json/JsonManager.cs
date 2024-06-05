@@ -1,75 +1,76 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.IO;
+using Library.BaseSingleton;
+using Library.DataManager.Json.LitJson;
 using UnityEngine;
-using System.IO;
-using LitJson;
 
-/// <summary>
-/// json解析工具类型
-/// </summary>
-public enum E_JsonTool
+namespace Library.DataManager.Json
 {
-    JsonUtility,
-    LitJson
-}
-
-public class JsonManager: BaseSingleton<JsonManager>
-{
-    
     /// <summary>
-    /// 数据保存为Json文件
+    /// json解析工具类型
     /// </summary>
-    /// <param name="fileName">文件名</param>
-    /// <param name="data">数据对象</param>
-    /// <param name="toolType">序列化工具, 默认使用LitJson</param>
-    public void Save(string fileName, object data, E_JsonTool toolType)
+    public enum E_JsonTool
     {
-        string path = Application.persistentDataPath + "/" + fileName + ".json";
-        string json = "";
-
-        switch (toolType)
-        {
-            case E_JsonTool.JsonUtility:
-                json = JsonUtility.ToJson(data);
-                break;
-            case E_JsonTool.LitJson:
-                json = JsonMapper.ToJson(data);
-                break;
-        }
-
-        File.WriteAllText(path, json);
+        JsonUtility,
+        LitJson
     }
-    
-    /// <summary>
-    /// 加载Json
-    /// </summary>
-    /// <param name="fileName">文件名</param>
-    /// <param name="toolType">序列化工具</param>
-    /// <typeparam name="T">泛型</typeparam>
-    /// <returns></returns>
-    public T Load<T>(string fileName, E_JsonTool toolType) where T : new()
+
+    public class JsonManager: BaseSingleton<JsonManager>
     {
-        string path = Application.streamingAssetsPath + "/" + fileName + ".json";
-
-        if (!File.Exists(path))
+    
+        /// <summary>
+        /// 数据保存为Json文件
+        /// </summary>
+        /// <param name="fileName">文件名</param>
+        /// <param name="data">数据对象</param>
+        /// <param name="toolType">序列化工具, 默认使用LitJson</param>
+        public void Save(string fileName, object data, E_JsonTool toolType)
         {
-            path = Application.persistentDataPath + "/" + fileName + ".json";
-        }
+            string path = Application.persistentDataPath + "/" + fileName + ".json";
+            string json = "";
 
-        T newObj = new T();
-        string json = "";
-        json = File.ReadAllText(path);
-        switch (toolType)
+            switch (toolType)
+            {
+                case E_JsonTool.JsonUtility:
+                    json = JsonUtility.ToJson(data);
+                    break;
+                case E_JsonTool.LitJson:
+                    json = JsonMapper.ToJson(data);
+                    break;
+            }
+
+            File.WriteAllText(path, json);
+        }
+    
+        /// <summary>
+        /// 加载Json
+        /// </summary>
+        /// <param name="fileName">文件名</param>
+        /// <param name="toolType">序列化工具</param>
+        /// <typeparam name="T">泛型</typeparam>
+        /// <returns></returns>
+        public T Load<T>(string fileName, E_JsonTool toolType) where T : new()
         {
-            case E_JsonTool.JsonUtility:
-                newObj = JsonUtility.FromJson<T>(json);
-                break;
-            case E_JsonTool.LitJson:
-                newObj = JsonMapper.ToObject<T>(json);
-                break;
-        }
+            string path = Application.streamingAssetsPath + "/" + fileName + ".json";
 
-        return newObj;
+            if (!File.Exists(path))
+            {
+                path = Application.persistentDataPath + "/" + fileName + ".json";
+            }
+
+            T newObj = new T();
+            string json = "";
+            json = File.ReadAllText(path);
+            switch (toolType)
+            {
+                case E_JsonTool.JsonUtility:
+                    newObj = JsonUtility.FromJson<T>(json);
+                    break;
+                case E_JsonTool.LitJson:
+                    newObj = JsonMapper.ToObject<T>(json);
+                    break;
+            }
+
+            return newObj;
+        }
     }
 }
