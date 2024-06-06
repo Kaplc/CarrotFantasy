@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using App.DataClass.Map;
 using App.Generic;
+using App.Generic.Map;
 using App.Static.Enum;
 using UnityEditor;
 using UnityEngine;
@@ -414,7 +415,7 @@ namespace MapEditor
             }
 
             mapData.towerList = new List<PointClass>();
-            foreach (var v in mapData.towerList)
+            foreach (var v in towerList)
             {
                 mapData.towerList.Add(v);
             }

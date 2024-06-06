@@ -1,4 +1,5 @@
 ﻿using App.DataClass.Game.Level;
+using App.DataClass.Map;
 using App.DataClass.Player;
 using App.MVC.View.GameScene.Object.Map;
 using App.SDK;
@@ -105,17 +106,12 @@ namespace App.MVC.Controller
             // 创建地图
             map = Instantiate(Resources.Load<GameObject>("Prefabs/Map")).GetComponent<Map>();
             // 地图初始化
-            map.InitMap();
+            map.InitMap(nowLevelData.mapData);
             // 创建出怪器
             spawner = Instantiate(Resources.Load<GameObject>("Prefabs/Spawner")).GetComponent<Spawner>();
-            // 创建萝卜
-            spawner.CreateCarrot();
-            // 创建起点路牌
-            spawner.CreateStartBrand();
-            // 创建障碍物
-            spawner.CreateObstacles();
+            spawner.Init(nowLevelData.mapData);
             // 刷新钱
-            money = nowLevelData.money;
+            money = nowLevelData.mapData.money;
         }
 
         /// <summary>
@@ -193,7 +189,7 @@ namespace App.MVC.Controller
             GameFacade.Instance.SendNotification(NotificationName.UI.SHOW_WINPANEL,
                 (
                     spawner.nowWavesCount,
-                    nowLevelData.roundDataList.Count,
+                    nowLevelData.mapData.waveDataList.Count,
                     nowLevelData.levelID,
                     grade
                 )
@@ -211,7 +207,7 @@ namespace App.MVC.Controller
             GameFacade.Instance.SendNotification(NotificationName.UI.SHOW_LOSEPANEL,
                 (
                     spawner.nowWavesCount,
-                    nowLevelData.roundDataList.Count,
+                    nowLevelData.mapData.waveDataList.Count,
                     nowLevelData.levelID
                 )
             );

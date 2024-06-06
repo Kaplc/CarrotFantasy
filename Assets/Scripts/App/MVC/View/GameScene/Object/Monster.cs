@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using App.DataClass.Game.Object;
 using App.Generic;
 using App.Generic.BaseObject;
+using App.Generic.Map;
 using App.MVC.Controller;
 using App.MVC.View.GameScene.UI.Control;
 using App.Static;
@@ -24,12 +26,13 @@ namespace App.MVC.View.GameScene.Object
         private float growth = 1.0f; // 成长系数
         public float speed;
         
-
         private Cell nextCell;
         public Animator animator;
         public Transform hpImageBg; // 血条背景图片
         public Transform hpImageFg; // 血条前景图片
         public Transform signFather; // 集火标记父对象
+
+        private List<Cell> pathList;
 
         #region 属性
 
@@ -103,7 +106,7 @@ namespace App.MVC.View.GameScene.Object
                 // 到达换下个目标格子
                 pathIndex++;
                 pathIndex = Mathf.Clamp(pathIndex, 0, GameManager.Instance.nowLevelData.mapData.pathList.Count - 1);
-                nextCell = GameManager.Instance.nowLevelData.mapData.pathList[pathIndex];
+                nextCell = pathList[pathIndex];
             }
 
             // 超过2秒没受到伤害或怪物死亡隐藏血条
@@ -111,6 +114,11 @@ namespace App.MVC.View.GameScene.Object
             {
                 hpImageBg.gameObject.SetActive(false);
             }
+        }
+
+        public void Init(List<PointClass> list)
+        {
+            pathList = PointClassToCell.ToCellList(list);
         }
 
         private void ClearAllBuffs()
@@ -209,9 +217,9 @@ namespace App.MVC.View.GameScene.Object
         public override void OnGet()
         {
             // 位置设置在起点
-            transform.position = Map.Map.GetCellCenterPos(GameManager.Instance.nowLevelData.mapData.pathList[0]);
+            transform.position = Map.Map.GetCellCenterPos(PointClassToCell.ToCell(GameManager.Instance.nowLevelData.mapData.pathList[0]));
             // 设置第一个目标格子
-            nextCell = GameManager.Instance.nowLevelData.mapData.pathList[0];
+            nextCell = PointClassToCell.ToCell(GameManager.Instance.nowLevelData.mapData.pathList[0]);
             pathIndex = 0;
             // 刷新属性
             hp = data.maxHp;

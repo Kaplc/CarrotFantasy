@@ -198,14 +198,14 @@ namespace App.MVC.View.SelectLevelScene
 
             // 获取icons
             List<Sprite> towerIconSprites = new List<Sprite>();
-            for (int i = 0; i < nowCenterLevelData.towersData.Count; i++)
+            for (int i = 0; i < nowCenterLevelData.mapData.towerTypeList.Count; i++)
             {
-                towerIconSprites.Add(nowCenterLevelData.towersData[i].selectLevelIcon);
+                towerIconSprites.Add(nowCenterLevelData.mapData.GetTowerData(i).selectLevelIcon);
             }
 
             // 更新面板
             UpdateTowerIcon(towerIconSprites.ToArray());
-            UpdateWavesCount(nowCenterLevelData.roundDataList.Count);
+            UpdateWavesCount(nowCenterLevelData.mapData.GetWaveCount());
         }
     }
 }

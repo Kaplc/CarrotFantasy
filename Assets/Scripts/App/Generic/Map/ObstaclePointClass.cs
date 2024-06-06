@@ -1,6 +1,7 @@
 using System;
+using App.DataClass.Map;
 
-namespace App.DataClass.Map
+namespace App.Generic.Map
 {
     [Serializable]
     public class ObstaclePointClass: PointClass

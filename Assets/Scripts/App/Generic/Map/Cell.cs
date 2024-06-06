@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace App.Generic
+namespace App.Generic.Map
 {
     [Serializable]
     public class Cell
@@ -23,10 +23,21 @@ namespace App.Generic
             get => isTowerPos;
             set => isTowerPos = value;
         }
-
+        
         public Cell(Point point)
         {
             this.point = point;
+        }
+
+        public Cell(ObstaclePointClass obstaclePointClass)
+        {
+            point = new Point(obstaclePointClass.x, obstaclePointClass.y);
+            obstacleName = obstaclePointClass.obstacleType.ToString();
+        }
+
+        public Cell(PointClass pointClass)
+        {
+            point = new Point(pointClass.x, pointClass.y);
         }
 
         public override string ToString()

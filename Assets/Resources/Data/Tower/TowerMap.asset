@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baa85a95595a4f838f016c7384801cb5, type: 3}
+  m_Name: TowerMap
+  m_EditorClassIdentifier: 
+  towerMapItems:
+  - towerType: 0
+    towerData: {fileID: 11400000, guid: aab2e8cd34433054a981d09ecb22a4b3, type: 2}
+  - towerType: 1
+    towerData: {fileID: 11400000, guid: 5dc00981fead5df4e922d0d6fd12f5f6, type: 2}

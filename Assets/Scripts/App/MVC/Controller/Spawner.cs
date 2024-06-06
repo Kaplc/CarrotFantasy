@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using App.DataClass.Game.Level;
 using App.DataClass.Game.Object;
-using App.Generic;
 using App.Generic.BaseObject;
+using App.Generic.Map;
 using App.MVC.View.GameScene.Object;
 using App.MVC.View.GameScene.Object.Carrot;
 using App.MVC.View.GameScene.Object.Map;
 using App.Static;
 using UnityEngine;
+using MapData = App.DataClass.Map.MapData;
 
 namespace App.MVC.Controller
 {
@@ -32,6 +33,10 @@ namespace App.MVC.Controller
         public Monster collectingFiresTarget; // 集火目标
         public Transform signTrans; // 集火标志
 
+        private Clock clock;
+        private MapData mapData;
+        private List<Cell> pathList;
+
         private void Awake()
         {
             spawnedComplete = false;
@@ -39,20 +44,34 @@ namespace App.MVC.Controller
             // 获取当前关卡数据
             levelData = GameManager.Instance.nowLevelData;
             // 更新面板波数显示
-            GameFacade.Instance.SendNotification(NotificationName.UIEvent.GAMEPANEL_UPDATE_WAVESCOUNT, (1, levelData.roundDataList.Count));
+            GameFacade.Instance.SendNotification(NotificationName.UIEvent.GAMEPANEL_UPDATE_WAVESCOUNT, (1, levelData.mapData.waveDataList.Count));
+
+            clock = GetComponent<Clock>();
+        }
+
+        public void Init(MapData data)
+        {
+            // 转换地图数据
+            pathList = PointClassToCell.ToCellList(data.pathList);
+            
+            CreateObstacles();
+            CreateCarrot();
+            CreateStartBrand();
         }
 
         /// <summary>
         /// 根据保存的地图数据生成障碍物
         /// </summary>
-        public void CreateObstacles()
+        private void CreateObstacles()
         {
             MapData nowMapData = GameManager.Instance.nowLevelData.mapData;
 
             for (int i = 0; i < nowMapData.obstacleList.Count; i++)
             {
-                Cell cell = nowMapData.obstacleList[i];
+                ObstaclePointClass obstaclePointClass = nowMapData.obstacleList[i];
 
+                Cell cell = new Cell(new Point(obstaclePointClass.x, obstaclePointClass.y));
+                cell.obstacleName = obstaclePointClass.obstacleType.ToString();
                 // 创建实例
                 Obstacle obstacle = GameManager.Instance.PoolManager.GetObject($"Object/Obstacle/{cell.obstacleName}").GetComponent<Obstacle>();
                 obstacle.transform.SetParent(GameManager.Instance.map.transform);
@@ -153,96 +172,34 @@ namespace App.MVC.Controller
         /// <summary>
         /// 创建萝卜
         /// </summary>
-        public void CreateCarrot()
+        private void CreateCarrot()
         {
             carrot = GameManager.Instance.PoolManager.GetObject("Object/Carrot").GetComponent<Carrot>();
             carrot.transform.SetParent(GameManager.Instance.map.transform);
             carrot.transform.localScale = Vector3.one;
             // 设置萝卜位置
-            Cell lastPathCell = levelData.mapData.pathList[levelData.mapData.pathList.Count - 1];
+            Cell lastPathCell = pathList[pathList.Count - 1];
             carrot.transform.position = Map.GetCellCenterPos(lastPathCell);
         }
 
         /// <summary>
         /// 创建开始路牌
         /// </summary>
-        public void CreateStartBrand()
+        private void CreateStartBrand()
         {
             startPoint = Instantiate(Resources.Load<GameObject>("Object/StartPoint")).GetComponent<Transform>();
             startPoint.SetParent(GameManager.Instance.map.transform);
             startPoint.localScale = Vector3.one;
             // 设置开始路牌位置
-            Cell firstPathCell = levelData.mapData.pathList[0];
+            Cell firstPathCell = pathList[0];
             startPoint.position = Map.GetCellCenterPos(firstPathCell);
         }
-
-        /// <summary>
-        /// 开启出怪协程
-        /// </summary>
-        public void StartSpawn()
-        {
-            spawnCoroutine = StartCoroutine(SpawnCoroutine());
-        }
-
+        
         public void StopSpawn()
         {
             if (spawnCoroutine != null)
             {
                 StopCoroutine(spawnCoroutine);
-            }
-        }
-
-        private IEnumerator SpawnCoroutine()
-        {
-            nowWavesCount = 0;
-            for (int i = 0; i < levelData.roundDataList.Count; i++)
-            {
-                nowWavesCount++;
-                // 更新面板波数显示
-                GameFacade.Instance.SendNotification(NotificationName.UIEvent.GAMEPANEL_UPDATE_WAVESCOUNT, (i + 1, levelData.roundDataList.Count));
-
-                RoundData roundData = levelData.roundDataList[i];
-
-                // 创建每组怪
-                for (int j = 0; j < roundData.group.Count; j++)
-                {
-                    GroupData groupData = roundData.group[j];
-                    for (int k = 0; k < groupData.count; k++)
-                    {
-                        // 实现暂停
-                        if (GameManager.Instance.Pause)
-                        {
-                            yield return new WaitWhile(() => GameManager.Instance.Pause);
-                            yield return new WaitForSeconds(roundData.intervalTimeEach + lastSpawnTime - GameManager.Instance.pauseTime);
-                        }
-
-                        // 缓存池取出
-                        Monster monster = GameManager.Instance.PoolManager.GetObject(groupData.monsterData.prefabsPath).GetComponent<Monster>();
-                        monster.transform.SetParent(GameManager.Instance.map.transform);
-                        monster.transform.localScale = Vector3.one;
-                        // 赋值成长系数
-                        monster.Growth = roundData.growth;
-                        // 保存出生的怪物
-                        monsters.Add(monster);
-                        // 记录时间
-                        lastSpawnTime = Time.time;
-                        // 最后一组怪最后一只跳过等待
-                        if (!(j == roundData.group.Count - 1 && k == groupData.count - 1))
-                        {
-                            // 每只间隔
-                            yield return new WaitForSeconds(roundData.intervalTimeEach);
-                        }
-                    }
-                }
-
-                // 下一波前直接判断还有无下一波怪物
-                if (levelData.roundDataList.Count - 1 == i)
-                {
-                    spawnedComplete = true;
-                }
-
-                // 等待每波间隔
-                yield return new WaitForSeconds(levelData.intervalTimePerWave);
             }
         }
 

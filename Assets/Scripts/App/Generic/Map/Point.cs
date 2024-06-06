@@ -1,6 +1,6 @@
 using System;
 
-namespace App.Generic
+namespace App.Generic.Map
 {
     /// <summary>
     /// 地图格子索引

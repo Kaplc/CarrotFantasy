@@ -1,6 +1,6 @@
 using System;
 
-namespace App.DataClass.Map
+namespace App.Generic.Map
 {
     [Serializable]
     public class PointClass

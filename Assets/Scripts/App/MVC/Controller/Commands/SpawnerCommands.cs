@@ -32,7 +32,7 @@ namespace App.MVC.Controller.Commands
     {
         public override void Execute(INotification notification)
         {
-            GameManager.Instance.spawner.StartSpawn();
+            
         }
     }
 

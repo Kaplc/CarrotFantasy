@@ -66,23 +66,23 @@ namespace App.MVC.Model.GameData
                         levelData = item.Value.levels[i];
                         // 加载地图数据
 #if UNITY_EDITOR_WIN
-                        levelData.mapData = GameManager.Instance.BinaryManager.Load<MapData>(DataPath.MAPDATA_PATH + $"{levelData.mapDataFileName}.md");
+                        // levelData.mapData = GameManager.Instance.BinaryManager.Load<MapData>(DataPath.MAPDATA_PATH + $"{levelData.mapDataFileName}.md");
 #endif
 #if UNITY_ANDROID
                         // android load from streamingAssets
-                        UnityWebRequest request =
-                            UnityWebRequest.Get(Application.streamingAssetsPath + "/" + DataPath.MAPDATA_PATH + $"{levelData.mapDataFileName}.md");
-                        request.SendWebRequest();
-                        // wait for request
-                        while (!request.isDone)
-                        {
-                        
-                        }
-                        // get bytes
-                        byte[] bytes = request.downloadHandler.data;
-                        // deserialize
-                        BinaryFormatter formatter = new BinaryFormatter();
-                        levelData.mapData = formatter.Deserialize(new MemoryStream(bytes)) as MapData;
+                        // UnityWebRequest request =
+                        //     UnityWebRequest.Get(Application.streamingAssetsPath + "/" + DataPath.MAPDATA_PATH + $"{levelData.mapDataFileName}.md");
+                        // request.SendWebRequest();
+                        // // wait for request
+                        // while (!request.isDone)
+                        // {
+                        //
+                        // }
+                        // // get bytes
+                        // byte[] bytes = request.downloadHandler.data;
+                        // // deserialize
+                        // BinaryFormatter formatter = new BinaryFormatter();
+                        // levelData.mapData = formatter.Deserialize(new MemoryStream(bytes)) as MapData;
 #endif
                         // 缓存已加载过的关卡
                         loadedLevelsDataDic.Add(levelData.levelID, levelData);

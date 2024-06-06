@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using App.DataClass.Game.Level;
 using App.DataClass.Game.Object;
+using App.DataClass.Map;
 using App.Generic;
 using App.Generic.BaseObject;
+using App.Generic.Map;
 using App.Generic.NotificationBody;
 using App.MVC.Controller;
 using App.Static;
@@ -28,169 +30,18 @@ namespace App.MVC.View.GameScene.Object.Map
         public SpriteRenderer roadSpriteRenderer;
 
         public static List<Cell> cellsList = new List<Cell>(); // 所有格子
-        public static List<Cell> pathList = new List<Cell>(); // 所有路径拐点
+        public List<Cell> pathList = new List<Cell>(); // 所有路径拐点
 
-        #region 编辑器相关字段
-    
-        public MapData nowEditorMapData; // 当前编辑地图数据
-        [Header("地图编辑器相关字段")]
-        [HideInInspector] public bool drawGizmos; // 开启绘制
-        [HideInInspector] public bool drawTowerPos;
-        [HideInInspector] public bool drawPath;
-        [HideInInspector] public bool drawObstacle;
-        [HideInInspector] public List<GameObject> obstacleList = new List<GameObject>();
-        [HideInInspector] public int obstacleIndex; // 默认选择第一种障碍物
-
-        #endregion
-
-        #region 游戏相关字段
-
-        [HideInInspector] public MapData nowMapData; // 当前游戏的关卡地图信息
+        public MapData nowMapData; // 当前游戏的关卡地图信息
         private Cell lastClickCell; // 上一次点击的格子
-
-        #endregion
+        
+        public List<TowerData> towerDataList = new List<TowerData>(); // 塔数据
 
         private void Awake()
         {
             // 计算格子数据
             CalCellSize();
         }
-
-        private void Update()
-        {
-            // 编辑器模式才开启检测
-            if (drawGizmos)
-            {
-                EditorCheckMouseEvent();
-            }
-        }
-
-        #region 编辑器相关
-
-        /// <summary>
-        /// 编辑器检测绘画鼠标事件
-        /// </summary>
-        private void EditorCheckMouseEvent()
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                Cell cell = GetMousePositionCell();
-                if (drawTowerPos)
-                {
-                    cell.IsTowerPos = true;
-                }
-
-                if (drawPath)
-                {
-                    pathList.Add(cell);
-                }
-
-                if (drawObstacle)
-                {
-                    // 创建实例
-                    GameObject obstacle = Instantiate(Resources.Load<GameObject>("Object/Obstacle/Obstacle" + (obstacleIndex + 1)));
-                    obstacle.transform.position = GetCellCenterPos(cell);
-                    // 记录
-                    cell.hasObstacle = true;
-                    cell.obstacleName = "Obstacle" + (obstacleIndex + 1);
-                    cell.obstacle = obstacle;
-                    obstacleList.Add(obstacle);
-                }
-            }
-
-            if (Input.GetMouseButtonDown(1))
-            {
-                Cell cell = GetMousePositionCell();
-
-                if (drawTowerPos)
-                {
-                    cell.IsTowerPos = false;
-                }
-
-                if (drawPath)
-                {
-                    pathList.Remove(cell);
-                }
-
-                if (drawObstacle)
-                {
-                    Destroy(cell.obstacle as GameObject);
-                    cell.obstacle = null;
-                    cell.hasObstacle = false;
-                    cell.obstacleName = null;
-                }
-            }
-        }
-
-        private void OnDrawGizmos()
-        {
-            if (!drawGizmos) return;
-
-            CalCellSize();
-            Gizmos.color = Color.green;
-
-            // 绘制行
-            for (int i = 0; i <= RowNum; i++)
-            {
-                Vector2 from = new Vector2(0 - mapWidth / 2f, i * cellHeight - mapHeight / 2f);
-                Vector2 to = new Vector2(mapWidth - mapWidth / 2f, i * cellHeight - mapHeight / 2f);
-                Gizmos.DrawLine(from, to);
-            }
-
-            // 绘制列
-            for (int i = 0; i <= ColumnNum; i++)
-            {
-                Vector2 from = new Vector2(i * cellWidth - mapWidth / 2f, 0 - mapHeight / 2f);
-                Vector2 to = new Vector2(i * cellWidth - mapWidth / 2f, mapHeight - mapHeight / 2f);
-                Gizmos.DrawLine(from, to);
-            }
-
-            // 绘制放塔点
-            for (int i = 0; i < cellsList.Count; i++)
-            {
-                if (cellsList[i].IsTowerPos)
-                {
-                    Gizmos.DrawIcon(GetCellCenterPos(cellsList[i]), "holder.png", true);
-                }
-            }
-
-            Gizmos.color = Color.red;
-            // 绘制路径
-            if (pathList.Count > 0)
-            {
-                Gizmos.DrawIcon(GetCellCenterPos(pathList[0]), "start.png", true);
-                Gizmos.DrawIcon(GetCellCenterPos(pathList[pathList.Count - 1]), "end.png", true);
-            }
-
-            for (int i = 0; i < pathList.Count - 1; i++)
-            {
-                Vector2 from = GetCellCenterPos(pathList[i]);
-                Vector2 to = GetCellCenterPos(pathList[i + 1]);
-                Gizmos.DrawLine(from, to);
-            }
-        }
-
-        /// <summary>
-        /// 编辑器模式根据保存的地图数据生成障碍物
-        /// </summary>
-        public void EditorCreateObstacle()
-        {
-            for (int i = 0; i < cellsList.Count; i++)
-            {
-                if (cellsList[i].hasObstacle)
-                {
-                    // 创建实例
-                    GameObject obstacle = Instantiate(Resources.Load<GameObject>($"Object/Obstacle/{cellsList[i].obstacleName}"));
-                    obstacle.transform.SetParent(transform);
-                    obstacle.transform.localScale = Vector3.one;
-                    obstacle.transform.position = GetCellCenterPos(cellsList[i]);
-                    cellsList[i].obstacle = obstacle;
-                    obstacleList.Add(obstacle);
-                }
-            }
-        }
-
-        #endregion
 
         #region 计算
 
@@ -199,12 +50,7 @@ namespace App.MVC.View.GameScene.Object.Map
         /// </summary>
         private void CalCellSize()
         {
-            // 摄像机视口左下和右上转世界坐标
-            // Vector3 bottomLeft = Camera.main.ViewportToWorldPoint(new Vector3(0, 0));
-            // Vector3 topRight = Camera.main.ViewportToWorldPoint(new Vector3(1, 1));
             // 地图大小
-            // mapWidth = Mathf.Abs(topRight.x - bottomLeft.x);
-            // mapHeight = Mathf.Abs(topRight.y - bottomLeft.y);
             mapWidth = mapBgSpriteRenderer.size.x * mapBgSpriteRenderer.transform.localScale.x;
             mapHeight = mapBgSpriteRenderer.size.y * mapBgSpriteRenderer.transform.localScale.y;
             // 格子大小
@@ -219,7 +65,7 @@ namespace App.MVC.View.GameScene.Object.Map
         /// <summary>
         /// 初始化生成格子
         /// </summary>
-        public static void GenerateCell()
+        private static void GenerateCell()
         {
             // 清空上一次的数据
             cellsList.Clear();
@@ -239,7 +85,7 @@ namespace App.MVC.View.GameScene.Object.Map
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public static Cell GetCell(int x, int y)
+        private static Cell GetCell(int x, int y)
         {
             return cellsList[x + y * ColumnNum];
         }
@@ -273,8 +119,6 @@ namespace App.MVC.View.GameScene.Object.Map
         /// <returns></returns>
         public static Cell GetMousePositionCell()
         {
-            // Vector3 mouseViewPos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
-            // Vector3 mouseWorldPos = Camera.main.ViewportToWorldPoint(mouseViewPos);
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         
             return GetCell(mouseWorldPos);
@@ -287,19 +131,24 @@ namespace App.MVC.View.GameScene.Object.Map
         /// <summary>
         /// 初始化地图
         /// </summary>
-        public void InitMap()
+        public void InitMap(MapData mapData)
         {
             // 获取当前地图数据
-            nowMapData = GameManager.Instance.nowLevelData.mapData;
+            nowMapData = mapData;
             // 生成地图格子
             GenerateCell();
             // 覆盖格子信息
             ReFlashCellData();
-
             // 设置地图背景
-            mapBgSpriteRenderer.sprite = GameManager.Instance.FactoryManager.SpriteFactory.GetSprite(nowMapData.mapBgSpritePath);
+            mapBgSpriteRenderer.sprite = mapData.mapBgTexture;
             // 设置路径背景
-            roadSpriteRenderer.sprite = GameManager.Instance.FactoryManager.SpriteFactory.GetSprite(nowMapData.roadSpritePath);
+            roadSpriteRenderer.sprite = mapData.mapFgTexture;
+            // 获取允许使用的塔数据
+            towerDataList.Clear();
+            for (int i = 0; i < mapData.towerTypeList.Count; i++)
+            {
+                towerDataList.Add(mapData.GetTowerData(i));
+            }
         }
 
         /// <summary>
@@ -310,7 +159,7 @@ namespace App.MVC.View.GameScene.Object.Map
             // 加载放塔点覆盖空数据的格子
             for (int i = 0; i < nowMapData.towerList.Count; i++)
             {
-                GetCell(nowMapData.towerList[i].X, nowMapData.towerList[i].Y).IsTowerPos = true;
+                GetCell(nowMapData.towerList[i].x, nowMapData.towerList[i].y).IsTowerPos = true;
             }
         }
 
@@ -319,7 +168,7 @@ namespace App.MVC.View.GameScene.Object.Map
         /// </summary>
         public void OnMouseDown()
         {
-            if (drawGizmos || GameManager.Instance.stop) return;
+            if (GameManager.Instance.stop) return;
 
             // 射线检测判断是否被UI遮挡
             GraphicRaycaster gr = UIManager.Instance.canvas.GetComponent<GraphicRaycaster>();
@@ -330,10 +179,7 @@ namespace App.MVC.View.GameScene.Object.Map
             if (results.Count > 0 && results[0].gameObject.name != "ImageAttackRange") return;
 
             // 获取点击的格子
-            // Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            // Cell cell = GetCell(mouseWorldPos);
             Cell cell = GetMousePositionCell();
-            // Debug.Log(cell + " " + GetCellCenterPos(cell));
             // 判断是否为放塔点
             if (cell.IsTowerPos)
             {
@@ -434,20 +280,19 @@ namespace App.MVC.View.GameScene.Object.Map
         private void ShowCreatePanel(Vector3 createPos, EBuiltPanelShowDir showDir)
         {
             Dictionary<TowerData, Sprite> towersDataDic = new Dictionary<TowerData, Sprite>();
-            List<TowerData> towersData = GameManager.Instance.nowLevelData.towersData;
             // 获取当前关卡可创建塔的所有Icons
-            for (int i = 0; i < towersData.Count; i++)
+            for (int i = 0; i < towerDataList.Count; i++)
             {
                 // 判断是否够钱, 获取0级的Icon
-                if (GameManager.Instance.money >= towersData[i].prices[0])
+                if (GameManager.Instance.money >= towerDataList[i].prices[0])
                 {
                     // 普通图标
-                    towersDataDic.Add(towersData[i], towersData[i].icon);
+                    towersDataDic.Add(towerDataList[i], towerDataList[i].icon);
                 }
                 else
                 {
                     // 灰色图标
-                    towersDataDic.Add(towersData[i], towersData[i].greyIcon);
+                    towersDataDic.Add(towerDataList[i], towerDataList[i].greyIcon);
                 }
             }
 
