@@ -116,9 +116,9 @@ namespace App.MVC.View.GameScene.Object
             }
         }
 
-        public void Init(List<PointClass> list)
+        public void Init(List<Cell> list)
         {
-            pathList = PointClassToCell.ToCellList(list);
+            pathList = list;
         }
 
         private void ClearAllBuffs()

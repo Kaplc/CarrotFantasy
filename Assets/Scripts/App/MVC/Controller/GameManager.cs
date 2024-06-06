@@ -121,6 +121,8 @@ namespace App.MVC.Controller
         {
             Pause = false;
             stop = false;
+            
+            spawner.StartSpawn();
         }
 
         /// <summary>
@@ -145,6 +147,15 @@ namespace App.MVC.Controller
         public void PauseGame()
         {
             Pause = true;
+            
+            spawner.PauseWaves();
+        }
+
+        public void ResumeGame()
+        {
+            Pause = false;
+            
+            spawner.ResumeWaves();
         }
 
         /// <summary>
@@ -188,7 +199,7 @@ namespace App.MVC.Controller
             // 显示胜利面板
             GameFacade.Instance.SendNotification(NotificationName.UI.SHOW_WINPANEL,
                 (
-                    spawner.nowWavesCount,
+                    spawner.GetNowWaveCount(),
                     nowLevelData.mapData.waveDataList.Count,
                     nowLevelData.levelID,
                     grade
@@ -206,7 +217,7 @@ namespace App.MVC.Controller
             // 显示失败面板
             GameFacade.Instance.SendNotification(NotificationName.UI.SHOW_LOSEPANEL,
                 (
-                    spawner.nowWavesCount,
+                    spawner.GetNowWaveCount(),
                     nowLevelData.mapData.waveDataList.Count,
                     nowLevelData.levelID
                 )

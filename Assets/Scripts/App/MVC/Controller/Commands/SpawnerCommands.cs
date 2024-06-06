@@ -32,7 +32,7 @@ namespace App.MVC.Controller.Commands
     {
         public override void Execute(INotification notification)
         {
-            
+            GameManager.Instance.spawner.ResumeWaves();
         }
     }
 
@@ -43,7 +43,7 @@ namespace App.MVC.Controller.Commands
     {
         public override void Execute(INotification notification)
         {
-            GameManager.Instance.spawner.StopSpawn();
+            GameManager.Instance.spawner.PauseWaves();
         }
     }
 

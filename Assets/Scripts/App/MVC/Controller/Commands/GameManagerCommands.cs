@@ -197,7 +197,7 @@ namespace App.MVC.Controller.Commands
     {
         public override void Execute(INotification notification)
         {
-            GameManager.Instance.StartGame();
+            GameManager.Instance.ResumeGame();
         }
     }
 

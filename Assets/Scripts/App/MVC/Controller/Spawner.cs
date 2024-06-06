@@ -1,15 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using App.DataClass.Game.Level;
 using App.DataClass.Game.Object;
+using App.DataClass.Map;
 using App.Generic.BaseObject;
 using App.Generic.Map;
 using App.MVC.View.GameScene.Object;
 using App.MVC.View.GameScene.Object.Carrot;
 using App.MVC.View.GameScene.Object.Map;
 using App.Static;
+using App.Static.Enum;
 using UnityEngine;
-using MapData = App.DataClass.Map.MapData;
 
 namespace App.MVC.Controller
 {
@@ -18,14 +18,8 @@ namespace App.MVC.Controller
     /// </summary>
     public class Spawner : MonoBehaviour
     {
-        public bool spawnedComplete; // 完成出怪
-        public float lastSpawnTime; // 上一只出怪时间
-        public int nowWavesCount; // 当前第几波
-
         public Carrot carrot; // 萝卜
         public Transform startPoint; // 开始路牌位置
-        private LevelData levelData;
-        private Coroutine spawnCoroutine;
         public List<Monster> monsters = new List<Monster>(); // 已经出生的怪物
         public List<BaseTower> towers = new List<BaseTower>(); // 已创建的塔
         public List<Obstacle> obstaclesList = new List<Obstacle>(); // 已创建的障碍物
@@ -33,69 +27,176 @@ namespace App.MVC.Controller
         public Monster collectingFiresTarget; // 集火目标
         public Transform signTrans; // 集火标志
 
-        private Clock clock;
         private MapData mapData;
         private List<Cell> pathList;
+
+        #region 出怪
+
+        public bool spawnedComplete; // 完成出怪
+        private bool isWaveInProgress = false;
+        private bool isStarted;
+        private bool isPaused;
+        private int currentWaveIndex = 0;
+        private int currentWaveMonsterIndex = 0;
+        private float waveTimer = 0f;
+        private float monsterSpawnTimer = 0f;
+        public List<WaveData> waveDataList = new List<WaveData>();
+        private List<SpawnMonsterData> nowWaveSpawnList = new List<SpawnMonsterData>();
+
+        #endregion
 
         private void Awake()
         {
             spawnedComplete = false;
+        }
 
-            // 获取当前关卡数据
-            levelData = GameManager.Instance.nowLevelData;
-            // 更新面板波数显示
-            GameFacade.Instance.SendNotification(NotificationName.UIEvent.GAMEPANEL_UPDATE_WAVESCOUNT, (1, levelData.mapData.waveDataList.Count));
+        private void Update()
+        {
+            if (!isStarted || isPaused)
+            {
+                return;
+            }
 
-            clock = GetComponent<Clock>();
+            if (currentWaveIndex < waveDataList.Count)
+            {
+                if (!isWaveInProgress && waveTimer >= waveDataList[currentWaveIndex].waveDuration)
+                {
+                    // 开始新一波
+                    StartNewWave();
+                }
+                
+                if (currentWaveMonsterIndex >= nowWaveSpawnList.Count)
+                {
+                    waveTimer += Time.deltaTime;
+                    // 当前波次怪物全部出完
+                    if (isWaveInProgress)
+                    {
+                        EndCurrentWave();
+                    }
+                }
+                else
+                {
+                    // 生成怪物
+                    HandleMonsterSpawning();
+                }
+                
+            }
+            else
+            {
+                spawnedComplete = true;
+            }
         }
 
         public void Init(MapData data)
         {
+            mapData = data;
             // 转换地图数据
-            pathList = PointClassToCell.ToCellList(data.pathList);
-            
+            pathList = PointClassToCell.ToCellList(mapData.pathList);
+            waveDataList = mapData.waveDataList;
+
             CreateObstacles();
             CreateCarrot();
             CreateStartBrand();
+            
+            // 更新面板波数显示
+            GameFacade.Instance.SendNotification(NotificationName.UIEvent.GAMEPANEL_UPDATE_WAVESCOUNT, (1, mapData.waveDataList.Count));
         }
 
-        /// <summary>
-        /// 根据保存的地图数据生成障碍物
-        /// </summary>
-        private void CreateObstacles()
+        #region 出怪相关
+
+        public void StartSpawn()
         {
-            MapData nowMapData = GameManager.Instance.nowLevelData.mapData;
+            isStarted = true;
+            isPaused = false;
+            currentWaveIndex = 0;
+            currentWaveMonsterIndex = 0;
+            waveTimer = 0f;
+            monsterSpawnTimer = 0f;
+            isWaveInProgress = false;
+            Debug.Log("Wave spawning started.");
+        }
 
-            for (int i = 0; i < nowMapData.obstacleList.Count; i++)
+        public void PauseWaves()
+        {
+            isPaused = true;
+            Debug.Log("Wave spawning paused.");
+        }
+
+        public void ResumeWaves()
+        {
+            isPaused = false;
+            Debug.Log("Wave spawning resumed.");
+        }
+
+        private void StartNewWave()
+        {
+            isWaveInProgress = true;
+            currentWaveMonsterIndex = 0;
+            waveTimer = 0f;
+            monsterSpawnTimer = 0f;
+            Debug.Log("Starting wave " + (currentWaveIndex + 1));
+            
+            // 生成出怪数据结构list
+            nowWaveSpawnList.Clear();
+            foreach (EachWaveData eachWaveData in waveDataList[currentWaveIndex].eachWaveDataList)
             {
-                ObstaclePointClass obstaclePointClass = nowMapData.obstacleList[i];
+                for (int i = 0; i < eachWaveData.monsterCount; i++)
+                {
+                    nowWaveSpawnList.Add(new SpawnMonsterData()
+                    {
+                        monsterType = eachWaveData.monsterType,
+                        nextSpawnTime = eachWaveData.monsterDuration,
+                        hard = eachWaveData.hard
+                    });
+                }
+            }
+            
+            // 更新面板波数显示
+            GameFacade.Instance.SendNotification(NotificationName.UIEvent.GAMEPANEL_UPDATE_WAVESCOUNT, (currentWaveIndex + 1, mapData.waveDataList.Count));
+        }
 
-                Cell cell = new Cell(new Point(obstaclePointClass.x, obstaclePointClass.y));
-                cell.obstacleName = obstaclePointClass.obstacleType.ToString();
-                // 创建实例
-                Obstacle obstacle = GameManager.Instance.PoolManager.GetObject($"Object/Obstacle/{cell.obstacleName}").GetComponent<Obstacle>();
-                obstacle.transform.SetParent(GameManager.Instance.map.transform);
-                obstacle.transform.localScale = Vector3.one;
-                obstacle.transform.position = Map.GetCellCenterPos(cell);
-                cell.obstacle = obstacle.gameObject;
-                obstaclesList.Add(obstacle);
+        private void EndCurrentWave()
+        {
+            isWaveInProgress = false;
+            currentWaveIndex++;
+            Debug.Log("Wave " + currentWaveIndex + " ended.");
+        }
+
+        private void HandleMonsterSpawning()
+        {
+            if (currentWaveIndex == 0 && currentWaveMonsterIndex == 0)
+            {
+                // 第一波的第一个直接出怪不用计时
+                SpawnMonster(nowWaveSpawnList[currentWaveMonsterIndex].monsterType, nowWaveSpawnList[currentWaveMonsterIndex].hard);
+                currentWaveMonsterIndex++;
+                monsterSpawnTimer = 0;
+            }
+            else
+            {
+                monsterSpawnTimer += Time.deltaTime;
+                if (monsterSpawnTimer >= nowWaveSpawnList[currentWaveMonsterIndex].nextSpawnTime)
+                {
+                    SpawnMonster(nowWaveSpawnList[currentWaveMonsterIndex].monsterType, nowWaveSpawnList[currentWaveMonsterIndex].hard);
+                    currentWaveMonsterIndex++;
+                    monsterSpawnTimer = 0;
+                }  
             }
         }
 
-        public void SetCollectingFires(Monster monster)
+        private void SpawnMonster(EMonsterType type, float hard)
         {
-            for (int i = 0; i < towers.Count; i++)
-            {
-                towers[i].target = monster;
-            }
-
-            // 设置集火标志
-            collectingFiresTarget = monster;
-            signTrans.gameObject.SetActive(true);
-            signTrans.SetParent(monster.signFather.transform);
-            signTrans.localPosition = Vector3.zero;
-            signTrans.localScale = Vector3.one;
+            Monster monster = GameManager.Instance.PoolManager.GetObject("Object/Monster/" + type).GetComponent<Monster>();
+            monster.transform.SetParent(transform);
+            monster.transform.localScale = Vector3.one;
+            monster.transform.position = Map.GetCellCenterPos(pathList[0]);
+            monster.data.maxHp *= hard;
+            monster.Init(pathList);
+            monsters.Add(monster);
         }
+
+        #endregion
+
+        #region 升级、出售
 
         /// <summary>
         /// 升级塔
@@ -138,6 +239,48 @@ namespace App.MVC.Controller
             GameFacade.Instance.SendNotification(NotificationName.UI.HIDE_BUILTPANEL);
             // 从列表移除
             towers.Remove(tower);
+        }
+
+        #endregion
+
+        #region 创建对象
+
+        public void SetCollectingFires(Monster monster)
+        {
+            for (int i = 0; i < towers.Count; i++)
+            {
+                towers[i].target = monster;
+            }
+
+            // 设置集火标志
+            collectingFiresTarget = monster;
+            signTrans.gameObject.SetActive(true);
+            signTrans.SetParent(monster.signFather.transform);
+            signTrans.localPosition = Vector3.zero;
+            signTrans.localScale = Vector3.one;
+        }
+
+        /// <summary>
+        /// 根据保存的地图数据生成障碍物
+        /// </summary>
+        private void CreateObstacles()
+        {
+            MapData nowMapData = GameManager.Instance.nowLevelData.mapData;
+
+            for (int i = 0; i < nowMapData.obstacleList.Count; i++)
+            {
+                ObstaclePointClass obstaclePointClass = nowMapData.obstacleList[i];
+
+                Cell cell = new Cell(new Point(obstaclePointClass.x, obstaclePointClass.y));
+                cell.obstacleName = obstaclePointClass.obstacleType.ToString();
+                // 创建实例
+                Obstacle obstacle = GameManager.Instance.PoolManager.GetObject($"Object/Obstacle/{cell.obstacleName}").GetComponent<Obstacle>();
+                obstacle.transform.SetParent(GameManager.Instance.map.transform);
+                obstacle.transform.localScale = Vector3.one;
+                obstacle.transform.position = Map.GetCellCenterPos(cell);
+                cell.obstacle = obstacle.gameObject;
+                obstaclesList.Add(obstacle);
+            }
         }
 
         /// <summary>
@@ -194,14 +337,10 @@ namespace App.MVC.Controller
             Cell firstPathCell = pathList[0];
             startPoint.position = Map.GetCellCenterPos(firstPathCell);
         }
-        
-        public void StopSpawn()
-        {
-            if (spawnCoroutine != null)
-            {
-                StopCoroutine(spawnCoroutine);
-            }
-        }
+
+        #endregion
+
+        #region 缓存池相关
 
         /// <summary>
         /// 回收所有游戏対象
@@ -254,5 +393,16 @@ namespace App.MVC.Controller
 
             obstaclesList.Clear();
         }
+
+        #endregion
+
+        #region 外部调用
+
+        public int GetNowWaveCount()
+        {
+            return currentWaveIndex;
+        }
+
+        #endregion
     }
 }
