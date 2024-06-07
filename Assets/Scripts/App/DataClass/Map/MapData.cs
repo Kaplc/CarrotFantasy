@@ -15,10 +15,11 @@ namespace App.DataClass.Map
         public Sprite mapBgTexture;
         public Sprite mapFgTexture;
         public List<PointClass> pathList = new List<PointClass>();
-        public List<PointClass> towerList = new List<PointClass>();
+        public List<PointClass> towerPosList = new List<PointClass>();
         public List<ETowerType> towerTypeList = new List<ETowerType>();
-        public List<ObstaclePointClass> obstacleList = new List<ObstaclePointClass>();
-        
+        public List<ObjectPointClass> obstacleList = new List<ObjectPointClass>();
+        public List<ObjectPointClass> towerList = new List<ObjectPointClass>();
+
         [Header("出怪数据")]
         public List<WaveData> waveDataList = new List<WaveData>();
 
@@ -32,7 +33,7 @@ namespace App.DataClass.Map
             // 从TowerMap获取
             TowerMap towerMap = Resources.Load<TowerMap>("Data/Tower/TowerMap");
 
-            foreach (var item in towerMap.towerMapItems)
+            foreach (var item in towerMap.towerMapDic)
             {
                 if (item.towerType == towerTypeList[index])
                 {

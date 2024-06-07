@@ -9,7 +9,19 @@ namespace App.DataClass
     [CreateAssetMenu(fileName = "TowerMap", menuName = "TowerMap", order = 0)]
     public class TowerMap: ScriptableObject
     {
-        public List<TowerMapItem> towerMapItems = new List<TowerMapItem>();
+        public List<TowerMapItem> towerMapDic = new List<TowerMapItem>();
+
+        private void OnEnable()
+        {
+            HashSet<ETowerType> seenTowerTypes = new HashSet<ETowerType>();
+            foreach (var item in towerMapDic)
+            {
+                if (!seenTowerTypes.Add(item.towerType))
+                {
+                    Debug.LogWarning($"Duplicate towerType found: {item.towerType}");
+                }
+            }
+        }
     }
 
     [Serializable]

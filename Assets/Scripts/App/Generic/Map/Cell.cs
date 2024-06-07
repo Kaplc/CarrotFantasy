@@ -29,10 +29,10 @@ namespace App.Generic.Map
             this.point = point;
         }
 
-        public Cell(ObstaclePointClass obstaclePointClass)
+        public Cell(ObjectPointClass objectPointClass)
         {
-            point = new Point(obstaclePointClass.x, obstaclePointClass.y);
-            obstacleName = obstaclePointClass.obstacleType.ToString();
+            point = new Point(objectPointClass.x, objectPointClass.y);
+            obstacleName = objectPointClass.obstacleType.ToString();
         }
 
         public Cell(PointClass pointClass)

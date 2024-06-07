@@ -2,6 +2,7 @@ namespace App.DataClass.Map
 {
     public enum EObstacleType
     {
+        None,
         StarYellow1X1,
         StarRed1X1,
         Cloud1X1,

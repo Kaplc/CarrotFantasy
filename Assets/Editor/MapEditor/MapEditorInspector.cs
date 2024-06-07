@@ -6,28 +6,44 @@ using UnityEngine;
 
 namespace Editor.MapEditor
 {
-    [CustomEditor(typeof(NormalMapEditor))]
-    public class NormalMapInspectorEditor : UnityEditor.Editor
+    [CustomEditor(typeof(global::MapEditor.MapEditor))]
+    public class MapEditorInspector : UnityEditor.Editor
     {
         // 当前正在编辑的地图
-        private NormalMapEditor map;
+        private global::MapEditor.MapEditor map;
+
+        private bool isNormalMap;
+        private string[] editorMapType = new[] { "普通模式", "Boss模式" };
+        private bool[] editorMapTypeValue = new[] { true, false };
 
         private EDrawType eDrawType = EDrawType.DrawPath;
         private SerializedProperty mapData;
-        private Texture obstacleTexture;
+       
         private SerializedProperty bgTexture;
         private SerializedProperty fgTexture;
+        
+        private SerializedProperty money;
+        
         private SerializedProperty drawType;
+        // 绘制障碍物
         private EObstacleType eObstacleType;
         private SerializedProperty obstacleType;
-        private SerializedProperty money;
-        private SerializedProperty towerTypeList;
+        private Texture obstacleTexture;
+        // 绘制塔
+        private ETowerType eTowerType;
+        private SerializedProperty towerType;
+        private Texture towerTexture;
+        // 绘制放塔点
+        private SerializedProperty allowBuiltTypeList;
+
+        private string[] norDrawTypeStr = new[] { "路径", "建塔点", "障碍物"};
+        private string[] bossDrawTypeStr = new[] { "路径", "建塔点", "障碍物", "塔"};
 
         #region Unity回调
 
         private void OnEnable()
         {
-            map = target as NormalMapEditor; // 关联mono脚本
+            map = target as global::MapEditor.MapEditor; // 关联mono脚本
 
             // 
             mapData = serializedObject.FindProperty("mapData");
@@ -36,7 +52,8 @@ namespace Editor.MapEditor
             drawType = serializedObject.FindProperty("drawType");
             obstacleType = serializedObject.FindProperty("obstacleType");
             money = serializedObject.FindProperty("money");
-            towerTypeList = serializedObject.FindProperty("towerTypeList");
+            allowBuiltTypeList = serializedObject.FindProperty("allowBuiltTypeList");
+            towerType = serializedObject.FindProperty("towerType");
         }
 
         public override void OnInspectorGUI()
@@ -74,8 +91,30 @@ namespace Editor.MapEditor
 
             #endregion
 
+            #region 编辑地图类型
+
+            EditorGUILayout.Space();
+
+            for (int i = 0; i < editorMapType.Length; i++)
+            {
+                editorMapTypeValue[i] = EditorGUILayout.ToggleLeft(editorMapType[i], editorMapTypeValue[i]);
+
+                if (editorMapTypeValue[i])
+                {
+                    for (int j = 0; j < editorMapTypeValue.Length; j++)
+                    {
+                        editorMapTypeValue[j] = false;
+                    }
+
+                    editorMapTypeValue[i] = true;
+                    isNormalMap = i == 0;
+                }
+            }
+
+            #endregion
+
             #region 绘制地图
-            
+
             EditorGUILayout.Space();
             bgTexture.objectReferenceValue = EditorGUILayout.ObjectField("前景", bgTexture.objectReferenceValue, typeof(Sprite), true) as Sprite;
             fgTexture.objectReferenceValue = EditorGUILayout.ObjectField("背景", fgTexture.objectReferenceValue, typeof(Sprite), true) as Sprite;
@@ -84,28 +123,49 @@ namespace Editor.MapEditor
             {
                 map.DrawMap();
             }
+
             EditorGUILayout.Space();
+
             #endregion
-            
+
             #region 地图信息
 
             money.intValue = EditorGUILayout.IntField("初始金币", money.intValue);
-            
-            EditorGUILayout.PropertyField(towerTypeList, new GUIContent("允许建造的塔类型"), true);
-            
+
+            EditorGUILayout.PropertyField(allowBuiltTypeList, new GUIContent("允许建造的塔类型"), true);
+
             EditorGUILayout.Space();
 
             #endregion
 
             #region 绘制对象
 
-            eDrawType = (EDrawType)EditorGUILayout.EnumPopup(new GUIContent("绘制类型"), eDrawType);
-            drawType.intValue = (int)eDrawType;
-            if (eDrawType == EDrawType.DrawObstacle)
+            if (isNormalMap)
+            {
+                drawType.intValue = EditorGUILayout.Popup(new GUIContent("绘制类型"), drawType.intValue, norDrawTypeStr);
+            }
+            else
+            {
+                drawType.intValue = EditorGUILayout.Popup(new GUIContent("绘制类型"), drawType.intValue, bossDrawTypeStr);
+            }
+            eDrawType = (EDrawType)drawType.intValue;
+
+            if (drawType.intValue == 2)
             {
                 eObstacleType = (EObstacleType)EditorGUILayout.EnumPopup(new GUIContent("障碍物类型"), eObstacleType);
                 obstacleType.enumValueIndex = (int)eObstacleType;
                 obstacleTexture = EditorGUIUtility.Load("ObstacleTexture/" + eObstacleType + ".png") as Texture;
+                // 绘制预览图
+                if (obstacleTexture)
+                {
+                    GUI.DrawTexture(GUILayoutUtility.GetRect(obstacleTexture.width, obstacleTexture.height), obstacleTexture, ScaleMode.ScaleToFit);
+                }
+            }
+            else if (drawType.intValue == 3)
+            {
+                eTowerType = (ETowerType)EditorGUILayout.EnumPopup(new GUIContent("塔类型"), eTowerType);
+                towerType.enumValueIndex = (int)eTowerType;
+                obstacleTexture = EditorGUIUtility.Load("TowerTexture/" + eTowerType + ".png") as Texture;
                 // 绘制预览图
                 if (obstacleTexture)
                 {
@@ -117,14 +177,17 @@ namespace Editor.MapEditor
             {
                 switch (eDrawType)
                 {
-                    case EDrawType.DrawTower:
-                        map.ClearTower();
+                    case EDrawType.DrawTowerPos:
+                        map.ClearTowerPos();
                         break;
                     case EDrawType.DrawPath:
                         map.ClearPath();
                         break;
                     case EDrawType.DrawObstacle:
                         map.ClearObstacle();
+                        break;
+                    case EDrawType.DrawTower:
+                        map.ClearTower();
                         break;
                 }
             }

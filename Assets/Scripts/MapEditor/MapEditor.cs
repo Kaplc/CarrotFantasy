@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace MapEditor
 {
-    public class NormalMapEditor : MonoBehaviour
+    public class MapEditor : MonoBehaviour
     {
         private bool isPlaying;
 
@@ -30,14 +30,12 @@ namespace MapEditor
         #region 初始金币和允许的塔
 
         public int money;
-        public List<ETowerType> towerTypeList;
+        public List<ETowerType> allowBuiltTypeList;
 
         #endregion
 
         #region 图片信息
 
-        private Sprite oBgTexture;
-        private Sprite oFgTexture;
         public Sprite bgTexture;
         public Sprite fgTexture;
 
@@ -46,13 +44,21 @@ namespace MapEditor
         #region 绘制
 
         public int drawType;
-        public EObstacleType obstacleType = EObstacleType.Cloud1X1;
-        public Transform obstaclesFarther;
+        // 绘制路径
         private List<PointClass> pathList = new List<PointClass>();
-        private List<PointClass> towerList = new List<PointClass>();
-        private List<ObstaclePointClass> obstacleList = new List<ObstaclePointClass>();
+        // 绘制放塔点
+        private List<PointClass> towerPosList = new List<PointClass>();
+        // 绘制障碍物
+        public EObstacleType obstacleType = EObstacleType.None;
+        public Transform obstaclesFarther;
+        private List<ObjectPointClass> obstacleList = new List<ObjectPointClass>();
         private List<Transform> obstacleObjs = new List<Transform>();
-
+        // 绘制塔
+        public ETowerType towerType = ETowerType.None;
+        public Transform towersFarther;
+        private List<ObjectPointClass> towerList = new List<ObjectPointClass>();
+        private List<Transform> towerObjs = new List<Transform>();
+        
         #endregion
 
         private void Awake()
@@ -66,7 +72,10 @@ namespace MapEditor
             cellHigh = bgSr.size.y / Y_CELL_COUNT;
             // 计算地图左下角坐标
             leftDown = transform.position - new Vector3(bgSr.size.x / 2, bgSr.size.y / 2, 0);
-
+            
+            obstaclesFarther = transform.Find("Obstacles");
+            towersFarther = transform.Find("Towers");
+            
             Load();
         }
 
@@ -96,10 +105,13 @@ namespace MapEditor
                         DrawPath(x, y);
                         break;
                     case 1:
-                        DrawTower(x, y);
+                        DrawTowerPos(x, y);
                         break;
                     case 2:
                         DrawObstacle(x, y, obstacleType);
+                        break;
+                    case 3:
+                        DrawTower(x, y, towerType);
                         break;
                 }
             }
@@ -123,10 +135,10 @@ namespace MapEditor
                         pathList.Remove(new PointClass(x, y));
                         break;
                     case 1:
-                        towerList.Remove(new PointClass(x, y));
+                        towerPosList.Remove(new PointClass(x, y));
                         break;
                     case 2:
-                        obstacleList.Remove(new ObstaclePointClass(x, y));
+                        obstacleList.Remove(new ObjectPointClass(x, y));
                         GenerateObstacle();
                         break;
                 }
@@ -189,7 +201,7 @@ namespace MapEditor
 
             #region 绘制放塔点
 
-            foreach (PointClass p in towerList)
+            foreach (PointClass p in towerPosList)
             {
                 Gizmos.DrawIcon(GetCellPos(p.x, p.y), "holder.png", true);
             }
@@ -197,7 +209,7 @@ namespace MapEditor
             #endregion
         }
 
-        #region 绘制障碍物
+        #region 生成障碍物和塔
 
         private void GenerateObstacle()
         {
@@ -215,14 +227,47 @@ namespace MapEditor
             }
 
             // 生成新的障碍物
-            foreach (ObstaclePointClass p in obstacleList)
+            foreach (ObjectPointClass p in obstacleList)
             {
-                Transform obstacle = Instantiate(Resources.Load<GameObject>("Object/Obstacle/" + p.obstacleType), obstaclesFarther).transform;
-                obstacle.position = GetCellPos(p.x, p.y);
-                obstacleObjs.Add(obstacle);
+                if (p.obstacleType == EObstacleType.None)
+                {
+                    continue;
+                }
+                GameObject obstacle = Instantiate(EditorGUIUtility.Load("ObstaclePrefabs/" + p.obstacleType + ".prefab") as GameObject, obstaclesFarther);;
+                obstacle.transform.position = GetCellPos(p.x, p.y);
+                obstacleObjs.Add(obstacle.transform);
             }
         }
+        
+        private void GenerateTower()
+        {
+            // 清除之前的障碍物
+            for (int i = 0; i < towerObjs.Count; i++)
+            {
+                Destroy(towerObjs[i].gameObject);
+            }
 
+            towerObjs.Clear();
+
+            if (towerList.Count == 0)
+            {
+                return;
+            }
+
+            // 生成新的障碍物
+            foreach (ObjectPointClass p in towerList)
+            {
+                if (p.towerType == ETowerType.None)
+                {
+                    continue;
+                }
+                
+                GameObject tower = Instantiate(EditorGUIUtility.Load("TowerPrefabs/" + p.towerType + ".prefab") as GameObject, towersFarther);;
+                tower.transform.position = GetCellPos(p.x, p.y);
+                towerObjs.Add(tower.transform);
+            }
+        }
+        
         #endregion
 
         #region 地图计算
@@ -253,36 +298,49 @@ namespace MapEditor
             pathList.Add(new PointClass(x, y));
         }
 
-        private void DrawTower(int x, int y)
+        private void DrawTowerPos(int x, int y)
         {
             // 重复的点不添加
-            if (towerList.Contains(new PointClass(x, y)))
+            if (towerPosList.Contains(new PointClass(x, y)))
             {
                 return;
             }
 
-            towerList.Add(new PointClass(x, y));
+            towerPosList.Add(new PointClass(x, y));
         }
 
         private void DrawObstacle(int x, int y, EObstacleType type)
         {
             // 重复的点不添加
-            if (obstacleList.Contains(new ObstaclePointClass(x, y)))
+            if (obstacleList.Contains(new ObjectPointClass(x, y)))
             {
                 return;
             }
 
-            obstacleList.Add(new ObstaclePointClass(x, y, type));
+            obstacleList.Add(new ObjectPointClass(x, y, type));
 
             GenerateObstacle();
+        }
+        
+        private void DrawTower(int x, int y, ETowerType type)
+        {
+            // 重复的点不添加
+            if (towerList.Contains(new ObjectPointClass(x, y)))
+            {
+                return;
+            }
+
+            towerList.Add(new ObjectPointClass(x, y, type));
+
+            GenerateTower();
         }
 
         /// <summary>
         /// 清除
         /// </summary>
-        public void ClearTower()
+        public void ClearTowerPos()
         {
-            towerList.Clear();
+            towerPosList.Clear();
         }
 
         public void ClearPath()
@@ -300,6 +358,17 @@ namespace MapEditor
             }
 
             obstacleObjs.Clear();
+        }
+
+        public void ClearTower()
+        {
+            towerList.Clear();
+
+            for (int i = 0; i < towerObjs.Count; i++)
+            {
+                Destroy(towerObjs[i].gameObject);
+            }
+            towerObjs.Clear();
         }
 
         #endregion
@@ -349,45 +418,50 @@ namespace MapEditor
             // 复制数据
             if (mapData.mapBgTexture)
             {
-                bgTexture = oBgTexture = mapData.mapBgTexture;
+                bgTexture = mapData.mapBgTexture;
             }
 
             if (mapData.mapFgTexture)
             {
-                fgTexture = oFgTexture = mapData.mapFgTexture;
+                fgTexture = mapData.mapFgTexture;
             }
 
             DrawMap();
 
             money = mapData.money;
-            towerTypeList = new List<ETowerType>();
+            allowBuiltTypeList = new List<ETowerType>();
             foreach (ETowerType e in mapData.towerTypeList)
             {
-                towerTypeList.Add(e);
+                allowBuiltTypeList.Add(e);
             }
 
             pathList = new List<PointClass>();
-            towerList = new List<PointClass>();
-            obstacleList = new List<ObstaclePointClass>();
+            towerPosList = new List<PointClass>();
+            obstacleList = new List<ObjectPointClass>();
+            towerList = new List<ObjectPointClass>();
 
             foreach (PointClass p in mapData.pathList)
             {
                 pathList.Add(p);
             }
 
-            foreach (PointClass p in mapData.towerList)
+            foreach (PointClass p in mapData.towerPosList)
             {
-                towerList.Add(p);
+                towerPosList.Add(p);
             }
 
-            foreach (ObstaclePointClass p in mapData.obstacleList)
+            foreach (ObjectPointClass p in mapData.obstacleList)
             {
                 obstacleList.Add(p);
             }
 
-            GenerateObstacle();
+            foreach (ObjectPointClass p in mapData.towerList)
+            {
+                towerList.Add(p);
+            }
 
-            // 修改图片
+            GenerateObstacle();
+            GenerateTower();
         }
 
         public void Save()
@@ -403,7 +477,7 @@ namespace MapEditor
             mapData.money = money;
 
             mapData.towerTypeList = new List<ETowerType>();
-            foreach (var v in towerTypeList)
+            foreach (var v in allowBuiltTypeList)
             {
                 mapData.towerTypeList.Add(v);
             }
@@ -414,16 +488,22 @@ namespace MapEditor
                 mapData.pathList.Add(v);
             }
 
-            mapData.towerList = new List<PointClass>();
-            foreach (var v in towerList)
+            mapData.towerPosList = new List<PointClass>();
+            foreach (var v in towerPosList)
             {
-                mapData.towerList.Add(v);
+                mapData.towerPosList.Add(v);
             }
 
-            mapData.obstacleList = new List<ObstaclePointClass>();
+            mapData.obstacleList = new List<ObjectPointClass>();
             foreach (var v in obstacleList)
             {
                 mapData.obstacleList.Add(v);
+            }
+            
+            mapData.towerList = new List<ObjectPointClass>();
+            foreach (var v in towerList)
+            {
+                mapData.towerList.Add(v);
             }
 
             EditorUtility.SetDirty(mapData);

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Monster2Data
   m_EditorClassIdentifier: 
   id: 2
-  speed: 4.5
+  speed: 2
   maxHp: 1
   atk: 1
   baseMoney: 10

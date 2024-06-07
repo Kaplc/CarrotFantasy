@@ -15,7 +15,7 @@ namespace App.Generic.Map
             return cells;
         }
         
-        public static List<Cell> ToCellList(List<ObstaclePointClass> l)
+        public static List<Cell> ToCellList(List<ObjectPointClass> l)
         {
             List<Cell> cells = new List<Cell>();
             foreach (var obstaclePointClass in l)

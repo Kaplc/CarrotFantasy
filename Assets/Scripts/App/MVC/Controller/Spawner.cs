@@ -269,10 +269,10 @@ namespace App.MVC.Controller
 
             for (int i = 0; i < nowMapData.obstacleList.Count; i++)
             {
-                ObstaclePointClass obstaclePointClass = nowMapData.obstacleList[i];
+                ObjectPointClass objectPointClass = nowMapData.obstacleList[i];
 
-                Cell cell = new Cell(new Point(obstaclePointClass.x, obstaclePointClass.y));
-                cell.obstacleName = obstaclePointClass.obstacleType.ToString();
+                Cell cell = new Cell(new Point(objectPointClass.x, objectPointClass.y));
+                cell.obstacleName = objectPointClass.obstacleType.ToString();
                 // 创建实例
                 Obstacle obstacle = GameManager.Instance.PoolManager.GetObject($"Object/Obstacle/{cell.obstacleName}").GetComponent<Obstacle>();
                 obstacle.transform.SetParent(GameManager.Instance.map.transform);

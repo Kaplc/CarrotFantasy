@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baa85a95595a4f838f016c7384801cb5, type: 3}
   m_Name: TowerMap
   m_EditorClassIdentifier: 
-  towerMapItems:
+  towerMapDic:
   - towerType: 0
     towerData: {fileID: 11400000, guid: aab2e8cd34433054a981d09ecb22a4b3, type: 2}
   - towerType: 1

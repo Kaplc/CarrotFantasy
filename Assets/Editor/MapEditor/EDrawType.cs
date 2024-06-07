@@ -3,7 +3,8 @@ namespace Editor.MapEditor
     public enum EDrawType
     {
         DrawPath,
-        DrawTower,
-        DrawObstacle
+        DrawTowerPos,
+        DrawObstacle,
+        DrawTower
     }
 }

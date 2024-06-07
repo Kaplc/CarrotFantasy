@@ -157,9 +157,9 @@ namespace App.MVC.View.GameScene.Object.Map
         private void ReFlashCellData()
         {
             // 加载放塔点覆盖空数据的格子
-            for (int i = 0; i < nowMapData.towerList.Count; i++)
+            for (int i = 0; i < nowMapData.towerPosList.Count; i++)
             {
-                GetCell(nowMapData.towerList[i].x, nowMapData.towerList[i].y).IsTowerPos = true;
+                GetCell(nowMapData.towerPosList[i].x, nowMapData.towerPosList[i].y).IsTowerPos = true;
             }
         }
 
