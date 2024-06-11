@@ -1,4 +1,4 @@
-﻿using Library.PoolManager;
+﻿using Library;
 using UnityEngine;
 
 namespace App.MVC.View.GameScene.UI.Control

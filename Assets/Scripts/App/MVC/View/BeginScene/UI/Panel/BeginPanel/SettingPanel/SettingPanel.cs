@@ -1,6 +1,6 @@
 ﻿using App.DataClass.Player;
 using App.Static;
-using Library.UIManager;
+using Library;
 using UnityEngine.UI;
 
 namespace App.MVC.View.BeginScene.UI.Panel.BeginPanel.SettingPanel

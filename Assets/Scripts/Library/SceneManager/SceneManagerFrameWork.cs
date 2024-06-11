@@ -1,9 +1,9 @@
 ﻿using System.Collections;
-using Library.BaseSingleton;
+using Library;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Library.SceneManager
+namespace Library
 {
     public class ZFrameWorkSceneManager : BaseSingleton<ZFrameWorkSceneManager>
     {
@@ -15,7 +15,7 @@ namespace Library.SceneManager
 
         public void LoadSceneAsync(string sceneName, UnityAction callBack = null)
         {
-            MonoManager.MonoManager.Instance.StartCoroutineFrameWork(LoadSceneAsyncCoroutine(sceneName, callBack));
+            Library.MonoManager.Instance.StartCoroutineFrameWork(LoadSceneAsyncCoroutine(sceneName, callBack));
         }
 
         private IEnumerator LoadSceneAsyncCoroutine(string sceneName, UnityAction callBack)
@@ -23,7 +23,7 @@ namespace Library.SceneManager
             AsyncOperation ao = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneName);
             while (!ao.isDone)
             {
-                EventCenter.EventCenter.Instance.TriggerEvent<float>("进度条更新", ao.progress);
+                Library.EventCenter.Instance.TriggerEvent<float>("进度条更新", ao.progress);
                 yield return ao;
             }
 

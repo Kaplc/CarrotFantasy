@@ -1,4 +1,5 @@
 using App.Static.Enum;
+using XLua;
 
 namespace App.DataClass.Map
 {

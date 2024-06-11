@@ -13,16 +13,16 @@ namespace App.MVC.View.GameScene.Object.Buff
         
         }
 
-        protected override void OnApplyBuff(Monster monster)
+        protected override void OnApplyBuff(IMonster monster)
         {
             // 减速
-            monster.speed = monster.data.speed / 2f;
+            monster.SetSpeed(monster.Data.speed / 2f);
         }
 
-        protected override void OnRemoveBuff(Monster monster)
+        protected override void OnRemoveBuff(IMonster monster)
         {
             // 恢复速度
-            monster.speed = monster.data.speed;
+            monster.SetSpeed(monster.Data.speed);
         }
     }
 }

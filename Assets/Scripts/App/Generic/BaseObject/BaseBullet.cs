@@ -1,7 +1,7 @@
 ﻿using App.DataClass.Game.Object;
 using App.MVC.Controller;
 using App.MVC.View.GameScene.Object;
-using Library.PoolManager;
+using Library;
 using UnityEngine;
 
 namespace App.Generic.BaseObject
@@ -12,7 +12,8 @@ namespace App.Generic.BaseObject
         public bool active;
     
         public BulletData data;
-        public Monster target;
+        public IMonster target;
+        protected Transform TargetTsf => ((MonoBehaviour)target).transform;
         private Animator animator;
 
         private void Awake()
@@ -24,10 +25,10 @@ namespace App.Generic.BaseObject
         {
             Flying();
 
-            if (target)
+            if (target != null)
             {
                 // 根据距离判断是否击中
-                if (Vector3.Distance(transform.position, target.transform.position) < 0.3f && active)
+                if (Vector3.Distance(transform.position, TargetTsf.position) < 0.3f && active)
                 {
                     Hit();
                     // 播放爆炸动画
@@ -50,16 +51,16 @@ namespace App.Generic.BaseObject
 
         protected virtual void Flying()
         {
-            if (target)
+            if (target != null)
             {
-                transform.LookAt(target.transform);
+                transform.LookAt(TargetTsf);
                 if (!GameManager.Instance.Pause)
                 {
                     transform.Translate(transform.forward * (Time.deltaTime * data.speed), Space.World);
                 }
 
                 // 目标死亡立刻回收
-                if (target.isDead || !target.gameObject.activeSelf)
+                if (target.IsDead || !TargetTsf.gameObject.activeSelf)
                 {
                     GameManager.Instance.PoolManager.PushObject(gameObject);
                 }

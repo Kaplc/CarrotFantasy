@@ -21,13 +21,15 @@ namespace XLua.CSObjectWrap
         {
 			ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
 			System.Type type = typeof(App.MVC.Controller.GameManager);
-			Utils.BeginObjectRegister(type, L, translator, 0, 7, 20, 12);
+			Utils.BeginObjectRegister(type, L, translator, 0, 9, 21, 12);
 			
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "InitGame", _m_InitGame);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "StartGame", _m_StartGame);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "ExitGame", _m_ExitGame);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "PauseGame", _m_PauseGame);
+			Utils.RegisterFunc(L, Utils.METHOD_IDX, "ResumeGame", _m_ResumeGame);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "StopGame", _m_StopGame);
+			Utils.RegisterFunc(L, Utils.METHOD_IDX, "SetSpawner", _m_SetSpawner);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "GameWin", _m_GameWin);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "GameOver", _m_GameOver);
 			
@@ -37,6 +39,7 @@ namespace XLua.CSObjectWrap
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "FactoryManager", _g_get_FactoryManager);
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "MusicManger", _g_get_MusicManger);
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "BuffManager", _g_get_BuffManager);
+            Utils.RegisterFunc(L, Utils.GETTER_IDX, "uiManager", _g_get_uiManager);
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "Pause", _g_get_Pause);
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "TwoSpeed", _g_get_TwoSpeed);
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "XLuaManager", _g_get_XLuaManager);
@@ -219,6 +222,33 @@ namespace XLua.CSObjectWrap
         }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _m_ResumeGame(RealStatePtr L)
+        {
+		    try {
+            
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+            
+            
+                App.MVC.Controller.GameManager gen_to_be_invoked = (App.MVC.Controller.GameManager)translator.FastGetCSObj(L, 1);
+            
+            
+                
+                {
+                    
+                    gen_to_be_invoked.ResumeGame(  );
+                    
+                    
+                    
+                    return 0;
+                }
+                
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static int _m_StopGame(RealStatePtr L)
         {
 		    try {
@@ -233,6 +263,34 @@ namespace XLua.CSObjectWrap
                 {
                     
                     gen_to_be_invoked.StopGame(  );
+                    
+                    
+                    
+                    return 0;
+                }
+                
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _m_SetSpawner(RealStatePtr L)
+        {
+		    try {
+            
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+            
+            
+                App.MVC.Controller.GameManager gen_to_be_invoked = (App.MVC.Controller.GameManager)translator.FastGetCSObj(L, 1);
+            
+            
+                
+                {
+                    ISpawner _s = (ISpawner)translator.GetObject(L, 2, typeof(ISpawner));
+                    
+                    gen_to_be_invoked.SetSpawner( _s );
                     
                     
                     
@@ -366,6 +424,20 @@ namespace XLua.CSObjectWrap
 			
                 App.MVC.Controller.GameManager gen_to_be_invoked = (App.MVC.Controller.GameManager)translator.FastGetCSObj(L, 1);
                 translator.Push(L, gen_to_be_invoked.BuffManager);
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 1;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _g_get_uiManager(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			
+                App.MVC.Controller.GameManager gen_to_be_invoked = (App.MVC.Controller.GameManager)translator.FastGetCSObj(L, 1);
+                translator.Push(L, gen_to_be_invoked.uiManager);
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
             }
@@ -561,7 +633,7 @@ namespace XLua.CSObjectWrap
                 ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
 			
                 App.MVC.Controller.GameManager gen_to_be_invoked = (App.MVC.Controller.GameManager)translator.FastGetCSObj(L, 1);
-                translator.Push(L, gen_to_be_invoked.spawner);
+                translator.PushAny(L, gen_to_be_invoked.spawner);
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
             }
@@ -741,7 +813,7 @@ namespace XLua.CSObjectWrap
                 ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
 			
                 App.MVC.Controller.GameManager gen_to_be_invoked = (App.MVC.Controller.GameManager)translator.FastGetCSObj(L, 1);
-                gen_to_be_invoked.spawner = (App.MVC.Controller.Spawner)translator.GetObject(L, 2, typeof(App.MVC.Controller.Spawner));
+                gen_to_be_invoked.spawner = (ISpawner)translator.GetObject(L, 2, typeof(ISpawner));
             
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);

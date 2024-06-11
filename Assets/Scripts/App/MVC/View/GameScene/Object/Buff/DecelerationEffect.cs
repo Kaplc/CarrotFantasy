@@ -16,7 +16,7 @@ namespace App.MVC.View.GameScene.Object.Buff
         /// <param name="monster">减速怪物対象</param>
         /// <param name="duration">持续时间</param>
         /// <param name="buff"></param>
-        public void StartDelayRemove(Monster monster, float duration, BaseBuff buff)
+        public void StartDelayRemove(IMonster monster, float duration, BaseBuff buff)
         {
             coroutine = StartCoroutine(DelayRemoveEffect(monster, duration, buff));
         }
@@ -28,7 +28,7 @@ namespace App.MVC.View.GameScene.Object.Buff
         /// <param name="duration">持续时间</param>
         /// <param name="buff"></param>
         /// <returns></returns>
-        private IEnumerator DelayRemoveEffect(Monster monster, float duration, BaseBuff buff)
+        private IEnumerator DelayRemoveEffect(IMonster monster, float duration, BaseBuff buff)
         {
             while (true)
             {

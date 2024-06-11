@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using Library.BaseSingleton;
+using Library;
 using UnityEngine.Events;
 
-namespace Library.EventCenter
+namespace Library
 {
     // 空接口装子类
     public interface IEventInfo

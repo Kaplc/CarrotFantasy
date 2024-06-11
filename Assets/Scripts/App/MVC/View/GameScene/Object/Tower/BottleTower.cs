@@ -3,9 +3,11 @@ using App.MVC.Controller;
 using App.MVC.View.GameScene.Object.Bullet;
 using App.Static;
 using UnityEngine;
+using XLua;
 
 namespace App.MVC.View.GameScene.Object.Tower
 {
+    [LuaCallCSharp]
     public class BottleTower : BaseTower
     {
         public Transform weapon;
@@ -27,7 +29,6 @@ namespace App.MVC.View.GameScene.Object.Tower
                 // 看向目标
                 LookAtTarget();
             }
-        
         }
 
         private void LookAtTarget()

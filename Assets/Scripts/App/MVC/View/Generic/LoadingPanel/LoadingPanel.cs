@@ -1,4 +1,4 @@
-﻿using Library.UIManager;
+﻿using Library;
 
 namespace App.MVC.View.Generic.LoadingPanel
 {

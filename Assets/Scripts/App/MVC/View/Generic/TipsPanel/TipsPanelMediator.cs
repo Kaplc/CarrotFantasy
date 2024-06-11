@@ -1,5 +1,5 @@
 ﻿using App.Static;
-using Library.UIManager;
+using Library;
 using PureMVC.Patterns.Mediator;
 
 namespace App.MVC.View.Generic.TipsPanel

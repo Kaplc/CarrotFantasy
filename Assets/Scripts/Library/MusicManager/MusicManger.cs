@@ -1,33 +1,33 @@
 ﻿using System.Collections.Generic;
-using Library.BaseSingleton;
-using Library.ResourcesLoad;
+using Library;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Library.MusicManager
+namespace Library
 {
     public class MusicData
     {
         public bool musicMute;
-        public bool soundMute;
         public float musicVolume;
+        public bool soundMute;
         public float soundVolume;
     }
 
 
     public class MusicManger : BaseSingleton<MusicManger>
     {
+        private AudioSource musicAudioSource;
+
         // 音乐
         private GameObject musicObject; // 音乐依附的对象
-        private AudioSource musicAudioSource;
+        private readonly List<AudioSource> soundAudioSources;
 
         // 音效
         private GameObject soundObject; // 音效依附的对象
-        private List<AudioSource> soundAudioSources;
 
         public MusicManger()
         {
-            MonoManager.MonoManager.Instance.AddUpdateEvent(UpdateSound);
+            Library.MonoManager.Instance.AddUpdateEvent(UpdateSound);
             soundAudioSources = new List<AudioSource>();
         }
 
@@ -38,22 +38,20 @@ namespace Library.MusicManager
                 soundObject = null;
                 soundAudioSources.Clear();
             }
-            
-            for (int i = 0; i < soundAudioSources.Count; i++)
-            {
+
+            for (var i = 0; i < soundAudioSources.Count; i++)
                 // 音效播放完毕就自动移除
                 if (!soundAudioSources[i].isPlaying)
                 {
-                    GameObject.Destroy(soundAudioSources[i]);
+                    Object.Destroy(soundAudioSources[i]);
                     soundAudioSources.RemoveAt(i);
                 }
-            }
         }
 
         #region 音乐相关
 
         /// <summary>
-        /// 音乐播放
+        ///     音乐播放
         /// </summary>
         /// <param name="path">音乐资源路径</param>
         /// <param name="volume">音量大小</param>
@@ -64,8 +62,9 @@ namespace Library.MusicManager
             {
                 musicObject = new GameObject("Music");
                 musicAudioSource = musicObject.AddComponent<AudioSource>();
-                GameObject.DontDestroyOnLoad(musicObject);
+                Object.DontDestroyOnLoad(musicObject);
             }
+
             // 异步加载音乐文件并播放
             ResourcesFrameWork.Instance.LoadAsync<AudioClip>(path, ac =>
             {
@@ -84,8 +83,10 @@ namespace Library.MusicManager
                 musicAudioSource.volume = volume;
                 return;
             }
+
             Debug.Log("无音乐对象");
         }
+
         // 静音
         public void MuteMusic(bool isMute)
         {
@@ -94,8 +95,10 @@ namespace Library.MusicManager
                 musicAudioSource.mute = isMute;
                 return;
             }
+
             Debug.Log("无音乐对象");
         }
+
         // 暂停
         public void PauseMusic()
         {
@@ -104,6 +107,7 @@ namespace Library.MusicManager
                 musicAudioSource.Pause();
                 return;
             }
+
             Debug.Log("无音乐对象");
         }
 
@@ -115,6 +119,7 @@ namespace Library.MusicManager
                 musicAudioSource.Stop();
                 return;
             }
+
             Debug.Log("无音乐对象");
         }
 
@@ -123,17 +128,14 @@ namespace Library.MusicManager
         #region 音效相关
 
         // 音效播放
-        public void PlaySound(string path,float volume, bool isLoop, UnityAction callBack = null)
+        public void PlaySound(string path, float volume, bool isLoop, UnityAction callBack = null)
         {
-            if (!soundObject)
-            {
-                soundObject = new GameObject("Sound");
-            }
+            if (!soundObject) soundObject = new GameObject("Sound");
             // 异步加载音乐文件并播放
             ResourcesFrameWork.Instance.LoadAsync<AudioClip>(path, ac =>
             {
                 // 每次播放都添加一个音效组件在身上
-                AudioSource newAudioSource = soundObject.AddComponent<AudioSource>();
+                var newAudioSource = soundObject.AddComponent<AudioSource>();
                 soundAudioSources.Add(newAudioSource);
                 newAudioSource.volume = volume;
                 newAudioSource.clip = ac;
@@ -147,26 +149,22 @@ namespace Library.MusicManager
         // 修改音效
         public void ChangeSoundVolume(float volume)
         {
-            for (int i = 0; i < soundAudioSources.Count; i++)
-            {
-                soundAudioSources[i].volume = volume;
-            }
+            for (var i = 0; i < soundAudioSources.Count; i++) soundAudioSources[i].volume = volume;
         }
+
         // 静音
         public void MuteSound(bool isMute)
         {
-            for (int i = 0; i < soundAudioSources.Count; i++)
-            {
-                soundAudioSources[i].mute = isMute;
-            }
+            for (var i = 0; i < soundAudioSources.Count; i++) soundAudioSources[i].mute = isMute;
         }
+
         // 停止音效
         public void StopSound(AudioSource audioSource)
         {
             if (soundAudioSources.Contains(audioSource))
             {
                 soundAudioSources.Remove(audioSource);
-                GameObject.Destroy(audioSource);
+                Object.Destroy(audioSource);
             }
         }
 

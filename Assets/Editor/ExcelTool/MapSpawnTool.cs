@@ -7,7 +7,7 @@ using System.Text;
 using App.DataClass.Map;
 using App.Static.Enum;
 using Excel;
-using Library.DataManager.Binary;
+using Library;
 using UnityEditor;
 using UnityEngine;
 

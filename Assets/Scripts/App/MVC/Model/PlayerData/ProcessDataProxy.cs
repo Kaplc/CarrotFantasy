@@ -3,7 +3,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using App.DataClass.Player;
 using App.Static;
-using Library.DataManager.Binary;
+using Library;
 using PureMVC.Patterns.Proxy;
 using UnityEngine;
 

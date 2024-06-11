@@ -99,14 +99,12 @@ namespace App.MVC.Controller.Commands
     {
         public override void Execute(INotification notification)
         {
-            Spawner spawner = GameManager.Instance.spawner;
+            ISpawner spawner = GameManager.Instance.spawner;
+            Monster tar = GameManager.Instance.spawner.GetCollectingFiresTarget();
             // 判断是否是集火目标
-            if (spawner.collectingFiresTarget == notification.Body as Monster)
+            if (tar == notification.Body as Monster)
             {
-                spawner.collectingFiresTarget = null;
-                // 隐藏集火标志
-                spawner.signTrans.gameObject.SetActive(false);
-                spawner.signTrans.transform.SetParent(spawner.transform);
+                spawner.CancelCollectingFiresTarget();
             }
         }
     }
@@ -118,25 +116,12 @@ namespace App.MVC.Controller.Commands
     {
         public override void Execute(INotification notification)
         {
-            Spawner spawner = GameManager.Instance.spawner;
-        
-            // 1.出怪完成
-            if (!spawner.spawnedComplete) return;
+            ISpawner spawner = GameManager.Instance.spawner;
 
-            // 2.萝卜没死
-            if (spawner.carrot.isDead) return;
-
-            // 3.怪物全部死亡
-            for (int i = 0; i < spawner.monsters.Count; i++)
+            if ((bool)spawner.WinJudge())
             {
-                // 有一个没死亡都无效
-                if (spawner.monsters[i].isDead == false)
-                {
-                    return;
-                }
+                SendNotification(NotificationName.Game.GAME_WIN);
             }
-        
-            SendNotification(NotificationName.Game.GAME_WIN);
         }
     }
 }

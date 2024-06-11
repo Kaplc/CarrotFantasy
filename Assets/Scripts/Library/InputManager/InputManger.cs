@@ -1,20 +1,20 @@
-﻿using Library.BaseSingleton;
+﻿using Library;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Library.InputManager
+namespace Library
 {
     public class InputManger : BaseSingleton<InputManger>
     {
         private bool isStart;
         private UnityAction keyCodeAction;
-    
+
         public InputManger()
         {
             // 每帧执行检测
-            MonoManager.MonoManager.Instance.AddUpdateEvent(CheckKeyCode);
+            Library.MonoManager.Instance.AddUpdateEvent(CheckKeyCode);
         }
-    
+
         /// <summary>
         /// 执行触发
         /// </summary>
@@ -24,28 +24,30 @@ namespace Library.InputManager
             // 长按
             if (Input.GetKey(keyCode))
             {
-                EventCenter.EventCenter.Instance.TriggerEvent(keyCode+"长按");
+                Library.EventCenter.Instance.TriggerEvent(keyCode + "长按");
             }
+
             // 按下
             if (Input.GetKeyDown(keyCode))
             {
-                EventCenter.EventCenter.Instance.TriggerEvent(keyCode+"按下");
+                Library.EventCenter.Instance.TriggerEvent(keyCode + "按下");
             }
+
             // 抬起
             if (Input.GetKeyUp(keyCode))
             {
-                EventCenter.EventCenter.Instance.TriggerEvent(keyCode+"抬起");
+                Library.EventCenter.Instance.TriggerEvent(keyCode + "抬起");
             }
         }
-    
+
         /// <summary>
         /// 检测按键
         /// </summary>
         /// <param name="checkKeyCodeFunc"></param>
         private void CheckKeyCode()
         {
-            if (!isStart)return;
-        
+            if (!isStart) return;
+
             keyCodeAction?.Invoke();
         }
 
@@ -53,7 +55,7 @@ namespace Library.InputManager
         {
             keyCodeAction += () => { TriggerKeyCode(keyCode); };
         }
-    
+
         public void Start()
         {
             isStart = true;

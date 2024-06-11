@@ -9,13 +9,15 @@ using App.Generic.NotificationBody;
 using App.MVC.Controller;
 using App.Static;
 using App.Static.Enum;
-using Library.UIManager;
+using Library;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using XLua;
 
 namespace App.MVC.View.GameScene.Object.Map
 {
+    [LuaCallCSharp]
     public class Map : MonoBehaviour
     {
         public const int RowNum = 8; // 地图行数
@@ -26,21 +28,22 @@ namespace App.MVC.View.GameScene.Object.Map
         private static float cellWidth;
         private static float cellHeight;
 
-        public SpriteRenderer mapBgSpriteRenderer;
-        public SpriteRenderer roadSpriteRenderer;
+        private SpriteRenderer mapBgSpriteRenderer;
+        private SpriteRenderer roadSpriteRenderer;
 
-        public static List<Cell> cellsList = new List<Cell>(); // 所有格子
-        public List<Cell> pathList = new List<Cell>(); // 所有路径拐点
-
-        public MapData nowMapData; // 当前游戏的关卡地图信息
-        private Cell lastClickCell; // 上一次点击的格子
+        private static List<Cell> cellsList = new List<Cell>(); // 所有格子
+        private MapData nowMapData; // 当前游戏的关卡地图信息
         
-        public List<TowerData> towerDataList = new List<TowerData>(); // 塔数据
+        private List<TowerData> towerDataList = new List<TowerData>(); // 塔数据
 
         private void Awake()
         {
+            mapBgSpriteRenderer = GetComponent<SpriteRenderer>();
+            roadSpriteRenderer = transform.Find("Road").GetComponent<SpriteRenderer>();
+            
             // 计算格子数据
             CalCellSize();
+
         }
 
         #region 计算

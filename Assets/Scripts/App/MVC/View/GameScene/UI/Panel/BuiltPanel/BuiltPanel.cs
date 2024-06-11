@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using App.DataClass.Game.Object;
 using App.Static.Enum;
-using Library.UIManager;
+using Library;
 using UnityEngine;
 
 namespace App.MVC.View.GameScene.UI.Panel.BuiltPanel

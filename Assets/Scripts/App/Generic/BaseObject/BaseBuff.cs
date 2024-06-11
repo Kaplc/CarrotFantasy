@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using App.MVC.View.GameScene.Object;
-using Library.MonoManager;
+using Library;
 using UnityEngine;
 
 namespace App.Generic.BaseObject
@@ -19,7 +19,7 @@ namespace App.Generic.BaseObject
         /// 启用Buff
         /// </summary>
         /// <param name="monster"></param>
-        public void ApplyBuff(Monster monster)
+        public void ApplyBuff(IMonster monster)
         {
             OnApplyBuff(monster);
 
@@ -37,12 +37,12 @@ namespace App.Generic.BaseObject
         /// 启用Buff的回调
         /// </summary>
         /// <param name="monster"></param>
-        protected virtual void OnApplyBuff(Monster monster)
+        protected virtual void OnApplyBuff(IMonster monster)
         {
             // 具体 Buff 逻辑在子类中实现
         }
 
-        private IEnumerator RemoveBuffAfterDelay(Monster monster)
+        private IEnumerator RemoveBuffAfterDelay(IMonster monster)
         {
             yield return new WaitForSeconds(Duration);
             RemoveBuff(monster);
@@ -52,7 +52,7 @@ namespace App.Generic.BaseObject
         /// 移除Buff
         /// </summary>
         /// <param name="monster"></param>
-        public void RemoveBuff(Monster monster)
+        public void RemoveBuff(IMonster monster)
         {
             OnRemoveBuff(monster);
         }
@@ -61,7 +61,7 @@ namespace App.Generic.BaseObject
         /// 移除Buff的回调
         /// </summary>
         /// <param name="monster"></param>
-        protected virtual void OnRemoveBuff(Monster monster)
+        protected virtual void OnRemoveBuff(IMonster monster)
         {
             // 在子类中实现需要在移除 Buff 时执行的逻辑
         }

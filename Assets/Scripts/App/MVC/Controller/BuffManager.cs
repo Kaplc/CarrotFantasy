@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using App.Generic.BaseObject;
 using App.MVC.View.GameScene.Object;
-using Library.BaseSingleton;
+using Library;
 
 namespace App.MVC.Controller
 {

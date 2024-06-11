@@ -496,7 +496,7 @@ GameObject:
   - component: {fileID: 3861736915796560262}
   - component: {fileID: 1014163521656713830}
   m_Layer: 5
-  m_Name: UpGradePaenl
+  m_Name: UpGradePanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -1,12 +1,12 @@
 ﻿using System.IO;
-using Library.BaseSingleton;
-using Library.DataManager.Json.LitJson;
+using Library;
+using Library.LitJson;
 using UnityEngine;
 
-namespace Library.DataManager.Json
+namespace Library
 {
     /// <summary>
-    /// json解析工具类型
+    ///     json解析工具类型
     /// </summary>
     public enum E_JsonTool
     {
@@ -14,19 +14,18 @@ namespace Library.DataManager.Json
         LitJson
     }
 
-    public class JsonManager: BaseSingleton<JsonManager>
+    public class JsonManager : BaseSingleton<JsonManager>
     {
-    
         /// <summary>
-        /// 数据保存为Json文件
+        ///     数据保存为Json文件
         /// </summary>
         /// <param name="fileName">文件名</param>
         /// <param name="data">数据对象</param>
         /// <param name="toolType">序列化工具, 默认使用LitJson</param>
         public void Save(string fileName, object data, E_JsonTool toolType)
         {
-            string path = Application.persistentDataPath + "/" + fileName + ".json";
-            string json = "";
+            var path = Application.persistentDataPath + "/" + fileName + ".json";
+            var json = "";
 
             switch (toolType)
             {
@@ -40,9 +39,9 @@ namespace Library.DataManager.Json
 
             File.WriteAllText(path, json);
         }
-    
+
         /// <summary>
-        /// 加载Json
+        ///     加载Json
         /// </summary>
         /// <param name="fileName">文件名</param>
         /// <param name="toolType">序列化工具</param>
@@ -50,15 +49,12 @@ namespace Library.DataManager.Json
         /// <returns></returns>
         public T Load<T>(string fileName, E_JsonTool toolType) where T : new()
         {
-            string path = Application.streamingAssetsPath + "/" + fileName + ".json";
+            var path = Application.streamingAssetsPath + "/" + fileName + ".json";
 
-            if (!File.Exists(path))
-            {
-                path = Application.persistentDataPath + "/" + fileName + ".json";
-            }
+            if (!File.Exists(path)) path = Application.persistentDataPath + "/" + fileName + ".json";
 
-            T newObj = new T();
-            string json = "";
+            var newObj = new T();
+            var json = "";
             json = File.ReadAllText(path);
             switch (toolType)
             {

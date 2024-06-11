@@ -3,7 +3,7 @@ using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 
-namespace Library.DataManager.Xml
+namespace Library
 {
     public class SerializerDictionary<TKey, TValue> : Dictionary<TKey, TValue>, IXmlSerializable
     {

@@ -1,11 +1,12 @@
 using System;
+using XLua;
 
 namespace App.Generic.Map
 {
     /// <summary>
     /// 地图格子索引
     /// </summary>
-    [Serializable]
+    [Serializable][LuaCallCSharp]
     public struct Point
     {
         private int x;

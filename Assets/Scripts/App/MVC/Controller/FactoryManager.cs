@@ -1,6 +1,6 @@
 
 using App.MVC.Model.Factory;
-using Library.BaseSingleton;
+using Library;
 
 namespace App.MVC.Controller
 {

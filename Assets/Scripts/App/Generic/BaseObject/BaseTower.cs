@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using App.DataClass.Game.Object;
 using App.MVC.Controller;
 using App.MVC.View.GameScene.Object;
-using Library.PoolManager;
+using Library;
 using UnityEngine;
 
 namespace App.Generic.BaseObject
@@ -40,7 +40,7 @@ namespace App.Generic.BaseObject
             if (target)
             {
                 // 大于攻击距离解除锁定或打死怪物
-                if (Vector3.Distance(transform.position, target.transform.position) > data.attackRangesList[level] || target.isDead)
+                if (Vector3.Distance(transform.position, target.transform.position) > data.attackRangesList[level] || target.IsDead)
                 {
                     animator.SetBool("Attack", false);
                     attacking = false;
@@ -55,7 +55,7 @@ namespace App.Generic.BaseObject
             }
 
             // 集火目标
-            if (GameManager.Instance.spawner.collectingFiresTarget)
+            if (GameManager.Instance.spawner.GetCollectingFiresTarget())
             {
                 CollectingFiresTarget();
             }
@@ -93,11 +93,11 @@ namespace App.Generic.BaseObject
         private void CollectingFiresTarget()
         {
             // 有集火目标直接锁定
-            Monster monster = GameManager.Instance.spawner.collectingFiresTarget;
+            Monster monster = GameManager.Instance.spawner.GetCollectingFiresTarget();
             float distance = Vector3.Distance(transform.position, monster.transform.position);
 
             // 处于攻击范围
-            if (distance < data.attackRangesList[level] && !monster.isDead)
+            if (distance < data.attackRangesList[level] && !monster.IsDead)
             {
                 target = monster;
             }
@@ -110,13 +110,13 @@ namespace App.Generic.BaseObject
         {
             // float closestDistance = 0f;
             // 查找目标
-            for (int i = 0; i < GameManager.Instance.spawner.monsters.Count; i++)
+            for (int i = 0; i < GameManager.Instance.spawner.GetAllMonsters().Count; i++)
             {
-                Monster monster = GameManager.Instance.spawner.monsters[i];
+                Monster monster = GameManager.Instance.spawner.GetAllMonsters()[i];
                 float distance = Vector3.Distance(transform.position, monster.transform.position);
 
                 // 处于攻击范围
-                if (distance < data.attackRangesList[level] && !monster.isDead)
+                if (distance < data.attackRangesList[level] && !monster.IsDead)
                 {
                     // if (closestDistance == 0f) closestDistance = distance;
 

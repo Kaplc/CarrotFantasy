@@ -1,19 +1,13 @@
 ﻿using System.IO;
-using Library.BaseSingleton;
+using Library;
 using UnityEngine;
 using XLua;
 
-namespace Library.XLuaManager
+namespace Library
 {
     public class XLuaManager : BaseSingleton<XLuaManager>
     {
         public LuaEnv luaEnv;
-
-        // 属性提供访问_G表
-        public LuaTable _G
-        {
-            get => luaEnv.Global;
-        }
 
         public XLuaManager()
         {
@@ -23,14 +17,34 @@ namespace Library.XLuaManager
             // luaEnv.AddLoader(AddABLuaFilePath); 
         }
 
+        // 属性提供访问_G表
+        public LuaTable _G => luaEnv.Global;
+
         public void DoFile(string fillName)
         {
-            luaEnv.DoString($"require(\"{ fillName}\")");
+            luaEnv.DoString($"require(\"{fillName}\")");
         }
 
         public void DoString(string str)
         {
             luaEnv.DoString(str);
+        }
+
+        /// <summary>
+        ///     lua的GC
+        /// </summary>
+        public void Tick()
+        {
+            luaEnv.Tick();
+        }
+
+        /// <summary>
+        ///     销毁lua解析器
+        /// </summary>
+        public void Dispose()
+        {
+            luaEnv.Dispose();
+            luaEnv = null;
         }
 
         #region 重定向执行Lua脚本执行路径
@@ -39,10 +53,7 @@ namespace Library.XLuaManager
         {
             luaEnv.AddLoader((ref string fileName) =>
             {
-                if (File.Exists(path + fileName + ".lua"))
-                {
-                    return File.ReadAllBytes(path + fileName + ".lua");
-                }
+                if (File.Exists(path + fileName + ".lua")) return File.ReadAllBytes(path + fileName + ".lua");
 
                 return null;
             });
@@ -65,33 +76,13 @@ namespace Library.XLuaManager
         // AB包中获取文件
         private byte[] AddABLuaFilePath(ref string fileName)
         {
+            var lua = Library.ABManager.Instance.Load<TextAsset>("lua", fileName);
 
-            TextAsset lua = ABManager.ABManager.Instance.Load<TextAsset>("lua", fileName);
+            if (lua != null) return lua.bytes;
 
-            if (lua != null)
-            {
-                return lua.bytes;
-            }
-            
             return null;
         }
 
         #endregion
-
-        /// <summary>
-        /// lua的GC
-        /// </summary>
-        public void Tick()
-        {
-            luaEnv.Tick();
-        }
-
-        /// <summary>
-        /// 销毁lua解析器
-        /// </summary>
-        public void Dispose(){
-            luaEnv.Dispose();
-            luaEnv = null;
-        }
     }
 }

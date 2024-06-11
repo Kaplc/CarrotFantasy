@@ -1,6 +1,6 @@
 using App.DataClass.Player;
 using App.Static;
-using Library.UIManager;
+using Library;
 using PureMVC.Interfaces;
 using PureMVC.Patterns.Mediator;
 

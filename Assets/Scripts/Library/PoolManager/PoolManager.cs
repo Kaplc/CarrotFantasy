@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
-using Library.BaseSingleton;
-using Library.ResourcesLoad;
+using Library;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Library.PoolManager
+namespace Library
 {
     /// <summary>
-    /// 使用对象池的对象要继承该接口
+    ///     使用对象池的对象要继承该接口
     /// </summary>
     public interface IPoolObject
     {
@@ -35,19 +34,16 @@ namespace Library.PoolManager
         public GameObject Get()
         {
             // 获取末尾的对象
-            GameObject targetObject = objectList[0];
+            var targetObject = objectList[0];
             // 断开父子关系
             targetObject.transform.parent = null;
             // 从list移除
             objectList.RemoveAt(0);
-        
+
             targetObject.SetActive(true);
             // 调用OnGet方法
-            if (targetObject.TryGetComponent<IPoolObject>(out var poolObjectComponent))
-            {
-                poolObjectComponent.OnGet();
-            }
-        
+            if (targetObject.TryGetComponent<IPoolObject>(out var poolObjectComponent)) poolObjectComponent.OnGet();
+
             return targetObject;
         }
 
@@ -56,12 +52,9 @@ namespace Library.PoolManager
             objectList.Add(gameObject);
             // 设置为list的子对象
             gameObject.transform.SetParent(father.transform);
-        
+
             // 调用OnPush方法
-            if (gameObject.TryGetComponent<IPoolObject>(out var poolObjectComponent))
-            {
-                poolObjectComponent.OnPush();
-            }
+            if (gameObject.TryGetComponent<IPoolObject>(out var poolObjectComponent)) poolObjectComponent.OnPush();
             // 失活
             gameObject.SetActive(false);
         }
@@ -82,12 +75,12 @@ namespace Library.PoolManager
             // 在场景上创建物体统一管理内容
             poolObject = new GameObject("Pool");
             // 
-            GameObject.DontDestroyOnLoad(poolObject);
+            Object.DontDestroyOnLoad(poolObject);
         }
 
 
         /// <summary>
-        /// 获取对象
+        ///     获取对象
         /// </summary>
         /// <param name="fullName">资源名</param>
         /// <param name="asyncHandleFun">异步加载时的执行函数</param>
@@ -99,35 +92,27 @@ namespace Library.PoolManager
 
             // 检查字典有无对象数据
             if (!poolDic.ContainsKey(fullName))
-            {
                 // 无对象则创建新list
                 poolDic.Add(fullName, new PoolData(fullName, poolObject));
-            }
 
-            if (poolDic[fullName].objectList.Count > 0)
-            {
-                return poolDic[fullName].Get();
-            }
+            if (poolDic[fullName].objectList.Count > 0) return poolDic[fullName].Get();
 
             // 同步加载
             if (asyncHandleFunc == null)
             {
-                GameObject gameObject = GameObject.Instantiate(ResourcesFrameWork.Instance.Load<GameObject>(fullName));
+                var gameObject = Object.Instantiate(ResourcesFrameWork.Instance.Load<GameObject>(fullName));
                 gameObject.name = fullName;
-            
+
                 // 调用OnGet方法
-                if (gameObject.TryGetComponent<IPoolObject>(out var poolObjectComponent))
-                {
-                    poolObjectComponent.OnGet();
-                }
-            
+                if (gameObject.TryGetComponent<IPoolObject>(out var poolObjectComponent)) poolObjectComponent.OnGet();
+
                 return gameObject;
             }
 
             // 异步加载
             ResourcesFrameWork.Instance.LoadAsync<GameObject>(fullName, resObj =>
             {
-                GameObject gameObject = GameObject.Instantiate(resObj);
+                var gameObject = Object.Instantiate(resObj);
                 gameObject.name = fullName;
                 asyncHandleFunc.Invoke(gameObject);
             });
@@ -142,7 +127,7 @@ namespace Library.PoolManager
             if (!poolObject) Init();
 
             // 有list
-            if (poolDic.TryGetValue(gameObject.name, out PoolData poolData))
+            if (poolDic.TryGetValue(gameObject.name, out var poolData))
             {
                 poolData.Push(gameObject);
             }
@@ -161,7 +146,7 @@ namespace Library.PoolManager
             if (poolDic != null)
             {
                 poolDic.Clear();
-                GameObject.Destroy(poolObject);
+                Object.Destroy(poolObject);
                 poolObject = null;
             }
         }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using App.DataClass.Map;
-using App.Generic;
 using App.Generic.Map;
 using App.Static.Enum;
 using UnityEditor;
@@ -415,6 +414,11 @@ namespace MapEditor
                 return;
             }
 
+            if (!CheekData())
+            {
+                return;
+            }
+
             // 复制数据
             if (mapData.mapBgTexture)
             {
@@ -462,6 +466,21 @@ namespace MapEditor
 
             GenerateObstacle();
             GenerateTower();
+        }
+
+        private bool CheekData()
+        {
+            // 检查数据合法
+            foreach (var i in towerList)
+            {
+                if (i.towerType == ETowerType.None)
+                {
+                    Debug.LogError("塔类型为空");
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         public void Save()

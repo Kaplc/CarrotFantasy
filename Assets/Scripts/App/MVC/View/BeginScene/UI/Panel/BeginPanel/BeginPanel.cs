@@ -1,13 +1,12 @@
 ﻿using App.MVC.Controller;
 using App.Static;
-using Library.UIManager;
+using Library;
 using UnityEngine;
 using UnityEngine.UI;
 using XLua;
 
 namespace App.MVC.View.BeginScene.UI.Panel.BeginPanel
 {
-    [Hotfix()]
     public class BeginPanel : BasePanel
     {
         public Button btnAdventure;

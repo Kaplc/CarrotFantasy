@@ -1,7 +1,9 @@
 using System.Collections.Generic;
+using XLua;
 
 namespace App.Generic.Map
 {
+    [LuaCallCSharp]
     public static class PointClassToCell
     {
         public static List<Cell> ToCellList(List<PointClass> l)

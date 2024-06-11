@@ -4,12 +4,7 @@ using App.DataClass.Player;
 using App.MVC.View.GameScene.Object.Map;
 using App.SDK;
 using App.Static;
-using Library.BaseSingleton;
-using Library.DataManager.Binary;
-using Library.MusicManager;
-using Library.PoolManager;
-using Library.UIManager;
-using Library.XLuaManager;
+using Library;
 using UnityEngine;
 using XLua;
 
@@ -23,6 +18,8 @@ namespace App.MVC.Controller
         public FactoryManager FactoryManager => FactoryManager.Instance;
         public MusicManger MusicManger => MusicManger.Instance;
         public BuffManager BuffManager => BuffManager.Instance;
+
+        public UIManager uiManager => UIManager.Instance;
 
         private bool pause; // 暂停标识
         public bool stop; // 停止标识
@@ -62,7 +59,7 @@ namespace App.MVC.Controller
         public LevelData nowLevelData; // 当前Level数据
         public MusicSettingData musicSettingData; // 音乐数据
         public Map map;
-        public Spawner spawner;
+        public ISpawner spawner;
 
         public SDKManager sdkManager;
 
@@ -135,7 +132,7 @@ namespace App.MVC.Controller
             // 移除怪物所有Buff
             BuffManager.Instance.ClearBuffs();
             // 回收所有对象
-            PoolManager.PushObject(spawner.carrot.gameObject);
+            PoolManager.PushObject(spawner.GetCarrot().gameObject);
             spawner.OnPushAllGameObject();
             // 持久化统计信息
             GameFacade.Instance.SendNotification(NotificationName.Data.SAVE_STATISTICALDATA);
@@ -170,12 +167,21 @@ namespace App.MVC.Controller
 
         #endregion
 
+        #region Spawner模块
+
+        public void SetSpawner(ISpawner s)
+        {
+            spawner = s;
+        }
+
+        #endregion
+
         /// <summary>
         /// 游戏胜利
         /// </summary>
         public void GameWin()
         {
-            float hp = spawner.carrot.Hp;
+            float hp = spawner.GetCarrot().Hp;
             // 结算通关等级
             EPassedGrade grade;
             if (1 <= hp && hp <= 3)

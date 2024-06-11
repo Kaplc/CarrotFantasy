@@ -1,11 +1,11 @@
-﻿using Library.PoolManager;
+﻿using Library;
 using UnityEngine;
 
 namespace App.Generic.BaseObject
 {
-    public abstract class BaseRole : MonoBehaviour, IPoolObject
+    public abstract class BaseRole : MonoBehaviour, IRole
     {
-        public bool isDead;
+        public bool IsDead { get; set; }
     
         public abstract void Wound(int woundHp);
 

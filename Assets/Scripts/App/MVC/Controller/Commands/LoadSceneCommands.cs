@@ -8,7 +8,7 @@ using App.MVC.View.InitScene;
 using App.MVC.View.SelectItemScene;
 using App.MVC.View.SelectLevelScene;
 using App.Static;
-using Library.SceneManager;
+using Library;
 using PureMVC.Interfaces;
 using PureMVC.Patterns.Command;
 using UnityEngine.Events;
@@ -102,12 +102,6 @@ namespace App.MVC.Controller.Commands
         public override void Execute(INotification notification)
         {
             SendNotification(NotificationName.UI.SHOW_LOADINGPANEL);
-        
-            GameFacade.Instance.RegisterMediator(new GamePanelMediator());
-            GameFacade.Instance.RegisterMediator(new BuiltPanelMediator());
-            GameFacade.Instance.RegisterMediator(new MenuPanelMediator());
-            GameFacade.Instance.RegisterMediator(new WinPanelMediator());
-            GameFacade.Instance.RegisterMediator(new LosePanelMediator());
             // 停止背景音乐
             GameFacade.Instance.SendNotification(NotificationName.Game.STOP_MUSIC);
         
@@ -259,11 +253,6 @@ namespace App.MVC.Controller.Commands
     {
         public override void Execute(INotification notification)
         {
-            GameFacade.Instance.RemoveMediator(nameof(GamePanelMediator));
-            GameFacade.Instance.RemoveMediator(nameof(BuiltPanelMediator));
-            GameFacade.Instance.RemoveMediator(nameof(MenuPanelMediator));
-            GameFacade.Instance.RemoveMediator(nameof(WinPanelMediator));
-            GameFacade.Instance.RemoveMediator(nameof(LosePanelMediator));
             // 开启背景音乐
             SendNotification(NotificationName.Game.PLAY_MUSIC);
         
@@ -278,12 +267,6 @@ namespace App.MVC.Controller.Commands
     {
         public override void Execute(INotification notification)
         {
-            GameFacade.Instance.RemoveMediator(nameof(GamePanelMediator));
-            GameFacade.Instance.RemoveMediator(nameof(BuiltPanelMediator));
-            GameFacade.Instance.RemoveMediator(nameof(MenuPanelMediator));
-            GameFacade.Instance.RemoveMediator(nameof(WinPanelMediator));
-            GameFacade.Instance.RemoveMediator(nameof(LosePanelMediator));
-
             SendNotification(NotificationName.LoadScene.LOADSCENE_GAME, (int)notification.Body);
         }
     }
@@ -295,12 +278,6 @@ namespace App.MVC.Controller.Commands
     {
         public override void Execute(INotification notification)
         {
-            GameFacade.Instance.RemoveMediator(nameof(GamePanelMediator));
-            GameFacade.Instance.RemoveMediator(nameof(BuiltPanelMediator));
-            GameFacade.Instance.RemoveMediator(nameof(MenuPanelMediator));
-            GameFacade.Instance.RemoveMediator(nameof(WinPanelMediator));
-            GameFacade.Instance.RemoveMediator(nameof(LosePanelMediator));
-
             SendNotification(NotificationName.LoadScene.LOADSCENE_END);
         }
     }

@@ -1,23 +1,21 @@
-﻿namespace Library.BaseSingleton
+﻿namespace Library
 {
     public class BaseSingleton<T> where T : class, new()
     {
         private static T instance;
-    
+
         // 仅第一次使用才会new
         public static T Instance
         {
             get
             {
-                if (instance == null)
-                {
-                    instance = new T();
-                }
+                if (instance == null) instance = new T();
                 return instance;
             }
         }
+
         /// <summary>
-        /// 销毁单例
+        ///     销毁单例
         /// </summary>
         private void DestroySingle()
         {

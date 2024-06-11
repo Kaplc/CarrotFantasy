@@ -4,7 +4,7 @@ using App.DataClass.Player;
 using App.MVC.Controller;
 using App.MVC.View.SelectLevelScene.Control;
 using App.Static;
-using Library.UIManager;
+using Library;
 using UnityEngine;
 using UnityEngine.UI;
 

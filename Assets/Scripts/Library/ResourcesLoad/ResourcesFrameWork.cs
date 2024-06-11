@@ -1,9 +1,9 @@
 ﻿using System.Collections;
-using Library.BaseSingleton;
+using Library;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Library.ResourcesLoad
+namespace Library
 {
     public class ResourcesFrameWork : BaseSingleton<ResourcesFrameWork>
     {
@@ -16,13 +16,13 @@ namespace Library.ResourcesLoad
         // 异步资源加载
         public void LoadAsync<T>(string fullName, UnityAction<T> callBack) where T : Object
         {
-            MonoManager.MonoManager.Instance.StartCoroutineFrameWork(LoadAsyncCoroutine<T>(fullName, callBack));
+            Library.MonoManager.Instance.StartCoroutineFrameWork(LoadAsyncCoroutine(fullName, callBack));
         }
-    
+
         // 异步加载协程
         private IEnumerator LoadAsyncCoroutine<T>(string fullName, UnityAction<T> callBack) where T : Object
         {
-            ResourceRequest rr = Resources.LoadAsync<T>(fullName);
+            var rr = Resources.LoadAsync<T>(fullName);
             yield return rr;
             // 带泛型UnityAction表示执行要带的时的参数类型
             callBack.Invoke(rr.asset as T);

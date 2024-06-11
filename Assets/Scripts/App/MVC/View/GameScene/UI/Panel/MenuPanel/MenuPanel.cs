@@ -1,5 +1,5 @@
 ﻿using App.Static;
-using Library.UIManager;
+using Library;
 using UnityEngine.UI;
 
 namespace App.MVC.View.GameScene.UI.Panel.MenuPanel

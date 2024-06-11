@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using XLua;
 
-namespace Library.UIManager
+namespace Library
 {
     [LuaCallCSharp()]
     public abstract class BasePanel : MonoBehaviour

@@ -1,4 +1,4 @@
-﻿using Library.PoolManager;
+﻿using Library;
 using PureMVC.Patterns.Proxy;
 using UnityEngine;
 

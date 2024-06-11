@@ -1,8 +1,9 @@
 ﻿using System;
+using XLua;
 
 namespace App.Generic.Map
 {
-    [Serializable]
+    [Serializable][LuaCallCSharp]
     public class Cell
     {
         // 格子坐标

@@ -4,7 +4,7 @@ using App.DataClass.Game.Object;
 using App.Generic.BaseObject;
 using App.MVC.Controller;
 using App.Static;
-using Library.PoolManager;
+using Library;
 using TMPro;
 using UnityEngine;
 
@@ -30,7 +30,7 @@ namespace App.MVC.View.GameScene.Object.Carrot
                 if (hp <= 0)
                 {
                     hp = 0;
-                    isDead = true;
+                    IsDead = true;
                     Dead();
                 }
             
@@ -95,7 +95,7 @@ namespace App.MVC.View.GameScene.Object.Carrot
             GameFacade.Instance.RegisterMediator(new CarrotMediator(this));
             // 刷新血量
             Hp = data.maxHp;
-            isDead = false;
+            IsDead = false;
             // 
             animator.enabled = true;
             // 重新开启动画协程

@@ -3,7 +3,7 @@ using App.MVC.Controller;
 using App.MVC.View.BeginScene.UI.BaseControl;
 using App.MVC.View.SelectItemScene.Control;
 using App.Static;
-using Library.UIManager;
+using Library;
 using UnityEngine.UI;
 
 namespace App.MVC.View.SelectItemScene

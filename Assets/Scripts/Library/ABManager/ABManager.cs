@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Library.BaseSingleton;
+using Library;
 using UnityEngine;
 using UnityEngine.Events;
 using Object = UnityEngine.Object;
 
-namespace Library.ABManager
+namespace Library
 {
     public class ABManager : BaseSingleton<ABManager>
     {
@@ -162,7 +162,7 @@ namespace Library.ABManager
             if (!assetBundlesDic.ContainsKey(abName))
             {
                 // 开启协程加载ab包
-                MonoManager.MonoManager.Instance.StartCoroutineFrameWork(LoadAbAsyncCoroutine(abName, resName, callback));
+                Library.MonoManager.Instance.StartCoroutineFrameWork(LoadAbAsyncCoroutine(abName, resName, callback));
             }
         }
 
@@ -183,7 +183,7 @@ namespace Library.ABManager
             assetBundlesDic.Add(abName, abCreateRequest.assetBundle);
 
             // 开启协程加载包中资源
-            MonoManager.MonoManager.Instance.StartCoroutineFrameWork(LoadResAsyncCoroutine(abCreateRequest.assetBundle, resName, callback));
+            Library.MonoManager.Instance.StartCoroutineFrameWork(LoadResAsyncCoroutine(abCreateRequest.assetBundle, resName, callback));
         }
 
         /// <summary>
@@ -214,7 +214,7 @@ namespace Library.ABManager
             if (!assetBundlesDic.ContainsKey(abName))
             {
                 // 开启协程加载ab包
-                MonoManager.MonoManager.Instance.StartCoroutineFrameWork(TypeLoadAbAsyncCoroutine(abName, resName, type, callback));
+                Library.MonoManager.Instance.StartCoroutineFrameWork(TypeLoadAbAsyncCoroutine(abName, resName, type, callback));
             }
         }
 
@@ -227,7 +227,7 @@ namespace Library.ABManager
             assetBundlesDic.Add(abName, abCreateRequest.assetBundle);
 
             // 开启协程加载包中资源
-            MonoManager.MonoManager.Instance.StartCoroutineFrameWork(TypeLoadResAsyncCoroutine(abCreateRequest.assetBundle, resName, type, callback));
+            Library.MonoManager.Instance.StartCoroutineFrameWork(TypeLoadResAsyncCoroutine(abCreateRequest.assetBundle, resName, type, callback));
         }
 
         private IEnumerator TypeLoadResAsyncCoroutine(AssetBundle assetBundle, string resName, Type type, UnityAction<Object> callBack)
@@ -253,7 +253,7 @@ namespace Library.ABManager
             if (!assetBundlesDic.ContainsKey(abName))
             {
                 // 开启协程加载ab包
-                MonoManager.MonoManager.Instance.StartCoroutineFrameWork(NameLoadAbAsyncCoroutine(abName, resName, callback));
+                Library.MonoManager.Instance.StartCoroutineFrameWork(NameLoadAbAsyncCoroutine(abName, resName, callback));
             }
         }
 
@@ -266,7 +266,7 @@ namespace Library.ABManager
             assetBundlesDic.Add(abName, abCreateRequest.assetBundle);
 
             // 开启协程加载包中资源
-            MonoManager.MonoManager.Instance.StartCoroutineFrameWork(NameLoadResAsyncCoroutine(abCreateRequest.assetBundle, resName, callback));
+            Library.MonoManager.Instance.StartCoroutineFrameWork(NameLoadResAsyncCoroutine(abCreateRequest.assetBundle, resName, callback));
         }
 
         private IEnumerator NameLoadResAsyncCoroutine(AssetBundle assetBundle, string resName, UnityAction<Object> callBack)

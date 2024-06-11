@@ -1,6 +1,11 @@
 ﻿using App.MVC.Controller.Commands;
 using App.MVC.Model.GameData;
 using App.MVC.Model.PlayerData;
+using App.MVC.View.GameScene.UI.Panel.BuiltPanel;
+using App.MVC.View.GameScene.UI.Panel.GamePanel;
+using App.MVC.View.GameScene.UI.Panel.LosePanel;
+using App.MVC.View.GameScene.UI.Panel.MenuPanel;
+using App.MVC.View.GameScene.UI.Panel.WinPanel;
 using App.MVC.View.Generic.LoadingPanel;
 using App.MVC.View.Generic.TipsPanel;
 using App.Static;
@@ -52,6 +57,11 @@ namespace App.MVC
             // 注册View
             RegisterMediator(new LoadingPanelMediator());
             RegisterMediator(new TipsPanelMediator());
+            RegisterMediator(new GamePanelMediator());
+            RegisterMediator(new BuiltPanelMediator());
+            RegisterMediator(new MenuPanelMediator());
+            RegisterMediator(new WinPanelMediator());
+            RegisterMediator(new LosePanelMediator());
         }
 
         protected override void InitializeModel()

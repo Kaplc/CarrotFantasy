@@ -32,8 +32,40 @@ MonoBehaviour:
     y: 2
   - x: 10
     y: 5
-  towerPosList: []
-  towerTypeList: 0000000001000000
+  towerPosList:
+  - x: 3
+    y: 4
+  - x: 4
+    y: 4
+  - x: 5
+    y: 4
+  - x: 6
+    y: 4
+  - x: 7
+    y: 4
+  - x: 3
+    y: 3
+  - x: 5
+    y: 2
+  - x: 6
+    y: 2
+  - x: 8
+    y: 4
+  - x: 8
+    y: 3
+  - x: 8
+    y: 1
+  - x: 6
+    y: 1
+  - x: 4
+    y: 1
+  - x: 3
+    y: 1
+  - x: 5
+    y: 1
+  - x: 7
+    y: 1
+  towerTypeList: 0100000002000000
   obstacleList:
   - x: 6
     y: 4
@@ -71,45 +103,44 @@ MonoBehaviour:
     y: 4
     obstacleType: 1
     towerType: 0
-  towerList:
-  - x: 8
-    y: 4
-    obstacleType: 0
-    towerType: 2
-  - x: 9
-    y: 4
-    obstacleType: 0
-    towerType: 2
-  - x: 9
-    y: 5
-    obstacleType: 0
-    towerType: 2
-  - x: 9
-    y: 6
-    obstacleType: 0
-    towerType: 2
-  - x: 8
-    y: 6
-    obstacleType: 0
-    towerType: 2
-  - x: 8
-    y: 5
-    obstacleType: 0
-    towerType: 2
-  - x: 7
-    y: 5
-    obstacleType: 0
-    towerType: 2
-  - x: 7
-    y: 6
-    obstacleType: 0
-    towerType: 2
-  - x: 6
-    y: 6
-    obstacleType: 0
-    towerType: 2
-  - x: 6
-    y: 5
-    obstacleType: 0
-    towerType: 2
-  waveDataList: []
+  towerList: []
+  waveDataList:
+  - waveCount: 1
+    waveDuration: 2
+    eachWaveDataList:
+    - hard: 1
+      monsterType: 0
+      monsterCount: 10
+      monsterDuration: 1
+  - waveCount: 2
+    waveDuration: 2
+    eachWaveDataList:
+    - hard: 1
+      monsterType: 0
+      monsterCount: 11
+      monsterDuration: 1
+  - waveCount: 3
+    waveDuration: 2
+    eachWaveDataList:
+    - hard: 1
+      monsterType: 1
+      monsterCount: 10
+      monsterDuration: 1
+  - waveCount: 4
+    waveDuration: 2
+    eachWaveDataList:
+    - hard: 1
+      monsterType: 1
+      monsterCount: 12
+      monsterDuration: 1
+  - waveCount: 5
+    waveDuration: 2
+    eachWaveDataList:
+    - hard: 1
+      monsterType: 2
+      monsterCount: 10
+      monsterDuration: 1
+    - hard: 1
+      monsterType: 0
+      monsterCount: 1
+      monsterDuration: 1

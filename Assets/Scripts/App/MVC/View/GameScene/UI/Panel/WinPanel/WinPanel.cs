@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using App.DataClass.Player;
 using App.Static;
-using Library.UIManager;
+using Library;
 using UnityEngine;
 using UnityEngine.UI;
 

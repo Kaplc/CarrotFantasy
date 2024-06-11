@@ -1,19 +1,17 @@
 ﻿using UnityEngine;
 
-namespace Library.BaseSingleton
+namespace Library
 {
     /// <summary>
-    /// 手动mono单例要拖动到对象上
+    ///     手动mono单例要拖动到对象上
     /// </summary>
-    public class BaseMonoSingleton<T> : MonoBehaviour where T: MonoBehaviour
+    public class BaseMonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
     {
-        private static T instance;
-    
-        public static T Instance => instance;
-    
+        public static T Instance { get; private set; }
+
         protected virtual void Awake()
         {
-            instance = this as T;
+            Instance = this as T;
         }
     }
 }
