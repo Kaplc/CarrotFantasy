@@ -21,19 +21,15 @@ namespace XLua.CSObjectWrap
         {
 			ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
 			System.Type type = typeof(App.MVC.View.GameScene.Object.Obstacle);
-			Utils.BeginObjectRegister(type, L, translator, 0, 3, 2, 2);
+			Utils.BeginObjectRegister(type, L, translator, 0, 3, 0, 0);
 			
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "Wound", _m_Wound);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "OnGet", _m_OnGet);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "OnPush", _m_OnPush);
 			
 			
-			Utils.RegisterFunc(L, Utils.GETTER_IDX, "spriteRenderer", _g_get_spriteRenderer);
-            Utils.RegisterFunc(L, Utils.GETTER_IDX, "originSprite", _g_get_originSprite);
-            
-			Utils.RegisterFunc(L, Utils.SETTER_IDX, "spriteRenderer", _s_set_spriteRenderer);
-            Utils.RegisterFunc(L, Utils.SETTER_IDX, "originSprite", _s_set_originSprite);
-            
+			
+			
 			
 			Utils.EndObjectRegister(type, L, translator, null, null,
 			    null, null, null);
@@ -163,65 +159,7 @@ namespace XLua.CSObjectWrap
         
         
         
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _g_get_spriteRenderer(RealStatePtr L)
-        {
-		    try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			
-                App.MVC.View.GameScene.Object.Obstacle gen_to_be_invoked = (App.MVC.View.GameScene.Object.Obstacle)translator.FastGetCSObj(L, 1);
-                translator.Push(L, gen_to_be_invoked.spriteRenderer);
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 1;
-        }
         
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _g_get_originSprite(RealStatePtr L)
-        {
-		    try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			
-                App.MVC.View.GameScene.Object.Obstacle gen_to_be_invoked = (App.MVC.View.GameScene.Object.Obstacle)translator.FastGetCSObj(L, 1);
-                translator.Push(L, gen_to_be_invoked.originSprite);
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 1;
-        }
-        
-        
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _s_set_spriteRenderer(RealStatePtr L)
-        {
-		    try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			
-                App.MVC.View.GameScene.Object.Obstacle gen_to_be_invoked = (App.MVC.View.GameScene.Object.Obstacle)translator.FastGetCSObj(L, 1);
-                gen_to_be_invoked.spriteRenderer = (UnityEngine.SpriteRenderer)translator.GetObject(L, 2, typeof(UnityEngine.SpriteRenderer));
-            
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 0;
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _s_set_originSprite(RealStatePtr L)
-        {
-		    try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			
-                App.MVC.View.GameScene.Object.Obstacle gen_to_be_invoked = (App.MVC.View.GameScene.Object.Obstacle)translator.FastGetCSObj(L, 1);
-                gen_to_be_invoked.originSprite = (UnityEngine.Sprite)translator.GetObject(L, 2, typeof(UnityEngine.Sprite));
-            
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 0;
-        }
         
 		
 		

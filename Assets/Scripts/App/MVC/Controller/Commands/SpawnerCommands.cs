@@ -88,7 +88,7 @@ namespace App.MVC.Controller.Commands
     {
         public override void Execute(INotification notification)
         {
-            GameManager.Instance.spawner.SetCollectingFires(notification.Body as Monster);
+            GameManager.Instance.spawner.SetCollectingFires(notification.Body as IMonster);
         }
     }
 
@@ -100,9 +100,9 @@ namespace App.MVC.Controller.Commands
         public override void Execute(INotification notification)
         {
             ISpawner spawner = GameManager.Instance.spawner;
-            Monster tar = GameManager.Instance.spawner.GetCollectingFiresTarget();
+            IMonster tar = GameManager.Instance.spawner.GetCollectingFiresTarget();
             // 判断是否是集火目标
-            if (tar == notification.Body as Monster)
+            if (tar == notification.Body as IMonster)
             {
                 spawner.CancelCollectingFiresTarget();
             }

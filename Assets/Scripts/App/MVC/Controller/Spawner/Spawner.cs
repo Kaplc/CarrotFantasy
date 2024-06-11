@@ -9,6 +9,7 @@ using App.MVC.Controller;
 using App.MVC.View.GameScene.Object;
 using App.MVC.View.GameScene.Object.Carrot;
 using App.MVC.View.GameScene.Object.Map;
+using App.MVC.View.GameScene.Object.Tower;
 using App.Static;
 using App.Static.Enum;
 using PureMVC.Interfaces;
@@ -19,16 +20,15 @@ using XLua;
 /// <summary>
 /// 对象生成器
 /// </summary>
-[LuaCallCSharp()]
 public class Spawner : MonoBehaviour, ISpawner
 {
     public Carrot carrot; // 萝卜
     public Transform startPoint; // 开始路牌位置
-    public List<Monster> monsters = new List<Monster>(); // 已经出生的怪物
-    public List<BaseTower> towers = new List<BaseTower>(); // 已创建的塔
-    public List<IObstacle> obstaclesList = new List<IObstacle>(); // 已创建的障碍物
+    private List<IMonster> monsters = new List<IMonster>(); // 已经出生的怪物
+    private List<ITower> towers = new List<ITower>(); // 已创建的塔
+    private List<IObstacle> obstaclesList = new List<IObstacle>(); // 已创建的障碍物
 
-    public Monster collectingFiresTarget; // 集火目标
+    private IMonster collectingFiresTarget; // 集火目标
     public Transform signTrans; // 集火标志
 
     // private MapData mapData;
@@ -102,7 +102,7 @@ public class Spawner : MonoBehaviour, ISpawner
         return carrot;
     }
 
-    public List<Monster> GetAllMonsters()
+    public List<IMonster> GetAllMonsters()
     {
         return monsters;
     }
@@ -130,12 +130,12 @@ public class Spawner : MonoBehaviour, ISpawner
 
     #region 集火相关
 
-    public Monster GetCollectingFiresTarget()
+    public IMonster GetCollectingFiresTarget()
     {
         return collectingFiresTarget;
     }
 
-    public void SetCollectingFiresTarget(Monster monster)
+    public void SetCollectingFiresTarget(IMonster monster)
     {
         collectingFiresTarget = monster;
     }
@@ -293,17 +293,17 @@ public class Spawner : MonoBehaviour, ISpawner
 
     #region 创建对象
 
-    public void SetCollectingFires(Monster monster)
+    public void SetCollectingFires(IMonster monster)
     {
         for (int i = 0; i < towers.Count; i++)
         {
-            towers[i].target = monster;
+            towers[i].SetCollectingFiresTarget(monster);
         }
 
         // 设置集火标志
         collectingFiresTarget = monster;
         signTrans.gameObject.SetActive(true);
-        signTrans.SetParent(monster.signFather.transform);
+        signTrans.SetParent(monster.GetSignFather());
         signTrans.localPosition = Vector3.zero;
         signTrans.localScale = Vector3.one;
     }
@@ -412,7 +412,7 @@ public class Spawner : MonoBehaviour, ISpawner
         {
             if (!monsters[i].IsDead)
             {
-                GameManager.Instance.PoolManager.PushObject(monsters[i].gameObject);
+                GameManager.Instance.PoolManager.PushObject(monsters[i].Transform.gameObject);
             }
         }
 
@@ -423,7 +423,7 @@ public class Spawner : MonoBehaviour, ISpawner
     {
         for (int i = 0; i < towers.Count; i++)
         {
-            GameManager.Instance.PoolManager.PushObject(towers[i].gameObject);
+            GameManager.Instance.PoolManager.PushObject(((MonoBehaviour)towers[i]).gameObject);
         }
 
         towers.Clear();

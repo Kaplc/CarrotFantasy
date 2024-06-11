@@ -1,0 +1,1 @@
+Tower = BaseTower:SubClass('Tower')

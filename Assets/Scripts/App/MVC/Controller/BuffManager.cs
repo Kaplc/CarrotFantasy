@@ -7,14 +7,14 @@ namespace App.MVC.Controller
 {
     public class BuffManager : BaseSingleton<BuffManager>
     {
-        private Dictionary<Monster, List<BaseBuff>> buffDictionary = new Dictionary<Monster, List<BaseBuff>>();
+        private Dictionary<IMonster, List<BaseBuff>> buffDictionary = new Dictionary<IMonster, List<BaseBuff>>();
 
         /// <summary>
         /// 怪物添加Buff
         /// </summary>
         /// <param name="monster"></param>
         /// <param name="buff"></param>
-        public void ApplyBuff(Monster monster, BaseBuff buff)
+        public void ApplyBuff(IMonster monster, BaseBuff buff)
         {
             if (!buffDictionary.ContainsKey(monster))
             {
@@ -32,7 +32,7 @@ namespace App.MVC.Controller
         /// </summary>
         /// <param name="monster"></param>
         /// <param name="buff"></param>
-        public void RemoveBuff(Monster monster, BaseBuff buff)
+        public void RemoveBuff(IMonster monster, BaseBuff buff)
         {
             if (!buffDictionary.ContainsKey(monster)) return;
 
@@ -48,7 +48,7 @@ namespace App.MVC.Controller
         /// 移除怪物上所有Buff
         /// </summary>
         /// <param name="monster"></param>
-        public void RemoveBuffs(Monster monster)
+        public void RemoveBuffs(IMonster monster)
         {
             if (!buffDictionary.ContainsKey(monster)) return;
 

@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &906888109636602081
 Transform:
   m_ObjectHideFlags: 0
@@ -173,9 +173,9 @@ GameObject:
   m_Component:
   - component: {fileID: 789210473473314120}
   - component: {fileID: 9085511880596456034}
-  - component: {fileID: 2873006730646284540}
   - component: {fileID: 3782543010935580208}
   - component: {fileID: -2086090203348294563}
+  - component: {fileID: -5167426676499341287}
   m_Layer: 0
   m_Name: Box1X1
   m_TagString: Obstacle
@@ -249,28 +249,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2873006730646284540
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1670189512630371208}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a25b2385baf8fe4c965390c3c66d2c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isDead: 0
-  data: {fileID: 11400000, guid: 85537c9c886e0b544894f19ce58c5c55, type: 2}
-  hp: 0
-  speed: 0
-  animator: {fileID: 0}
-  hpImageBg: {fileID: 906888109636602081}
-  hpImageFg: {fileID: 5277117055700530291}
-  signFather: {fileID: 8678306425751687304}
-  spriteRenderer: {fileID: 9085511880596456034}
-  originSprite: {fileID: 21300000, guid: fb29e1a0e3897ca4b8fd5e48b1f30fde, type: 3}
 --- !u!61 &3782543010935580208
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -316,6 +294,25 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &-5167426676499341287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1670189512630371208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c032abc0d7c122c43a58a71d7c2fe26d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: dc267108a0d8ff2498fc60220362d828, type: 2}
+  hp: 0
+  speed: 0
+  animator: {fileID: 0}
+  hpImageBg: {fileID: 0}
+  hpImageFg: {fileID: 0}
+  signFather: {fileID: 0}
 --- !u!1 &8678838380958266573
 GameObject:
   m_ObjectHideFlags: 0

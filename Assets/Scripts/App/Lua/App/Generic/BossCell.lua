@@ -1,0 +1,1 @@
+BossCell = Object:SubClass('BossCell')

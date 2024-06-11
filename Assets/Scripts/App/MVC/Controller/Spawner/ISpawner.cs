@@ -11,8 +11,8 @@ public interface ISpawner
     #region 获取字段
 
     Carrot GetCarrot();
-    Monster GetCollectingFiresTarget();
-    List<Monster> GetAllMonsters();
+    IMonster GetCollectingFiresTarget();
+    List<IMonster> GetAllMonsters();
     int GetNowWaveCount();
 
     #endregion
@@ -21,8 +21,8 @@ public interface ISpawner
     void Init(MapData mapData);
 
     // 集火
-    void SetCollectingFires(Monster monster);
-    void SetCollectingFiresTarget(Monster monster);
+    void SetCollectingFires(IMonster monster);
+    void SetCollectingFiresTarget(IMonster monster);
     void CancelCollectingFiresTarget();
 
     #region 出怪

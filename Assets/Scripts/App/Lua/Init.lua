@@ -11,6 +11,4 @@ require("Library/Object")
 require("Library/NameSpace")
 -- 初始化类
 require("App/Manager/UIManager/UIManager")
-
--- 初始化GameManager
-require("App/Manager/GameManager")
+require('App/Manager/BossGameManager')

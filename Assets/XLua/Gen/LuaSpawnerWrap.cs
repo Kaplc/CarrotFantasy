@@ -162,7 +162,7 @@ namespace XLua.CSObjectWrap
                 {
                     
                         var gen_ret = gen_to_be_invoked.GetCollectingFiresTarget(  );
-                        translator.Push(L, gen_ret);
+                        translator.PushAny(L, gen_ret);
                     
                     
                     
@@ -272,7 +272,7 @@ namespace XLua.CSObjectWrap
             
                 
                 {
-                    App.MVC.View.GameScene.Object.Monster _monster = (App.MVC.View.GameScene.Object.Monster)translator.GetObject(L, 2, typeof(App.MVC.View.GameScene.Object.Monster));
+                    App.MVC.View.GameScene.Object.IMonster _monster = (App.MVC.View.GameScene.Object.IMonster)translator.GetObject(L, 2, typeof(App.MVC.View.GameScene.Object.IMonster));
                     
                     gen_to_be_invoked.SetCollectingFires( _monster );
                     
@@ -300,7 +300,7 @@ namespace XLua.CSObjectWrap
             
                 
                 {
-                    App.MVC.View.GameScene.Object.Monster _monster = (App.MVC.View.GameScene.Object.Monster)translator.GetObject(L, 2, typeof(App.MVC.View.GameScene.Object.Monster));
+                    App.MVC.View.GameScene.Object.IMonster _monster = (App.MVC.View.GameScene.Object.IMonster)translator.GetObject(L, 2, typeof(App.MVC.View.GameScene.Object.IMonster));
                     
                     gen_to_be_invoked.SetCollectingFiresTarget( _monster );
                     
@@ -889,7 +889,7 @@ namespace XLua.CSObjectWrap
                 ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
 			
                 LuaSpawner gen_to_be_invoked = (LuaSpawner)translator.FastGetCSObj(L, 1);
-                gen_to_be_invoked.onGetAllMonstersAction = translator.GetDelegate<System.Func<System.Collections.Generic.List<App.MVC.View.GameScene.Object.Monster>>>(L, 2);
+                gen_to_be_invoked.onGetAllMonstersAction = translator.GetDelegate<System.Func<System.Collections.Generic.List<App.MVC.View.GameScene.Object.IMonster>>>(L, 2);
             
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
@@ -904,7 +904,7 @@ namespace XLua.CSObjectWrap
                 ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
 			
                 LuaSpawner gen_to_be_invoked = (LuaSpawner)translator.FastGetCSObj(L, 1);
-                gen_to_be_invoked.onGetCollectingFiresTargetAction = translator.GetDelegate<System.Func<App.MVC.View.GameScene.Object.Monster>>(L, 2);
+                gen_to_be_invoked.onGetCollectingFiresTargetAction = translator.GetDelegate<System.Func<App.MVC.View.GameScene.Object.IMonster>>(L, 2);
             
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
@@ -919,7 +919,7 @@ namespace XLua.CSObjectWrap
                 ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
 			
                 LuaSpawner gen_to_be_invoked = (LuaSpawner)translator.FastGetCSObj(L, 1);
-                gen_to_be_invoked.onSetCollectingFiresAction = translator.GetDelegate<UnityEngine.Events.UnityAction<App.MVC.View.GameScene.Object.Monster>>(L, 2);
+                gen_to_be_invoked.onSetCollectingFiresAction = translator.GetDelegate<UnityEngine.Events.UnityAction<App.MVC.View.GameScene.Object.IMonster>>(L, 2);
             
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
@@ -934,7 +934,7 @@ namespace XLua.CSObjectWrap
                 ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
 			
                 LuaSpawner gen_to_be_invoked = (LuaSpawner)translator.FastGetCSObj(L, 1);
-                gen_to_be_invoked.onSetCollectingFiresTargetAction = translator.GetDelegate<UnityEngine.Events.UnityAction<App.MVC.View.GameScene.Object.Monster>>(L, 2);
+                gen_to_be_invoked.onSetCollectingFiresTargetAction = translator.GetDelegate<UnityEngine.Events.UnityAction<App.MVC.View.GameScene.Object.IMonster>>(L, 2);
             
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);

@@ -11,8 +11,21 @@ namespace App.MVC.View.GameScene.Object
     [LuaCallCSharp]
     public class Obstacle : Monster, IObstacle
     {
-        public SpriteRenderer spriteRenderer;
-        public Sprite originSprite; // 障碍物原图片
+        private SpriteRenderer spriteRenderer;
+        private Sprite originSprite; // 障碍物原图片
+
+        protected override void Awake()
+        {
+            base.Awake();
+            
+            signFather = transform.Find("SignFather");
+            spriteRenderer = GetComponent<SpriteRenderer>();
+            originSprite = spriteRenderer.sprite;
+            hpImageBg = transform.Find("HpHolder");
+            hpImageFg = transform.Find("HpHolder/HpSlider");
+            
+            hpImageBg.gameObject.SetActive(false);
+        }
 
         protected override void Update()
         {

@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using App.DataClass.Game.Object;
 using App.MVC.Controller;
 using App.MVC.View.GameScene.Object;
-using Library;
+using App.MVC.View.GameScene.Object.Tower;
 using UnityEngine;
 
 namespace App.Generic.BaseObject
 {
     [Serializable]
-    public abstract class BaseTower : MonoBehaviour, IPoolObject
+    public abstract class BaseTower : MonoBehaviour, ITower
     {
         public TowerData data;
         public int Atk => data.atkList[level];
@@ -18,12 +18,24 @@ namespace App.Generic.BaseObject
 
         public Animator animator;
         public List<RuntimeAnimatorController> controllers;
-        public Monster target; // 当前目标
+        public IMonster target; // 当前目标
+
+        public Transform TargetTsf => ((Monster)target)?.transform;
+
         private GameObject upGradeTips;
+        protected Transform firePos;
+
+        private bool Pause => GameManager.Instance.Pause;
+        private ISpawner Spawner => GameManager.Instance.spawner;
+
+        protected virtual void Awake()
+        {
+            animator = GetComponent<Animator>();
+        }
 
         protected virtual void Update()
         {
-            if (GameManager.Instance.Pause)
+            if (Pause)
             {
                 // 游戏暂停停止炮塔动画
                 animator.SetBool("Attack", false);
@@ -32,34 +44,19 @@ namespace App.Generic.BaseObject
             }
 
             // 查找目标
-            if (target is null)
-            {
-                FindTargets();
-            }
-
-            if (target)
-            {
-                // 大于攻击距离解除锁定或打死怪物
-                if (Vector3.Distance(transform.position, target.transform.position) > data.attackRangesList[level] || target.IsDead)
-                {
-                    animator.SetBool("Attack", false);
-                    attacking = false;
-                    target = null;
-                }
-            }
-
-            // 攻击
-            if (target && !attacking)
-            {
-                animator.SetBool("Attack", true);
-            }
-
+            FindTargets();
+            // 开始攻击
+            StartAttack();
+            // 取消攻击
+            CancelAttack();
             // 集火目标
-            if (GameManager.Instance.spawner.GetCollectingFiresTarget())
-            {
-                CollectingFiresTarget();
-            }
+            CollectingFiresTarget();
+            // 显示升级提醒
+            ShowUpGradeTips();
+        }
 
+        private void ShowUpGradeTips()
+        {
             // 显示升级提醒
             if (level != 2 && GameManager.Instance.money > data.prices[level + 1])
             {
@@ -81,9 +78,9 @@ namespace App.Generic.BaseObject
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
-            if (target)
+            if (target != null)
             {
-                Gizmos.DrawLine(transform.position, target.transform.position);
+                Gizmos.DrawLine(transform.position, TargetTsf.position);
             }
         }
 
@@ -93,13 +90,16 @@ namespace App.Generic.BaseObject
         private void CollectingFiresTarget()
         {
             // 有集火目标直接锁定
-            Monster monster = GameManager.Instance.spawner.GetCollectingFiresTarget();
-            float distance = Vector3.Distance(transform.position, monster.transform.position);
-
-            // 处于攻击范围
-            if (distance < data.attackRangesList[level] && !monster.IsDead)
+            IMonster monster = GameManager.Instance.spawner.GetCollectingFiresTarget();
+            if (monster != null && target != monster)
             {
-                target = monster;
+                float distance = Vector3.Distance(transform.position, monster.Transform.position);
+
+                // 处于攻击范围
+                if (distance < data.attackRangesList[level] && !monster.IsDead)
+                {
+                    target = monster;
+                }
             }
         }
 
@@ -108,29 +108,53 @@ namespace App.Generic.BaseObject
         /// </summary>
         protected void FindTargets()
         {
-            // float closestDistance = 0f;
+            if (target != null) return;
+            
+            List<IMonster> monsters = Spawner.GetAllMonsters();
             // 查找目标
-            for (int i = 0; i < GameManager.Instance.spawner.GetAllMonsters().Count; i++)
+            foreach (IMonster m in monsters)
             {
-                Monster monster = GameManager.Instance.spawner.GetAllMonsters()[i];
-                float distance = Vector3.Distance(transform.position, monster.transform.position);
+                float distance = Vector3.Distance(transform.position, m.Transform.position);
 
                 // 处于攻击范围
-                if (distance < data.attackRangesList[level] && !monster.IsDead)
+                if (distance < data.attackRangesList[level] && !m.IsDead)
                 {
-                    // if (closestDistance == 0f) closestDistance = distance;
-
-                    // if (distance <= closestDistance)
-                    // {
-                    //     closestDistance = distance;
-                    //     target = monster;
-                    // }
-                    target = monster;
+                    target = m;
+                    return;
                 }
             }
         }
 
-        public abstract void Attack();
+        private void StartAttack()
+        {
+            // 攻击
+            if (target == null && attacking) return;
+            
+            animator.SetBool("Attack", true);
+            attacking = true;
+        }
+
+        private void CancelAttack()
+        {
+            if (target == null)
+            {
+                animator.SetBool("Attack", false);
+                attacking = false;
+                return;
+            }
+            
+            // 大于攻击距离或打死怪物解除锁定
+            if (Vector3.Distance(transform.position, TargetTsf.position) > data.attackRangesList[level] || target.IsDead)
+            {
+                animator.SetBool("Attack", false);
+                attacking = false;
+                target = null;
+            }
+        }
+
+        public virtual void Attack()
+        {
+        }
 
         /// <summary>
         /// 炮塔升级
@@ -138,11 +162,25 @@ namespace App.Generic.BaseObject
         public virtual void UpGrade()
         {
             level++;
-
             // 切换状态机
             animator.runtimeAnimatorController = controllers[level];
             // 升级动画
             animator.SetTrigger("UpGrade");
+        }
+
+        public void SetCollectingFiresTarget(IMonster monster)
+        {
+            target = monster;
+        }
+
+        public TowerData GetData()
+        {
+            return data;
+        }
+
+        public int GetLevel()
+        {
+            return level;
         }
 
         public virtual void OnGet()

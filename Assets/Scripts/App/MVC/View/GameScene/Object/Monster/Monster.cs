@@ -17,7 +17,6 @@ using XLua;
 
 namespace App.MVC.View.GameScene.Object
 {
-    [LuaCallCSharp]
     public class Monster : BaseRole, IMonster
     {
         public MonsterData data;
@@ -84,10 +83,11 @@ namespace App.MVC.View.GameScene.Object
         }
 
         public MonsterData Data => data;
+        public Transform Transform => transform;
 
         #endregion
 
-        private void Awake()
+        protected virtual void Awake()
         {
             animator = GetComponent<Animator>();
         }
@@ -181,6 +181,11 @@ namespace App.MVC.View.GameScene.Object
         public void SetSpeed(float v)
         {
             speed = v;
+        }
+
+        public Transform GetSignFather()
+        {
+            return signFather;
         }
 
         /// <summary>

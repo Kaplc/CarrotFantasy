@@ -7,6 +7,7 @@ using App.Generic.BaseObject;
 using App.Generic.Map;
 using App.Generic.NotificationBody;
 using App.MVC.Controller;
+using App.MVC.View.GameScene.Object.Tower;
 using App.Static;
 using App.Static.Enum;
 using Library;
@@ -221,10 +222,10 @@ namespace App.MVC.View.GameScene.Object.Map
                 }
 
                 // 判断格子是否存在塔
-                if (cell.tower as BaseTower)
+                if (cell.tower != null)
                 {
                     // 显示升级塔面板
-                    ShowUpGradePanel(cell.tower as BaseTower, GetCellCenterPos(cell), showDir);
+                    ShowUpGradePanel((ITower)cell.tower, GetCellCenterPos(cell), showDir);
                 }
                 else
                 {
@@ -242,35 +243,35 @@ namespace App.MVC.View.GameScene.Object.Map
         /// <summary>
         /// 显示升级塔面板
         /// </summary>
-        private void ShowUpGradePanel(BaseTower tower, Vector3 createPos, EBuiltPanelShowDir showDir)
+        private void ShowUpGradePanel(ITower tower, Vector3 createPos, EBuiltPanelShowDir showDir)
         {
-            TowerData towerData = tower.data;
-
+            TowerData towerData = tower.GetData();
+            int level = tower.GetLevel();
+            
             UpGradeTowerArgsBody body = new UpGradeTowerArgsBody();
-
             // 根据当前塔等级选择升级Icon和卖出Icon
-            if (tower.level == 2)
+            if (level == 2)
             {
                 // 最大等级
                 body.icon = GameManager.Instance.FactoryManager.SpriteFactory.GetSprite("Atlas/BuiltPanelAtlas", "Btn_ReachHighestLevel");
             }
-            else if (GameManager.Instance.money >= towerData.prices[tower.level + 1])
+            else if (GameManager.Instance.money >= towerData.prices[level + 1])
             {
                 // 够钱升级
                 body.icon = GameManager.Instance.FactoryManager.SpriteFactory.GetSprite("Atlas/BuiltPanelAtlas", "Btn_CanUpLevel");
                 // 取下一级的价格
-                body.upGradeMoney = towerData.prices[tower.level + 1];
+                body.upGradeMoney = towerData.prices[level + 1];
             }
             else
             {
                 // 不够钱升级
                 body.icon = GameManager.Instance.FactoryManager.SpriteFactory.GetSprite("Atlas/BuiltPanelAtlas", "Btn_CantUpLevel");
-                body.upGradeMoney = towerData.prices[tower.level + 1];
+                body.upGradeMoney = towerData.prices[level + 1];
             }
 
             body.createPos = createPos;
-            body.sellMoney = towerData.sellPrices[tower.level];
-            body.attackRange = towerData.attackRangesList[tower.level];
+            body.sellMoney = towerData.sellPrices[level];
+            body.attackRange = towerData.attackRangesList[level];
             body.showDir = showDir;
 
             // 显示升级面板

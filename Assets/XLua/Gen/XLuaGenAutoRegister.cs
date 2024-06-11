@@ -37,9 +37,6 @@ namespace XLua.CSObjectWrap
             translator.DelayWrapLoader(typeof(LuaSpawner), LuaSpawnerWrap.__Register);
         
         
-            translator.DelayWrapLoader(typeof(Spawner), SpawnerWrap.__Register);
-        
-        
             translator.DelayWrapLoader(typeof(UIManager), UIManagerWrap.__Register);
         
         
@@ -67,13 +64,7 @@ namespace XLua.CSObjectWrap
             translator.DelayWrapLoader(typeof(App.MVC.View.GameScene.Object.LuaObstacle), AppMVCViewGameSceneObjectLuaObstacleWrap.__Register);
         
         
-            translator.DelayWrapLoader(typeof(App.MVC.View.GameScene.Object.Monster), AppMVCViewGameSceneObjectMonsterWrap.__Register);
-        
-        
             translator.DelayWrapLoader(typeof(App.MVC.View.GameScene.Object.Obstacle), AppMVCViewGameSceneObjectObstacleWrap.__Register);
-        
-        
-            translator.DelayWrapLoader(typeof(App.MVC.View.GameScene.Object.Tower.BottleTower), AppMVCViewGameSceneObjectTowerBottleTowerWrap.__Register);
         
         
             translator.DelayWrapLoader(typeof(App.MVC.View.GameScene.Object.Map.Map), AppMVCViewGameSceneObjectMapMapWrap.__Register);

@@ -57,7 +57,9 @@ function BossPanel.Init(self)
 
     self.btnStart.onClick:AddListener(
         function()
-            print('开始游戏')
+            -- 加载场景完成回调
+            SceneManager.sceneLoaded('+', self.LoadedBossGameScene)
+            SceneManager.LoadScene('BossGameScene')
         end
     )
 
@@ -97,6 +99,18 @@ function BossPanel.Init(self)
     end
 end
 
+function BossPanel.Hide(self)
+    self.base:Hide()
+    -- 移除场景加载完成回调
+    SceneManager.sceneLoaded('-', self.LoadedBossGameScene)
+end
+
+function BossPanel.LoadedBossGameScene(scene, mode)
+    CS.UIManager.Instance:Hide('BeginPanel', false)
+    UIManager:HidePanel('BossPanel')
+    BossGameManager:Init(BossPanel.index)
+end
+
 function BossPanel.Update(self)
     self.sr.horizontalNormalizedPosition =
         Mathf.Lerp(self.sr.horizontalNormalizedPosition, (self.index - 1) / (self.totalCount - 1), self.speed)
@@ -122,8 +136,8 @@ function BossPanel.NextPage(self)
     if self.index > self.totalCount then
         self.index = self.totalCount
     end
-    
-    self:UpdateInfo();
+
+    self:UpdateInfo()
 end
 
 function BossPanel.LastPage(self)
@@ -132,7 +146,7 @@ function BossPanel.LastPage(self)
         self.index = 1
     end
 
-    self:UpdateInfo();
+    self:UpdateInfo()
 end
 
 function BossPanel.UpdateInfo(self)

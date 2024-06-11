@@ -1,4 +1,5 @@
-﻿using App.Generic.BaseObject;
+﻿using System;
+using App.Generic.BaseObject;
 using App.MVC.Controller;
 using App.MVC.View.GameScene.Object.Bullet;
 using App.Static;
@@ -7,11 +8,18 @@ using XLua;
 
 namespace App.MVC.View.GameScene.Object.Tower
 {
-    [LuaCallCSharp]
     public class BottleTower : BaseTower
     {
-        public Transform weapon;
-        public Transform firePos;
+        private Transform weapon;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            
+            animator = GetComponent<Animator>();
+            weapon = transform.Find("Weapon");
+            firePos = transform.Find("Weapon/FirePos");
+        }
 
         protected override void Update()
         {
@@ -24,7 +32,7 @@ namespace App.MVC.View.GameScene.Object.Tower
                 return;
             }
 
-            if (target)
+            if (target != null)
             {
                 // 看向目标
                 LookAtTarget();
@@ -34,7 +42,7 @@ namespace App.MVC.View.GameScene.Object.Tower
         private void LookAtTarget()
         {
             // 向量
-            Vector3 dir = target.transform.position - weapon.position;
+            Vector3 dir = TargetTsf.position - weapon.position;
             // 计算x轴的角度
             float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
             // 
@@ -44,18 +52,22 @@ namespace App.MVC.View.GameScene.Object.Tower
 
         public override void Attack()
         {
-            if (!target) return;
-            // 创建子弹预设体并设置目标
-            BottleTowerBullet bullet = GameManager.Instance.PoolManager.GetObject(data.bulletsPrefabsPath[level]).GetComponent<BottleTowerBullet>();
-            bullet.transform.position = firePos.position;
-            bullet.target = target;
-            bullet.atk = Atk;
-            // 播放攻击音效
-            (string, float, bool) soundData;
-            soundData.Item1 = "Music/Bottle";
-            soundData.Item2 = 1;
-            soundData.Item3 = false;
-            GameFacade.Instance.SendNotification(NotificationName.Game.PLAY_SOUND, soundData);
+            base.Attack();
+
+            if (target != null && attacking)
+            {
+                // 创建子弹预设体并设置目标
+                BottleTowerBullet bullet = GameManager.Instance.PoolManager.GetObject(data.bulletsPrefabsPath[level]).GetComponent<BottleTowerBullet>();
+                bullet.transform.position = firePos.position;
+                bullet.target = target;
+                bullet.atk = Atk;
+                // 播放攻击音效
+                (string, float, bool) soundData;
+                soundData.Item1 = "Music/Bottle";
+                soundData.Item2 = 1;
+                soundData.Item3 = false;
+                GameFacade.Instance.SendNotification(NotificationName.Game.PLAY_SOUND, soundData);
+            }
         }
     
     }

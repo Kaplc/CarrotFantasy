@@ -20,7 +20,7 @@ namespace App.MVC.Controller.Commands
     {
         public override void Execute(INotification notification)
         {
-            (Monster monster, BaseBuff buff) data = ((Monster, BaseBuff))notification.Body;;
+            (IMonster monster, BaseBuff buff) data = ((IMonster, BaseBuff))notification.Body;;
             GameManager.Instance.BuffManager.ApplyBuff(data.monster, data.buff);
         }
     }
@@ -29,7 +29,7 @@ namespace App.MVC.Controller.Commands
     {
         public override void Execute(INotification notification)
         {
-            (Monster monster, BaseBuff buff) data = ((Monster, BaseBuff))notification.Body;
+            (IMonster monster, BaseBuff buff) data = ((IMonster, BaseBuff))notification.Body;
             GameManager.Instance.BuffManager.RemoveBuff(data.monster, data.buff);
         }
     }
@@ -38,7 +38,7 @@ namespace App.MVC.Controller.Commands
     {
         public override void Execute(INotification notification)
         {
-            GameManager.Instance.BuffManager.RemoveBuffs(notification.Body as Monster);
+            GameManager.Instance.BuffManager.RemoveBuffs(notification.Body as IMonster);
         }
     }
 }

@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5055801750243459605}
   - component: {fileID: 5808014050101925626}
-  - component: {fileID: 4397953785343964753}
   - component: {fileID: 2649753783361148988}
   - component: {fileID: 1804460035729430977}
+  - component: {fileID: 1865988241678813741}
   m_Layer: 0
   m_Name: Tree4X4
   m_TagString: Obstacle
@@ -86,28 +86,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4397953785343964753
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 782805275443345383}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a25b2385baf8fe4c965390c3c66d2c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isDead: 0
-  data: {fileID: 11400000, guid: b87dfb2e2b2b38942ab7933f061a220b, type: 2}
-  hp: 0
-  speed: 0
-  animator: {fileID: 0}
-  hpImageBg: {fileID: 7496715924403519831}
-  hpImageFg: {fileID: 2464388963825016649}
-  signFather: {fileID: 4441187648390626311}
-  spriteRenderer: {fileID: 5808014050101925626}
-  originSprite: {fileID: 21300000, guid: 1cfa1dac8bae1eb46ac720ecfd8db01a, type: 3}
 --- !u!95 &2649753783361148988
 Animator:
   serializedVersion: 3
@@ -153,6 +131,25 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.4981765, y: 1.5028565}
   m_EdgeRadius: 0
+--- !u!114 &1865988241678813741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 782805275443345383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c032abc0d7c122c43a58a71d7c2fe26d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: dc267108a0d8ff2498fc60220362d828, type: 2}
+  hp: 0
+  speed: 0
+  animator: {fileID: 0}
+  hpImageBg: {fileID: 0}
+  hpImageFg: {fileID: 0}
+  signFather: {fileID: 0}
 --- !u!1 &3778342439831823484
 GameObject:
   m_ObjectHideFlags: 0
@@ -199,7 +196,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7496715924403519831
 Transform:
   m_ObjectHideFlags: 0
@@ -251,8 +248,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 315469461
-  m_SortingLayer: 0
+  m_SortingLayerID: 896647207
+  m_SortingLayer: 2
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 03540da6b2a6d8846accbbe0f1cf3859, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -332,8 +329,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 315469461
-  m_SortingLayer: 0
+  m_SortingLayerID: 896647207
+  m_SortingLayer: 2
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 68a33ee1b6105664da510fb8a095fe27, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

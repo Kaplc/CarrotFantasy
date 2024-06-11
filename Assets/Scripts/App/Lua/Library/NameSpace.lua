@@ -7,7 +7,7 @@
 -- env
 CS = CS
 
--- Components
+-- Unity
 GameObject = CS.UnityEngine.GameObject
 Transform = CS.UnityEngine.Transform
 RectTransform = CS.UnityEngine.RectTransform
@@ -19,6 +19,10 @@ Time = CS.UnityEngine.Time
 Input = CS.UnityEngine.Input
 KeyCode = CS.UnityEngine.KeyCode
 Resources = CS.UnityEngine.Resources
+SceneManager = CS.UnityEngine.SceneManagement.SceneManager
+Input = CS.UnityEngine.Input
+Camera = CS.UnityEngine.Camera
+Destroy = CS.UnityEngine.Object.Destroy
 
 -- UI
 Canvas = CS.UnityEngine.Canvas
@@ -37,3 +41,7 @@ ScrollRect = CS.UnityEngine.UI.ScrollRect
 UIInterfaceClass = CS.UIInterfaceClass
 MonoScript = CS.MonoScript
 Mathf = CS.CallMathf
+Cell = CS.App.Generic.Map.Cell
+Point = CS.App.Generic.Map.Point
+GameManager = CS.App.MVC.Controller.GameManager
+PointClassToCell = CS.App.Generic.Map.PointClassToCell

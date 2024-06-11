@@ -4,14 +4,15 @@
 --- DateTime: 2024/4/15 23:03
 ---
 
+require('App/Manager/UIManager/EUILayers')
 
-require("App/Manager/UIManager/EUILayers")
+require('App/UI/BasePanel')
+require('App/UI/BeginPanel')
+require('App/UI/BossPanel/BossPanel')
+require('App/UI/BuiltPanel')
+require('App/UI/BossGamePanel')
 
-require("App/UI/BasePanel")
-require("App/UI/BeginPanel")
-require("App/UI/BossPanel/BossPanel")
-
-UIManager = Object:SubClass("UIManager")
+UIManager = Object:SubClass('UIManager')
 
 UIManager.panelDic = {}
 
@@ -19,20 +20,30 @@ function UIManager:ShowPanel(panelName, layerType)
     local panel
     local layer
     if layerType == EUILayers.Bottom then
-        layer = CS.Library.UIManager.Instance.Bottom
+        layer = CS.UIManager.Instance.Bottom
     elseif layerType == EUILayers.Middle then
-        layer = CS.Library.UIManager.Instance.Middle
+        layer = CS.UIManager.Instance.Middle
     elseif layerType == EUILayers.Top then
-        layer = CS.Library.UIManager.Instance.Top
+        layer = CS.UIManager.Instance.Top
     elseif layerType == EUILayers.System then
-        layer = CS.Library.UIManager.Instance.System
+        layer = CS.UIManager.Instance.System
     else
-        layer = CS.Library.UIManager.Instance.Bottom
+        layer = CS.UIManager.Instance.Bottom
     end
 
     -- 加载面板预设体
     if self.panelDic[panelName] == nil then
-        local panelObj = GameObject.Instantiate(Resources.Load("UI/" .. panelName), layer)
+        local prefabs = Resources.Load('AB/' .. panelName)
+        if prefabs == nil then
+            prefabs = Resources.Load('UI/' .. panelName)
+        end
+
+        if prefabs == nil then
+            print('UI prefabs is nil')
+            return nil
+        end
+
+        local panelObj = GameObject.Instantiate(prefabs, layer)
         -- 设置
         panelObj.transform.localScale = Vector3.one
         -- 绑定到lua脚本

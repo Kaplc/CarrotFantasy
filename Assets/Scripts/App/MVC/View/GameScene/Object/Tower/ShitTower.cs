@@ -1,4 +1,5 @@
-﻿using App.Generic.BaseObject;
+﻿using System;
+using App.Generic.BaseObject;
 using App.MVC.Controller;
 using App.MVC.View.GameScene.Object.Bullet;
 using App.Static;
@@ -8,7 +9,11 @@ namespace App.MVC.View.GameScene.Object.Tower
 {
     public class ShitTower : BaseTower
     {
-        public Transform firePos;
+        protected override void Awake()
+        {
+            base.Awake();
+            firePos = transform.Find("FirePos");
+        }
 
         protected override void Update()
         {
@@ -23,7 +28,7 @@ namespace App.MVC.View.GameScene.Object.Tower
 
         public override void Attack()
         {
-            if (!target) return;
+            if (target is null) return;
             // 创建子弹预设体并设置目标
             ShitTowerBullet bullet = GameManager.Instance.PoolManager.GetObject(data.bulletsPrefabsPath[level]).GetComponent<ShitTowerBullet>();
             bullet.transform.position = firePos.position;
