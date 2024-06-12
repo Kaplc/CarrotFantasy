@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using App.DataClass.Game.Object;
+using App.Manager.Game.SceneManager.Interf;
 using App.MVC.Controller;
 using App.MVC.View.GameScene.Object;
 using App.MVC.View.GameScene.Object.Tower;
@@ -25,8 +26,10 @@ namespace App.Generic.BaseObject
         private GameObject upGradeTips;
         protected Transform firePos;
 
-        private bool Pause => GameManager.Instance.Pause;
-        private ISpawner Spawner => GameManager.Instance.spawner;
+        private ISceneManger sceneManger => GameManager.Instance.sceneManger;
+        
+        private bool Pause => sceneManger.IsPause();
+        private ISpawner Spawner => sceneManger.Spawner;
 
         protected virtual void Awake()
         {
@@ -58,7 +61,7 @@ namespace App.Generic.BaseObject
         private void ShowUpGradeTips()
         {
             // 显示升级提醒
-            if (level != 2 && GameManager.Instance.money > data.prices[level + 1])
+            if (level != 2 && sceneManger.GetMoney() > data.prices[level + 1])
             {
                 if (upGradeTips) return;
 
@@ -90,7 +93,7 @@ namespace App.Generic.BaseObject
         private void CollectingFiresTarget()
         {
             // 有集火目标直接锁定
-            IMonster monster = GameManager.Instance.spawner.GetCollectingFiresTarget();
+            IMonster monster = Spawner.GetCollectingFiresTarget();
             if (monster != null && target != monster)
             {
                 float distance = Vector3.Distance(transform.position, monster.Transform.position);

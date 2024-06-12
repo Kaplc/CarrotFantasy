@@ -5,14 +5,14 @@
         public static class Init
         {
             public const string INIT = "INIT"; // 游戏初始化
-            public const string INIT_GAMEMANAGER_CONTROLLER = "INIT_GAMEMANAGER_CONTROLLER";
-            public const string INIT_GAMEDATAPROXY_CONTROLLER = "INIT_GAMEDATAPROXY_CONTROLLER";
-            public const string INIT_BUFFMANAGER_CONTROLLER = "INIT_BUFFMANAGER_CONTROLLER";
-            public const string INIT_SPAWNER_CONTROLLER = "INIT_SPAWNER_CONTROLLER";
-            public const string INIT_PROCESSDATAPROXY_CONTROLLER = "INIT_PROCESSDATAPROXY_CONTROLLER";
-            public const string INIT_MUSICDATAPROXY_CONTROLLER = "INIT_MUSICDATAPROXY_CONTROLLER";
-            public const string INIT_STATICALDATAPROXY_CONTROLLER = "INIT_STATICALDATAPROXY_CONTROLLER";
-            public const string INIT_LOADSCENE_CONTROLLER = "INIT_LOADSCENE_CONTROLLER";
+            public const string INIT_GAME_COMMAND = "INIT_GAME_COMMAND";
+            public const string INIT_GAMEDATAPROXY_COMMAND = "INIT_GAMEDATAPROXY_COMMAND";
+            public const string INIT_BUFFMANAGER_COMMAND = "INIT_BUFFMANAGER_COMMAND";
+            public const string INIT_SPAWNER_COMMAND = "INIT_SPAWNER_COMMAND";
+            public const string INIT_PROCESSDATAPROXY_COMMAND = "INIT_PROCESSDATAPROXY_COMMAND";
+            public const string INIT_MUSICDATAPROXY_COMMAND = "INIT_MUSICDATAPROXY_COMMAND";
+            public const string INIT_STATICALDATAPROXY_COMMAND = "INIT_STATICALDATAPROXY_COMMAND";
+            public const string INIT_LOADSCENE_COMMAND = "INIT_LOADSCENE_COMMAND";
             public const string INIT_GAMEDATA = "INIT_GAMEDATA"; // 初始化数据
             public const string INIT_END = "INIT_END"; // 游戏初始化结束
         }
@@ -23,7 +23,7 @@
             public const string START_GAME = "StartGame"; // 开始游戏
             public const string RESTART_GAME = "RestartGame"; // 重新开始
             public const string EXIT_GAME = "ExitGame"; // 退出游戏
-            public const string INIT_GAME = "InitGame"; // 初始化游戏
+            public const string INIT_SCENE_MANAGER = "InitGame"; // 初始化游戏
             public const string PAUSE_GAME = "PauseGame"; // 暂停游戏
             public const string CONTINUE_GAME = "ContinueGame"; // 继续游戏
             public const string NEXT_LEVEL = "NextLevel"; // 下一关
@@ -59,8 +59,17 @@
     
             public const string SHOW_SELECTITEMPANEL = "ShowSelectBigLevelPanel"; // 选择大关卡
             public const string SHOW_SELECTLEVELPANEL = "ShowSelectLevelPanel"; // 选择小关卡
-            public const string SHOW_HELPPANEL = "ShowHelpPanel"; // 帮助面板
+
+
+
+            #region 开始界面
+
             public const string SHOW_BEGINPANEL = "ShowBeginPanel"; // 开始面板
+            public const string UPDATE_MUSIC_SETTING = "UpdateMusicSetting"; // 更新音乐设置
+            public const string UPDATE_STATISTICAL_DATA = "UpdateStatisticalData"; // 更新统计数据
+            public const string SHOW_HELPPANEL = "ShowHelpPanel"; // 帮助面板
+
+            #endregion
     
             public const string SHOW_GAMEPANEL = "ShowGamePanel"; // 游戏面板
             public const string HIDE_GAMEPANEL = "HideGamePaenl"; 
@@ -69,8 +78,8 @@
             public const string HIDE_MENUPANEL = "HideMenuPanel";
     
             public const string SHOW_SETTINGPANEL = "ShowSettingPanel"; // 设置
-            public const string SHOW_LOSEPANEL = "ShowLosePanel"; // 失败
-            public const string SHOW_WINPANEL = "ShowWinPanel"; // 胜利
+            public const string SHOW_LOSE_PANEL = "ShowLosePanel"; // 失败
+            public const string SHOW_WIN_PANEL = "ShowWinPanel"; // 胜利
             public const string SHOW_LOADINGPANEL = "ShowLoadingPanel"; // 加载面板
     
             public const string SHOW_CREATEPANEL = "ShowCreatePanel"; // 建造面板
@@ -107,16 +116,15 @@
             public const string LOAD_ITEMDATA = "LoadItemData";
             public const string LOADED_ITEMDATA = "LoadedItemData";
             // 音乐设置
-            public const string LOAD_MUSICSETTINGDATA = "LoadMusciSettingData";
+            public const string LOAD_MUSICSETTING_DATA = "LoadMusciSettingData";
             public const string LOADED_MUSICSETTINGDATA = "LoadedMusicSettingData";
-            public const string SAVE_MUSCISETTINGDATA = "SaveMusicSettingData";
+            public const string SAVE_MUSCISETTING_DATA = "SaveMusicSettingData";
             // 游戏进程数据
             public const string LOAD_PROCESSDATA = "LoadProcessData";
             public const string LOADED_PROCESSDATA = "LoadedProcessData";
             // 统计数据
-            public const string LOAD_STATISTICALDATA = "LoadStatisticalData";
-            public const string LOADED_STATISTICALDATA = "LoadedStatisticalData";
-            public const string SAVE_STATISTICALDATA = "SAVE_STATISTICALDATA";
+            public const string LOAD_STATISTICAL_DATA = "LoadStatisticalData";
+            public const string SAVE_STATISTICAL_DATA = "SAVE_STATISTICALDATA";
             public const string CHANGE_MONEY_COUNT = "CHANGE_MONEY_COUNT";
             public const string CHANGE_DESTROYOBSTACLE_COUNT = "CHANGE_DESTROYOBSTACLE_COUNT";
             public const string CHANGE_KILLMONSTER_COUNT = "CHANGE_KILLMONSTER_COUNT";
@@ -126,7 +134,7 @@
             public const string LOAD_ATLAS = "LoadAtlas"; 
             public const string LOADED_ATLAS = "LoadedAtlas"; 
             // 保存游戏进度数据
-            public const string SAVE_PROCESSDATA = "SaveProcessData";
+            public const string SAVE_PROCESS_DATA = "SaveProcessData";
         }
     
         #region 场景状态相关

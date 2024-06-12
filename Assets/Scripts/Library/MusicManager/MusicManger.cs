@@ -13,7 +13,7 @@ namespace Library
         public float soundVolume;
     }
 
-
+    
     public class MusicManger : BaseSingleton<MusicManger>
     {
         private AudioSource musicAudioSource;

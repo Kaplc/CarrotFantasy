@@ -22,7 +22,6 @@ BossGameManager.money = 0
 
 function BossGameManager.Init(self, mapIndex)
     self.mapData = self.mapDataModel:Load(mapIndex)
-    local comp = self.gameObjectModel:GetObject('Prefabs/Map')
     self.map:Init(comp.gameObject, self.mapData)
 
     self.spawner:Init(self.mapData)

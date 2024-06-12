@@ -1,0 +1,16 @@
+using App.DataClass.Player;
+using App.MVC.Controller;
+using Library;
+using PureMVC.Interfaces;
+using PureMVC.Patterns.Command;
+
+namespace App.UI.BeginScene.SettingPanel
+{
+    public class SaveMusicSettingDataCommand : SimpleCommand
+    {
+        public override void Execute(INotification notification)
+        {
+            GameManager.Instance.dataManager.MusicDataManager.Save(notification.Body as MusicSettingData);
+        }
+    }
+}

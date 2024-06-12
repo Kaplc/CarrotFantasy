@@ -8,7 +8,7 @@ using UnityEngine;
 namespace App.DataClass.Map
 {
     [CreateAssetMenu(fileName = "MapData", menuName = "MapData", order = 0)]
-    public class MapData: ScriptableObject
+    public class MapData: ScriptableObject, IMapData
     {
         [Header("地图数据")] 
         public int money;
@@ -42,6 +42,11 @@ namespace App.DataClass.Map
             }
 
             return null;
+        }
+
+        public List<Cell> GetPathList()
+        {
+            return PointClassToCell.ToCellList(pathList);
         }
     }
 }

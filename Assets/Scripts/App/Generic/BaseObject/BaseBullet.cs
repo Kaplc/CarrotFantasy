@@ -54,7 +54,7 @@ namespace App.Generic.BaseObject
             if (target != null)
             {
                 transform.LookAt(TargetTsf);
-                if (!GameManager.Instance.Pause)
+                if (!GameManager.Instance.sceneManger.IsPause())
                 {
                     transform.Translate(transform.forward * (Time.deltaTime * data.speed), Space.World);
                 }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2886ab1245834df0a9fc8f2c6e4cdf6c, type: 3}
   m_Name: NewMap1
   m_EditorClassIdentifier: 
-  money: 200
+  money: 500
   mapBgTexture: {fileID: 21300000, guid: 4ae06062bf9c04d4193371324a9af96d, type: 3}
   mapFgTexture: {fileID: 21300000, guid: 4b1b3d55969940f43abca95ce5b03b45, type: 3}
   pathList:
