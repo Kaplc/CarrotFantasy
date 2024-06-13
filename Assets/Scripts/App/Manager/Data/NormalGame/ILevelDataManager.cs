@@ -1,8 +1,10 @@
+using App.DataClass.Game.Level;
+
 namespace App.Manager.Data.NormalGame
 {
     public interface ILevelDataManager
     {
-        void GetBigLevelData(int itemID);
-        void LoadLevelData(int levelID);
+        ItemData GetItemLevelData(int itemID);
+        LevelData GetLevelData(int levelID);
     }
 }

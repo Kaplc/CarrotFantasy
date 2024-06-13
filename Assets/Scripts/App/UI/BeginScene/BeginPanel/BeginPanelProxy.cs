@@ -7,8 +7,8 @@ namespace App.UI.BeginScene.BeginPanel
 {
     public class BeginPanelProxy : Proxy
     {
-        private readonly MusicSettingData musicData;
-        private readonly StatisticalData statisticalData;
+        private MusicSettingData musicData;
+        private StatisticalData statisticalData;
 
         public BeginPanelProxy() : base(nameof(BeginPanelProxy))
         {
@@ -16,24 +16,15 @@ namespace App.UI.BeginScene.BeginPanel
             statisticalData = new StatisticalData();
         }
 
-        public void UpdateMusicData()
+        public void UpdateMusicData(MusicSettingData data)
         {
-            musicData.musicOpen = GameManager.Instance.dataManager.MusicDataManager.MusicOpen;
-            musicData.soundOpen = GameManager.Instance.dataManager.MusicDataManager.SoundOpen;
+            musicData = data;
             SendNotification(NotificationName.UI.UPDATE_MUSIC_SETTING, musicData);
         }
 
-        public void UpdateStatisticalData()
+        public void UpdateStatisticalData(StatisticalData data)
         {
-            StatisticalData data = GameManager.Instance.dataManager.StatisticalDataManager.GetStatisticalData();
-            statisticalData.money = data.money;
-            statisticalData.bossMapCount = data.bossMapCount;
-            statisticalData.adventureMapCount = data.adventureMapCount;
-            statisticalData.killBossCount = data.killBossCount;
-            statisticalData.killMonsterCount = data.killMonsterCount;
-            statisticalData.destroyObstacleCount = data.destroyObstacleCount;
-            statisticalData.hideMapCount = data.hideMapCount;
-
+            statisticalData = data;
             SendNotification(NotificationName.UI.UPDATE_STATISTICAL_DATA, statisticalData);
         }
     }

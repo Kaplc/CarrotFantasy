@@ -12,8 +12,6 @@ namespace App.MVC.Controller.Commands
         public override void Execute(INotification notification)
         {
             // 初始化GameController注册命令
-            GameFacade.Instance.RegisterCommand(NotificationName.Data.LOADED_LEVELDATA, () => new AcceptLevelDataCommand());
-
             GameFacade.Instance.RegisterCommand(NotificationName.Game.LOAD_GAME, () => new LoadGameCommand());
             GameFacade.Instance.RegisterCommand(NotificationName.Game.START_GAME, () => new StartGameCommand());
             GameFacade.Instance.RegisterCommand(NotificationName.Game.INIT_SCENE_MANAGER, () => new InitSceneManagerCommand());
@@ -79,7 +77,7 @@ namespace App.MVC.Controller.Commands
         public override void Execute(INotification notification)
         {
             // 加载当前关卡数据
-            SendNotification(NotificationName.Data.LOAD_LEVELDATA, (int)notification.Body);
+            SendNotification(NotificationName.Data.LOAD_LEVEL_DATA, (int)notification.Body);
         }
     }
 

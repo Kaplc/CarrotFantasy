@@ -1,4 +1,5 @@
-﻿using App.DataClass.Player;
+﻿using System.Collections.Generic;
+using App.DataClass.Player;
 using App.Manager.Game.SceneManager.Interf;
 using App.MVC;
 using App.MVC.Controller;
@@ -23,51 +24,12 @@ namespace App.UI.SelectItemScene
         public Button btnRight;
 
         public BasePageFlipping pageFlipping; // 翻页效果脚本
-        public ProcessData processData; // 游戏进度数据
         public ItemLockPanel itemLockPanel; // 提示主题锁定子面板
 
         private INormalSceneManager sceneManger => GameManager.Instance.sceneManger as INormalSceneManager;
 
         protected override void Init()
         {
-            //
-            btnBigLevel0.onClick.AddListener(() =>
-            {
-                // 记录选择的大关卡索引
-                sceneManger.NowBigLevelID = 0;
-                // 跳转场景
-                GameFacade.Instance.SendNotification(NotificationName.LoadScene.LOADSCENE_SELECTITEM_TO_SELECTLEVEL);
-                UIManager.Instance.Hide<SelectItemPanel>(false);
-            });
-            btnBigLevel1.onClick.AddListener(() =>
-            {
-                // 判断是否解锁
-                if (!processData.passedItemsDic.ContainsKey(1))
-                {
-                    // 未解锁
-                    itemLockPanel.gameObject.SetActive(true);
-                    itemLockPanel.ShowItem0 = true;
-                    return;
-                }
-            
-                sceneManger.NowBigLevelID = 1;
-                GameFacade.Instance.SendNotification(NotificationName.LoadScene.LOADSCENE_SELECTITEM_TO_SELECTLEVEL);
-                UIManager.Instance.Hide<SelectItemPanel>(false);
-            });
-            btnBigLevel2.onClick.AddListener(() =>
-            {
-                if (!processData.passedItemsDic.ContainsKey(2))
-                {
-                    // 未解锁
-                    itemLockPanel.gameObject.SetActive(true);
-                    itemLockPanel.ShowItem1 = true;
-                    return;
-                }
-            
-                sceneManger.NowBigLevelID = 2;
-                GameFacade.Instance.SendNotification(NotificationName.LoadScene.LOADSCENE_SELECTITEM_TO_SELECTLEVEL);
-                UIManager.Instance.Hide<SelectItemPanel>(false);
-            });
             btnHome.onClick.AddListener(() =>
             {
                 PanelMediator.SendNotification(NotificationName.LoadScene.LOADSCENE_SELECTITEM_TO_BEGIN);
@@ -116,23 +78,65 @@ namespace App.UI.SelectItemScene
 
             // 开始为第一页自动隐藏左边按钮
             btnLeft.gameObject.SetActive(false);
-            // 获取关卡解锁数据
-            if (processData.passedItemsDic.ContainsKey(0))
-            {
-                btnBigLevel0.GetComponent<ItemButton>().UpdateUnlockMapCount(processData.passedItemsDic[0].passedLevelCount);
-            }
-
-            if (processData.passedItemsDic.ContainsKey(1))
-            {
-                btnBigLevel1.GetComponent<ItemButton>().UpdateUnlockMapCount(processData.passedItemsDic[1].passedLevelCount);
-            }
-
-            if (processData.passedItemsDic.ContainsKey(2))
-            {
-                btnBigLevel2.GetComponent<ItemButton>().UpdateUnlockMapCount(processData.passedItemsDic[2].passedLevelCount);
-            }
         }
 
+        public void UpdateItem(ProcessData processData)
+        {
+            btnBigLevel0.onClick.AddListener(() =>
+            {
+                // 记录选择的大关卡索引
+                sceneManger.NowItemID = 0;
+                // 跳转场景
+                GameFacade.Instance.SendNotification(NotificationName.LoadScene.LOADSCENE_SELECTITEM_TO_SELECTLEVEL);
+                UIManager.Instance.Hide<SelectItemPanel>(false);
+            });
+            
+            btnBigLevel1.onClick.AddListener(() =>
+            {
+                // 判断是否解锁
+                if (!processData.passedItemsDic.ContainsKey(1))
+                {
+                    // 未解锁
+                    itemLockPanel.gameObject.SetActive(true);
+                    itemLockPanel.ShowItem0 = true;
+                    return;
+                }
+            
+                sceneManger.NowItemID = 1;
+                GameFacade.Instance.SendNotification(NotificationName.LoadScene.LOADSCENE_SELECTITEM_TO_SELECTLEVEL);
+                UIManager.Instance.Hide<SelectItemPanel>(false);
+            });
+            btnBigLevel2.onClick.AddListener(() =>
+            {
+                if (!processData.passedItemsDic.ContainsKey(2))
+                {
+                    // 未解锁
+                    itemLockPanel.gameObject.SetActive(true);
+                    itemLockPanel.ShowItem1 = true;
+                    return;
+                }
+            
+                sceneManger.NowItemID = 2;
+                GameFacade.Instance.SendNotification(NotificationName.LoadScene.LOADSCENE_SELECTITEM_TO_SELECTLEVEL);
+                UIManager.Instance.Hide<SelectItemPanel>(false);
+            });
+            // 获取关卡解锁数据
+            if (processData.passedItemsDic.TryGetValue(0, out var value))
+            {
+                btnBigLevel0.GetComponent<ItemButton>().UpdateUnlockMapCount(value.passedLevelCount);
+            }
+
+            if (processData.passedItemsDic.TryGetValue(1, out var value1))
+            {
+                btnBigLevel1.GetComponent<ItemButton>().UpdateUnlockMapCount(value1.passedLevelCount);
+            }
+
+            if (processData.passedItemsDic.TryGetValue(2, out var value2))
+            {
+                btnBigLevel2.GetComponent<ItemButton>().UpdateUnlockMapCount(value2.passedLevelCount);
+            }
+        }
+        
         #region 接受ScrollView的消息
 
         public void FirstPage()

@@ -28,9 +28,8 @@ namespace App.UI.SelectLevelScene
         {
             return new string[]
             {
-                NotificationName.UI.SHOW_SELECTLEVELPANEL,
-                NotificationName.Data.LOADED_ITEMDATA,
-                NotificationName.Data.LOADED_PROCESSDATA
+                NotificationName.UI.SHOW_SELECT_LEVEL_PANEL,
+                NotificationName.UI.LEVEL_DATA_UPDATED,
             };
         }
 
@@ -40,20 +39,13 @@ namespace App.UI.SelectLevelScene
 
             switch (notification.Name)
             {
-                case NotificationName.UI.SHOW_SELECTLEVELPANEL:
+                case NotificationName.UI.SHOW_SELECT_LEVEL_PANEL:
                     Panel = UIManager.Instance.Show<SelectLevelPanel>(false);
                     // 获取游戏进度数据
-                    SendNotification(NotificationName.Data.LOAD_PROCESSDATA);
-                    // 获取当前选择的大关卡数据
-                    SendNotification(NotificationName.Data.LOAD_ITEMDATA, notification.Body);
+                    SendNotification(NotificationName.Data.REQUEST_UPDATE_LEVEL_PROCESS_DATA);
                     break;
-                case NotificationName.Data.LOADED_ITEMDATA:
+                case NotificationName.UI.LEVEL_DATA_UPDATED:
                     Panel.CreateLevelButton(notification.Body as ItemData);
-                    break;
-                case NotificationName.Data.LOADED_PROCESSDATA:
-                    if (!Panel) break;
-
-                    Panel.processData = notification.Body as ProcessData;
                     break;
             }
         }

@@ -9,8 +9,8 @@ namespace App.Manager.Data.NormalGame
         private ILevelDataManager levelDataManager;
         private IProcessDataManager processDataManager;
         
-        IProcessDataManager ProcessDataManager { get=>processDataManager;}
-        ILevelDataManager LevelDataManager {  get=> levelDataManager; }
+        public IProcessDataManager ProcessDataManager { get=>processDataManager;}
+        public ILevelDataManager LevelDataManager {  get=> levelDataManager; }
         
         public NormalGameDataManager()
         {

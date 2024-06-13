@@ -11,11 +11,11 @@ namespace App.MVC.Controller.Commands
 
         public override void Execute(INotification notification)
         {
-            GameFacade.Instance.RegisterCommand(NotificationName.Data.LOAD_ITEMDATA, () => new GetBigLevelDataCommand()
+            GameFacade.Instance.RegisterCommand(NotificationName.Data.LOAD_ITEM_DATA, () => new GetBigLevelDataCommand()
             {
                 manager = manager
             });
-            GameFacade.Instance.RegisterCommand(NotificationName.Data.LOAD_LEVELDATA, () => new LoadLevelDataCommand()
+            GameFacade.Instance.RegisterCommand(NotificationName.Data.LOAD_LEVEL_DATA, () => new LoadLevelDataCommand()
             {
                 manager = manager
             });
@@ -29,7 +29,7 @@ namespace App.MVC.Controller.Commands
 
         public override void Execute(INotification notification)
         {
-            manager.GetBigLevelData((int)notification.Body);
+            manager.GetItemLevelData((int)notification.Body);
         }
     }
 
@@ -39,7 +39,7 @@ namespace App.MVC.Controller.Commands
 
         public override void Execute(INotification notification)
         {
-            manager.LoadLevelData((int)notification.Body);
+            manager.GetLevelData((int)notification.Body);
         }
     }
 }

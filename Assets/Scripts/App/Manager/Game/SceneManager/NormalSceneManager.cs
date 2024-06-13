@@ -11,7 +11,7 @@ namespace App.MVC.Controller
 {
     public class NormalSceneManager : BaseSceneManager, INormalSceneManager
     {
-        private int nowBigLevelID;
+        private int nowItemID;
         private int nowLevelID;
         private LevelData nowLevelData;
         private StatisticalData statisticalData;
@@ -85,7 +85,7 @@ namespace App.MVC.Controller
             
             // 保存游戏进度
             ProcessDataManager manager = GameFacade.Instance.RetrieveProxy(nameof(ProcessDataManager)) as ProcessDataManager;
-            manager?.SaveProcessData(nowBigLevelID, nowLevelData.levelID, grade);
+            manager?.SaveProcessData(nowItemID, nowLevelData.levelID, grade);
 
             // 通知保存统计数据
             GameManager.Instance.SaveGameData();
@@ -167,7 +167,7 @@ namespace App.MVC.Controller
 
         public int GetNowBigLevelID()
         {
-            return nowBigLevelID;
+            return nowItemID;
         }
 
         public int GetLevelID()
@@ -175,10 +175,10 @@ namespace App.MVC.Controller
             return nowLevelID;
         }
 
-        public int NowBigLevelID
+        public int NowItemID
         {
-            get => nowBigLevelID;
-            set => nowBigLevelID = value;
+            get => nowItemID;
+            set => nowItemID = value;
         }
         public int NowLevelID
         {

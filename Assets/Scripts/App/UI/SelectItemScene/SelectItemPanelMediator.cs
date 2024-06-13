@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using App.DataClass.Player;
 using App.Static;
 using PureMVC.Interfaces;
@@ -27,8 +28,8 @@ namespace App.UI.SelectItemScene
         {
             return new string[]
             {
-                NotificationName.UI.SHOW_SELECTITEMPANEL,
-                NotificationName.Data.LOADED_PROCESSDATA
+                NotificationName.UI.SHOW_SELECT_ITEM_PANEL,
+                NotificationName.UI.ITEM_DATA_UPDATED
             };
         }
 
@@ -38,12 +39,15 @@ namespace App.UI.SelectItemScene
 
             switch (notification.Name)
             {
-                case NotificationName.UI.SHOW_SELECTITEMPANEL:
+                case NotificationName.UI.SHOW_SELECT_ITEM_PANEL:
                     Panel = UIManager.Instance.Show<SelectItemPanel>(false);
-                    SendNotification(NotificationName.Data.LOAD_PROCESSDATA);
+                    SendNotification(NotificationName.Data.REQUEST_UPDATE_ITEM_PROCESS_DATA);
                     break;
-                case NotificationName.Data.LOADED_PROCESSDATA:
-                    Panel.processData = notification.Body as ProcessData;
+                case NotificationName.UI.ITEM_DATA_UPDATED:
+                    if (Panel)
+                    {
+                        Panel.UpdateItem(notification.Body as ProcessData);
+                    }
                     break;
             }
         }

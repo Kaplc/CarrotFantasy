@@ -74,7 +74,7 @@ namespace App.MVC.Controller.Commands
             GameFacade.Instance.RegisterMediator(new SelectItemPanelMediator());
             ZFrameWorkSceneManager.Instance.LoadSceneAsync("3.SelectItemScene", () =>
             {
-                SendNotification(NotificationName.UI.SHOW_SELECTITEMPANEL);
+                SendNotification(NotificationName.UI.SHOW_SELECT_ITEM_PANEL);
             });
         }
     }
@@ -87,7 +87,7 @@ namespace App.MVC.Controller.Commands
             ZFrameWorkSceneManager.Instance.LoadSceneAsync("4.SelectLevelScene", () =>
             {
                 // 根据记录的ID打开对应主题
-                SendNotification(NotificationName.UI.SHOW_SELECTLEVELPANEL, ((INormalSceneManager)GameManager.Instance.sceneManger).NowBigLevelID);
+                SendNotification(NotificationName.UI.SHOW_SELECT_LEVEL_PANEL, ((INormalSceneManager)GameManager.Instance.sceneManger).NowItemID);
             });
         }
     }

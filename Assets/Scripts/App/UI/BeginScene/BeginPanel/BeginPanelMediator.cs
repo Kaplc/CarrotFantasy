@@ -67,7 +67,7 @@ namespace App.UI.BeginScene.BeginPanel
                     break;
                 case NotificationName.UI.SHOW_SETTINGPANEL:
                     // 给设置面板刷获取数据
-                    SendNotification(NotificationName.Data.LOAD_MUSICSETTING_DATA);
+                    SendNotification(NotificationName.Data.LOAD_MUSIC_SETTING_DATA);
                     SendNotification(NotificationName.Data.LOAD_STATISTICAL_DATA);
                     // 
                     // 播放显示HelpPanel的动画

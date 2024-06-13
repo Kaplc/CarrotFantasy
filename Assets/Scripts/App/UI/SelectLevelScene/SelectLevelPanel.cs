@@ -118,7 +118,7 @@ namespace App.UI.SelectLevelScene
             }
 
             // 显隐锁定图标和更新通关等级体图片
-            PassedLevelData passedLevelData = processData.passedItemsDic[normalSceneManager.NowBigLevelID];
+            PassedLevelData passedLevelData = processData.passedItemsDic[normalSceneManager.NowItemID];
             for (int i = 0; i < btnsLevel.Count; i++)
             {
                 int levelID = btnsLevel[i].GetComponent<ButtonLevel>().levelID;

@@ -41,7 +41,7 @@ namespace App.MVC.Controller
             // 初始化数据
             dataManager = new DataManager();
             // 初始化音乐
-            GameFacade.Instance.SendNotification(NotificationName.Data.LOAD_MUSICSETTING_DATA);
+            GameFacade.Instance.SendNotification(NotificationName.Data.LOAD_MUSIC_SETTING_DATA);
             GameFacade.Instance.SendNotification(NotificationName.Game.PLAY_MUSIC);
             
             // 初始化Sdk

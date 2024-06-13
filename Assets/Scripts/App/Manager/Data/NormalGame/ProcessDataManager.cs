@@ -13,6 +13,11 @@ namespace App.MVC.Model.PlayerData
     {
         private ProcessData processData;
         
+        public ProcessDataManager()
+        {
+            LoadProcessData();
+        }
+        
         public ProcessData GetProcessData()
         {
             if (processData != null)
@@ -21,8 +26,7 @@ namespace App.MVC.Model.PlayerData
                 {
                     passedItemsDic = new Dictionary<int, PassedLevelData>(processData.passedItemsDic)
                 };
-
-                GameFacade.Instance.SendNotification(NotificationName.Data.LOADED_PROCESSDATA, newData);
+                
                 return newData;
             }
 

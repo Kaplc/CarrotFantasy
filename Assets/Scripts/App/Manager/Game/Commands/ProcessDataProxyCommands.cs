@@ -12,26 +12,11 @@ namespace App.MVC.Controller.Commands
     
         public override void Execute(INotification notification)
         {
-            GameFacade.Instance.RegisterCommand(NotificationName.Data.SAVE_PROCESS_DATA, ()=> new SaveProcessDataCommand()
-            {
-                manager = manager
-            });
-            GameFacade.Instance.RegisterCommand(NotificationName.Data.LOAD_PROCESSDATA, () => new GetProcessDataCommand()
-            {
-                manager = manager
-            });
+
         }
     }
 
-    public class GetProcessDataCommand : SimpleCommand
-    {
-        public ProcessDataManager manager;
-    
-        public override void Execute(INotification notification)
-        {
-            manager?.GetProcessData();
-        }
-    }
+
 
     public class SaveProcessDataCommand : SimpleCommand
     {

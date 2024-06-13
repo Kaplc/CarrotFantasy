@@ -56,10 +56,18 @@
         {
             public const string SHOW_INITPANEL = "ShowInitPanel"; // 初始化界面
             public const string HIDE_INIPANEL = "HideInitPanel";
-    
-            public const string SHOW_SELECTITEMPANEL = "ShowSelectBigLevelPanel"; // 选择大关卡
-            public const string SHOW_SELECTLEVELPANEL = "ShowSelectLevelPanel"; // 选择小关卡
 
+            #region 选择界面
+
+            public const string SHOW_SELECT_ITEM_PANEL = "SHOW_SELECT_ITEM_PANEL"; // 选择大关卡
+            public const string UPDATE_SELECT_ITEM_PANEL = "UPDATE_SELECT_ITEM_PANEL";
+            public const string REQUEST_UPDATE_SELECT_ITEM_PANEL = "REQUEST_UPDATE_SELECT_ITEM_PANEL";
+            public const string SHOW_SELECT_LEVEL_PANEL = "SHOW_SELECT_LEVEL_PANEL"; // 选择小关卡
+            public const string LEVEL_DATA_UPDATED = "LEVEL_DATA_UPDATED";
+            public const string ITEM_DATA_UPDATED = "ITEM_DATA_UPDATED";
+            public const string REQUEST_UPDATE_SELECT_LEVEL_PANEL = "REQUEST_UPDATE_SELECT_LEVEL_PANEL";
+
+            #endregion
 
 
             #region 开始界面
@@ -110,18 +118,18 @@
         public static class Data
         {
             // 关卡数据
-            public const string LOAD_LEVELDATA = "LoadLevelData";
-            public const string LOADED_LEVELDATA = "LoadedLevelMapData"; // 加载完成关卡
+            public const string LOAD_LEVEL_DATA = "LOAD_LEVEL_DATA";
+            // public const string LOADED_LEVELDATA = "LoadedLevelMapData"; // 加载完成关卡
             // 大关卡数据
-            public const string LOAD_ITEMDATA = "LoadItemData";
-            public const string LOADED_ITEMDATA = "LoadedItemData";
+            public const string LOAD_ITEM_DATA = "LOAD_ITEM_DATA";
+            // public const string LOADED_ITEMDATA = "LoadedItemData";
             // 音乐设置
-            public const string LOAD_MUSICSETTING_DATA = "LoadMusciSettingData";
+            public const string LOAD_MUSIC_SETTING_DATA = "LoadMusciSettingData";
             public const string LOADED_MUSICSETTINGDATA = "LoadedMusicSettingData";
             public const string SAVE_MUSCISETTING_DATA = "SaveMusicSettingData";
             // 游戏进程数据
-            public const string LOAD_PROCESSDATA = "LoadProcessData";
-            public const string LOADED_PROCESSDATA = "LoadedProcessData";
+            public const string REQUEST_UPDATE_ITEM_PROCESS_DATA = "REQUEST_UPDATE_ITEM_DATA";
+            public const string REQUEST_UPDATE_LEVEL_PROCESS_DATA = "REQUEST_UPDATE_LEVEL_DATA";
             // 统计数据
             public const string LOAD_STATISTICAL_DATA = "LoadStatisticalData";
             public const string SAVE_STATISTICAL_DATA = "SAVE_STATISTICALDATA";

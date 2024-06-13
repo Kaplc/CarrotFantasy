@@ -10,9 +10,9 @@ namespace App.MVC.Model
         private IMusicDataManager musicDataManager;
         private IStatisticalDataManager statisticalDataManager;
         
-        public IGameDataManager GameDataManager { get => gameDataManager; }
-        public IMusicDataManager MusicDataManager { get => musicDataManager; }
-        public IStatisticalDataManager StatisticalDataManager { get => statisticalDataManager; }
+        public IGameDataManager GameDataManager { get => gameDataManager; set => gameDataManager = value;}
+        public IMusicDataManager MusicDataManager { get => musicDataManager; set => musicDataManager = value;}
+        public IStatisticalDataManager StatisticalDataManager { get => statisticalDataManager; set => statisticalDataManager = value;}
 
         public DataManager()
         {
