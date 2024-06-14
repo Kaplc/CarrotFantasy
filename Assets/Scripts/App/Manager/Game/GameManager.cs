@@ -37,23 +37,23 @@ namespace App.MVC.Controller
         {
             base.Awake();
             DontDestroyOnLoad(gameObject);
+            // 初始化Sdk
+            GameObject sdkManagerObj = new GameObject(name:"SDKManager");
+            sdkManager = sdkManagerObj.AddComponent<SDKManager>();
+            DontDestroyOnLoad(sdkManagerObj);
+        
+            // 初始化XLua 
+            // custom loader
+            string path = Application.dataPath + "/Scripts/App/Lua/"; 
+            XLuaManager.AddLuaFilePath(path);
+            XLuaManager.DoFile("Init");
+            
             GameFacade.Instance.SendNotification(NotificationName.Init.INIT);
             // 初始化数据
             dataManager = new DataManager();
             // 初始化音乐
             GameFacade.Instance.SendNotification(NotificationName.Data.LOAD_MUSIC_SETTING_DATA);
             GameFacade.Instance.SendNotification(NotificationName.Game.PLAY_MUSIC);
-            
-            // 初始化Sdk
-            GameObject sdkManagerObj = new GameObject(name:"SDKManager");
-            sdkManager = sdkManagerObj.AddComponent<SDKManager>();
-            DontDestroyOnLoad(sdkManagerObj);
-        
-            // add lua loader 
-            // custom loader
-            string path = Application.dataPath + "/Scripts/App/Lua/"; 
-            XLuaManager.AddLuaFilePath(path);
-            XLuaManager.DoFile("Init");
         }
 
         #region 游戏相关

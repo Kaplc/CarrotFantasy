@@ -11,6 +11,11 @@ namespace App.MVC.Model.GameData
         private readonly Dictionary<int, LevelData> loadedLevelsDataDic = new Dictionary<int, LevelData>(); // 已经加载过的关卡缓存
         private readonly Dictionary<int, ItemData> loadedItemsDataDic = new Dictionary<int, ItemData>(); // 已经加载过的主题
         
+        public LevelDataManager()
+        {
+            LoadBigLevelData();
+        }
+        
         public ItemData GetItemLevelData(int itemID)
         {
             if (loadedItemsDataDic.TryGetValue(itemID, out var value))

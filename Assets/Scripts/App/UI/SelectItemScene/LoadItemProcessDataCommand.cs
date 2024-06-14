@@ -13,9 +13,8 @@ namespace App.UI.SelectLevelScene
     {
         public override void Execute(INotification notification)
         {
-            NormalGameDataManager nr = GameManager.Instance.dataManager.GameDataManager as NormalGameDataManager;
             SelectItemPanelProxy proxy = GameFacade.Instance.RetrieveProxy(nameof(SelectItemPanelProxy)) as SelectItemPanelProxy;
-            proxy.UpdateItemData(nr.ProcessDataManager.GetProcessData());
+            proxy.UpdateItemData();
         }
     }
 }
