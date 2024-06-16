@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using App.DataClass.Game.Object;
+using App.Data.DataClass.Game.Object;
 using App.Static.Enum;
 using Library;
 using UnityEngine;

@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using App.DataClass.Game.Level;
-using App.DataClass.Player;
-using App.Manager.Game.SceneManager.Interf;
-using App.MVC;
-using App.MVC.Controller;
+using App.Data.DataClass.Game.Level;
+using App.Data.DataClass.Player;
+using App.Game;
+using App.Game.SceneManager.NormalGame.interf;
 using App.Static;
 using App.UI.SelectLevelScene.Control;
 using Library;
@@ -30,7 +29,6 @@ namespace App.UI.SelectLevelScene
         public SelectLevelPanelPageFlipping pageFlipping;
         private ItemData itemData;
         public LevelLockPanel levelLockPanel; // 提示关卡锁定的子面板
-        public ProcessData processData; // 游戏进度数据
         
         private INormalSceneManager normalSceneManager => GameManager.Instance.sceneManger as INormalSceneManager;
 
@@ -76,7 +74,7 @@ namespace App.UI.SelectLevelScene
         /// <summary>
         /// 创建关卡按钮
         /// </summary>
-        public void CreateLevelButton(ItemData data)
+        public void CreateLevelButton(ItemData data, ProcessData processData)
         {
             RectTransform content = scrollRect.content;
             // 设置滑动容器大小
@@ -84,8 +82,7 @@ namespace App.UI.SelectLevelScene
 
             for (int i = 0; i < data.levels.Count; i++)
             {
-                // Button button = Instantiate(Resources.Load<GameObject>("UI/Button/ButtonLevel"), content).GetComponent<Button>();
-                Button button = GameManager.Instance.FactoryManager.UIControlFactory.CreateControl("ButtonLevel").GetComponent<Button>();
+                Button button = GameManager.Instance.factoryManager.UIControlFactory.CreateControl("ButtonLevel").GetComponent<Button>();
                 button.transform.SetParent(content, false);
                 btnsLevel.Add(button);
                 // 获取脚本
@@ -113,7 +110,7 @@ namespace App.UI.SelectLevelScene
                     }
 
                     UIManager.Instance.Hide<SelectLevelPanel>(false);
-                    GameFacade.Instance.SendNotification(NotificationName.LoadScene.LOADSCENE_SELECTLEVEL_TO_GAME, levelData.levelID);
+                    GameFacade.Instance.SendNotification(NotificationName.UI.START_NORMAL_GAME, levelData.levelID);
                 });
             }
 
@@ -123,10 +120,10 @@ namespace App.UI.SelectLevelScene
             {
                 int levelID = btnsLevel[i].GetComponent<ButtonLevel>().levelID;
             
-                if (passedLevelData.passedLevelDic.ContainsKey(levelID))
+                if (passedLevelData.passedLevelDic.TryGetValue(levelID, out var value))
                 {
                     // 设置通关等级
-                    btnsLevel[i].GetComponent<ButtonLevel>().passedGrade = passedLevelData.passedLevelDic[levelID];
+                    btnsLevel[i].GetComponent<ButtonLevel>().passedGrade = value;
                     // 取消锁定
                     btnsLevel[i].GetComponent<ButtonLevel>().IsLock = false;
                 }
@@ -154,7 +151,7 @@ namespace App.UI.SelectLevelScene
             for (int i = 0; i < icons.Length; i++)
             {
                 // Image icon = Instantiate(Resources.Load<GameObject>("UI/Image/ImageTowerIcon"), transformCreateTowerIcon).GetComponent<Image>();
-                Image icon = GameManager.Instance.FactoryManager.UIControlFactory.CreateControl("ImageTowerIcon").GetComponent<Image>();
+                Image icon = GameManager.Instance.factoryManager.UIControlFactory.CreateControl("ImageTowerIcon").GetComponent<Image>();
                 icon.transform.SetParent(transformCreateTowerIcon, false);
                 icon.sprite = icons[i];
                 towerIcons.Add(icon);

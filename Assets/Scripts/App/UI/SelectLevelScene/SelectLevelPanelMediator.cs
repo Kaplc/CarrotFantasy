@@ -1,5 +1,4 @@
-using App.DataClass.Game.Level;
-using App.DataClass.Player;
+using App.Data.DataClass.Game.Level;
 using App.Static;
 using PureMVC.Interfaces;
 using PureMVC.Patterns.Mediator;
@@ -45,7 +44,8 @@ namespace App.UI.SelectLevelScene
                     SendNotification(NotificationName.Data.REQUEST_UPDATE_LEVEL_PROCESS_DATA);
                     break;
                 case NotificationName.UI.LEVEL_DATA_UPDATED:
-                    Panel.CreateLevelButton(notification.Body as ItemData);
+                    LevelDataUpdatedArgs args = notification.Body as LevelDataUpdatedArgs;
+                    Panel.CreateLevelButton(args.itemData, args.processData);
                     break;
             }
         }

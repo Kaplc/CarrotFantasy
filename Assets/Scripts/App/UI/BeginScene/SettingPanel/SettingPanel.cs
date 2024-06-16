@@ -1,5 +1,5 @@
-﻿using App.DataClass.Player;
-using App.MVC;
+﻿using App.Data.DataClass.Player;
+using App.Game;
 using App.Static;
 using Library;
 using UnityEngine.UI;
@@ -53,7 +53,7 @@ namespace App.UI.BeginScene.SettingPanel
             btnHome.onClick.AddListener(() =>
             {
                 // 通过MVC管理器发送显示BeginPanel的消息
-                GameFacade.Instance.SendNotification(NotificationName.UI.SHOW_BEGINPANEL);
+                GameFacade.Instance.SendNotification(NotificationName.UI.SHOW_BEGIN_PANEL);
             });
 
             tgSelect.onValueChanged.AddListener((isOn) => { ShowSelectPage = isOn; });

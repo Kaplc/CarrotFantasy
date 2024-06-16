@@ -1,4 +1,4 @@
-﻿using App.MVC;
+﻿using App.Game;
 using App.Static;
 using Library;
 using UnityEngine.UI;
@@ -22,19 +22,19 @@ namespace App.UI.GameScene.Panel.GamePanel
             {
                 btnSpeed2.gameObject.SetActive(true);
                 btnSpeed1.gameObject.SetActive(false);
-                GameFacade.Instance.SendNotification(NotificationName.Game.TWOSPEED, true);
+                GameFacade.Instance.SendNotification(NotificationName.Game.SET_SPEED_UP, true);
             });
             btnSpeed2.onClick.AddListener(() =>
             {
                 btnSpeed1.gameObject.SetActive(true);
                 btnSpeed2.gameObject.SetActive(false);
-                GameFacade.Instance.SendNotification(NotificationName.Game.TWOSPEED, false);
+                GameFacade.Instance.SendNotification(NotificationName.Game.SET_SPEED_UP, false);
             });
             tgPause.onValueChanged.AddListener(isOn =>
             {
                 if (isOn)
                 {
-                    PanelMediator.SendNotification(NotificationName.Game.CONTINUE_GAME);
+                    PanelMediator.SendNotification(NotificationName.Game.RESUME_GAME);
                 }
                 else
                 {
@@ -44,7 +44,7 @@ namespace App.UI.GameScene.Panel.GamePanel
             });
             btnMenu.onClick.AddListener(() =>
             {
-                PanelMediator.SendNotification(NotificationName.UI.SHOW_MENUPANEL);
+                PanelMediator.SendNotification(NotificationName.UI.SHOW_MENU_PANEL);
             });
             btnSpeed2.gameObject.SetActive(false);
             imgPause.gameObject.SetActive(false);

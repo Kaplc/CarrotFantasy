@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using App.DataClass.Player;
+using App.Data.DataClass.Player;
 using UnityEngine;
 using UnityEngine.UI;
 

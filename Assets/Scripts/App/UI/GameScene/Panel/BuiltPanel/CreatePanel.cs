@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using App.DataClass.Game.Object;
-using App.Generic.NotificationBody;
-using App.MVC;
-using App.MVC.Controller;
+using App.Data.DataClass.Game.Object;
+using App.Game;
+using App.Game.Generic.NotificationBody;
 using App.Static;
 using App.Static.Enum;
 using UnityEngine;
@@ -18,6 +17,7 @@ namespace App.UI.GameScene.Panel.BuiltPanel
         /// 根据UI坐标显示建造面板
         /// </summary>
         /// <param name="iconsDic">icons字典</param>
+        /// <param name="towersDataDic"></param>
         /// <param name="showDir">显示方向</param>
         /// <param name="uiPos">ui的位置坐标</param>
         /// <param name="cellWorldPos">格子世界坐标</param>
@@ -31,7 +31,7 @@ namespace App.UI.GameScene.Panel.BuiltPanel
             // 创建按钮
             foreach (KeyValuePair<TowerData, Sprite> item in towersDataDic)
             {
-                Button button =GameManager.Instance.FactoryManager.UIControlFactory.CreateControl("ButtonCreateTower").GetComponent<Button>();
+                Button button =GameManager.Instance.factoryManager.UIControlFactory.CreateControl("ButtonCreateTower").GetComponent<Button>();
                 // 设置信息
                 button.GetComponent<Image>().sprite = item.Value;
 
@@ -58,7 +58,7 @@ namespace App.UI.GameScene.Panel.BuiltPanel
                 // 监听点击事件
                 button.onClick.AddListener(() =>
                 {
-                    GameFacade.Instance.SendNotification(NotificationName.UIEvent.CREATE_TOWER, new CreateTowerArgsBogy()
+                    GameFacade.Instance.SendNotification(NotificationName.UI.CREATE_TOWER, new CreateTowerArgs()
                     {
                         towerData = item.Key,
                         cellWorldPos = cellWorldPos

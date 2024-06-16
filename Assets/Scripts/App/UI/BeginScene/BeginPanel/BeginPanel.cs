@@ -1,4 +1,4 @@
-﻿using App.MVC.Controller;
+﻿using App.Game;
 using App.Static;
 using Library;
 using UnityEngine;
@@ -39,10 +39,10 @@ namespace App.UI.BeginScene.BeginPanel
             btnMonster.onClick.AddListener(() => { });
             btnSetting.onClick.AddListener(() =>
             {
-                PanelMediator.SendNotification(NotificationName.UI.SHOW_SETTINGPANEL);
+                PanelMediator.SendNotification(NotificationName.UI.SHOW_SETTING_PANEL);
             
             });
-            btnHelp.onClick.AddListener(() => { PanelMediator.SendNotification(NotificationName.UI.SHOW_HELPPANEL, true); });
+            btnHelp.onClick.AddListener(() => { PanelMediator.SendNotification(NotificationName.UI.SHOW_HELP_PANEL, true); });
 
             btnPositioning.onClick.AddListener(() =>
             {
@@ -52,7 +52,7 @@ namespace App.UI.BeginScene.BeginPanel
     
         public void ShowBossPanel()
         {
-            GameManager.Instance.XLuaManager.DoString("UIManager:ShowPanel('BossPanel', EUILayers.Middle)");
+            GameManager.Instance.xLuaManager.DoString("UIManager:ShowPanel('BossPanel', EUILayers.Middle)");
         }
 
         private void OnDestroy() {

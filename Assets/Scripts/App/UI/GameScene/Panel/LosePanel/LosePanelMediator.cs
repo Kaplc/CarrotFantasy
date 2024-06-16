@@ -38,7 +38,7 @@ namespace App.UI.GameScene.Panel.LosePanel
             {
                 case NotificationName.UI.SHOW_LOSE_PANEL:
                     // 先关闭菜单面板
-                    SendNotification(NotificationName.UI.HIDE_MENUPANEL);
+                    SendNotification(NotificationName.UI.HIDE_MENU_PANEL);
                     // 停止游戏
                     SendNotification(NotificationName.Game.STOP_GAME);
                     Panel = UIManager.Instance.Show<LosePanel>(false);

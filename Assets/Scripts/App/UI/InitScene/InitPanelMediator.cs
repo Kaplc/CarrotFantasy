@@ -26,8 +26,8 @@ namespace App.UI.InitScene
         {
             return new string[]
             {
-                NotificationName.UI.SHOW_INITPANEL,
-                NotificationName.UI.HIDE_INIPANEL
+                NotificationName.UI.SHOW_INIT_PANEL,
+                NotificationName.UI.HIDE_INIT_PANEL
             };
         }
 
@@ -37,10 +37,10 @@ namespace App.UI.InitScene
 
             switch (notification.Name)
             {
-                case NotificationName.UI.SHOW_INITPANEL:
+                case NotificationName.UI.SHOW_INIT_PANEL:
                     Panel = UIManager.Instance.Show<InitPanel>(false);
                     break;
-                case NotificationName.UI.HIDE_INIPANEL:
+                case NotificationName.UI.HIDE_INIT_PANEL:
                     UIManager.Instance.Hide<InitPanel>(false);
                     break;
             }

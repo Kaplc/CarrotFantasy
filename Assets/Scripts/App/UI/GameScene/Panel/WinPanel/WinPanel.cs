@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using App.DataClass.Player;
+using App.Data.DataClass.Player;
 using App.Static;
 using Library;
 using UnityEngine;
@@ -22,13 +22,12 @@ namespace App.UI.GameScene.Panel.WinPanel
         {
             btnContinue.onClick.AddListener(() =>
             {
-                PanelMediator.SendNotification(NotificationName.Game.NEXT_LEVEL);
+                PanelMediator.SendNotification(NotificationName.UI.NEXT_LEVEL);
                 UIManager.Instance.Hide<WinPanel>(false);
             });
             btnSelect.onClick.AddListener(() =>
             {
-                PanelMediator.SendNotification(NotificationName.Game.EXIT_GAME);
-                PanelMediator.SendNotification(NotificationName.LoadScene.LOADSCENE_GAME_TO_SELECTLEVEL);
+                PanelMediator.SendNotification(NotificationName.UI.SELECT_LEVEL);
                 UIManager.Instance.Hide<WinPanel>(false);
             });
         }

@@ -74,6 +74,14 @@ namespace Library
                 eventDic.Add(eventName, new EventInfo<T>(newAction));
             }
         }
+
+        public void RemoveEvent(string evenName)
+        {
+            if (eventDic.ContainsKey(evenName))
+            {
+                eventDic.Remove(evenName);
+            }
+        }
     
         public void RemoveEventListener(string eventName, UnityAction oldAction)
         {

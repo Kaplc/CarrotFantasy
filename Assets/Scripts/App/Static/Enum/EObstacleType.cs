@@ -1,4 +1,4 @@
-namespace App.DataClass.Map
+namespace App.Static.Enum
 {
     public enum EObstacleType
     {

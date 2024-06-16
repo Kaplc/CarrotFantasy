@@ -14,14 +14,14 @@ namespace App.UI.Generic.TipsPanel
         {
             return  new string[]
             {
-                NotificationName.UI.SHOW_TIPS_PAENL
+                NotificationName.UI.SHOW_TIPS_PANEL
             };
         }
         public override void HandleNotification(PureMVC.Interfaces.INotification notification)
         {
             switch (notification.Name)
             {
-                case NotificationName.UI.SHOW_TIPS_PAENL:
+                case NotificationName.UI.SHOW_TIPS_PANEL:
                     UIManager.Instance.Show<TipsPanel>().SetInfo(notification.Body.ToString());
                     break;
             }

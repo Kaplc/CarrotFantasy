@@ -1,4 +1,4 @@
-﻿using App.MVC;
+﻿using App.Game;
 using App.Static;
 using Library;
 using UnityEngine;
@@ -82,7 +82,7 @@ namespace App.UI.BeginScene.HelpPanel
             btnHome.onClick.AddListener(() =>
             {
                 // 通过MVC管理器发送显示BeginPanel的消息
-                GameFacade.Instance.SendNotification(NotificationName.UI.SHOW_BEGINPANEL);
+                GameFacade.Instance.SendNotification(NotificationName.UI.SHOW_BEGIN_PANEL);
             });
         
             tgTower.onValueChanged.AddListener((isOn) =>

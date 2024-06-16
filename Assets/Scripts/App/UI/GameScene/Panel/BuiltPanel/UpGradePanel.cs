@@ -1,4 +1,4 @@
-﻿using App.MVC;
+﻿using App.Game;
 using App.Static;
 using App.Static.Enum;
 using UnityEngine;
@@ -17,8 +17,8 @@ namespace App.UI.GameScene.Panel.BuiltPanel
 
         private void Awake()
         {
-            btnUpGrade.onClick.AddListener(() => { GameFacade.Instance.SendNotification(NotificationName.UIEvent.UPGRADE_TOWER, cellWorldPos); });
-            btnSell.onClick.AddListener(() => { GameFacade.Instance.SendNotification(NotificationName.UIEvent.SELL_TOWER, cellWorldPos); });
+            btnUpGrade.onClick.AddListener(() => { GameFacade.Instance.SendNotification(NotificationName.UI.UPGRADE_TOWER, cellWorldPos); });
+            btnSell.onClick.AddListener(() => { GameFacade.Instance.SendNotification(NotificationName.UI.SELL_TOWER, cellWorldPos); });
         }
 
         public void Show(Vector2 uiPos, Sprite icon, int upGradeMoney, int sellMoney, float attackRange, EBuiltPanelShowDir showDir)

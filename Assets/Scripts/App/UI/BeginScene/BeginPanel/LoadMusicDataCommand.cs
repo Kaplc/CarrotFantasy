@@ -1,6 +1,5 @@
-using App.DataClass.Player;
-using App.MVC;
-using App.MVC.Controller;
+using App.Data.DataClass.Player;
+using App.Game;
 using Library;
 using PureMVC.Interfaces;
 using PureMVC.Patterns.Command;

@@ -1,8 +1,7 @@
 using System.Collections.Generic;
-using App.DataClass.Game.Level;
-using App.DataClass.Player;
-using App.Manager.Data.NormalGame;
-using App.MVC.Controller;
+using App.Data.DataClass.Player;
+using App.Game;
+using App.Game.SceneManager.NormalGame.interf;
 using App.Static;
 using PureMVC.Patterns.Proxy;
 
@@ -10,7 +9,7 @@ namespace App.UI.SelectItemScene
 {
     public class SelectItemPanelProxy: Proxy
     {
-        private NormalGameDataManager GameDataManager => GameManager.Instance.dataManager.GameDataManager as NormalGameDataManager;
+        private INormalSceneDataManager SceneDataManager => GameManager.Instance.sceneManger.SceneDataManager as INormalSceneDataManager;
         private ProcessData processData;
         
         public SelectItemPanelProxy() : base(nameof(SelectItemPanelProxy))
@@ -19,7 +18,7 @@ namespace App.UI.SelectItemScene
 
         public void UpdateItemData()
         {
-            processData = GameDataManager.ProcessDataManager.GetProcessData();
+            processData = SceneDataManager.ProcessDataManager.GetProcessData();
             SendNotification(NotificationName.UI.ITEM_DATA_UPDATED, processData);
         }
     }

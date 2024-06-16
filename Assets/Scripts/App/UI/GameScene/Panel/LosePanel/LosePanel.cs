@@ -21,8 +21,7 @@ namespace App.UI.GameScene.Panel.LosePanel
             });
             btnSelect.onClick.AddListener(() =>
             {
-                PanelMediator.SendNotification(NotificationName.Game.EXIT_GAME);
-                PanelMediator.SendNotification(NotificationName.LoadScene.LOADSCENE_GAME_TO_SELECTLEVEL);
+                PanelMediator.SendNotification(NotificationName.UI.SELECT_LEVEL);
                 UIManager.Instance.Hide<LosePanel>(false);
             });
         }

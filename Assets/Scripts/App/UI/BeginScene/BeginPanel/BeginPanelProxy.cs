@@ -1,5 +1,4 @@
-using App.DataClass.Player;
-using App.MVC.Controller;
+using App.Data.DataClass.Player;
 using App.Static;
 using PureMVC.Patterns.Proxy;
 
@@ -19,13 +18,13 @@ namespace App.UI.BeginScene.BeginPanel
         public void UpdateMusicData(MusicSettingData data)
         {
             musicData = data;
-            SendNotification(NotificationName.UI.UPDATE_MUSIC_SETTING, musicData);
+            SendNotification(NotificationName.UI.MUSIC_SETTING_UPDATED, musicData);
         }
 
         public void UpdateStatisticalData(StatisticalData data)
         {
             statisticalData = data;
-            SendNotification(NotificationName.UI.UPDATE_STATISTICAL_DATA, statisticalData);
+            SendNotification(NotificationName.UI.STATISTICAL_DATA_UPDATED, statisticalData);
         }
     }
 }

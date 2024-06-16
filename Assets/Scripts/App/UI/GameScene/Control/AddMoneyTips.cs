@@ -1,4 +1,4 @@
-﻿using App.MVC.Controller;
+﻿using App.Game;
 using Library;
 using TMPro;
 using UnityEngine;
@@ -12,7 +12,7 @@ namespace App.UI.GameScene.Control
 
         public void PushSelf()
         {
-            GameManager.Instance.FactoryManager.UIControlFactory.PushControl(gameObject);
+            GameManager.Instance.factoryManager.UIControlFactory.PushControl(gameObject);
         }
     
         public void OnGet()

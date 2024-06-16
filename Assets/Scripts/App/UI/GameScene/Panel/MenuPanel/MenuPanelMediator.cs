@@ -26,8 +26,8 @@ namespace App.UI.GameScene.Panel.MenuPanel
         {
             return new string[]
             {
-                NotificationName.UI.SHOW_MENUPANEL,
-                NotificationName.UI.HIDE_MENUPANEL
+                NotificationName.UI.SHOW_MENU_PANEL,
+                NotificationName.UI.HIDE_MENU_PANEL
             };
         }
 
@@ -36,13 +36,13 @@ namespace App.UI.GameScene.Panel.MenuPanel
             base.HandleNotification(notification);
             switch (notification.Name)
             {
-                case NotificationName.UI.SHOW_MENUPANEL:
+                case NotificationName.UI.SHOW_MENU_PANEL:
                     Panel = UIManager.Instance.Show<MenuPanel>(false);
                     // 停止游戏
                     SendNotification(NotificationName.Game.STOP_GAME);
                 
                     break;
-                case NotificationName.UI.HIDE_MENUPANEL:
+                case NotificationName.UI.HIDE_MENU_PANEL:
                     UIManager.Instance.Hide<MenuPanel>(false);
                     break;
             }

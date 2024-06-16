@@ -15,7 +15,7 @@ namespace App.UI.GameScene.Panel.MenuPanel
             btnContinue.onClick.AddListener(() =>
             {
                 UIManager.Instance.Hide<MenuPanel>(false);
-                PanelMediator.SendNotification(NotificationName.Game.CONTINUE_GAME);
+                PanelMediator.SendNotification(NotificationName.Game.RESUME_GAME);
             });
         
             btnReStart.onClick.AddListener(() =>
@@ -28,9 +28,7 @@ namespace App.UI.GameScene.Panel.MenuPanel
             {
                 UIManager.Instance.Hide<MenuPanel>(false);
                 // 退出游戏
-                PanelMediator.SendNotification(NotificationName.Game.EXIT_GAME);
-                // 进入选择面板
-                PanelMediator.SendNotification(NotificationName.LoadScene.LOADSCENE_GAME_TO_SELECTLEVEL);;
+                PanelMediator.SendNotification(NotificationName.UI.SELECT_LEVEL);
             });
         }
     

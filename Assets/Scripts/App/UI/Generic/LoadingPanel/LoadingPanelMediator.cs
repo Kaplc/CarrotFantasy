@@ -26,8 +26,8 @@ namespace App.UI.Generic.LoadingPanel
         {
             return new string[]
             {
-                NotificationName.UI.SHOW_LOADINGPANEL,
-                NotificationName.UI.HIDE_LOADINGPANEL
+                NotificationName.UI.SHOW_LOADING_PANEL,
+                NotificationName.UI.HIDE_LOADING_PANEL
             };
 
         }
@@ -38,10 +38,10 @@ namespace App.UI.Generic.LoadingPanel
 
             switch (notification.Name)
             {
-                case NotificationName.UI.SHOW_LOADINGPANEL:
+                case NotificationName.UI.SHOW_LOADING_PANEL:
                     Panel = UIManager.Instance.Show<LoadingPanel>(false);
                     break;
-                case NotificationName.UI.HIDE_LOADINGPANEL:
+                case NotificationName.UI.HIDE_LOADING_PANEL:
                     UIManager.Instance.Hide<LoadingPanel>(false);
                     break;
             }

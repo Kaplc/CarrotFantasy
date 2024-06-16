@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using App.DataClass.Player;
-using App.Manager.Game.SceneManager.Interf;
-using App.MVC;
-using App.MVC.Controller;
+using App.Data.DataClass.Player;
+using App.Game;
+using App.Game.SceneManager.NormalGame.interf;
 using App.Static;
 using App.UI.BaseControl;
 using App.UI.SelectItemScene.Control;

@@ -27,10 +27,10 @@ namespace App.UI.GameScene.Panel.GamePanel
         {
             return new string[]
             {
-                NotificationName.UI.SHOW_GAMEPANEL,
-                NotificationName.UI.HIDE_GAMEPANEL,
-                NotificationName.UIEvent.GAMEPANEL_UPDATE_MONEY,
-                NotificationName.UIEvent.GAMEPANEL_UPDATE_WAVESCOUNT
+                NotificationName.UI.SHOW_GAME_PANEL,
+                NotificationName.UI.HIDE_GAME_PANEL,
+                NotificationName.UI.MONEY_UPDATED,
+                NotificationName.UI.WAVES_COUNT_UPDATED
             };
         }
 
@@ -40,7 +40,7 @@ namespace App.UI.GameScene.Panel.GamePanel
 
             switch (notification.Name)
             {
-                case NotificationName.UI.SHOW_GAMEPANEL:
+                case NotificationName.UI.SHOW_GAME_PANEL:
                     // 判断是否重新开始, 清空面板并重新生成, 让倒计时面板重新显示
                     if (Panel!=null)
                     {
@@ -49,14 +49,14 @@ namespace App.UI.GameScene.Panel.GamePanel
                     Panel = UIManager.Instance.Show<GamePanel>(false);
                 
                     break;
-                case NotificationName.UI.HIDE_GAMEPANEL:
+                case NotificationName.UI.HIDE_GAME_PANEL:
                     UIManager.Instance.Hide<GamePanel>(false);
                 
                     break;
-                case NotificationName.UIEvent.GAMEPANEL_UPDATE_MONEY:
+                case NotificationName.UI.MONEY_UPDATED:
                     Panel.UpdateMoney((int)notification.Body);
                     break;
-                case NotificationName.UIEvent.GAMEPANEL_UPDATE_WAVESCOUNT:
+                case NotificationName.UI.WAVES_COUNT_UPDATED:
                     Panel.UpdateWavesCount(((int, int))notification.Body);
                     break;
             }

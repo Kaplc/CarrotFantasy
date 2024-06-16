@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using App.DataClass.Map;
-using App.Generic.Map;
+using App.Data.DataClass.Map;
+using App.Game.Generic.Map;
 using App.Static.Enum;
 using UnityEditor;
 using UnityEngine;
