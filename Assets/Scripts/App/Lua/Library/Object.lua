@@ -4,7 +4,7 @@ Object = {}
 Object.name = "Object"
 
 -- 定义new实例化方法, 
-function Object.New(self)
+function Object:New()
     -- 创建新表作为对象
     local newObj = {}
 
@@ -15,7 +15,7 @@ function Object.New(self)
 end
 
 -- 定义继承方法
-function Object.SubClass(self, subClass)
+function Object:SubClass(subClass)
     -- 大G表中创建以该子类类名命名的类, 之后可以直接通过名字访问该子类
     _G[subClass] = {}
 

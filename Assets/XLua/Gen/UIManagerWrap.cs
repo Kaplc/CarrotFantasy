@@ -21,10 +21,9 @@ namespace XLua.CSObjectWrap
         {
 			ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
 			System.Type type = typeof(UIManager);
-			Utils.BeginObjectRegister(type, L, translator, 0, 5, 6, 2);
+			Utils.BeginObjectRegister(type, L, translator, 0, 4, 6, 2);
 			
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "Show", _m_Show);
-			Utils.RegisterFunc(L, Utils.METHOD_IDX, "LuaCallShow", _m_LuaCallShow);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "Hide", _m_Hide);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "GetPanel", _m_GetPanel);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "CloseAllPanel", _m_CloseAllPanel);
@@ -131,84 +130,66 @@ namespace XLua.CSObjectWrap
                     
                     return 1;
                 }
+                if(gen_param_count == 6&& (LuaAPI.lua_isnil(L, 2) || LuaAPI.lua_type(L, 2) == LuaTypes.LUA_TSTRING)&& (LuaAPI.lua_isnil(L, 3) || LuaAPI.lua_type(L, 3) == LuaTypes.LUA_TSTRING)&& LuaTypes.LUA_TBOOLEAN == LuaAPI.lua_type(L, 4)&& translator.Assignable<EUILayerType>(L, 5)&& translator.Assignable<UnityEngine.Events.UnityAction>(L, 6)) 
+                {
+                    string _path = LuaAPI.lua_tostring(L, 2);
+                    string _panelName = LuaAPI.lua_tostring(L, 3);
+                    bool _isFade = LuaAPI.lua_toboolean(L, 4);
+                    EUILayerType _layerType;translator.Get(L, 5, out _layerType);
+                    UnityEngine.Events.UnityAction _callBack = translator.GetDelegate<UnityEngine.Events.UnityAction>(L, 6);
+                    
+                        var gen_ret = gen_to_be_invoked.Show( _path, _panelName, _isFade, _layerType, _callBack );
+                        translator.Push(L, gen_ret);
+                    
+                    
+                    
+                    return 1;
+                }
+                if(gen_param_count == 5&& (LuaAPI.lua_isnil(L, 2) || LuaAPI.lua_type(L, 2) == LuaTypes.LUA_TSTRING)&& (LuaAPI.lua_isnil(L, 3) || LuaAPI.lua_type(L, 3) == LuaTypes.LUA_TSTRING)&& LuaTypes.LUA_TBOOLEAN == LuaAPI.lua_type(L, 4)&& translator.Assignable<EUILayerType>(L, 5)) 
+                {
+                    string _path = LuaAPI.lua_tostring(L, 2);
+                    string _panelName = LuaAPI.lua_tostring(L, 3);
+                    bool _isFade = LuaAPI.lua_toboolean(L, 4);
+                    EUILayerType _layerType;translator.Get(L, 5, out _layerType);
+                    
+                        var gen_ret = gen_to_be_invoked.Show( _path, _panelName, _isFade, _layerType );
+                        translator.Push(L, gen_ret);
+                    
+                    
+                    
+                    return 1;
+                }
+                if(gen_param_count == 4&& (LuaAPI.lua_isnil(L, 2) || LuaAPI.lua_type(L, 2) == LuaTypes.LUA_TSTRING)&& (LuaAPI.lua_isnil(L, 3) || LuaAPI.lua_type(L, 3) == LuaTypes.LUA_TSTRING)&& LuaTypes.LUA_TBOOLEAN == LuaAPI.lua_type(L, 4)) 
+                {
+                    string _path = LuaAPI.lua_tostring(L, 2);
+                    string _panelName = LuaAPI.lua_tostring(L, 3);
+                    bool _isFade = LuaAPI.lua_toboolean(L, 4);
+                    
+                        var gen_ret = gen_to_be_invoked.Show( _path, _panelName, _isFade );
+                        translator.Push(L, gen_ret);
+                    
+                    
+                    
+                    return 1;
+                }
+                if(gen_param_count == 3&& (LuaAPI.lua_isnil(L, 2) || LuaAPI.lua_type(L, 2) == LuaTypes.LUA_TSTRING)&& (LuaAPI.lua_isnil(L, 3) || LuaAPI.lua_type(L, 3) == LuaTypes.LUA_TSTRING)) 
+                {
+                    string _path = LuaAPI.lua_tostring(L, 2);
+                    string _panelName = LuaAPI.lua_tostring(L, 3);
+                    
+                        var gen_ret = gen_to_be_invoked.Show( _path, _panelName );
+                        translator.Push(L, gen_ret);
+                    
+                    
+                    
+                    return 1;
+                }
                 
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
             }
             
             return LuaAPI.luaL_error(L, "invalid arguments to UIManager.Show!");
-            
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _m_LuaCallShow(RealStatePtr L)
-        {
-		    try {
-            
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-            
-            
-                UIManager gen_to_be_invoked = (UIManager)translator.FastGetCSObj(L, 1);
-            
-            
-			    int gen_param_count = LuaAPI.lua_gettop(L);
-            
-                if(gen_param_count == 5&& (LuaAPI.lua_isnil(L, 2) || LuaAPI.lua_type(L, 2) == LuaTypes.LUA_TSTRING)&& LuaTypes.LUA_TBOOLEAN == LuaAPI.lua_type(L, 3)&& translator.Assignable<EUILayerType>(L, 4)&& translator.Assignable<UnityEngine.Events.UnityAction>(L, 5)) 
-                {
-                    string _panelName = LuaAPI.lua_tostring(L, 2);
-                    bool _isFade = LuaAPI.lua_toboolean(L, 3);
-                    EUILayerType _layerType;translator.Get(L, 4, out _layerType);
-                    UnityEngine.Events.UnityAction _callBack = translator.GetDelegate<UnityEngine.Events.UnityAction>(L, 5);
-                    
-                        var gen_ret = gen_to_be_invoked.LuaCallShow( _panelName, _isFade, _layerType, _callBack );
-                        translator.Push(L, gen_ret);
-                    
-                    
-                    
-                    return 1;
-                }
-                if(gen_param_count == 4&& (LuaAPI.lua_isnil(L, 2) || LuaAPI.lua_type(L, 2) == LuaTypes.LUA_TSTRING)&& LuaTypes.LUA_TBOOLEAN == LuaAPI.lua_type(L, 3)&& translator.Assignable<EUILayerType>(L, 4)) 
-                {
-                    string _panelName = LuaAPI.lua_tostring(L, 2);
-                    bool _isFade = LuaAPI.lua_toboolean(L, 3);
-                    EUILayerType _layerType;translator.Get(L, 4, out _layerType);
-                    
-                        var gen_ret = gen_to_be_invoked.LuaCallShow( _panelName, _isFade, _layerType );
-                        translator.Push(L, gen_ret);
-                    
-                    
-                    
-                    return 1;
-                }
-                if(gen_param_count == 3&& (LuaAPI.lua_isnil(L, 2) || LuaAPI.lua_type(L, 2) == LuaTypes.LUA_TSTRING)&& LuaTypes.LUA_TBOOLEAN == LuaAPI.lua_type(L, 3)) 
-                {
-                    string _panelName = LuaAPI.lua_tostring(L, 2);
-                    bool _isFade = LuaAPI.lua_toboolean(L, 3);
-                    
-                        var gen_ret = gen_to_be_invoked.LuaCallShow( _panelName, _isFade );
-                        translator.Push(L, gen_ret);
-                    
-                    
-                    
-                    return 1;
-                }
-                if(gen_param_count == 2&& (LuaAPI.lua_isnil(L, 2) || LuaAPI.lua_type(L, 2) == LuaTypes.LUA_TSTRING)) 
-                {
-                    string _panelName = LuaAPI.lua_tostring(L, 2);
-                    
-                        var gen_ret = gen_to_be_invoked.LuaCallShow( _panelName );
-                        translator.Push(L, gen_ret);
-                    
-                    
-                    
-                    return 1;
-                }
-                
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            
-            return LuaAPI.luaL_error(L, "invalid arguments to UIManager.LuaCallShow!");
             
         }
         

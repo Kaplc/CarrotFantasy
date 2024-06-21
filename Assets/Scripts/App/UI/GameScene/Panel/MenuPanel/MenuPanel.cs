@@ -15,20 +15,20 @@ namespace App.UI.GameScene.Panel.MenuPanel
             btnContinue.onClick.AddListener(() =>
             {
                 UIManager.Instance.Hide<MenuPanel>(false);
-                PanelMediator.SendNotification(NotificationName.Game.RESUME_GAME);
+                GameFacade.Instance.SendNotification(NotificationName.Game.RESUME_GAME);
             });
         
             btnReStart.onClick.AddListener(() =>
             {
                 UIManager.Instance.Hide<MenuPanel>(false);
-                PanelMediator.SendNotification(NotificationName.Game.RESTART_GAME);
+                GameFacade.Instance.SendNotification(NotificationName.Game.RESTART_GAME);
             });
         
             btnSelect.onClick.AddListener(() =>
             {
                 UIManager.Instance.Hide<MenuPanel>(false);
                 // 退出游戏
-                PanelMediator.SendNotification(NotificationName.UI.SELECT_LEVEL);
+                GameFacade.Instance.SendNotification(NotificationName.UI.SELECT_LEVEL);
             });
         }
     

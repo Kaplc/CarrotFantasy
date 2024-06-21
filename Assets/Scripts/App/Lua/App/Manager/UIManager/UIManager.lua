@@ -11,6 +11,7 @@ require('App/UI/BossPanel/BossPanel')
 require('App/UI/BuiltPanel')
 require('App/UI/BossGamePanel')
 require('App/UI/CountDownPanel')
+require('App/UI/MenuPanel')
 
 UIManager = Object:SubClass('UIManager')
 

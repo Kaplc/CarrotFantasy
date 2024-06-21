@@ -34,7 +34,7 @@ function BossGameManager:Init()
 
 end
 
-function BossGameManager.InitCsAction(self)
+function BossGameManager:InitCsAction()
     -- 添加回调函数
     self.script.onSetSpawnerAction = function(spawner)
         self:SetSpwaner(spawner)
@@ -95,11 +95,11 @@ function BossGameManager.InitCsAction(self)
     end
 end
 
-function BossGameManager.IsStop(self)
+function BossGameManager:IsStop()
     return self.isStop
 end
 
-function BossGameManager.InitGame(self, levelID)
+function BossGameManager:InitGame(levelID)
     -- 加载地图数据
     self.mapData = self.gameDataManager:Load('AB/Data/BossMap' .. levelID)
     -- 初始化
@@ -116,24 +116,25 @@ function BossGameManager.InitGame(self, levelID)
     self.money = self.mapData.money
     GameManager.Instance:StopMusic()
     -- UI
-    UIManager:ShowPanel('BossGamePanel')
+    UIManager:ShowPanel('BossGamePanel', EUILayers.Bottom)
 
 end
 
-function BossGameManager.StartGame(self)
+function BossGameManager:StartGame()
+    print(self.isStop)
     print('start')
 end
 
-function BossGameManager.SetSpwaner(self, spawner)
+function BossGameManager:SetSpwaner(spawner)
     self.script.Spawner = spawner
     self.spawner = spawner
 end
 
-function BossGameManager.SetSceneDataManager(self, manager)
+function BossGameManager:SetSceneDataManager(manager)
     self.sceneDataManager = manager
 end
 
-function BossGameManager.GetSceneDataManager(self)
+function BossGameManager:GetSceneDataManager()
     return self.sceneDataManager
 end
 

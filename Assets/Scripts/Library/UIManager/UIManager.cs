@@ -112,18 +112,31 @@ public class UIManager
         return CreateNewPanel(panelName, isFade, layerType, callBack);
     }
 
-    public GameObject LuaCallShow(string panelName, bool isFade = true, EUILayerType layerType = EUILayerType.Bottom, UnityAction callBack = null)
+    public BasePanel Show(string path, string panelName, bool isFade = true, EUILayerType layerType = EUILayerType.Bottom, UnityAction callBack = null)
     {
-        try
+        // 不存在直接创建并保存
+        BasePanel newPanel = GameObject.Instantiate(Resources.Load<GameObject>(path + panelName), canvas.transform).GetComponent(panelName) as BasePanel;
+        panelsDic.Add(panelName, newPanel);
+        newPanel.Show(isFade, callBack);
+
+        // 设置层级
+        switch (layerType)
         {
-            GameObject newPanel = GameObject.Instantiate(Resources.Load<GameObject>("UI/" + panelName), canvas.transform);
-            return newPanel;
+            case EUILayerType.Bottom:
+                newPanel.transform.SetParent(Bottom);
+                break;
+            case EUILayerType.Middle:
+                newPanel.transform.SetParent(Middle);
+                break;
+            case EUILayerType.Top:
+                newPanel.transform.SetParent(Top);
+                break;
+            case EUILayerType.System:
+                newPanel.transform.SetParent(System);
+                break;
         }
-        catch (Exception e)
-        {
-            Debug.LogError(e);
-            return null;
-        }
+
+        return newPanel;
     }
 
     private BasePanel CreateNewPanel(string panelName, bool isFade, EUILayerType layerType, UnityAction callBack)
