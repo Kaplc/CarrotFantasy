@@ -39,7 +39,7 @@ namespace App.Game.Object.Map
 
         private void Awake()
         {
-            sceneManger = GameManager.Instance.sceneManger;
+            sceneManger = GameManager.Instance.sceneManager;
             
             mapBgSpriteRenderer = GetComponent<SpriteRenderer>();
             roadSpriteRenderer = transform.Find("Road").GetComponent<SpriteRenderer>();
@@ -293,7 +293,7 @@ namespace App.Game.Object.Map
             for (int i = 0; i < towerDataList.Count; i++)
             {
                 // 判断是否够钱, 获取0级的Icon
-                if (GameManager.Instance.sceneManger.GetMoney() >= towerDataList[i].prices[0])
+                if (GameManager.Instance.sceneManager.GetMoney() >= towerDataList[i].prices[0])
                 {
                     // 普通图标
                     towersDataDic.Add(towerDataList[i], towerDataList[i].icon);

@@ -9,7 +9,7 @@ namespace App.UI.GameScene.Panel.BuiltPanel.Command
     {
         public override void Execute(INotification notification)
         {
-            GameManager.Instance.sceneManger.Spawner.UpGradeTower((Vector3)notification.Body);
+            GameManager.Instance.sceneManager.Spawner.UpGradeTower((Vector3)notification.Body);
         }
     }
 }

@@ -164,18 +164,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95edcc3ba6a7e62409964f5bec8fe25d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stop: 0
-  pauseTime: 0
-  nowBigLevelId: 0
-  money: 1000
-  openedBuiltPanel: 0
-  twoSpeed: 0
-  nowLevelData: {fileID: 0}
-  musicSettingData:
-    musicOpen: 0
-    soundOpen: 0
-  map: {fileID: 0}
-  spawner: {fileID: 0}
   sdkManager: {fileID: 0}
 --- !u!1001 &6812224283282451708
 PrefabInstance:

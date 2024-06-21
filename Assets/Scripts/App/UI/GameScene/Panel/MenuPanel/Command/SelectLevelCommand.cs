@@ -13,7 +13,7 @@ namespace App.UI.GameScene.Panel.MenuPanel.Command
         public override void Execute(INotification notification)
         {
             // 回到选择界面完全退出游戏
-            GameManager.Instance.sceneManger.EndGame();
+            GameManager.Instance.sceneManager.EndGame();
         }
     }
 }

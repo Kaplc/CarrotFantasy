@@ -11,7 +11,7 @@ namespace App.UI.GameScene.Panel.GamePanel
     {
         public override void Execute(INotification notification)
         {
-            GameManager.Instance.sceneManger.RestartGame();
+            GameManager.Instance.sceneManager.RestartGame();
         }
     }
 }

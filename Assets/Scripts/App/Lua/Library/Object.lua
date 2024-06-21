@@ -11,7 +11,6 @@ function Object.New(self)
     -- 设置该对象的类为调用者
     setmetatable(newObj, self)
     self.__index = self
-
     return newObj
 end
 

@@ -21,16 +21,17 @@ namespace App.Game.Generic.BaseObject
         public Animator animator;
         public List<RuntimeAnimatorController> controllers;
         public IMonster target; // 当前目标
-
-        public Transform TargetTsf => ((Monster)target)?.transform;
-
         private GameObject upGradeTips;
         protected Transform firePos;
 
-        private ISceneManger sceneManger => GameManager.Instance.sceneManger;
+        public bool IsDead { get; set; }
+        public Transform Transform => transform;
 
-        private bool Pause => sceneManger.IsPause();
-        private ISpawner Spawner => sceneManger.Spawner;
+
+        private ISceneManger SceneManager => GameManager.Instance.sceneManager;
+        public Transform TargetTsf => ((Monster)target)?.transform;
+        private bool Pause => SceneManager.IsPause();
+        private ISpawner Spawner => SceneManager.Spawner;
         private Dictionary<float, IMonster> targetDic = new Dictionary<float, IMonster>();
 
         protected virtual void Awake()
@@ -59,11 +60,16 @@ namespace App.Game.Generic.BaseObject
             // 显示升级提醒
             ShowUpGradeTips();
         }
+        
+        public void Wound(int woundHp)
+        {
+            
+        }
 
         private void ShowUpGradeTips()
         {
             // 显示升级提醒
-            if (level != 2 && sceneManger.GetMoney() > data.prices[level + 1])
+            if (level != 2 && SceneManager.GetMoney() > data.prices[level + 1])
             {
                 if (upGradeTips) return;
 

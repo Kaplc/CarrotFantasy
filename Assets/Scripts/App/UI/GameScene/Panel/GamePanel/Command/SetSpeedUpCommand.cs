@@ -11,7 +11,7 @@ namespace App.UI.GameScene.Panel.GamePanel
     {
         public override void Execute(INotification notification)
         {
-            GameManager.Instance.sceneManger.SetSpeedUp((bool)notification.Body);
+            GameManager.Instance.sceneManager.SetSpeedUp((bool)notification.Body);
         }
     }
 }

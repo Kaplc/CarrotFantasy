@@ -23,13 +23,13 @@ namespace App.Game
         public MusicManger musicManger;
         public BuffManager buffManager;
         public XLuaManager xLuaManager;
-        public UIManager uIManager;
+        public UIManager uiManager;
         public EventCenter eventCenter;
         public SDKManager sdkManager;
 
         #endregion
         
-        public ISceneManger sceneManger;
+        public ISceneManger sceneManager;
         public IDataManager dataManager;
         
         protected override void Awake()
@@ -45,7 +45,7 @@ namespace App.Game
             musicManger = MusicManger.Instance;
             buffManager = BuffManager.Instance;
             xLuaManager = XLuaManager.Instance;
-            uIManager = UIManager.Instance;
+            uiManager = UIManager.Instance;
             eventCenter = EventCenter.Instance;
 
             // 初始化Sdk
@@ -81,7 +81,7 @@ namespace App.Game
         /// </summary>
         public void SetSceneManager(ISceneManger manger)
         {
-            sceneManger = manger;
+            sceneManager = manger;
         }
 
         public void LoadGameScene(string sceneName, int levelID)
@@ -90,7 +90,7 @@ namespace App.Game
             ZFrameWorkSceneManager.Instance.LoadSceneAsync(sceneName, () =>
             {
                 // 初始化场景
-                sceneManger.InitGame(levelID);
+                sceneManager.InitGame(levelID);
             });
         }
 

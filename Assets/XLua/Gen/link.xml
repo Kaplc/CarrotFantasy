@@ -1,0 +1,45 @@
+﻿
+
+<linker>
+
+	<assembly fullname="Assembly-CSharp">
+	    <type fullname="CallMathf" preserve="all"/>
+		<type fullname="LuaNewList" preserve="all"/>
+		<type fullname="MonoScript" preserve="all"/>
+		<type fullname="UIInterfaceClass" preserve="all"/>
+		<type fullname="GameFacade" preserve="all"/>
+		<type fullname="UIManager" preserve="all"/>
+		<type fullname="Tutorial.BaseClass" preserve="all"/>
+		<type fullname="Tutorial.TestEnum" preserve="all"/>
+		<type fullname="Tutorial.DerivedClass" preserve="all"/>
+		<type fullname="Tutorial.ICalc" preserve="all"/>
+		<type fullname="Tutorial.DerivedClassExtensions" preserve="all"/>
+		<type fullname="Library.BasePanel" preserve="all"/>
+		<type fullname="App.UI.GameScene.Panel.GamePanel.CountDownPanel" preserve="all"/>
+		<type fullname="App.UI.BaseControl.BasePageFlipping" preserve="all"/>
+		<type fullname="App.Game.GameManager" preserve="all"/>
+		<type fullname="App.Game.LuaCommand" preserve="all"/>
+		<type fullname="App.Game.LuaMediator" preserve="all"/>
+		<type fullname="App.Game.LuaProxy" preserve="all"/>
+		<type fullname="App.Game.Spawner.LuaSpawner" preserve="all"/>
+		<type fullname="App.Game.SceneManager.LuaSceneDataManager" preserve="all"/>
+		<type fullname="App.Game.SceneManager.LuaSceneManager" preserve="all"/>
+		<type fullname="App.Game.Object.Tower.LuaTower" preserve="all"/>
+		<type fullname="App.Game.Object.Obstacle.LuaObstacle" preserve="all"/>
+		<type fullname="App.Game.Object.Obstacle.Obstacle" preserve="all"/>
+		<type fullname="App.Game.Object.Monster.LuaMonster" preserve="all"/>
+		<type fullname="App.Game.Object.Map.Map" preserve="all"/>
+		<type fullname="App.Game.Generic.Map.Cell" preserve="all"/>
+		<type fullname="App.Game.Generic.Map.Point" preserve="all"/>
+		<type fullname="App.Game.Generic.Map.PointClassToCell" preserve="all"/>
+		<type fullname="App.Data.DataClass.Map.SpawnMonsterData" preserve="all"/>
+		<type fullname="Tutorial.DerivedClass+TestEnumInner" preserve="all"/>
+		
+	</assembly>
+
+	<assembly fullname="UnityEngine.CoreModule">
+	    <type fullname="UnityEngine.SceneManagement.SceneManager" preserve="all"/>
+		
+	</assembly>
+
+</linker>

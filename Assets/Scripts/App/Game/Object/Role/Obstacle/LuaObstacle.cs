@@ -9,7 +9,7 @@ using XLua;
 namespace App.Game.Object.Obstacle
 {
     [LuaCallCSharp()]
-    public class LuaObstacle: IObstacle
+    public class LuaObstacle: MonoBehaviour, IObstacle
     {
         #region 属性
 

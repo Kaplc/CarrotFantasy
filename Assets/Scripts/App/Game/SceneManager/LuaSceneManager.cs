@@ -3,9 +3,11 @@ using App.Data.DataClass.Map;
 using App.Game.Object.Monster;
 using App.Game.Spawner;
 using UnityEngine.Events;
+using XLua;
 
 namespace App.Game.SceneManager
 {
+    [LuaCallCSharp]
     public class LuaSceneManager : ISceneManger
     {
         public Func<ISceneDataManager> onGetSceneDataManagerAction;

@@ -1,13 +1,14 @@
 using System;
 using App.Data.DataClass.Game.Object;
 using App.Game.Object.Monster;
+using UnityEngine;
 using UnityEngine.Events;
 using XLua;
 
 namespace App.Game.Object.Tower
 {
     [LuaCallCSharp]
-    public class LuaTower : ITower
+    public class LuaTower : MonoBehaviour, ITower
     {
         public UnityAction onPushAction;
         public UnityAction onGetAction;
@@ -16,6 +17,20 @@ namespace App.Game.Object.Tower
         public UnityAction<IMonster> onSetCollectingFiresTargetAction;
         public Func<TowerData> onGetDataAction;
         public Func<int> onGetLevelAction;
+        public Func<bool> onGetIsDeadAction;
+        public UnityAction<bool> onSetIsDeadAction;
+
+        public bool IsDead
+        {
+            get => (bool)onGetIsDeadAction?.Invoke();
+            set => onSetIsDeadAction?.Invoke(value);
+        }
+
+        public Transform Transform => transform;
+
+        public void Wound(int woundHp)
+        {
+        }
 
         public void OnGet() => onGetAction?.Invoke();
 

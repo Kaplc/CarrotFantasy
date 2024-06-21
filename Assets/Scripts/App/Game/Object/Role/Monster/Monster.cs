@@ -45,7 +45,7 @@ namespace App.Game.Object.Monster
                     hp = 0;
                     IsDead = true;
                     // 加钱
-                    gameManager.sceneManger.UpdateMoney(+(int)(data.baseMoney * growth));
+                    gameManager.sceneManager.UpdateMoney(+(int)(data.baseMoney * growth));
                     // 生成加钱UI
                     AddMoneyTips addMoneyTips =
                         gameManager.factoryManager.UIControlFactory.CreateControl("AddMoneyTips").GetComponent<AddMoneyTips>();
@@ -55,9 +55,9 @@ namespace App.Game.Object.Monster
                     // 移除所有Buff
                     ClearAllBuffs();
                     // 如果集火的是自己取消集火标志
-                    if ((Monster)gameManager.sceneManger.Spawner.GetCollectingFiresTarget() == this)
+                    if ((Monster)gameManager.sceneManager.Spawner.GetCollectingFiresTarget() == this)
                     {
-                        gameManager.sceneManger.CancelFire();
+                        gameManager.sceneManager.CancelFire();
                     }
 
                     // 播放死亡动画
@@ -84,7 +84,6 @@ namespace App.Game.Object.Monster
         }
 
         public MonsterData Data => data;
-        public Transform Transform => transform;
 
         #endregion
 
@@ -149,19 +148,19 @@ namespace App.Game.Object.Monster
             if (IsDead)return;
 
             // 射线检测判断是否被UI遮挡
-            GraphicRaycaster gr = gameManager.uIManager.canvas.GetComponent<GraphicRaycaster>();
+            GraphicRaycaster gr = gameManager.uiManager.canvas.GetComponent<GraphicRaycaster>();
             PointerEventData eventData = new PointerEventData(EventSystem.current) { position = Input.mousePosition };
             List<RaycastResult> results = new List<RaycastResult>();
             gr.Raycast(eventData, results);
             // 被显示范围的Ui遮挡除外
             if (results.Count > 0 && results[0].gameObject.name != "ImageAttackRange") return;
             // 将自己的位置信息传出
-            gameManager.sceneManger.SetFireTarget(this);
+            gameManager.sceneManager.SetFireTarget(this);
         }
 
         private void Move()
         {
-            if (gameManager.sceneManger.IsPause() || IsDead) return;
+            if (gameManager.sceneManager.IsPause() || IsDead) return;
 
             Vector3 dir = Map.Map.GetCellCenterPos(nextCell) - transform.position;
             dir.Normalize();
@@ -198,7 +197,7 @@ namespace App.Game.Object.Monster
             hp = 0;
             IsDead = true;
             // 触发怪物到达终点事件
-            gameManager.sceneManger.Spawner.Carrot.Wound((int)data.atk);
+            gameManager.sceneManager.Spawner.Carrot.Wound((int)data.atk);
             // 移除所有Buff
             ClearAllBuffs();
             // 播放死亡动画
@@ -214,7 +213,7 @@ namespace App.Game.Object.Monster
             // 怪物死亡触发判断胜利
             gameManager.eventCenter.TriggerEvent("JudgeWin");
             // 记录到统计信息
-            gameManager.sceneManger.UpdateKillMonsterCount(+1);
+            gameManager.sceneManager.UpdateKillMonsterCount(+1);
         }
 
         public override void OnPush()
@@ -230,7 +229,7 @@ namespace App.Game.Object.Monster
         /// </summary>
         public override void OnGet()
         {
-            Init(gameManager.sceneManger.MapData.GetPathList());
+            Init(gameManager.sceneManager.MapData.GetPathList());
             // 位置设置在起点
             transform.position = Map.Map.GetCellCenterPos(pathList[0]);
             // 设置第一个目标格子

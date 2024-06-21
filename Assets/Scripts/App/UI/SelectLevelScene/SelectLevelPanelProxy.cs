@@ -10,8 +10,8 @@ namespace App.UI.SelectLevelScene
 {
     public class SelectLevelPanelProxy : Proxy
     {
-        private NormalSceneDataManager SceneDataManager => GameManager.Instance.sceneManger.SceneDataManager as NormalSceneDataManager;
-        private NormalSceneManager SceneManger =>GameManager.Instance.sceneManger as NormalSceneManager;
+        private NormalSceneDataManager SceneDataManager => GameManager.Instance.sceneManager.SceneDataManager as NormalSceneDataManager;
+        private NormalSceneManager SceneManger =>GameManager.Instance.sceneManager as NormalSceneManager;
         private ItemData itemData;
         private ProcessData processData;
 

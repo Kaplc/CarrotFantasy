@@ -9,7 +9,7 @@ namespace App.UI.SelectItemScene
 {
     public class SelectItemPanelProxy: Proxy
     {
-        private INormalSceneDataManager SceneDataManager => GameManager.Instance.sceneManger.SceneDataManager as INormalSceneDataManager;
+        private INormalSceneDataManager SceneDataManager => GameManager.Instance.sceneManager.SceneDataManager as INormalSceneDataManager;
         private ProcessData processData;
         
         public SelectItemPanelProxy() : base(nameof(SelectItemPanelProxy))

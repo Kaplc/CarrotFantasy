@@ -30,7 +30,7 @@ namespace App.UI.SelectLevelScene
         private ItemData itemData;
         public LevelLockPanel levelLockPanel; // 提示关卡锁定的子面板
         
-        private INormalSceneManager normalSceneManager => GameManager.Instance.sceneManger as INormalSceneManager;
+        private INormalSceneManager normalSceneManager => GameManager.Instance.sceneManager as INormalSceneManager;
 
         protected override void Init()
         {

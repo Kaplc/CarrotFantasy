@@ -48,7 +48,7 @@ namespace App.Game.Commands
             ZFrameWorkSceneManager.Instance.LoadSceneAsync("4.SelectLevelScene", () =>
             {
                 // 根据记录的ID打开对应主题
-                SendNotification(NotificationName.UI.SHOW_SELECT_LEVEL_PANEL, ((INormalSceneManager)GameManager.Instance.sceneManger).NowItemID);
+                SendNotification(NotificationName.UI.SHOW_SELECT_LEVEL_PANEL, ((INormalSceneManager)GameManager.Instance.sceneManager).NowItemID);
             });
         }
     }

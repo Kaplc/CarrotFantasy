@@ -30,7 +30,7 @@ namespace App.Game.Spawner
         public Transform signTrans; // 集火标志
 
         private List<Cell> pathList;
-        private List<Cell> obstacleList;
+        private List<Cell> obstacleList; 
 
         #region 出怪
 
@@ -49,12 +49,12 @@ namespace App.Game.Spawner
 
         private INormalSceneManager sceneManger;
         
-        public Carrot Carrot
+        public virtual Carrot Carrot
         {
             get => carrot;
         }
 
-        private void Update()
+        protected virtual void Update()
         {
             if (!isStarted || isPaused)
             {
@@ -90,12 +90,12 @@ namespace App.Game.Spawner
             }
         }
 
-        public List<IMonster> GetAllMonsters()
+        public virtual List<IMonster> GetAllMonsters()
         {
             return monsters;
         }
 
-        public void Init(IMapData data)
+        public virtual void Init(IMapData data)
         {
             spawnedComplete = false;
             isWaveInProgress = false;
@@ -115,7 +115,7 @@ namespace App.Game.Spawner
             CreateStartBrand();
 
             // 更新面板波数显示
-            sceneManger = GameManager.Instance.sceneManger as INormalSceneManager;
+            sceneManger = GameManager.Instance.sceneManager as INormalSceneManager;
             sceneManger?.UpdateWaveCount(1, waveDataList.Count);
             
             monsters.Clear();
@@ -123,12 +123,12 @@ namespace App.Game.Spawner
 
         #region 集火相关
 
-        public IMonster GetCollectingFiresTarget()
+        public virtual IMonster GetCollectingFiresTarget()
         {
             return collectingFiresTarget;
         }
 
-        public void CancelCollectingFiresTarget()
+        public virtual void CancelCollectingFiresTarget()
         {
             collectingFiresTarget = null;
             // 隐藏集火标志
@@ -140,7 +140,7 @@ namespace App.Game.Spawner
 
         #region 出怪相关
 
-        public void StartSpawn()
+        public virtual void StartSpawn()
         {
             isStarted = true;
             isPaused = false;
@@ -152,12 +152,12 @@ namespace App.Game.Spawner
             Debug.Log("Wave spawning started.");
         }
 
-        public void PauseSpawn()
+        public virtual void PauseSpawn()
         {
             isPaused = true;
         }
 
-        public void ResumeSpawn()
+        public virtual void ResumeSpawn()
         {
             isPaused = false;
         }
@@ -233,7 +233,7 @@ namespace App.Game.Spawner
         /// <summary>
         /// 升级塔
         /// </summary>
-        public void UpGradeTower(Vector3 cellWorldPos)
+        public virtual void UpGradeTower(Vector3 cellWorldPos)
         {
             ITower tower = Map.GetCell(cellWorldPos).tower as ITower;
             if (tower == null) return;
@@ -243,7 +243,7 @@ namespace App.Game.Spawner
             if (level == 2) return;
 
             // 够钱才升级
-            if (GameManager.Instance.sceneManger.GetMoney() < data.prices[level + 1]) return;
+            if (GameManager.Instance.sceneManager.GetMoney() < data.prices[level + 1]) return;
             // 扣钱
             GameFacade.Instance.SendNotification(NotificationName.Game.UPDATE_MONEY, -data.prices[level + 1]);
             // 调用更新方法
@@ -255,7 +255,7 @@ namespace App.Game.Spawner
         /// <summary>
         /// 出售塔
         /// </summary>
-        public void SellTower(Vector3 cellWorldPos)
+        public virtual void SellTower(Vector3 cellWorldPos)
         {
             Cell cell = Map.GetCell(cellWorldPos);
             BaseTower tower = cell.tower as BaseTower;
@@ -278,7 +278,7 @@ namespace App.Game.Spawner
 
         #region 创建对象
 
-        public void SetCollectingFires(IMonster monster)
+        public virtual void SetCollectingFires(IMonster monster)
         {
             for (int i = 0; i < towers.Count; i++)
             {
@@ -321,10 +321,10 @@ namespace App.Game.Spawner
         /// </summary>
         /// <param name="towerData"></param>
         /// <param name="cellWorldPos">创建的位置世界坐标</param>
-        public void CreateTowerObject(TowerData towerData, Vector3 cellWorldPos)
+        public virtual void CreateTowerObject(TowerData towerData, Vector3 cellWorldPos)
         {
             // 够钱才创建
-            if (GameManager.Instance.sceneManger.GetMoney() >= towerData.prices[0])
+            if (GameManager.Instance.sceneManager.GetMoney() >= towerData.prices[0])
             {
                 BaseTower tower = GameManager.Instance.poolManager.GetObject(towerData.prefabsPath).GetComponent<BaseTower>();
                 tower.transform.SetParent(transform);
@@ -378,7 +378,7 @@ namespace App.Game.Spawner
         /// <summary>
         /// 回收所有游戏対象
         /// </summary>
-        public void OnPushAllGameObject()
+        public virtual void OnPushAllGameObject()
         {
             // 隐藏标志
             signTrans.gameObject.SetActive(false);
@@ -433,7 +433,7 @@ namespace App.Game.Spawner
 
         #region 外部调用
 
-        public int GetNowWaveCount()
+        public virtual int GetNowWaveCount()
         {
             return currentWaveIndex;
         }
@@ -442,7 +442,7 @@ namespace App.Game.Spawner
 
         #region 判断胜利
 
-        public bool WinJudge()
+        public virtual bool WinJudge()
         {
             // 1.出怪完成
             if (!spawnedComplete)

@@ -7,30 +7,135 @@ require('App/Model/MapDataModel')
 require('App/Model/GameObjectModel')
 require('App/Manager/Spawner')
 require('App/View/Map')
+require('App/Manager/BossGameDataManager')
 
 BossGameManager = Object:SubClass('BossGameManager')
 
+BossGameManager.script = nil
+
+BossGameManager.gameDataManager = nil
+BossGameManager.map = nil
 BossGameManager.mapData = nil
+BossGameManager.spawner = nil
 
-BossGameManager.mapDataModel = MapDataModel
-BossGameManager.gameObjectModel = GameObjectModel
-BossGameManager.spawner = Spawner
-BossGameManager.map = Map
+BossGameManager.money = nil
 
---Game
-BossGameManager.money = 0
+BossGameManager.isStop = true
 
-function BossGameManager.Init(self, mapIndex)
-    self.mapData = self.mapDataModel:Load(mapIndex)
-    self.map:Init(comp.gameObject, self.mapData)
+function BossGameManager:Init()
+    -- 初始化场景管理器
+    UIManager:ShowPanel('BossPanel', EUILayers.Middle)
+    self.script = LuaSceneManager()
+    GameManager.Instance:SetSceneManager(self.script)
+    self:InitCsAction()
 
-    self.spawner:Init(self.mapData)
-    GameManager.Instance.spawner = self.spawner.comp
+    self.gameDataManager = BossGameDataManager
+    self:SetSceneDataManager(BossGameDataManager.script)
 
+end
+
+function BossGameManager.InitCsAction(self)
+    -- 添加回调函数
+    self.script.onSetSpawnerAction = function(spawner)
+        self:SetSpwaner(spawner)
+    end
+    self.script.onSetSceneDataManagerAction = function(sceneDataManager)
+        self:SetSceneDataManager(sceneDataManager)
+    end
+    self.script.onInitGameAction = function(levelID)
+        self:InitGame(levelID)
+    end
+    self.script.onStartGameAction = function()
+        self:StartGame()
+    end
+    self.script.onPauseGameAction = function()
+        self:PauseGame()
+    end
+    self.script.onResumeGameAction = function()
+        self:ResumeGame()
+    end
+    self.script.onRestartGameAction = function()
+        self:RestartGame()
+    end
+    self.script.onEndGameAction = function()
+        self:EndGame()
+    end
+    self.script.onGameOverAction = function()
+        self:GameOver()
+    end
+    self.script.onGameWinAction = function()
+        self:GameWin()
+    end
+    self.script.onNextLevelAction = function()
+        self:NextLevel()
+    end
+    self.script.onSetSpeedUpAction = function(isSpeedUp)
+        self:SetSpeedUp(isSpeedUp)
+    end
+    self.script.onIsPauseFunc = function()
+        return self:IsPause()
+    end
+    self.script.onIsStopFunc = function()
+        return self:IsStop()
+    end
+    self.script.onSetFireTargetAction = function(target)
+        self:SetFireTarget(target)
+    end
+    self.script.onCancelFireAction = function()
+        self:CancelFire()
+    end
+    self.script.onGetMoneyFunc = function()
+        return self:GetMoney()
+    end
+    self.script.onUpdateKillMonsterCountAction = function(v)
+        self:UpdateKillMonsterCount(v)
+    end
+    self.script.onUpdateMoneyAction = function(v)
+        self:UpdateMoney(v)
+    end
+end
+
+function BossGameManager.IsStop(self)
+    return self.isStop
+end
+
+function BossGameManager.InitGame(self, levelID)
+    -- 加载地图数据
+    self.mapData = self.gameDataManager:Load('AB/Data/BossMap' .. levelID)
+    -- 初始化
+    if self.map == nil then
+        self.map = Map
+        self.map:InitLua(self.mapData)
+    end
+
+    if self.spawner == nil then
+        self.spawner = Spawner:New()
+        self.spawner:InitLua(self.mapData)
+    end
+    
     self.money = self.mapData.money
-    self:Start()
+    GameManager.Instance:StopMusic()
+    -- UI
+    UIManager:ShowPanel('BossGamePanel')
+
 end
 
-function BossGameManager.Start(self)
-    GameManager.Instance.stop = false
+function BossGameManager.StartGame(self)
+    print('start')
 end
+
+function BossGameManager.SetSpwaner(self, spawner)
+    self.script.Spawner = spawner
+    self.spawner = spawner
+end
+
+function BossGameManager.SetSceneDataManager(self, manager)
+    self.sceneDataManager = manager
+end
+
+function BossGameManager.GetSceneDataManager(self)
+    return self.sceneDataManager
+end
+
+
+

@@ -1,8 +1,8 @@
 Map = Object:SubClass('Map')
 
-Map.comp = nil
+Map.script = nil
 
-function Map.Init(self, mapData)
-    self.comp = BossGameManager.gameObjectModel:GetObject('Prefabs/Map'):GetComponent('Map')
-    self.comp:Init(mapData)
+function Map.InitLua(self, mapData)
+    self.script = Instantiate(Resources.Load('Prefabs/Map')):GetComponent('Map')
+    self.script:Init(mapData)
 end

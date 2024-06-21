@@ -33,7 +33,7 @@ namespace App.Game.Object.Buff
             while (true)
             {
                 yield return new WaitForSeconds(duration);
-                if (!GameManager.Instance.sceneManger.IsPause())
+                if (!GameManager.Instance.sceneManager.IsPause())
                 {
                     break;
                 }

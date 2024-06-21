@@ -25,7 +25,7 @@ namespace App.UI.SelectItemScene
         public BasePageFlipping pageFlipping; // 翻页效果脚本
         public ItemLockPanel itemLockPanel; // 提示主题锁定子面板
 
-        private INormalSceneManager sceneManger => GameManager.Instance.sceneManger as INormalSceneManager;
+        private INormalSceneManager sceneManger => GameManager.Instance.sceneManager as INormalSceneManager;
 
         protected override void Init()
         {

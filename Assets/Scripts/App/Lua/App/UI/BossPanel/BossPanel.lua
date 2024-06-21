@@ -57,9 +57,9 @@ function BossPanel.Init(self)
 
     self.btnStart.onClick:AddListener(
         function()
-            -- 加载场景完成回调
-            SceneManager.sceneLoaded('+', self.LoadedBossGameScene)
-            SceneManager.LoadScene('BossGameScene')
+            GameManager.Instance.uiManager:Hide('BeginPanel', false)
+            UIManager:HidePanel('BossPanel', false)
+            GameManager.Instance:LoadGameScene('BossGameScene', self.index)
         end
     )
 
@@ -101,14 +101,6 @@ end
 
 function BossPanel.Hide(self)
     self.base:Hide()
-    -- 移除场景加载完成回调
-    SceneManager.sceneLoaded('-', self.LoadedBossGameScene)
-end
-
-function BossPanel.LoadedBossGameScene(scene, mode)
-    CS.UIManager.Instance:Hide('BeginPanel', false)
-    UIManager:HidePanel('BossPanel')
-    BossGameManager:Init(BossPanel.index)
 end
 
 function BossPanel.Update(self)

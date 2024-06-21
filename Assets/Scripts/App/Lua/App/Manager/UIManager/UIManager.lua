@@ -7,10 +7,10 @@
 require('App/Manager/UIManager/EUILayers')
 
 require('App/UI/BasePanel')
-require('App/UI/BeginPanel')
 require('App/UI/BossPanel/BossPanel')
 require('App/UI/BuiltPanel')
 require('App/UI/BossGamePanel')
+require('App/UI/CountDownPanel')
 
 UIManager = Object:SubClass('UIManager')
 

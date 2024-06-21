@@ -15,6 +15,8 @@ namespace App.UI.GameScene.Panel.GamePanel
         public Text txNowWave;
         public Text txTotalWaves;
         public Image imgPause;
+
+        public CountDownPanel countDownPanel;
     
         protected override void Init()
         {
@@ -48,6 +50,9 @@ namespace App.UI.GameScene.Panel.GamePanel
             });
             btnSpeed2.gameObject.SetActive(false);
             imgPause.gameObject.SetActive(false);
+            
+            // 开始倒计时
+            countDownPanel.StartCountDown();
         }
 
 
@@ -60,14 +65,6 @@ namespace App.UI.GameScene.Panel.GamePanel
         {
             txNowWave.text = $"{data.nowWave / 10}  {data.nowWave % 10}";
             txTotalWaves.text = data.totalWavesCount.ToString();
-        }
-    
-        /// <summary>
-        /// 广播接受子类信息
-        /// </summary>
-        public void SendStartGameNotification()
-        {
-            PanelMediator.SendNotification(NotificationName.Game.START_GAME);
         }
     }
 }

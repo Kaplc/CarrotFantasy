@@ -7,7 +7,7 @@ namespace App.Game.Object.Tower
 {
     public class ShitTower : BaseTower
     {
-        private ISceneManger SceneManger => GameManager.Instance.sceneManger;
+        private ISceneManger SceneManager => GameManager.Instance.sceneManager;
         
         protected override void Awake()
         {
@@ -19,7 +19,7 @@ namespace App.Game.Object.Tower
         {
             base.Update();
         
-            if (SceneManger.IsPause())
+            if (SceneManager.IsPause())
             {
                 // 游戏暂停停止炮塔动画
                 animator.SetBool("Attack", false);

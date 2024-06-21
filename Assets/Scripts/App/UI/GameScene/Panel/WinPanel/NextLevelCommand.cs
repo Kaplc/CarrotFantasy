@@ -8,7 +8,7 @@ namespace App.UI.GameScene.Panel.WinPanel
     {
         public override void Execute(INotification notification)
         {
-            GameManager.Instance.sceneManger.NextLevel();
+            GameManager.Instance.sceneManager.NextLevel();
         }
     }
 }

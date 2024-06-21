@@ -10,7 +10,7 @@ namespace App.UI.GameScene.Panel.BuiltPanel.Command
         public override void Execute(INotification notification)
         {
             CreateTowerArgs args = notification.Body as CreateTowerArgs;
-            GameManager.Instance.sceneManger.Spawner.CreateTowerObject(args.towerData, args.cellWorldPos);
+            GameManager.Instance.sceneManager.Spawner.CreateTowerObject(args.towerData, args.cellWorldPos);
         }
     }
 }

@@ -8,7 +8,7 @@ namespace App.Game.Object.Tower
     public class BottleTower : BaseTower
     {
         private Transform weapon;
-        private bool Pause => GameManager.Instance.sceneManger.IsPause();
+        private bool Pause => GameManager.Instance.sceneManager.IsPause();
         
         protected override void Awake()
         {

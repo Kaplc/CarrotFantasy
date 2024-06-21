@@ -1,4 +1,11 @@
 ﻿using System.Collections.Generic;
+using App.Data.DataClass.Game.Object;
+using App.Data.DataClass.Map;
+using App.Game.Object.Monster;
+using App.Game.SceneManager;
+using App.Game.Spawner;
+using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using XLua;
 
@@ -11,8 +18,20 @@ namespace App.Game.Generic.LuaCallCsharp
         public static List<System.Type> CSharpCallLua = new List<System.Type>()
         {
             typeof(System.Action),
-            typeof(UnityEngine.Events.UnityAction),
-            typeof(UnityEngine.Events.UnityAction<Scene, LoadSceneMode>),
+            typeof(UnityAction),
+            typeof(UnityAction<Scene, LoadSceneMode>),
+            typeof(UnityAction<TowerData, Vector3>),
+            typeof(UnityAction<int>),
+            typeof(UnityAction<bool>),
+            typeof(UnityAction<IMonster>),
+            typeof(UnityAction<ISpawner>),
+            typeof(UnityAction<ISceneDataManager>),
+            typeof(UnityAction<Vector3>),
+            typeof(System.Func<bool>),
+            typeof(System.Func<int>),
+            typeof(System.Func<ISceneDataManager>),
+            typeof(System.Func<ISpawner>),
+            typeof(System.Func<IMapData>),
             typeof(UnityEngine.EventSystems.PointerEventData)
         };
 

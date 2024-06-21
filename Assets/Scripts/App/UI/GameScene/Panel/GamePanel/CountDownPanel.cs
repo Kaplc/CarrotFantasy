@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using App.Static;
 using UnityEngine;
 using UnityEngine.UI;
+using XLua;
 
 namespace App.UI.GameScene.Panel.GamePanel
 {
+    [LuaCallCSharp]
     public class CountDownPanel : MonoBehaviour
     {
         public float speed;
@@ -13,7 +16,7 @@ namespace App.UI.GameScene.Panel.GamePanel
         public List<Sprite> countDownImage;
         private int index;
 
-        private void Start()
+        public void StartCountDown()
         {
             index = countDownImage.Count - 1;
             StartCoroutine(CountDownCoroutine());
@@ -36,7 +39,7 @@ namespace App.UI.GameScene.Panel.GamePanel
             }
             gameObject.SetActive(false);
             // 开始游戏
-            SendMessageUpwards("SendStartGameNotification");
+            GameFacade.Instance.SendNotification(NotificationName.Game.START_GAME);
         }
     }
 }

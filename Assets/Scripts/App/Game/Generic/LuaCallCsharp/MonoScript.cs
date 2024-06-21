@@ -2,46 +2,44 @@ using UnityEngine;
 using UnityEngine.Events;
 using XLua;
 
-namespace App.Game.Generic.LuaCallCsharp
+
+[LuaCallCSharp]
+public class MonoScript : MonoBehaviour
 {
-    [LuaCallCSharp]
-    public class MonoScript : MonoBehaviour
+    public UnityAction onEnableAction;
+    public UnityAction onAwakeAction;
+    public UnityAction onStartAction;
+    public UnityAction onUpdateAction;
+    public UnityAction onDisableAction;
+    public UnityAction onDestroyAction;
+
+    private void OnEnable()
     {
-        public UnityAction onEnableAction;
-        public UnityAction onAwakeAction;
-        public UnityAction onStartAction;
-        public UnityAction onUpdateAction;
-        public UnityAction onDisableAction;
-        public UnityAction onDestroyAction;
-    
-        private void OnEnable()
-        {
-            onEnableAction?.Invoke();
-        }
-    
-        private void Awake()
-        {
-            onAwakeAction?.Invoke();
-        }
-    
-        private void Start()
-        {
-            onStartAction?.Invoke();
-        }
-    
-        private void Update()
-        {
-            onUpdateAction?.Invoke();
-        }
-    
-        private void OnDisable()
-        {
-            onDisableAction?.Invoke();
-        }
-    
-        private void OnDestroy()
-        {
-            onDestroyAction?.Invoke();
-        }
+        onEnableAction?.Invoke();
+    }
+
+    private void Awake()
+    {
+        onAwakeAction?.Invoke();
+    }
+
+    private void Start()
+    {
+        onStartAction?.Invoke();
+    }
+
+    private void Update()
+    {
+        onUpdateAction?.Invoke();
+    }
+
+    private void OnDisable()
+    {
+        onDisableAction?.Invoke();
+    }
+
+    private void OnDestroy()
+    {
+        onDestroyAction?.Invoke();
     }
 }

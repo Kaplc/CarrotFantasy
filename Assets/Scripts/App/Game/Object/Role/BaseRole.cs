@@ -5,7 +5,9 @@ namespace App.Game.Generic.BaseObject
     public abstract class BaseRole : MonoBehaviour, IRole
     {
         public bool IsDead { get; set; }
-    
+
+        public Transform Transform { get=>transform; }
+        
         public abstract void Wound(int woundHp);
 
         protected abstract void Dead();
