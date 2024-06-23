@@ -210,6 +210,7 @@ function Spawner:SpawnerMonster(type, hard)
     monster:Init(self.pathList, hard, monsterData)
 end
 
+-- 开始、暂停、继续
 function Spawner:StartSpawn()
     self.isStarted = true
     self.isPaused = false
@@ -219,6 +220,15 @@ function Spawner:StartSpawn()
     self.monsterSpawnTimer = 0
     self.isWaveInProgress = false
 end
+
+function Spawner:PauseWaves()
+    self.isPaused = true
+end
+
+function Spawner:ResumeWaves()
+    self.isPaused = false
+end
+
 
 -- 塔升级出售
 function Spawner:UpGradeTower()
@@ -247,9 +257,14 @@ end
 
 -- 集火
 function Spawner:SetCollectingFires(monster)
+    self.fireTarget = monster
 end
 function Spawner:GetCollectingFiresTarget()
-    self.script.base:GetCollectingFiresTarget()
+    return self.fireTarget
+end
+
+function Spawner:CancelCollectingFiresTarget()
+    self.fireTarget = nil
 end
 
 -- 缓存池

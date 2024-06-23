@@ -130,11 +130,13 @@ function BossGameManager:StartGame()
 end
 
 function BossGameManager:PauseGame()
-    print('pause')
+    self.isPause = true
+    self.spawner:PauseWaves()
 end
 
 function BossGameManager:ResumeGame()
-    print('resume')
+    self.isPause = false
+    self.spawner:ResumeWaves()
 end
 
 function BossGameManager:RestartGame()
