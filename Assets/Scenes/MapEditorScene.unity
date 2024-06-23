@@ -539,7 +539,8 @@ MonoBehaviour:
   money: 0
   allowBuiltTypeList: 
   bgTexture: {fileID: 21300000, guid: 4ae06062bf9c04d4193371324a9af96d, type: 3}
-  fgTexture: {fileID: 21300000, guid: 4b1b3d55969940f43abca95ce5b03b45, type: 3}
+  fgTexture: {fileID: -8012172775998428791, guid: 014c294f286a44c4f86e045f357e5899,
+    type: 3}
   drawType: 0
   obstacleType: 5
   obstaclesFarther: {fileID: 1876754319}

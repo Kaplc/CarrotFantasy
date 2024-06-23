@@ -13,7 +13,7 @@ namespace App.Game.Object.Monster
         float Growth { get; set; }
         MonsterData Data { get; }
 
-        void Init(List<Cell> list);
+        void Init(List<Cell> list, float hard, MonsterData dat);
 
         void SetSpeed(float v);
         Transform GetSignFather();

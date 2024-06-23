@@ -1,3 +1,6 @@
+require('App/Generic/SpawnMonsterData')
+require('App/Object/Monster')
+
 Spawner = Object:SubClass('Spawner')
 
 Spawner.script = nil
@@ -27,7 +30,7 @@ Spawner.spawnedObstacleList = {}
 
 Spawner.nowWaveSpawnList = {}
 
-function Spawner.InitLua(self, mapData)
+function Spawner:Construct()
     self.gameManager = GameManager.Instance
 
     local obj = Instantiate(Resources.Load('Prefabs/Spawner'))
@@ -37,10 +40,17 @@ function Spawner.InitLua(self, mapData)
 
     self:InitAction()
 
+    self.nowWaveSpawnList = List:New()
+    self.spawnedMonsterList = List:New()
+    self.spawnedTowerList = List:New()
+    self.spawnedObstacleList = List:New()
+end
+
+function Spawner.InitLua(self, mapData)
     self.script:Init(mapData)
 end
 
-function Spawner.InitAction(self)
+function Spawner:InitAction()
     -- monoScript
     self.monoScript.onUpdateAction = function()
         self:Update()
@@ -71,7 +81,7 @@ function Spawner.InitAction(self)
         return self:GetCollectingFiresTarget()
     end
     self.script.onSetCollectingFiresAction = function(m)
-        self:SetCollectingFires()
+        self:SetCollectingFires(m)
     end
     self.script.onCancelCollectingFiresTargetAction = function()
         self:CancelCollectingFiresTarget()
@@ -93,20 +103,20 @@ function Spawner.InitAction(self)
     end
 end
 
-function Spawner.Update(self)
+function Spawner:Update()
     if self.isStarted == false or self.isPaused == true then
         return
     end
 
     if self.currentWaveIndex < self.waveDataList.Count then
-        if self.isWaveInProgress == true and self.waveTimer >= self.waveDataList[self.currentWaveIndex].waveDuration then
+        if self.isWaveInProgress == false and self.waveTimer >= self.waveDataList[self.currentWaveIndex].waveDuration then
             self:StartNewWave()
         end
 
-        if self.currentWaveMonsterIndex >= self.nowWaveSpawnList.Count then
+        if self.currentWaveMonsterIndex >= self.nowWaveSpawnList.count then
             self.waveTimer = self.waveTimer + Time.deltaTime
             if self.isWaveInProgress == true then
-                self:EndCurremtWave()
+                self:EndCurrentWave()
             end
         else
             self:HandleMonsterSpawning()
@@ -114,7 +124,7 @@ function Spawner.Update(self)
     end
 end
 
-function Spawner.Init(self, mapData)
+function Spawner:Init(mapData)
     self.spawnedComplete = false
     self.isWaveInProgress = false
     self.isStarted = false
@@ -134,44 +144,41 @@ function Spawner.Init(self, mapData)
 end
 
 -- 出怪逻辑
-function Spawner.StartNewWave(self)
+function Spawner:StartNewWave()
     self.isWaveInProgress = true
     self.currentWaveMonsterIndex = 0
     self.waveTimer = 0
     self.monsterSpawnTimer = 0
 
-    self.nowWaveSpawnList.Clear()
+    self.nowWaveSpawnList:Clear()
 
     local list = self.waveDataList[self.currentWaveIndex].eachWaveDataList
-    for i = 0, e.Count - 1 do
-        local e = list[0]
+    for i = 0, list.Count - 1 do
+        local e = list[i]
         for j = 0, e.monsterCount - 1 do
-            local d = SpawnMonsterData()
-            d.monsterType = e.monsterType
-            d.nextSpawnTime = e.monsterDuration
-            d.hard = e.hard
-            self.nowWaveSpawnList[0] = d
+            local d = SpawnMonsterData:New(e.monsterType, e.monsterDuration, e.hard)
+            self.nowWaveSpawnList:Add(d)
         end
     end
 end
 
-function Spawner.EndCurrentWave(self)
+function Spawner:EndCurrentWave()
     self.isWaveInProgress = false
     self.currentWaveIndex = self.currentWaveIndex + 1
 end
 
-function Spawner.HandleMonsterSpawning(self)
+function Spawner:HandleMonsterSpawning()
     if self.currentWaveIndex == 0 and self.currentWaveMonsterIndex == 0 then
-        local type = self.nowWaveSpawnList[self.currentWaveMonsterIndex].monsterType
-        local hard = self.nowWaveSpawnList[self.currentWaveMonsterIndex].hard
+        local type = self.nowWaveSpawnList:Get(self.currentWaveMonsterIndex).monsterType
+        local hard = self.nowWaveSpawnList:Get(self.currentWaveMonsterIndex).hard
         self:SpawnerMonster(type, hard)
         self.currentWaveMonsterIndex = self.currentWaveMonsterIndex + 1
         self.monsterSpawnTimer = 0
     else
-        self.monsterSpawnTimer  = self.monsterSpawnTimer + Time.deltaTime
-        if self.monsterSpawnTimer >= self.nowWaveSpawnList[self.currentWaveMonsterIndex] then
-            local type = self.nowWaveSpawnList[self.currentWaveMonsterIndex].monsterType
-            local hard = self.nowWaveSpawnList[self.currentWaveMonsterIndex].hard
+        self.monsterSpawnTimer = self.monsterSpawnTimer + Time.deltaTime
+        if self.monsterSpawnTimer >= self.nowWaveSpawnList:Get(self.currentWaveMonsterIndex).nextSpawnTime then
+            local type = self.nowWaveSpawnList:Get(self.currentWaveMonsterIndex).monsterType
+            local hard = self.nowWaveSpawnList:Get(self.currentWaveMonsterIndex).hard
             self:SpawnerMonster(type, hard)
             self.currentWaveMonsterIndex = self.currentWaveMonsterIndex + 1
             self.monsterSpawnTimer = 0
@@ -179,17 +186,31 @@ function Spawner.HandleMonsterSpawning(self)
     end
 end
 
-function Spawner.SpawnerMonster(self, type, hard)
-    local monster = self.gameManager.poolManage:GetObject('Object/Monster/' .. type):GetComponent('Monster')
-    monster.transform:SetParent(self.script.transform)
-    monster.transform.localScale = Vector3.one
-    monster.transform.position = CSMap.GetCellCenterPos(self.pathList[0])
-    monster.data.maxHp = monster.data.maxHp * hard
-    monster:Init(self.pathList)
-    monster:Add(monster)
+function Spawner:SpawnerMonster(type, hard)
+    -- 获取预设体
+    local prefabs = Resources.Load('Object/Monster/' .. type:ToString())
+    if prefabs == nil then
+        prefabs = Resources.Load('AB/Monster/' .. type:ToString())
+    end
+    local obj = Instantiate(prefabs)
+    DestroyImmediate(obj:GetComponent('Monster'), true)
+    -- 实例化并进行lua初始化
+    local monster = Monster:New(obj)
+    -- 设置位置
+    monster.obj.transform:SetParent(self.script.transform)
+    monster.obj.transform.localScale = Vector3.one
+    -- 添加进列表
+    self.spawnedMonsterList:Add(monster)
+    -- 加载怪物数据
+    local monsterDataMap = Resources.Load('Data/Monster/MonsterDataMap')
+    if monsterData == nil then
+        monsterData = Resources.Load('AB/Data/')
+    end
+    local monsterData = monsterDataMap:GetData(type)
+    monster:Init(self.pathList, hard, monsterData)
 end
 
-function Spawner.StartSpawn(self)
+function Spawner:StartSpawn()
     self.isStarted = true
     self.isPaused = false
     self.currentWaveIndex = 0
@@ -200,19 +221,14 @@ function Spawner.StartSpawn(self)
 end
 
 -- 塔升级出售
-function Spawner.UpGradeTower(self)
-    
+function Spawner:UpGradeTower()
 end
 
-function Spawner.SellTower(self)
-    
+function Spawner:SellTower()
 end
 
-
-
-function Spawner.CreateObstacles(self)
-
-    for i = 0, self.obstacleList.Count -1 do
+function Spawner:CreateObstacles()
+    for i = 0, self.obstacleList.Count - 1 do
         if self.obstacleList[i].obstacleName ~= 'None' then
             local cell = self.obstacleList[i]
             local obj = self.gameManager.poolManager:GetObject('Object/Obstacle/' .. cell.obstacleName)
@@ -226,25 +242,22 @@ function Spawner.CreateObstacles(self)
     end
 end
 
-function Spawner.CreateTowerObject(self)
-   
+function Spawner:CreateTowerObject()
 end
 
 -- 集火
-function Spawner.SetCollectingFires(monster)
-    
+function Spawner:SetCollectingFires(monster)
 end
-function Spawner.GetCollectingFiresTarget(self)
+function Spawner:GetCollectingFiresTarget()
     self.script.base:GetCollectingFiresTarget()
 end
 
 -- 缓存池
-function Spawner.OnPushAllGameObject(self)
+function Spawner:OnPushAllGameObject()
     self.signTrf.gameObject.SetActive(false)
-
 end
 
-function Spawner.OnPushAllMonsters(self)
+function Spawner:OnPushAllMonsters()
     for i = 0, self.spawnedMonsterList.Count - 1 do
         if self.spawnedMonsterList[i].IsDead == true then
             self.gameManager.poolManager:PushObject(self.spawnedMonsterList[i].Transform.gameObject)
@@ -253,14 +266,14 @@ function Spawner.OnPushAllMonsters(self)
     self.spawnedMonsterList:Clear()
 end
 
-function Spawner.OnPushAllTowers(self)
+function Spawner:OnPushAllTowers()
     for i = 0, self.spawnedTowerList.Count - 1 do
         self.gameManager.poolManager:PushObject(self.spawnedTowerList[i].Transform.gameObject)
     end
     self.spawnedTowerList:Clear()
 end
 
-function Spawner.OnPushAllObstacles(self)
+function Spawner:OnPushAllObstacles()
     for i = 0, self.spawnedObstacleList.Count - 1 do
         self.gameManager.poolManager:PushObject(self.spawnedObstacleList[i].Transform.gameObject)
     end

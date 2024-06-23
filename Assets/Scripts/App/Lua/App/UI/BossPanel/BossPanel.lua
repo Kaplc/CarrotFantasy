@@ -100,7 +100,7 @@ function BossPanel.Init(self)
 end
 
 function BossPanel.Hide(self)
-    self.base:Hide()
+    self.__base:Hide()
 end
 
 function BossPanel.Update(self)

@@ -12,79 +12,138 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2886ab1245834df0a9fc8f2c6e4cdf6c, type: 3}
   m_Name: BossMap1
   m_EditorClassIdentifier: 
-  money: 100
+  money: 500
   mapBgTexture: {fileID: 21300000, guid: 4ae06062bf9c04d4193371324a9af96d, type: 3}
-  mapFgTexture: {fileID: 21300000, guid: 4b1b3d55969940f43abca95ce5b03b45, type: 3}
+  mapFgTexture: {fileID: -8012172775998428791, guid: 014c294f286a44c4f86e045f357e5899,
+    type: 3}
   pathList:
-  - x: 1
+  - x: 2
     y: 5
-  - x: 1
-    y: 2
-  - x: 4
-    y: 2
-  - x: 4
+  - x: 9
+    y: 5
+  - x: 9
+    y: 4
+  - x: 6
+    y: 4
+  - x: 6
     y: 3
   - x: 7
     y: 3
   - x: 7
     y: 2
-  - x: 10
+  - x: 4
     y: 2
-  - x: 10
-    y: 5
+  - x: 4
+    y: 3
+  - x: 3
+    y: 3
+  - x: 3
+    y: 4
+  - x: 2
+    y: 4
   towerPosList:
+  - x: 2
+    y: 6
+  - x: 3
+    y: 6
+  - x: 4
+    y: 6
+  - x: 5
+    y: 6
+  - x: 6
+    y: 6
+  - x: 7
+    y: 6
+  - x: 8
+    y: 6
+  - x: 9
+    y: 6
+  - x: 10
+    y: 6
+  - x: 10
+    y: 5
+  - x: 10
+    y: 4
+  - x: 10
+    y: 3
   - x: 9
     y: 3
   - x: 8
     y: 3
   - x: 8
-    y: 4
-  - x: 9
-    y: 4
+    y: 2
+  - x: 8
+    y: 1
+  - x: 7
+    y: 1
+  - x: 5
+    y: 1
+  - x: 6
+    y: 1
+  - x: 4
+    y: 1
   - x: 3
-    y: 4
+    y: 1
+  - x: 2
+    y: 2
   - x: 3
-    y: 3
+    y: 2
   - x: 2
+    y: 3
+  - x: 1
+    y: 3
+  - x: 1
     y: 4
-  - x: 2
-    y: 3
+  - x: 1
+    y: 5
+  - x: 1
+    y: 6
   - x: 4
     y: 4
   - x: 5
     y: 4
-  - x: 6
-    y: 4
-  - x: 7
-    y: 4
-  - x: 6
-    y: 2
   - x: 5
-    y: 2
+    y: 3
   towerTypeList: 0100000002000000
-  obstacleList:
-  - x: 6
-    y: 4
-    obstacleType: 1
-    towerType: 0
-  - x: 7
-    y: 4
-    obstacleType: 1
-    towerType: 0
-  - x: 5
-    y: 4
-    obstacleType: 1
-    towerType: 0
-  - x: 4
-    y: 4
-    obstacleType: 1
-    towerType: 0
+  obstacleList: []
   towerList: []
   waveDataList:
   - waveCount: 1
-    waveDuration: 1
+    waveDuration: 2
     eachWaveDataList:
     - hard: 1
       monsterType: 0
       monsterCount: 10
+      monsterDuration: 1
+  - waveCount: 2
+    waveDuration: 2
+    eachWaveDataList:
+    - hard: 1
+      monsterType: 0
+      monsterCount: 11
+      monsterDuration: 1
+  - waveCount: 3
+    waveDuration: 2
+    eachWaveDataList:
+    - hard: 1
+      monsterType: 1
+      monsterCount: 10
+      monsterDuration: 1
+  - waveCount: 4
+    waveDuration: 2
+    eachWaveDataList:
+    - hard: 1
+      monsterType: 1
+      monsterCount: 12
+      monsterDuration: 1
+  - waveCount: 5
+    waveDuration: 2
+    eachWaveDataList:
+    - hard: 1
+      monsterType: 2
+      monsterCount: 10
+      monsterDuration: 1
+    - hard: 1
+      monsterType: 0
+      monsterCount: 1
       monsterDuration: 1

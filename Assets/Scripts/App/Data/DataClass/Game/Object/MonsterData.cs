@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
+using XLua;
 
 namespace App.Data.DataClass.Game.Object
 {
-    [CreateAssetMenu]
+    [CreateAssetMenu][LuaCallCSharp]
     public class MonsterData: ScriptableObject
     {
         public int id;

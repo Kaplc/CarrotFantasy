@@ -8,6 +8,7 @@
 -- dbg.tcpConnect('localhost', 1144)
 
 require("Library/Object")
+require('Library/List')
 require("Library/NameSpace")
 -- 初始化类
 require("App/Manager/UIManager/UIManager")

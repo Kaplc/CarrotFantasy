@@ -209,8 +209,10 @@ namespace XLua.CSObjectWrap
                 
                 {
                     System.Collections.Generic.List<App.Game.Generic.Map.Cell> _list = (System.Collections.Generic.List<App.Game.Generic.Map.Cell>)translator.GetObject(L, 2, typeof(System.Collections.Generic.List<App.Game.Generic.Map.Cell>));
+                    float _hard = (float)LuaAPI.lua_tonumber(L, 3);
+                    App.Data.DataClass.Game.Object.MonsterData _data = (App.Data.DataClass.Game.Object.MonsterData)translator.GetObject(L, 4, typeof(App.Data.DataClass.Game.Object.MonsterData));
                     
-                    gen_to_be_invoked.Init( _list );
+                    gen_to_be_invoked.Init( _list, _hard, _data );
                     
                     
                     
@@ -767,7 +769,7 @@ namespace XLua.CSObjectWrap
                 ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
 			
                 App.Game.Object.Monster.LuaMonster gen_to_be_invoked = (App.Game.Object.Monster.LuaMonster)translator.FastGetCSObj(L, 1);
-                gen_to_be_invoked.onInitAction = translator.GetDelegate<UnityEngine.Events.UnityAction<System.Collections.Generic.List<App.Game.Generic.Map.Cell>>>(L, 2);
+                gen_to_be_invoked.onInitAction = translator.GetDelegate<UnityEngine.Events.UnityAction<System.Collections.Generic.List<App.Game.Generic.Map.Cell>, float, App.Data.DataClass.Game.Object.MonsterData>>(L, 2);
             
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);

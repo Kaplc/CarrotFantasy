@@ -220,9 +220,8 @@ namespace App.Game.Spawner
             Monster monster = GameManager.Instance.poolManager.GetObject("Object/Monster/" + type).GetComponent<Monster>();
             monster.transform.SetParent(transform);
             monster.transform.localScale = Vector3.one;
-            monster.transform.position = Map.GetCellCenterPos(pathList[0]);
-            monster.data.maxHp *= hard;
-            monster.Init(pathList);
+            MonsterData monsterData = Resources.Load<MonsterData>("" + type);
+            monster.Init(pathList, hard, monsterData);
             monsters.Add(monster);
         }
 

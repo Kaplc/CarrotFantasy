@@ -9,7 +9,7 @@ using XLua;
 namespace App.Game.Object.Monster
 {
     [LuaCallCSharp]
-    public class LuaMonster :Monster, IMonster
+    public class LuaMonster : IMonster
     {
         public Func<float> onGetHpAction;
         public UnityAction<float> onSetHpAction;
@@ -27,27 +27,27 @@ namespace App.Game.Object.Monster
         public UnityAction<int> onWoundAction;
         public UnityAction onPushAction;
         public UnityAction onGetAction;
-        public UnityAction<List<Cell>> onInitAction;
+        public UnityAction<List<Cell>, float, MonsterData> onInitAction;
         public UnityAction<float> onSetSpeedAction;
         public Func<Transform> onGetSignFatherAction;
         
-        public new float Hp { get => (float)onGetHpAction?.Invoke(); set => onSetHpAction?.Invoke(value); }
-        public new float Growth { get => (float)onGetGrowthAction?.Invoke(); set => onSetGrowthAction?.Invoke(value); }
-        public new bool IsDead { get => (bool)onGetIsDeadAction?.Invoke(); set => onSetIsDeadAction?.Invoke(value); }
-        public new MonsterData Data => onGetDataAction?.Invoke();
-        public new Transform Transform => onGetTransformAction?.Invoke();
+        public float Hp { get => (float)onGetHpAction?.Invoke(); set => onSetHpAction?.Invoke(value); }
+        public float Growth { get => (float)onGetGrowthAction?.Invoke(); set => onSetGrowthAction?.Invoke(value); }
+        public bool IsDead { get => (bool)onGetIsDeadAction?.Invoke(); set => onSetIsDeadAction?.Invoke(value); }
+        public MonsterData Data => onGetDataAction?.Invoke();
+        public Transform Transform => onGetTransformAction?.Invoke();
 
-        public override void OnGet() => onGetAction?.Invoke();
+        public void OnGet() => onGetAction?.Invoke();
 
-        public override void OnPush() => onPushAction?.Invoke();
+        public void OnPush() => onPushAction?.Invoke();
 
-        public override void Wound(int woundHp) => onWoundAction?.Invoke(woundHp);
+        public void Wound(int woundHp) => onWoundAction?.Invoke(woundHp);
         
-        public override void Init(List<Cell> list) => onInitAction?.Invoke(list);
+        public void Init(List<Cell> list, float hard, MonsterData data) => onInitAction?.Invoke(list, hard, data);
 
-        public override void SetSpeed(float v) =>  onSetSpeedAction?.Invoke(v);
+        public void SetSpeed(float v) =>  onSetSpeedAction?.Invoke(v);
 
-        public override Transform GetSignFather() => onGetSignFatherAction?.Invoke();
+        public Transform GetSignFather() => onGetSignFatherAction?.Invoke();
 
     }
 }

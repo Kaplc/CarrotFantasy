@@ -33,7 +33,7 @@ namespace App.Game.Object.Obstacle
         public UnityAction<int> onWoundAction;
         public UnityAction onPushAction;
         public UnityAction onGetAction;
-        public UnityAction<List<Cell>> onInitAction;
+        public UnityAction<List<Cell>, float, MonsterData> onInitAction;
 
         #endregion
 
@@ -59,7 +59,7 @@ namespace App.Game.Object.Obstacle
 
         public void OnGet() => onGetAction?.Invoke();
         public void OnPush() => onPushAction?.Invoke();
-        public void Init(List<Cell> list) => onInitAction?.Invoke(list);
+        public void Init(List<Cell> list, float hard, MonsterData data) => onInitAction?.Invoke(list, hard, data);
         public void Wound(int woundHp) => onWoundAction?.Invoke(woundHp);
         public void SetSpeed(float v)
         {

@@ -6,7 +6,7 @@
 require('App/Model/MapDataModel')
 require('App/Model/GameObjectModel')
 require('App/Manager/Spawner')
-require('App/View/Map')
+require('App/Object/Map')
 require('App/Manager/BossGameDataManager')
 
 BossGameManager = Object:SubClass('BossGameManager')
@@ -21,6 +21,7 @@ BossGameManager.spawner = nil
 BossGameManager.money = nil
 
 BossGameManager.isStop = true
+BossGameManager.isPause = true
 
 function BossGameManager:Init()
     -- 初始化场景管理器
@@ -95,16 +96,17 @@ function BossGameManager:InitCsAction()
     end
 end
 
-function BossGameManager:IsStop()
-    return self.isStop
-end
+
 
 function BossGameManager:InitGame(levelID)
+    self.isStop = true
+    self.isPause = true
+
     -- 加载地图数据
     self.mapData = self.gameDataManager:Load('AB/Data/BossMap' .. levelID)
     -- 初始化
     if self.map == nil then
-        self.map = Map
+        self.map = Map:New()
         self.map:InitLua(self.mapData)
     end
 
@@ -121,10 +123,50 @@ function BossGameManager:InitGame(levelID)
 end
 
 function BossGameManager:StartGame()
-    print(self.isStop)
     print('start')
+    self.isStop = false
+    self.isPause = false
+    self.spawner:StartSpawn()
 end
 
+function BossGameManager:PauseGame()
+    print('pause')
+end
+
+function BossGameManager:ResumeGame()
+    print('resume')
+end
+
+function BossGameManager:RestartGame()
+    print('restart')
+end
+
+function BossGameManager:EndGame()
+    print('end')
+end
+
+function BossGameManager:GameOver()
+    print('game over')
+end
+
+function BossGameManager:GameWin()
+    print('game win')
+end
+
+function BossGameManager:NextLevel()
+    print('next level')
+end
+
+function BossGameManager:SetSpeedUp()
+    print('set speed up')
+end
+
+function BossGameManager:IsPause()
+    return self.isPause
+end
+function BossGameManager:IsStop()
+    return self.isStop
+end
 function BossGameManager:SetSpwaner(spawner)
     self.script.Spawner = spawner
     self.spawner = spawner

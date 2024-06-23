@@ -93,6 +93,14 @@ namespace App.Game.Object.Monster
 
             gameManager = GameManager.Instance;
             facade = GameFacade.Instance;
+            hpImageBg = transform.Find("HpHolder");
+            hpImageFg = hpImageBg.Find("HpSlider");
+        }
+
+        protected virtual void Start()
+        {
+            // 默认隐藏血条
+            hpImageBg.gameObject.SetActive(false);
         }
 
         protected virtual void Update()
@@ -123,9 +131,15 @@ namespace App.Game.Object.Monster
             }
         }
 
-        public virtual void Init(List<Cell> list)
+        public virtual void Init(List<Cell> list, float hard, MonsterData data)
         {
+            this.data = data;
             pathList = list;
+            Growth = hard;
+            // 位置设置在起点
+            transform.position = Map.Map.GetCellCenterPos(pathList[0]);
+            // 设置第一个目标格子
+            nextCell = pathList[0];
         }
 
         private void ClearAllBuffs()
@@ -145,7 +159,7 @@ namespace App.Game.Object.Monster
         /// </summary>
         private void OnMouseDown()
         {
-            if (IsDead)return;
+            if (IsDead) return;
 
             // 射线检测判断是否被UI遮挡
             GraphicRaycaster gr = gameManager.uiManager.canvas.GetComponent<GraphicRaycaster>();
@@ -229,11 +243,6 @@ namespace App.Game.Object.Monster
         /// </summary>
         public override void OnGet()
         {
-            Init(gameManager.sceneManager.MapData.GetPathList());
-            // 位置设置在起点
-            transform.position = Map.Map.GetCellCenterPos(pathList[0]);
-            // 设置第一个目标格子
-            nextCell = pathList[0];
             pathIndex = 0;
             // 刷新属性
             hp = data.maxHp;

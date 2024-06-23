@@ -24,6 +24,7 @@ SceneManager = CS.UnityEngine.SceneManagement.SceneManager
 Input = CS.UnityEngine.Input
 Camera = CS.UnityEngine.Camera
 Destroy = CS.UnityEngine.Object.Destroy
+DestroyImmediate = CS.UnityEngine.Object.DestroyImmediate
 
 -- UI
 Canvas = CS.UnityEngine.Canvas
@@ -47,7 +48,9 @@ Point = CS.App.Game.Generic.Map.Point
 GameManager = CS.App.Game.GameManager
 GameFacade = CS.GameFacade
 PointClassToCell = CS.App.Game.Generic.Map.PointClassToCell
+CSMap = CS.App.Game.Object.Map.Map
+-- lua兼容层
 LuaSceneManager = CS.App.Game.SceneManager.LuaSceneManager
 LuaSceneDataManager = CS.App.Game.SceneManager.LuaSceneDataManager
 LuaSpawner = CS.App.Game.Spawner.LuaSpawner
-CSMap = CS.App.Game.Object.Map.Map
+LuaMonster = CS.App.Game.Object.Monster.LuaMonster
