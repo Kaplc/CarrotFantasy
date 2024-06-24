@@ -15,18 +15,19 @@ using System.Collections.Generic;
 namespace XLua.CSObjectWrap
 {
     using Utils = XLua.Utils;
-    public class AppGameObjectObstacleObstacleWrap 
+    public class AppGameObjectTowerITowerWrap 
     {
         public static void __Register(RealStatePtr L)
         {
 			ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			System.Type type = typeof(App.Game.Object.Obstacle.Obstacle);
-			Utils.BeginObjectRegister(type, L, translator, 0, 4, 0, 0);
+			System.Type type = typeof(App.Game.Object.Tower.ITower);
+			Utils.BeginObjectRegister(type, L, translator, 0, 5, 0, 0);
 			
-			Utils.RegisterFunc(L, Utils.METHOD_IDX, "Wound", _m_Wound);
-			Utils.RegisterFunc(L, Utils.METHOD_IDX, "Dead", _m_Dead);
-			Utils.RegisterFunc(L, Utils.METHOD_IDX, "OnGet", _m_OnGet);
-			Utils.RegisterFunc(L, Utils.METHOD_IDX, "OnPush", _m_OnPush);
+			Utils.RegisterFunc(L, Utils.METHOD_IDX, "Attack", _m_Attack);
+			Utils.RegisterFunc(L, Utils.METHOD_IDX, "UpGrade", _m_UpGrade);
+			Utils.RegisterFunc(L, Utils.METHOD_IDX, "SetCollectingFiresTarget", _m_SetCollectingFiresTarget);
+			Utils.RegisterFunc(L, Utils.METHOD_IDX, "GetData", _m_GetData);
+			Utils.RegisterFunc(L, Utils.METHOD_IDX, "GetLevel", _m_GetLevel);
 			
 			
 			
@@ -48,24 +49,7 @@ namespace XLua.CSObjectWrap
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static int __CreateInstance(RealStatePtr L)
         {
-            
-			try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-				if(LuaAPI.lua_gettop(L) == 1)
-				{
-					
-					var gen_ret = new App.Game.Object.Obstacle.Obstacle();
-					translator.Push(L, gen_ret);
-                    
-					return 1;
-				}
-				
-			}
-			catch(System.Exception gen_e) {
-				return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-			}
-            return LuaAPI.luaL_error(L, "invalid arguments to App.Game.Object.Obstacle.Obstacle constructor!");
-            
+            return LuaAPI.luaL_error(L, "App.Game.Object.Tower.ITower does not have a constructor!");
         }
         
 		
@@ -76,21 +60,20 @@ namespace XLua.CSObjectWrap
         
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _m_Wound(RealStatePtr L)
+        static int _m_Attack(RealStatePtr L)
         {
 		    try {
             
                 ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
             
             
-                App.Game.Object.Obstacle.Obstacle gen_to_be_invoked = (App.Game.Object.Obstacle.Obstacle)translator.FastGetCSObj(L, 1);
+                App.Game.Object.Tower.ITower gen_to_be_invoked = (App.Game.Object.Tower.ITower)translator.FastGetCSObj(L, 1);
             
             
                 
                 {
-                    int _woundHp = LuaAPI.xlua_tointeger(L, 2);
                     
-                    gen_to_be_invoked.Wound( _woundHp );
+                    gen_to_be_invoked.Attack(  );
                     
                     
                     
@@ -104,20 +87,20 @@ namespace XLua.CSObjectWrap
         }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _m_Dead(RealStatePtr L)
+        static int _m_UpGrade(RealStatePtr L)
         {
 		    try {
             
                 ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
             
             
-                App.Game.Object.Obstacle.Obstacle gen_to_be_invoked = (App.Game.Object.Obstacle.Obstacle)translator.FastGetCSObj(L, 1);
+                App.Game.Object.Tower.ITower gen_to_be_invoked = (App.Game.Object.Tower.ITower)translator.FastGetCSObj(L, 1);
             
             
                 
                 {
                     
-                    gen_to_be_invoked.Dead(  );
+                    gen_to_be_invoked.UpGrade(  );
                     
                     
                     
@@ -131,20 +114,21 @@ namespace XLua.CSObjectWrap
         }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _m_OnGet(RealStatePtr L)
+        static int _m_SetCollectingFiresTarget(RealStatePtr L)
         {
 		    try {
             
                 ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
             
             
-                App.Game.Object.Obstacle.Obstacle gen_to_be_invoked = (App.Game.Object.Obstacle.Obstacle)translator.FastGetCSObj(L, 1);
+                App.Game.Object.Tower.ITower gen_to_be_invoked = (App.Game.Object.Tower.ITower)translator.FastGetCSObj(L, 1);
             
             
                 
                 {
+                    App.Game.Object.Monster.IMonster _monster = (App.Game.Object.Monster.IMonster)translator.GetObject(L, 2, typeof(App.Game.Object.Monster.IMonster));
                     
-                    gen_to_be_invoked.OnGet(  );
+                    gen_to_be_invoked.SetCollectingFiresTarget( _monster );
                     
                     
                     
@@ -158,24 +142,53 @@ namespace XLua.CSObjectWrap
         }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _m_OnPush(RealStatePtr L)
+        static int _m_GetData(RealStatePtr L)
         {
 		    try {
             
                 ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
             
             
-                App.Game.Object.Obstacle.Obstacle gen_to_be_invoked = (App.Game.Object.Obstacle.Obstacle)translator.FastGetCSObj(L, 1);
+                App.Game.Object.Tower.ITower gen_to_be_invoked = (App.Game.Object.Tower.ITower)translator.FastGetCSObj(L, 1);
             
             
                 
                 {
                     
-                    gen_to_be_invoked.OnPush(  );
+                        var gen_ret = gen_to_be_invoked.GetData(  );
+                        translator.Push(L, gen_ret);
                     
                     
                     
-                    return 0;
+                    return 1;
+                }
+                
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _m_GetLevel(RealStatePtr L)
+        {
+		    try {
+            
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+            
+            
+                App.Game.Object.Tower.ITower gen_to_be_invoked = (App.Game.Object.Tower.ITower)translator.FastGetCSObj(L, 1);
+            
+            
+                
+                {
+                    
+                        var gen_ret = gen_to_be_invoked.GetLevel(  );
+                        LuaAPI.xlua_pushinteger(L, gen_ret);
+                    
+                    
+                    
+                    return 1;
                 }
                 
             } catch(System.Exception gen_e) {

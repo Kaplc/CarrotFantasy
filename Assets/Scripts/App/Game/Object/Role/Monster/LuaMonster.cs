@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using App.Data.DataClass.Game.Object;
+using App.Game.Generic.BaseObject;
 using App.Game.Generic.Map;
 using UnityEngine;
 using UnityEngine.Events;
@@ -9,7 +10,7 @@ using XLua;
 namespace App.Game.Object.Monster
 {
     [LuaCallCSharp]
-    public class LuaMonster : IMonster
+    public class LuaMonster : BaseRole, IMonster
     {
         public Func<float> onGetHpAction;
         public UnityAction<float> onSetHpAction;
@@ -30,18 +31,22 @@ namespace App.Game.Object.Monster
         public UnityAction<List<Cell>, float, MonsterData> onInitAction;
         public UnityAction<float> onSetSpeedAction;
         public Func<Transform> onGetSignFatherAction;
+
+        public UnityAction onDeadAction;
+
+        public UnityAction<BaseBuffEffect> onAddBuffEffectAction;
         
         public float Hp { get => (float)onGetHpAction?.Invoke(); set => onSetHpAction?.Invoke(value); }
         public float Growth { get => (float)onGetGrowthAction?.Invoke(); set => onSetGrowthAction?.Invoke(value); }
-        public bool IsDead { get => (bool)onGetIsDeadAction?.Invoke(); set => onSetIsDeadAction?.Invoke(value); }
+        public new bool IsDead { get => (bool)onGetIsDeadAction?.Invoke(); set => onSetIsDeadAction?.Invoke(value); }
         public MonsterData Data => onGetDataAction?.Invoke();
-        public Transform Transform => onGetTransformAction?.Invoke();
+        public new Transform Transform => onGetTransformAction?.Invoke();
 
-        public void OnGet() => onGetAction?.Invoke();
+        public override void OnGet() => onGetAction?.Invoke();
 
-        public void OnPush() => onPushAction?.Invoke();
+        public override void OnPush() => onPushAction?.Invoke();
 
-        public void Wound(int woundHp) => onWoundAction?.Invoke(woundHp);
+        public override void Wound(int woundHp) => onWoundAction?.Invoke(woundHp);
         
         public void Init(List<Cell> list, float hard, MonsterData data) => onInitAction?.Invoke(list, hard, data);
 
@@ -49,5 +54,8 @@ namespace App.Game.Object.Monster
 
         public Transform GetSignFather() => onGetSignFatherAction?.Invoke();
 
+        public override void Dead() => onDeadAction?.Invoke();
+
+        public void AddBuffEffect(BaseBuffEffect buffEffect) => onAddBuffEffectAction?.Invoke(buffEffect);
     }
 }

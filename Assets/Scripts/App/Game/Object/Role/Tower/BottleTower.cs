@@ -40,7 +40,7 @@ namespace App.Game.Object.Tower
         private void LookAtTarget()
         {
             // 向量
-            Vector3 dir = TargetTsf.position - weapon.position;
+            Vector3 dir = target.Transform.position - weapon.position;
             // 计算x轴的角度
             float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
             // 

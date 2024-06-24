@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using App.Data.DataClass;
 using App.Data.DataClass.Game.Object;
 using App.Data.DataClass.Map;
 using App.Game.Generic.BaseObject;
@@ -30,7 +31,7 @@ namespace App.Game.Spawner
         public Transform signTrans; // 集火标志
 
         private List<Cell> pathList;
-        private List<Cell> obstacleList; 
+        private List<Cell> obstacleList;
 
         #region 出怪
 
@@ -48,7 +49,7 @@ namespace App.Game.Spawner
         #endregion
 
         private INormalSceneManager sceneManger;
-        
+
         public virtual Carrot Carrot
         {
             get => carrot;
@@ -117,7 +118,7 @@ namespace App.Game.Spawner
             // 更新面板波数显示
             sceneManger = GameManager.Instance.sceneManager as INormalSceneManager;
             sceneManger?.UpdateWaveCount(1, waveDataList.Count);
-            
+
             monsters.Clear();
         }
 
@@ -220,8 +221,8 @@ namespace App.Game.Spawner
             Monster monster = GameManager.Instance.poolManager.GetObject("Object/Monster/" + type).GetComponent<Monster>();
             monster.transform.SetParent(transform);
             monster.transform.localScale = Vector3.one;
-            MonsterData monsterData = Resources.Load<MonsterData>("" + type);
-            monster.Init(pathList, hard, monsterData);
+            MonsterDataMap map = Resources.Load<MonsterDataMap>("Data/Monster/MonsterDataMap");
+            monster.Init(pathList, hard, map.GetData(type));
             monsters.Add(monster);
         }
 
@@ -244,7 +245,7 @@ namespace App.Game.Spawner
             // 够钱才升级
             if (GameManager.Instance.sceneManager.GetMoney() < data.prices[level + 1]) return;
             // 扣钱
-            GameFacade.Instance.SendNotification(NotificationName.Game.UPDATE_MONEY, -data.prices[level + 1]);
+            sceneManger.UpdateMoney(-data.prices[level + 1]);
             // 调用更新方法
             tower.UpGrade();
             // 关闭建造面板
@@ -257,16 +258,16 @@ namespace App.Game.Spawner
         public virtual void SellTower(Vector3 cellWorldPos)
         {
             Cell cell = Map.GetCell(cellWorldPos);
-            BaseTower tower = cell.tower as BaseTower;
-            if (!tower) return;
-
+            ITower tower = cell.tower as ITower;
+            if (tower == null) return;
+            var level = tower.GetLevel();
+            var data = tower.GetData();
             // 加钱
-            GameFacade.Instance.SendNotification(NotificationName.Game.UPDATE_MONEY, +tower.data.sellPrices[tower.level]);
+            sceneManger.UpdateMoney(+data.sellPrices[level]);
             // 回收对象
-            GameManager.Instance.poolManager.PushObject(tower.gameObject);
+            GameManager.Instance.poolManager.PushObject(tower.Transform.gameObject);
             // 清空格子
             cell.tower = null;
-
             // 关闭建造面板
             GameFacade.Instance.SendNotification(NotificationName.UI.HIDE_BUILT_PANEL);
             // 从列表移除
@@ -325,15 +326,14 @@ namespace App.Game.Spawner
             // 够钱才创建
             if (GameManager.Instance.sceneManager.GetMoney() >= towerData.prices[0])
             {
-                BaseTower tower = GameManager.Instance.poolManager.GetObject(towerData.prefabsPath).GetComponent<BaseTower>();
-                tower.transform.SetParent(transform);
-                tower.transform.localScale = Vector3.one;
-                tower.transform.position = cellWorldPos;
+                ITower tower = GameManager.Instance.poolManager.GetObject(towerData.prefabsPath).GetComponent<ITower>();
+                tower.Transform.SetParent(transform);
+                tower.Transform.localScale = Vector3.one;
+                tower.Transform.position = cellWorldPos;
                 // 扣钱
-                GameFacade.Instance.SendNotification(NotificationName.Game.UPDATE_MONEY, -towerData.prices[0]);
+                sceneManger.UpdateMoney(-towerData.prices[0]);
                 // 记录该格子已经存在塔
                 Map.GetCell(cellWorldPos).tower = tower;
-
                 // 关闭建造面板
                 GameFacade.Instance.SendNotification(NotificationName.UI.HIDE_BUILT_PANEL);
                 // 添加进列表
@@ -381,7 +381,7 @@ namespace App.Game.Spawner
         {
             // 隐藏标志
             signTrans.gameObject.SetActive(false);
-            
+
             GameManager.Instance.poolManager.PushObject(carrot.gameObject);
             OnPushAllTowers();
             OnPushAllMonsters();

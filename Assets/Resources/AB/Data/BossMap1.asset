@@ -105,7 +105,19 @@ MonoBehaviour:
   - x: 5
     y: 3
   towerTypeList: 0100000002000000
-  obstacleList: []
+  obstacleList:
+  - x: 5
+    y: 3
+    obstacleType: 1
+    towerType: 0
+  - x: 5
+    y: 4
+    obstacleType: 1
+    towerType: 0
+  - x: 4
+    y: 4
+    obstacleType: 1
+    towerType: 0
   towerList: []
   waveDataList:
   - waveCount: 1

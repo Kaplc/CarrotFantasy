@@ -262,7 +262,29 @@ namespace XLua
 #endif
 		}
         
-		public bool __Gen_Delegate_Imp11()
+		public void __Gen_Delegate_Imp11(App.Game.Generic.BaseObject.BaseBuffEffect p0)
+		{
+#if THREAD_SAFE || HOTFIX_ENABLE
+            lock (luaEnv.luaEnvLock)
+            {
+#endif
+                RealStatePtr L = luaEnv.L;
+                int errFunc = LuaAPI.pcall_prepare(L, errorFuncRef, luaReference);
+                ObjectTranslator translator = luaEnv.translator;
+                translator.Push(L, p0);
+                
+                PCall(L, 1, 0, errFunc);
+                
+                
+                
+                LuaAPI.lua_settop(L, errFunc - 1);
+                
+#if THREAD_SAFE || HOTFIX_ENABLE
+            }
+#endif
+		}
+        
+		public bool __Gen_Delegate_Imp12()
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -283,7 +305,7 @@ namespace XLua
 #endif
 		}
         
-		public float __Gen_Delegate_Imp12()
+		public float __Gen_Delegate_Imp13()
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -304,7 +326,7 @@ namespace XLua
 #endif
 		}
         
-		public int __Gen_Delegate_Imp13()
+		public int __Gen_Delegate_Imp14()
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -325,7 +347,7 @@ namespace XLua
 #endif
 		}
         
-		public App.Game.SceneManager.ISceneDataManager __Gen_Delegate_Imp14()
+		public App.Game.SceneManager.ISceneDataManager __Gen_Delegate_Imp15()
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -346,7 +368,7 @@ namespace XLua
 #endif
 		}
         
-		public App.Game.Spawner.ISpawner __Gen_Delegate_Imp15()
+		public App.Game.Spawner.ISpawner __Gen_Delegate_Imp16()
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -367,7 +389,7 @@ namespace XLua
 #endif
 		}
         
-		public App.Data.DataClass.Map.IMapData __Gen_Delegate_Imp16()
+		public App.Data.DataClass.Map.IMapData __Gen_Delegate_Imp17()
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -388,7 +410,7 @@ namespace XLua
 #endif
 		}
         
-		public int __Gen_Delegate_Imp17(int p0, string p1, out Tutorial.CSCallLua.DClass p2)
+		public int __Gen_Delegate_Imp18(int p0, string p1, out Tutorial.CSCallLua.DClass p2)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -412,7 +434,7 @@ namespace XLua
 #endif
 		}
         
-		public System.Action __Gen_Delegate_Imp18()
+		public System.Action __Gen_Delegate_Imp19()
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -445,6 +467,11 @@ namespace XLua
 		    if (type == typeof(UnityEngine.Events.UnityAction))
 			{
 			    return new UnityEngine.Events.UnityAction(__Gen_Delegate_Imp0);
+			}
+		
+		    if (type == typeof(DG.Tweening.TweenCallback))
+			{
+			    return new DG.Tweening.TweenCallback(__Gen_Delegate_Imp0);
 			}
 		
 		    if (type == typeof(UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene, UnityEngine.SceneManagement.LoadSceneMode>))
@@ -497,44 +524,49 @@ namespace XLua
 			    return new UnityEngine.Events.UnityAction<System.Collections.Generic.List<App.Game.Generic.Map.Cell>, float, App.Data.DataClass.Game.Object.MonsterData>(__Gen_Delegate_Imp10);
 			}
 		
+		    if (type == typeof(UnityEngine.Events.UnityAction<App.Game.Generic.BaseObject.BaseBuffEffect>))
+			{
+			    return new UnityEngine.Events.UnityAction<App.Game.Generic.BaseObject.BaseBuffEffect>(__Gen_Delegate_Imp11);
+			}
+		
 		    if (type == typeof(System.Func<bool>))
 			{
-			    return new System.Func<bool>(__Gen_Delegate_Imp11);
+			    return new System.Func<bool>(__Gen_Delegate_Imp12);
 			}
 		
 		    if (type == typeof(System.Func<float>))
 			{
-			    return new System.Func<float>(__Gen_Delegate_Imp12);
+			    return new System.Func<float>(__Gen_Delegate_Imp13);
 			}
 		
 		    if (type == typeof(System.Func<int>))
 			{
-			    return new System.Func<int>(__Gen_Delegate_Imp13);
+			    return new System.Func<int>(__Gen_Delegate_Imp14);
 			}
 		
 		    if (type == typeof(System.Func<App.Game.SceneManager.ISceneDataManager>))
 			{
-			    return new System.Func<App.Game.SceneManager.ISceneDataManager>(__Gen_Delegate_Imp14);
+			    return new System.Func<App.Game.SceneManager.ISceneDataManager>(__Gen_Delegate_Imp15);
 			}
 		
 		    if (type == typeof(System.Func<App.Game.Spawner.ISpawner>))
 			{
-			    return new System.Func<App.Game.Spawner.ISpawner>(__Gen_Delegate_Imp15);
+			    return new System.Func<App.Game.Spawner.ISpawner>(__Gen_Delegate_Imp16);
 			}
 		
 		    if (type == typeof(System.Func<App.Data.DataClass.Map.IMapData>))
 			{
-			    return new System.Func<App.Data.DataClass.Map.IMapData>(__Gen_Delegate_Imp16);
+			    return new System.Func<App.Data.DataClass.Map.IMapData>(__Gen_Delegate_Imp17);
 			}
 		
 		    if (type == typeof(Tutorial.CSCallLua.FDelegate))
 			{
-			    return new Tutorial.CSCallLua.FDelegate(__Gen_Delegate_Imp17);
+			    return new Tutorial.CSCallLua.FDelegate(__Gen_Delegate_Imp18);
 			}
 		
 		    if (type == typeof(Tutorial.CSCallLua.GetE))
 			{
-			    return new Tutorial.CSCallLua.GetE(__Gen_Delegate_Imp18);
+			    return new Tutorial.CSCallLua.GetE(__Gen_Delegate_Imp19);
 			}
 		
 		    return null;

@@ -32,6 +32,8 @@ namespace App.Game.Object.Monster
 
         private List<Cell> pathList;
 
+        private List<BaseBuffEffect> buffEffects = new List<BaseBuffEffect>();
+
         #region 属性
 
         public float Hp
@@ -94,7 +96,7 @@ namespace App.Game.Object.Monster
             gameManager = GameManager.Instance;
             facade = GameFacade.Instance;
             hpImageBg = transform.Find("HpHolder");
-            hpImageFg = hpImageBg.Find("HpSlider");
+            hpImageFg = transform.Find("HpHolder/HpSlider");
         }
 
         protected virtual void Start()
@@ -145,13 +147,17 @@ namespace App.Game.Object.Monster
         private void ClearAllBuffs()
         {
             // 移除身上所有Buff
-            BaseBuffEffect[] buffEffects = transform.GetComponentsInChildren<BaseBuffEffect>();
-            for (int i = 0; i < buffEffects.Length; i++)
+            for (int i = 0; i < buffEffects.Count; i++)
             {
                 gameManager.poolManager.PushObject(buffEffects[i].gameObject);
             }
 
             gameManager.buffManager.RemoveAllBuffs(this);
+        }
+
+        public void AddBuffEffect(BaseBuffEffect buffEffect)
+        {
+            buffEffects.Add(buffEffect);
         }
 
         /// <summary>
@@ -220,7 +226,7 @@ namespace App.Game.Object.Monster
             gameManager.PlaySound("Music/MonsterDead", 1, false);
         }
 
-        protected override void Dead()
+        public override void Dead()
         {
             // 回收
             gameManager.poolManager.PushObject(gameObject);
@@ -233,7 +239,7 @@ namespace App.Game.Object.Monster
         public override void OnPush()
         {
             // 清空数据
-            nextCell = null;
+            nextCell = null;                                                 
             // 还原动画
             animator.SetBool("Dead", false);
         }

@@ -3,6 +3,7 @@ Monster = Object:SubClass('Monster')
 Monster.cs = nil
 Monster.mono = nil
 Monster.obj = nil
+Monster.gameManager = nil
 
 Monster.data = nil
 Monster.hp = 0
@@ -19,16 +20,27 @@ Monster.hpFg = nil
 Monster.lastWoundTime = 0
 -- 集火标志
 Monster.signFather = nil
-
 Monster.animator = nil
-
 Monster.canMove = false
+Monster.buffsList = nil
 
 function Monster:Construct(args)
+    self.gameManager = GameManager.Instance
+    self.buffsList = List:New()
     self.obj = args[1]
 
-    self.cs = LuaMonster()
-    self.mono = self.obj:AddComponent(typeof(MonoScript))
+    if self.obj:GetComponent(typeof(LuaMonster)) == nil then
+        self.cs = self.obj:AddComponent(typeof(LuaMonster))
+    else
+        self.cs = self.obj:GetComponent(typeof(LuaMonster))
+    end
+
+    if self.obj:GetComponent(typeof(MonoScript)) == nil then
+        self.mono = self.obj:AddComponent(typeof(MonoScript))
+    else
+        self.mono = self.obj:GetComponent(typeof(MonoScript))
+    end
+
     self:InitCsAction()
 
     self.animator = self.obj:GetComponent('Animator')
@@ -50,8 +62,8 @@ function Monster:InitCsAction()
     self.cs.onGetGrowthAction = function()
         return self:GetGrowth()
     end
-    self.cs.onSetGrowthAction = function()
-        return self:SetGrowth()
+    self.cs.onSetGrowthAction = function(v)
+        return self:SetGrowth(v)
     end
     self.cs.onGetIsDeadAction = function()
         return self:GetIsDead()
@@ -74,8 +86,8 @@ function Monster:InitCsAction()
     self.cs.onGetAction = function()
         self:OnGet()
     end
-    self.cs.onInitAction = function(cellList)
-        self:Init(cellList)
+    self.cs.onInitAction = function(cellList, hard, data)
+        self:Init(cellList, hard, data)
     end
     self.cs.onSetSpeedAction = function(v)
         self:SetSpeed(v)
@@ -83,6 +95,13 @@ function Monster:InitCsAction()
     self.cs.onGetSignFatherAction = function()
         return self:GetSignFather()
     end
+    self.cs.onDeadAction = function()
+        self:Dead()
+    end
+    self.cs.onAddBuffEffectAction = function(buffEffct)
+        self:AddBuffEffect(buffEffct)
+    end
+
     -- unity 回调
     self.mono.onUpdateAction = function()
         self:Update()
@@ -103,8 +122,11 @@ end
 -- 移动
 function Monster:Move()
     -- 暂停或死亡禁止移动
-    if BossGameManager.isPause == true or self.isDead == true then
+    if self.gameManager.sceneManager:IsPause() == true or self.isDead == true then
         return
+    end
+    if self.nextCell == nil then
+        print(self.isDead)
     end
 
     -- 判断是否到达格子
@@ -137,6 +159,7 @@ function Monster:Init(cellList, hard, data)
     self.pathIndex = 0
     self.nextCell = self.pathList[0]
     self.canMove = true
+    self.isDead = false
 end
 
 function Monster:GetHp()
@@ -173,12 +196,60 @@ end
 
 function Monster:Wound(v)
     self.hp = self.hp - v
+    -- 更新血条
+    self.hpBg.gameObject:SetActive(true)
+    local maxHp = self.data.maxHp * self.growth
+    self.hpFg.localScale = Vector3(self.hp / maxHp, 1, 1)
+    self.lastWoundTime = Time.time
+
+    if self.hp <= 0 then
+        self.hp = 0
+        self.isDead = true
+        self.gameManager.sceneManager:UpdateMoney(math.floor(self.data.baseMoney * self.growth))
+        -- 加钱ui
+        local ui =
+            GameManager.Instance.factoryManager.UIControlFactory:CreateControl('AddMoneyTips'):GetComponent(
+            'AddMoneyTips'
+        )
+        ui.textMeshPro.text = '+' .. math.floor(self.data.baseMoney * self.growth)
+        ui.transform.position = self.mono.transform.position
+        CS.DG.Tweening.ShortcutExtensions.DOMoveY(ui.transform, ui.transform.position.y + 2, 0.5)
+        -- 移除buff
+        self:ClearAllBuffs()
+
+        if self.gameManager.sceneManager.Spawner:GetCollectingFiresTarget() == self.cs then
+            self.gameManager.sceneManager:CancelFire()
+        end
+        -- 触发死亡动画
+        self.animator:SetBool('Dead', true)
+    end
+end
+
+function Monster:ClearAllBuffs()
+    for i = 0, self.buffsList.count - 1 do
+        self.gameManager.poolManager:PushObject(self.buffsList:Get(i).gameObject)
+    end
+    self.gameManager.buffManager:RemoveAllBuffs(self.cs)
+    self.buffsList:Clear()
+end
+
+function Monster:AddBuffEffect(buffEffct)
+    self.buffsList:Add(buffEffct)
+end
+
+function Monster:Dead()
+    self.gameManager.poolManager:PushObject(self.mono.gameObject)
+    self.gameManager.eventCenter:TriggerEvent('JudgeWin')
+    self.gameManager.sceneManager:UpdateKillMonsterCount(1)
 end
 
 function Monster:OnPush()
+    self.nextCell = nil
+    self.animator:SetBool('Dead', false)
 end
 
 function Monster:OnGet()
+    self.pathIndex = 0
 end
 
 function Monster:SetSpeed(v)

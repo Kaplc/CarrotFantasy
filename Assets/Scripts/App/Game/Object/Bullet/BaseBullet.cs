@@ -12,7 +12,6 @@ namespace App.Game.Generic.BaseObject
     
         public BulletData data;
         public IMonster target;
-        protected Transform TargetTsf => ((MonoBehaviour)target).transform;
         private Animator animator;
 
         private void Awake()
@@ -27,7 +26,7 @@ namespace App.Game.Generic.BaseObject
             if (target != null)
             {
                 // 根据距离判断是否击中
-                if (Vector3.Distance(transform.position, TargetTsf.position) < 0.3f && active)
+                if (Vector3.Distance(transform.position, target.Transform.position) < 0.3f && active)
                 {
                     Hit();
                     // 播放爆炸动画
@@ -58,14 +57,14 @@ namespace App.Game.Generic.BaseObject
         {
             if (target != null && !target.IsDead)
             {
-                transform.LookAt(TargetTsf);
+                transform.LookAt(target.Transform);
                 if (!GameManager.Instance.sceneManager.IsPause())
                 {
                     transform.Translate(transform.forward * (Time.deltaTime * data.speed), Space.World);
                 }
 
                 // 目标死亡立刻回收
-                if (target.IsDead || !TargetTsf.gameObject.activeSelf)
+                if (target.IsDead || !target.Transform.gameObject.activeSelf)
                 {
                     GameManager.Instance.poolManager.PushObject(gameObject);
                 }

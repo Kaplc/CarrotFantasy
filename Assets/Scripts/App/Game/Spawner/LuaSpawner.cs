@@ -11,7 +11,7 @@ using XLua;
 namespace App.Game.Spawner
 {
     [LuaCallCSharp()]
-    public class LuaSpawner : Spawner, ISpawner
+    public class LuaSpawner : ISpawner
     {
         public Func<Carrot> onGetCarrotAction;
         public UnityAction onPushAllGameObjectAction;
@@ -29,24 +29,24 @@ namespace App.Game.Spawner
         public UnityAction<Vector3> onSellTowerAction;
         public Func<int> onGetNowWaveCountAction;
 
-        public override Carrot Carrot
+        public Carrot Carrot
         {
             get => onGetCarrotAction?.Invoke();
         }
 
-        public override IMonster GetCollectingFiresTarget() => onGetCollectingFiresTargetAction?.Invoke();
-        public override List<IMonster> GetAllMonsters() => onGetAllMonstersAction?.Invoke();
-        public override int GetNowWaveCount() => (int)onGetNowWaveCountAction?.Invoke();
-        public override void Init(IMapData mapData) => onInitAction?.Invoke(mapData);
-        public override void SetCollectingFires(IMonster monster) => onSetCollectingFiresAction?.Invoke(monster);
-        public override void CancelCollectingFiresTarget() => onCancelCollectingFiresTargetAction?.Invoke();
-        public override void StartSpawn() => onStartSpawnAction?.Invoke();
-        public override void PauseSpawn() => onPauseWavesAction?.Invoke();
-        public override void ResumeSpawn() => onResumeWavesAction?.Invoke();
-        public override void CreateTowerObject(TowerData towerData, Vector3 cellWorldPos) => onCreateTowerObjectAction?.Invoke(towerData, cellWorldPos);
-        public override void UpGradeTower(Vector3 cellWorldPos) => onUpGradeTowerAction?.Invoke(cellWorldPos);
-        public override void SellTower(Vector3 cellWorldPos) => onSellTowerAction?.Invoke(cellWorldPos);
-        public override void OnPushAllGameObject() => onPushAllGameObjectAction?.Invoke();
-        public override bool WinJudge() => (bool)onWinJudgeAction?.Invoke();
+        public IMonster GetCollectingFiresTarget() => onGetCollectingFiresTargetAction?.Invoke();
+        public List<IMonster> GetAllMonsters() => onGetAllMonstersAction?.Invoke();
+        public int GetNowWaveCount() => (int)onGetNowWaveCountAction?.Invoke();
+        public void Init(IMapData mapData) => onInitAction?.Invoke(mapData);
+        public void SetCollectingFires(IMonster monster) => onSetCollectingFiresAction?.Invoke(monster);
+        public void CancelCollectingFiresTarget() => onCancelCollectingFiresTargetAction?.Invoke();
+        public void StartSpawn() => onStartSpawnAction?.Invoke();
+        public void PauseSpawn() => onPauseWavesAction?.Invoke();
+        public void ResumeSpawn() => onResumeWavesAction?.Invoke();
+        public void CreateTowerObject(TowerData towerData, Vector3 cellWorldPos) => onCreateTowerObjectAction?.Invoke(towerData, cellWorldPos);
+        public void UpGradeTower(Vector3 cellWorldPos) => onUpGradeTowerAction?.Invoke(cellWorldPos);
+        public void SellTower(Vector3 cellWorldPos) => onSellTowerAction?.Invoke(cellWorldPos);
+        public void OnPushAllGameObject() => onPushAllGameObjectAction?.Invoke();
+        public bool WinJudge() => (bool)onWinJudgeAction?.Invoke();
     }
 }

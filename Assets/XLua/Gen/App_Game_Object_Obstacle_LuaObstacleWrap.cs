@@ -21,7 +21,7 @@ namespace XLua.CSObjectWrap
         {
 			ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
 			System.Type type = typeof(App.Game.Object.Obstacle.LuaObstacle);
-			Utils.BeginObjectRegister(type, L, translator, 0, 6, 17, 15);
+			Utils.BeginObjectRegister(type, L, translator, 0, 8, 19, 17);
 			
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "OnGet", _m_OnGet);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "OnPush", _m_OnPush);
@@ -29,6 +29,8 @@ namespace XLua.CSObjectWrap
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "Wound", _m_Wound);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "SetSpeed", _m_SetSpeed);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "GetSignFather", _m_GetSignFather);
+			Utils.RegisterFunc(L, Utils.METHOD_IDX, "Dead", _m_Dead);
+			Utils.RegisterFunc(L, Utils.METHOD_IDX, "AddBuffEffect", _m_AddBuffEffect);
 			
 			
 			Utils.RegisterFunc(L, Utils.GETTER_IDX, "Hp", _g_get_Hp);
@@ -48,6 +50,8 @@ namespace XLua.CSObjectWrap
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "onPushAction", _g_get_onPushAction);
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "onGetAction", _g_get_onGetAction);
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "onInitAction", _g_get_onInitAction);
+            Utils.RegisterFunc(L, Utils.GETTER_IDX, "onDeadAction", _g_get_onDeadAction);
+            Utils.RegisterFunc(L, Utils.GETTER_IDX, "onGetSignFatherAction", _g_get_onGetSignFatherAction);
             
 			Utils.RegisterFunc(L, Utils.SETTER_IDX, "Hp", _s_set_Hp);
             Utils.RegisterFunc(L, Utils.SETTER_IDX, "Growth", _s_set_Growth);
@@ -64,6 +68,8 @@ namespace XLua.CSObjectWrap
             Utils.RegisterFunc(L, Utils.SETTER_IDX, "onPushAction", _s_set_onPushAction);
             Utils.RegisterFunc(L, Utils.SETTER_IDX, "onGetAction", _s_set_onGetAction);
             Utils.RegisterFunc(L, Utils.SETTER_IDX, "onInitAction", _s_set_onInitAction);
+            Utils.RegisterFunc(L, Utils.SETTER_IDX, "onDeadAction", _s_set_onDeadAction);
+            Utils.RegisterFunc(L, Utils.SETTER_IDX, "onGetSignFatherAction", _s_set_onGetSignFatherAction);
             
 			
 			Utils.EndObjectRegister(type, L, translator, null, null,
@@ -269,6 +275,61 @@ namespace XLua.CSObjectWrap
                     
                     
                     return 1;
+                }
+                
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _m_Dead(RealStatePtr L)
+        {
+		    try {
+            
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+            
+            
+                App.Game.Object.Obstacle.LuaObstacle gen_to_be_invoked = (App.Game.Object.Obstacle.LuaObstacle)translator.FastGetCSObj(L, 1);
+            
+            
+                
+                {
+                    
+                    gen_to_be_invoked.Dead(  );
+                    
+                    
+                    
+                    return 0;
+                }
+                
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _m_AddBuffEffect(RealStatePtr L)
+        {
+		    try {
+            
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+            
+            
+                App.Game.Object.Obstacle.LuaObstacle gen_to_be_invoked = (App.Game.Object.Obstacle.LuaObstacle)translator.FastGetCSObj(L, 1);
+            
+            
+                
+                {
+                    App.Game.Generic.BaseObject.BaseBuffEffect _buffEffect = (App.Game.Generic.BaseObject.BaseBuffEffect)translator.GetObject(L, 2, typeof(App.Game.Generic.BaseObject.BaseBuffEffect));
+                    
+                    gen_to_be_invoked.AddBuffEffect( _buffEffect );
+                    
+                    
+                    
+                    return 0;
                 }
                 
             } catch(System.Exception gen_e) {
@@ -518,6 +579,34 @@ namespace XLua.CSObjectWrap
             return 1;
         }
         
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _g_get_onDeadAction(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			
+                App.Game.Object.Obstacle.LuaObstacle gen_to_be_invoked = (App.Game.Object.Obstacle.LuaObstacle)translator.FastGetCSObj(L, 1);
+                translator.Push(L, gen_to_be_invoked.onDeadAction);
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 1;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _g_get_onGetSignFatherAction(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			
+                App.Game.Object.Obstacle.LuaObstacle gen_to_be_invoked = (App.Game.Object.Obstacle.LuaObstacle)translator.FastGetCSObj(L, 1);
+                translator.Push(L, gen_to_be_invoked.onGetSignFatherAction);
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 1;
+        }
+        
         
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -738,6 +827,36 @@ namespace XLua.CSObjectWrap
 			
                 App.Game.Object.Obstacle.LuaObstacle gen_to_be_invoked = (App.Game.Object.Obstacle.LuaObstacle)translator.FastGetCSObj(L, 1);
                 gen_to_be_invoked.onInitAction = translator.GetDelegate<UnityEngine.Events.UnityAction<System.Collections.Generic.List<App.Game.Generic.Map.Cell>, float, App.Data.DataClass.Game.Object.MonsterData>>(L, 2);
+            
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 0;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _s_set_onDeadAction(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			
+                App.Game.Object.Obstacle.LuaObstacle gen_to_be_invoked = (App.Game.Object.Obstacle.LuaObstacle)translator.FastGetCSObj(L, 1);
+                gen_to_be_invoked.onDeadAction = translator.GetDelegate<UnityEngine.Events.UnityAction>(L, 2);
+            
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 0;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _s_set_onGetSignFatherAction(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			
+                App.Game.Object.Obstacle.LuaObstacle gen_to_be_invoked = (App.Game.Object.Obstacle.LuaObstacle)translator.FastGetCSObj(L, 1);
+                gen_to_be_invoked.onGetSignFatherAction = translator.GetDelegate<System.Func<UnityEngine.Transform>>(L, 2);
             
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);

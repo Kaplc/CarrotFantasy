@@ -54,3 +54,7 @@ LuaSceneManager = CS.App.Game.SceneManager.LuaSceneManager
 LuaSceneDataManager = CS.App.Game.SceneManager.LuaSceneDataManager
 LuaSpawner = CS.App.Game.Spawner.LuaSpawner
 LuaMonster = CS.App.Game.Object.Monster.LuaMonster
+-- 接口
+ITower = CS.App.Game.Object.Tower.ITower
+IMonster = CS.App.Game.Object.Monster.IMonster
+IObstacle = CS.App.Game.Object.Obstacle.IObstacle

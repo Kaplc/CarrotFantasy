@@ -27,9 +27,7 @@ namespace App.Game.Generic.BaseObject
         public bool IsDead { get; set; }
         public Transform Transform => transform;
 
-
         private ISceneManger SceneManager => GameManager.Instance.sceneManager;
-        public Transform TargetTsf => ((Monster)target)?.transform;
         private bool Pause => SceneManager.IsPause();
         private ISpawner Spawner => SceneManager.Spawner;
         private Dictionary<float, IMonster> targetDic = new Dictionary<float, IMonster>();
@@ -91,7 +89,7 @@ namespace App.Game.Generic.BaseObject
             Gizmos.color = Color.red;
             if (target != null)
             {
-                Gizmos.DrawLine(transform.position, TargetTsf.position);
+                Gizmos.DrawLine(transform.position, target.Transform.position);
             }
         }
 
@@ -160,7 +158,7 @@ namespace App.Game.Generic.BaseObject
             }
 
             // 大于攻击距离或打死怪物解除锁定
-            if (Vector3.Distance(transform.position, TargetTsf.position) > data.attackRangesList[level] || target.IsDead)
+            if (Vector3.Distance(transform.position, target.Transform.position) > data.attackRangesList[level] || target.IsDead)
             {
                 animator.SetBool("Attack", false);
                 attacking = false;

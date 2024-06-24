@@ -85,7 +85,13 @@ namespace XLua.CSObjectWrap
             translator.DelayWrapLoader(typeof(App.Game.SceneManager.LuaSceneManager), AppGameSceneManagerLuaSceneManagerWrap.__Register);
         
         
+            translator.DelayWrapLoader(typeof(App.Game.Object.Tower.ITower), AppGameObjectTowerITowerWrap.__Register);
+        
+        
             translator.DelayWrapLoader(typeof(App.Game.Object.Tower.LuaTower), AppGameObjectTowerLuaTowerWrap.__Register);
+        
+        
+            translator.DelayWrapLoader(typeof(App.Game.Object.Obstacle.IObstacle), AppGameObjectObstacleIObstacleWrap.__Register);
         
         
             translator.DelayWrapLoader(typeof(App.Game.Object.Obstacle.LuaObstacle), AppGameObjectObstacleLuaObstacleWrap.__Register);
@@ -94,10 +100,16 @@ namespace XLua.CSObjectWrap
             translator.DelayWrapLoader(typeof(App.Game.Object.Obstacle.Obstacle), AppGameObjectObstacleObstacleWrap.__Register);
         
         
+            translator.DelayWrapLoader(typeof(App.Game.Object.Monster.IMonster), AppGameObjectMonsterIMonsterWrap.__Register);
+        
+        
             translator.DelayWrapLoader(typeof(App.Game.Object.Monster.LuaMonster), AppGameObjectMonsterLuaMonsterWrap.__Register);
         
         
             translator.DelayWrapLoader(typeof(App.Game.Object.Map.Map), AppGameObjectMapMapWrap.__Register);
+        
+        
+            translator.DelayWrapLoader(typeof(App.Game.Generic.BaseObject.IRole), AppGameGenericBaseObjectIRoleWrap.__Register);
         
         
             translator.DelayWrapLoader(typeof(App.Game.Generic.Map.Cell), AppGameGenericMapCellWrap.__Register);
@@ -132,6 +144,10 @@ namespace XLua.CSObjectWrap
             
             wrapInit0(luaenv, translator);
             
+            
+            translator.AddInterfaceBridgeCreator(typeof(App.Game.Object.Monster.IMonster), AppGameObjectMonsterIMonsterBridge.__Create);
+            
+            translator.AddInterfaceBridgeCreator(typeof(App.Game.Generic.BaseObject.IRole), AppGameGenericBaseObjectIRoleBridge.__Create);
             
             translator.AddInterfaceBridgeCreator(typeof(Tutorial.CSCallLua.ItfD), TutorialCSCallLuaItfDBridge.__Create);
             

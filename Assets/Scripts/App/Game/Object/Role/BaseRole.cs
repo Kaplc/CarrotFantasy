@@ -8,20 +8,20 @@ namespace App.Game.Generic.BaseObject
 
         public Transform Transform { get=>transform; }
         
-        public abstract void Wound(int woundHp);
+        public virtual void Wound(int woundHp){}
 
-        protected abstract void Dead();
+        public virtual void Dead(){}
     
         /// <summary>
         /// 适用于对象池回收时复原
         /// </summary>
         /// <param name="obj"></param>
-        public abstract void OnPush();
+        public virtual void OnPush(){}
     
         /// <summary>
         /// 使用对象池时初始化
         /// </summary>
         /// <returns></returns>
-        public abstract void OnGet();
+        public virtual void OnGet(){}
     }
 }

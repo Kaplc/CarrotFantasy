@@ -11,7 +11,7 @@ require('App/Manager/BossGameDataManager')
 
 BossGameManager = Object:SubClass('BossGameManager')
 
-BossGameManager.script = nil
+BossGameManager.cs = nil
 
 BossGameManager.gameDataManager = nil
 BossGameManager.map = nil
@@ -23,84 +23,90 @@ BossGameManager.money = nil
 BossGameManager.isStop = true
 BossGameManager.isPause = true
 
+BossGameManager.killMonsterCount = 0
+BossGameManager.getAllmoney = 0
+
 function BossGameManager:Init()
     -- 初始化场景管理器
     UIManager:ShowPanel('BossPanel', EUILayers.Middle)
-    self.script = LuaSceneManager()
-    GameManager.Instance:SetSceneManager(self.script)
+    self.cs = LuaSceneManager()
+    GameManager.Instance:SetSceneManager(self.cs)
     self:InitCsAction()
 
     self.gameDataManager = BossGameDataManager
     self:SetSceneDataManager(BossGameDataManager.script)
-
+    
 end
 
 function BossGameManager:InitCsAction()
     -- 添加回调函数
-    self.script.onSetSpawnerAction = function(spawner)
+    self.cs.onGetSpawnerAction = function ()
+        return self:GetSpawner()
+    end
+    self.cs.onSetSpawnerAction = function(spawner)
         self:SetSpwaner(spawner)
     end
-    self.script.onSetSceneDataManagerAction = function(sceneDataManager)
+    self.cs.onSetSceneDataManagerAction = function(sceneDataManager)
         self:SetSceneDataManager(sceneDataManager)
     end
-    self.script.onInitGameAction = function(levelID)
+    self.cs.onInitGameAction = function(levelID)
         self:InitGame(levelID)
     end
-    self.script.onStartGameAction = function()
+    self.cs.onStartGameAction = function()
         self:StartGame()
     end
-    self.script.onPauseGameAction = function()
+    self.cs.onPauseGameAction = function()
         self:PauseGame()
     end
-    self.script.onResumeGameAction = function()
+    self.cs.onResumeGameAction = function()
         self:ResumeGame()
     end
-    self.script.onRestartGameAction = function()
+    self.cs.onRestartGameAction = function()
         self:RestartGame()
     end
-    self.script.onEndGameAction = function()
+    self.cs.onEndGameAction = function()
         self:EndGame()
     end
-    self.script.onGameOverAction = function()
+    self.cs.onGameOverAction = function()
         self:GameOver()
     end
-    self.script.onGameWinAction = function()
+    self.cs.onGameWinAction = function()
         self:GameWin()
     end
-    self.script.onNextLevelAction = function()
+    self.cs.onNextLevelAction = function()
         self:NextLevel()
     end
-    self.script.onSetSpeedUpAction = function(isSpeedUp)
+    self.cs.onSetSpeedUpAction = function(isSpeedUp)
         self:SetSpeedUp(isSpeedUp)
     end
-    self.script.onIsPauseFunc = function()
+    self.cs.onIsPauseFunc = function()
         return self:IsPause()
     end
-    self.script.onIsStopFunc = function()
+    self.cs.onIsStopFunc = function()
         return self:IsStop()
     end
-    self.script.onSetFireTargetAction = function(target)
+    self.cs.onSetFireTargetAction = function(target)
         self:SetFireTarget(target)
     end
-    self.script.onCancelFireAction = function()
+    self.cs.onCancelFireAction = function()
         self:CancelFire()
     end
-    self.script.onGetMoneyFunc = function()
+    self.cs.onGetMoneyFunc = function()
         return self:GetMoney()
     end
-    self.script.onUpdateKillMonsterCountAction = function(v)
+    self.cs.onUpdateKillMonsterCountAction = function(v)
         self:UpdateKillMonsterCount(v)
     end
-    self.script.onUpdateMoneyAction = function(v)
+    self.cs.onUpdateMoneyAction = function(v)
         self:UpdateMoney(v)
     end
 end
 
-
-
 function BossGameManager:InitGame(levelID)
     self.isStop = true
     self.isPause = true
+    self.getAllmoney = 0
+    self.killMonsterCount = 0
 
     -- 加载地图数据
     self.mapData = self.gameDataManager:Load('AB/Data/BossMap' .. levelID)
@@ -118,15 +124,25 @@ function BossGameManager:InitGame(levelID)
     self.money = self.mapData.money
     GameManager.Instance:StopMusic()
     -- UI
-    UIManager:ShowPanel('BossGamePanel', EUILayers.Bottom)
+    local panel = UIManager:ShowPanel('BossGamePanel', EUILayers.Bottom)
+    panel:UpdateTime(240)
+    self:UpdateMoney(self.money)
+    -- 添加事件
+    GameManager.Instance.eventCenter:RemoveEvent('JudgeWin')
+    GameManager.Instance.eventCenter:AddEventListener('JudgeWin', function ()
+        self:JudgeWin()
+    end)
+end
 
+function BossGameManager:JudgeWin()
+    print('JudgeWin')
 end
 
 function BossGameManager:StartGame()
-    print('start')
     self.isStop = false
     self.isPause = false
     self.spawner:StartSpawn()
+    UIManager:GetPanel('BossGamePanel'):StartCountDown(240)
 end
 
 function BossGameManager:PauseGame()
@@ -159,6 +175,7 @@ function BossGameManager:NextLevel()
     print('next level')
 end
 
+-- 获取和设置变量
 function BossGameManager:SetSpeedUp()
     print('set speed up')
 end
@@ -170,7 +187,7 @@ function BossGameManager:IsStop()
     return self.isStop
 end
 function BossGameManager:SetSpwaner(spawner)
-    self.script.Spawner = spawner
+    self.cs.Spawner = spawner
     self.spawner = spawner
 end
 
@@ -182,5 +199,22 @@ function BossGameManager:GetSceneDataManager()
     return self.sceneDataManager
 end
 
+function BossGameManager:GetMoney()
+    return self.money
+end
 
+function BossGameManager:GetSpawner()
+    return self.spawner.cs
+end
+
+-- 更新数据
+function BossGameManager:UpdateKillMonsterCount(v)
+    self.killMonsterCount = self.killMonsterCount + v
+end
+
+function BossGameManager:UpdateMoney(v)
+    self.money = self.money + v
+    -- 通知面板更新数据
+    UIManager:GetPanel('BossGamePanel'):UpdateMoney(self.money)
+end
 

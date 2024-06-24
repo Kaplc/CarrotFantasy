@@ -58,7 +58,7 @@ namespace App.Game.Object.Carrot
             Hp -= woundHp;
         }
 
-        protected override void Dead()
+        public override void Dead()
         {
             // 回收
             GameManager.Instance.poolManager.PushObject(gameObject);

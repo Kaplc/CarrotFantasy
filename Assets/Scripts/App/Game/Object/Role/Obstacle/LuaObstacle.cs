@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using App.Data.DataClass.Game.Object;
+using App.Game.Generic.BaseObject;
 using App.Game.Generic.Map;
 using UnityEngine;
 using UnityEngine.Events;
@@ -35,6 +36,10 @@ namespace App.Game.Object.Obstacle
         public UnityAction onGetAction;
         public UnityAction<List<Cell>, float, MonsterData> onInitAction;
 
+        public UnityAction onDeadAction;
+
+        public Func<Transform> onGetSignFatherAction;
+
         #endregion
 
         public float Hp
@@ -66,9 +71,13 @@ namespace App.Game.Object.Obstacle
             
         }
 
-        public Transform GetSignFather()
+        public Transform GetSignFather() => onGetSignFatherAction?.Invoke();
+
+        public void Dead() => onDeadAction?.Invoke();
+
+        public void AddBuffEffect(BaseBuffEffect buffEffect)
         {
-            return null;
+            
         }
     }
 }

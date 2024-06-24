@@ -40,7 +40,7 @@ namespace App.Game.Object.Obstacle
             Hp -= woundHp;
         }
 
-        protected override void Dead()
+        public override void Dead()
         {
             // 回收
             GameManager.Instance.poolManager.PushObject(gameObject);

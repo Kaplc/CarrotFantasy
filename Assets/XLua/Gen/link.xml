@@ -24,11 +24,15 @@
 		<type fullname="App.Game.Spawner.LuaSpawner" preserve="all"/>
 		<type fullname="App.Game.SceneManager.LuaSceneDataManager" preserve="all"/>
 		<type fullname="App.Game.SceneManager.LuaSceneManager" preserve="all"/>
+		<type fullname="App.Game.Object.Tower.ITower" preserve="all"/>
 		<type fullname="App.Game.Object.Tower.LuaTower" preserve="all"/>
+		<type fullname="App.Game.Object.Obstacle.IObstacle" preserve="all"/>
 		<type fullname="App.Game.Object.Obstacle.LuaObstacle" preserve="all"/>
 		<type fullname="App.Game.Object.Obstacle.Obstacle" preserve="all"/>
+		<type fullname="App.Game.Object.Monster.IMonster" preserve="all"/>
 		<type fullname="App.Game.Object.Monster.LuaMonster" preserve="all"/>
 		<type fullname="App.Game.Object.Map.Map" preserve="all"/>
+		<type fullname="App.Game.Generic.BaseObject.IRole" preserve="all"/>
 		<type fullname="App.Game.Generic.Map.Cell" preserve="all"/>
 		<type fullname="App.Game.Generic.Map.Point" preserve="all"/>
 		<type fullname="App.Game.Generic.Map.PointClassToCell" preserve="all"/>

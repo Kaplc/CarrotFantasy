@@ -5,6 +5,7 @@ using App.Game.Factory;
 using App.Game.SceneManager;
 using App.Game.SDK;
 using App.Static;
+using DG.Tweening;
 using Library;
 using UnityEngine;
 using UnityEngine.Events;
@@ -57,6 +58,7 @@ namespace App.Game
             xLuaManager.AddLuaFilePath(path);
             xLuaManager.DoFile("Init");
             
+            DOTween.Init();
             #endregion
             
             

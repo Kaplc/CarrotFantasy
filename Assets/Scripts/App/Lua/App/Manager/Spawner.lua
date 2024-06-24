@@ -3,8 +3,8 @@ require('App/Object/Monster')
 
 Spawner = Object:SubClass('Spawner')
 
-Spawner.script = nil
-Spawner.monoScript = nil
+Spawner.cs = nil
+Spawner.mono = nil
 Spawner.sceneManager = nil
 Spawner.gameManager = nil
 
@@ -24,85 +24,100 @@ Spawner.pathList = nil
 Spawner.waveDataList = nil
 Spawner.obstacleList = nil
 
-Spawner.spawnedMonsterList = {}
-Spawner.spawnedTowerList = {}
-Spawner.spawnedObstacleList = {}
+Spawner.spawnedMonsterList = nil
+Spawner.spawnedTowerList = nil
+Spawner.spawnedObstacleList = nil
 
-Spawner.nowWaveSpawnList = {}
+Spawner.nowWaveSpawnList = nil
 
 function Spawner:Construct()
     self.gameManager = GameManager.Instance
+    self.sceneManager = GameManager.Instance.sceneManager
 
     local obj = Instantiate(Resources.Load('Prefabs/Spawner'))
     Destroy(obj:GetComponent('Spawner'))
-    self.script = obj:AddComponent(typeof(LuaSpawner))
-    self.monoScript = obj:AddComponent(typeof(MonoScript))
+    self.cs = LuaSpawner()
+    self.mono = obj:AddComponent(typeof(MonoScript))
 
     self:InitAction()
 
     self.nowWaveSpawnList = List:New()
-    self.spawnedMonsterList = List:New()
-    self.spawnedTowerList = List:New()
-    self.spawnedObstacleList = List:New()
+    self.spawnedMonsterList = CS.System.Collections.Generic.List(IMonster)()
+    self.spawnedTowerList = CS.System.Collections.Generic.List(ITower)()
+    self.spawnedObstacleList = CS.System.Collections.Generic.List(IObstacle)()
 end
 
 function Spawner.InitLua(self, mapData)
-    self.script:Init(mapData)
+    self.cs:Init(mapData)
 end
 
 function Spawner:InitAction()
     -- monoScript
-    self.monoScript.onUpdateAction = function()
+    self.mono.onUpdateAction = function()
         self:Update()
     end
     -- LuaSpawner
-    self.script.onGetCarrotAction = function()
+    self.cs.onGetCarrotAction = function()
         return self:GetCarrot()
     end
-    self.script.onPushAllGameObjectAction = function()
-        self:PushAllGameObject()
+    self.cs.onPushAllGameObjectAction = function()
+        self:OnPushAllGameObject()
     end
-    self.script.onWinJudgeAction = function()
+    self.cs.onWinJudgeAction = function()
         return self:WinJudge()
     end
-    self.script.onPauseWavesAction = function()
+    self.cs.onPauseWavesAction = function()
         self:PauseWaves()
     end
-    self.script.onResumeWavesAction = function()
+    self.cs.onResumeWavesAction = function()
         self:ResumeWaves()
     end
-    self.script.onStartSpawnAction = function()
+    self.cs.onStartSpawnAction = function()
         self:StartSpawn()
     end
-    self.script.onGetAllMonstersAction = function()
+    self.cs.onGetAllMonstersAction = function()
         return self:GetAllMonsters()
     end
-    self.script.onGetCollectingFiresTargetAction = function()
+    self.cs.onGetCollectingFiresTargetAction = function()
         return self:GetCollectingFiresTarget()
     end
-    self.script.onSetCollectingFiresAction = function(m)
+    self.cs.onSetCollectingFiresAction = function(m)
         self:SetCollectingFires(m)
     end
-    self.script.onCancelCollectingFiresTargetAction = function()
+    self.cs.onCancelCollectingFiresTargetAction = function()
         self:CancelCollectingFiresTarget()
     end
-    self.script.onInitAction = function(mapData)
+    self.cs.onInitAction = function(mapData)
         self:Init(mapData)
     end
-    self.script.onCreateTowerObjectAction = function(towerData, v3)
+    self.cs.onCreateTowerObjectAction = function(towerData, v3)
         self:CreateTowerObject(towerData, v3)
     end
-    self.script.onUpGradeTowerAction = function(v3)
+    self.cs.onUpGradeTowerAction = function(v3)
         self:UpGradeTower(v3)
     end
-    self.script.onSellTowerAction = function(v3)
+    self.cs.onSellTowerAction = function(v3)
         self:SellTower(v3)
     end
-    self.script.onGetNowWaveCountAction = function()
+    self.cs.onGetNowWaveCountAction = function()
         return self:GetNowWaveCount()
     end
 end
 
+-- 外部获取变量
+function Spawner:GetCarrot()
+    return nil
+end
+
+function Spawner:GetNowWaveCount()
+    return 0
+end
+
+function Spawner:GetAllMonsters()
+    return self.spawnedMonsterList
+end
+
+-- unity回调
 function Spawner:Update()
     if self.isStarted == false or self.isPaused == true then
         return
@@ -137,8 +152,6 @@ function Spawner:Init(mapData)
     self.pathList = mapData:GetPathList()
     self.waveDataList = mapData:GetWaveData()
     self.obstacleList = mapData:GetObstacle()
-
-    self.sceneManager = self.gameManager.sceneManager
 
     self:CreateObstacles()
 end
@@ -188,23 +201,19 @@ end
 
 function Spawner:SpawnerMonster(type, hard)
     -- 获取预设体
-    local prefabs = Resources.Load('Object/Monster/' .. type:ToString())
-    if prefabs == nil then
-        prefabs = Resources.Load('AB/Monster/' .. type:ToString())
-    end
-    local obj = Instantiate(prefabs)
-    DestroyImmediate(obj:GetComponent('Monster'), true)
+    local monsterObj = self.gameManager.poolManager:GetObject('Object/Monster/' .. type:ToString())
+    DestroyImmediate(monsterObj:GetComponent('Monster'), true)
     -- 实例化并进行lua初始化
-    local monster = Monster:New(obj)
+    local monster = Monster:New(monsterObj)
     -- 设置位置
-    monster.obj.transform:SetParent(self.script.transform)
+    monster.obj.transform:SetParent(self.cs.transform)
     monster.obj.transform.localScale = Vector3.one
     -- 添加进列表
-    self.spawnedMonsterList:Add(monster)
+    self.spawnedMonsterList:Add(monster.cs)
     -- 加载怪物数据
     local monsterDataMap = Resources.Load('Data/Monster/MonsterDataMap')
-    if monsterData == nil then
-        monsterData = Resources.Load('AB/Data/')
+    if monsterDataMap == nil then
+        monsterDataMap = Resources.Load('AB/Data/')
     end
     local monsterData = monsterDataMap:GetData(type)
     monster:Init(self.pathList, hard, monsterData)
@@ -229,12 +238,60 @@ function Spawner:ResumeWaves()
     self.isPaused = false
 end
 
-
 -- 塔升级出售
-function Spawner:UpGradeTower()
+function Spawner:UpGradeTower(pos)
+    local tower = CSMap.GetCell(pos).tower
+    if tower == nil then
+        return
+    end
+    local level = tower:GetLevel()
+    local data = tower:GetData()
+
+    if level == 2 then
+        return
+    end
+
+    if self.sceneManager:GetMoney() < data.prices[level + 1] then
+        return
+    end
+
+    tower:UpGrade()
+
+    self.sceneManager:UpdateMoney(-data.prices[level + 1])
+    GameFacade.Instance:SendNotification('HIDE_BUILT_PANEL')
 end
 
-function Spawner:SellTower()
+function Spawner:SellTower(pos)
+    local cell = CSMap.GetCell(pos)
+    local tower = cell.tower
+    if tower == nil then
+        return
+    end
+    local level = tower:GetLevel()
+    local data = tower:GetData()
+
+    self.sceneManager:UpdateMoney(data.sellPrices[level])
+    -- 回收对象
+    self.gameManager.poolManager:PushObject(tower.gameObject)
+    self.spawnedTowerList:Remove(tower)
+    cell.tower = nil
+    GameFacade.Instance:SendNotification('HIDE_BUILT_PANEL')
+end
+
+function Spawner:CreateTowerObject(towerData, pos)
+    if self.sceneManager:GetMoney() <= towerData.prices[0] then
+        return
+    end
+    local towerObj = self.gameManager.poolManager:GetObject(towerData.prefabsPath)
+    local tower = towerObj:GetComponent(typeof(ITower))
+    towerObj.transform:SetParent(self.mono.transform)
+    towerObj.transform.localScale = Vector3.one
+    towerObj.transform.position = pos
+
+    self.sceneManager:UpdateMoney(-towerData.prices[0])
+    CSMap.GetCell(pos).tower = tower
+    GameFacade.Instance:SendNotification('HIDE_BUILT_PANEL')
+    self.spawnedTowerList:Add(tower)
 end
 
 function Spawner:CreateObstacles()
@@ -242,17 +299,13 @@ function Spawner:CreateObstacles()
         if self.obstacleList[i].obstacleName ~= 'None' then
             local cell = self.obstacleList[i]
             local obj = self.gameManager.poolManager:GetObject('Object/Obstacle/' .. cell.obstacleName)
-            obj.transform:SetParent(self.script.transform)
+            obj.transform:SetParent(self.cs.transform)
             obj.transform.localScale = Vector3.one
             obj.transform.position = CSMap.GetCellCenterPos(cell)
             cell.obstacle = obj
-
-            self.spawnedObstacleList[i] = obj:GetComponent('Obstacle')
+            self.spawnedObstacleList:Add(obj:GetComponent(typeof(IMonster)))
         end
     end
-end
-
-function Spawner:CreateTowerObject()
 end
 
 -- 集火
@@ -293,4 +346,8 @@ function Spawner:OnPushAllObstacles()
         self.gameManager.poolManager:PushObject(self.spawnedObstacleList[i].Transform.gameObject)
     end
     self.spawnedObstacleList:Clear()
+end
+
+-- Win
+function Spawner:WinJudge()
 end
