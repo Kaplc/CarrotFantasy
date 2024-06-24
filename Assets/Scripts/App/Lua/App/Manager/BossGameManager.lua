@@ -121,7 +121,7 @@ function BossGameManager:InitGame(levelID)
 
     if self.spawner == nil then
         self.spawner = Spawner:New()
-        self.spawner:Init(self.mapData)
+        self.spawner.cs:Init(self.mapData)
     end
     
     self.money = self.mapData.money
@@ -138,7 +138,11 @@ function BossGameManager:InitGame(levelID)
 end
 
 function BossGameManager:JudgeWin()
-    print('JudgeWin')
+    if self.spawner.cs:WinJudge() == false then
+        return
+    end
+
+    self:GameWin()
 end
 
 function BossGameManager:StartGame()
@@ -172,6 +176,11 @@ end
 
 function BossGameManager:GameWin()
     print('game win')
+    -- 回收所有对象
+    self.spawner.cs:OnPushAllGameObject()
+    self.isStop = true
+    self.isPause = true
+    -- 打开胜利面板
 end
 
 function BossGameManager:NextLevel()

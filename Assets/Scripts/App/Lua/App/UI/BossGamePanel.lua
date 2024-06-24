@@ -70,9 +70,9 @@ function BossGamePanel:Update()
         end
 
         local t = self.time / self.totalTime
-        if t >= 0.75 then
+        if t >= 0.30 then
             self:UpdatePrize('Gold')
-        elseif t >= 0.5 and t < 0.75 then
+        elseif t >= 0.20 and t < 0.30 then
             self:UpdatePrize('Sliver')
         else
             self:UpdatePrize('Copper')

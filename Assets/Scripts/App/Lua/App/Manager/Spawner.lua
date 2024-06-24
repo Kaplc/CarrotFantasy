@@ -49,10 +49,6 @@ function Spawner:Construct()
     self.signTrf = self.mono.transform:Find('CollectingFiresSign')
 end
 
-function Spawner:Init(mapData)
-    self.cs:Init(mapData)
-end
-
 function Spawner:InitAction()
     -- monoScript
     self.mono.onUpdateAction = function()
@@ -138,6 +134,8 @@ function Spawner:Update()
         else
             self:HandleMonsterSpawning()
         end
+    else
+        self.spawnedComplete = true
     end
 
     -- 射线检测
@@ -333,7 +331,10 @@ end
 
 -- 缓存池
 function Spawner:OnPushAllGameObject()
-    self.signTrf.gameObject.SetActive(false)
+    self.signTrf.gameObject:SetActive(false)
+    self:OnPushAllMonsters()
+    self:OnPushAllObstacles()
+    self:OnPushAllTowers()
 end
 
 function Spawner:OnPushAllMonsters()
@@ -361,4 +362,19 @@ end
 
 -- Win
 function Spawner:WinJudge()
+    -- 出怪完成
+    if self.spawnedComplete == false then
+        return false
+    end
+
+    -- 所有怪物死亡
+    for i = 0, self.spawnedMonsterList.Count - 1 do
+        local m = self.spawnedMonsterList[i]
+        if m.IsDead == false then
+            return false
+        end
+    end
+
+    return true
+
 end
