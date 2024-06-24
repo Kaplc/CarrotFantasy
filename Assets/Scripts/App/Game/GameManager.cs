@@ -20,7 +20,7 @@ namespace App.Game
 
         public PoolManager poolManager;
         public BinaryManager binaryManager;
-        public FactoryManager factoryManager ;
+        public FactoryManager factoryManager;
         public MusicManger musicManger;
         public BuffManager buffManager;
         public XLuaManager xLuaManager;
@@ -29,10 +29,10 @@ namespace App.Game
         public SDKManager sdkManager;
 
         #endregion
-        
+
         public ISceneManger sceneManager;
         public IDataManager dataManager;
-        
+
         protected override void Awake()
         {
             base.Awake();
@@ -50,24 +50,24 @@ namespace App.Game
             eventCenter = EventCenter.Instance;
 
             // 初始化Sdk
-            GameObject sdkManagerObj = new GameObject(name:"SDKManager");
+            GameObject sdkManagerObj = new GameObject(name: "SDKManager");
             sdkManager = sdkManagerObj.AddComponent<SDKManager>();
             DontDestroyOnLoad(sdkManagerObj);
             // 自定义lua解析路径 
-            string path = Application.dataPath + "/Scripts/App/Lua/"; 
+            string path = Application.dataPath + "/Scripts/App/Lua/";
             xLuaManager.AddLuaFilePath(path);
             xLuaManager.DoFile("Init");
-            
+
             DOTween.Init();
             #endregion
-            
-            
+
+
             DontDestroyOnLoad(gameObject);
 
             // 初始化数据
             dataManager = new DataManager();
             // 初始化完成跳转开始场景
-            LoadScene("2.BeginScene",() =>
+            LoadScene("2.BeginScene", () =>
             {
                 GameFacade.Instance.SendNotification(NotificationName.UI.HIDE_INIT_PANEL);
                 GameFacade.Instance.SendNotification(NotificationName.UI.SHOW_BEGIN_PANEL);
@@ -83,6 +83,10 @@ namespace App.Game
         /// </summary>
         public void SetSceneManager(ISceneManger manger)
         {
+            if (sceneManager != null)
+            {
+                sceneManager.ExitScene();
+            }
             sceneManager = manger;
         }
 
@@ -100,14 +104,14 @@ namespace App.Game
         {
             ZFrameWorkSceneManager.Instance.LoadSceneAsync(sceneName, callBack);
         }
-        
+
         public void SaveStatisticalData(StatisticalData data)
         {
             dataManager.StatisticalDataManager.SaveStatisticalData(data);
         }
-        
+
         #endregion
-        
+
         #region 音乐相关
 
         public void StopMusic()

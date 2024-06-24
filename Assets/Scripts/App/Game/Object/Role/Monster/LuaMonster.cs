@@ -35,6 +35,8 @@ namespace App.Game.Object.Monster
         public UnityAction onDeadAction;
 
         public UnityAction<BaseBuffEffect> onAddBuffEffectAction;
+
+        public UnityAction onMouseDownAction;
         
         public float Hp { get => (float)onGetHpAction?.Invoke(); set => onSetHpAction?.Invoke(value); }
         public float Growth { get => (float)onGetGrowthAction?.Invoke(); set => onSetGrowthAction?.Invoke(value); }
@@ -57,5 +59,7 @@ namespace App.Game.Object.Monster
         public override void Dead() => onDeadAction?.Invoke();
 
         public void AddBuffEffect(BaseBuffEffect buffEffect) => onAddBuffEffectAction?.Invoke(buffEffect);
+
+        public void OnMouseDown() => onMouseDownAction?.Invoke();
     }
 }

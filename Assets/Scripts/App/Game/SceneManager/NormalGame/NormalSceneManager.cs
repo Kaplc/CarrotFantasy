@@ -368,5 +368,10 @@ namespace App.Game.SceneManager.NormalGame
         }
 
         #endregion
+
+        public void ExitScene()
+        {
+            Destroy(gameObject);
+        }
     }
 }

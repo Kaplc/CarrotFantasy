@@ -34,6 +34,8 @@ namespace App.Game.SceneManager
         public UnityAction<int> onUpdateKillMonsterCountAction;
         public UnityAction<int> onUpdateMoneyAction;
 
+        public UnityAction onExitSceneAction;
+
         public ISceneDataManager SceneDataManager
         {
             get => onGetSceneDataManagerAction?.Invoke();
@@ -73,5 +75,7 @@ namespace App.Game.SceneManager
         public int GetMoney() => (int)onGetMoneyFunc?.Invoke();
         public void UpdateKillMonsterCount(int v) => onUpdateKillMonsterCountAction?.Invoke(v);
         public void UpdateMoney(int v) => onUpdateMoneyAction?.Invoke(v);
+
+        public void ExitScene() => onExitSceneAction?.Invoke();
     }
 }

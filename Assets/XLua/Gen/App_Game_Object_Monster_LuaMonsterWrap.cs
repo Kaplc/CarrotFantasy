@@ -21,7 +21,7 @@ namespace XLua.CSObjectWrap
         {
 			ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
 			System.Type type = typeof(App.Game.Object.Monster.LuaMonster);
-			Utils.BeginObjectRegister(type, L, translator, 0, 8, 21, 19);
+			Utils.BeginObjectRegister(type, L, translator, 0, 9, 22, 20);
 			
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "OnGet", _m_OnGet);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "OnPush", _m_OnPush);
@@ -31,6 +31,7 @@ namespace XLua.CSObjectWrap
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "GetSignFather", _m_GetSignFather);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "Dead", _m_Dead);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "AddBuffEffect", _m_AddBuffEffect);
+			Utils.RegisterFunc(L, Utils.METHOD_IDX, "OnMouseDown", _m_OnMouseDown);
 			
 			
 			Utils.RegisterFunc(L, Utils.GETTER_IDX, "Hp", _g_get_Hp);
@@ -54,6 +55,7 @@ namespace XLua.CSObjectWrap
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "onGetSignFatherAction", _g_get_onGetSignFatherAction);
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "onDeadAction", _g_get_onDeadAction);
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "onAddBuffEffectAction", _g_get_onAddBuffEffectAction);
+            Utils.RegisterFunc(L, Utils.GETTER_IDX, "onMouseDownAction", _g_get_onMouseDownAction);
             
 			Utils.RegisterFunc(L, Utils.SETTER_IDX, "Hp", _s_set_Hp);
             Utils.RegisterFunc(L, Utils.SETTER_IDX, "Growth", _s_set_Growth);
@@ -74,6 +76,7 @@ namespace XLua.CSObjectWrap
             Utils.RegisterFunc(L, Utils.SETTER_IDX, "onGetSignFatherAction", _s_set_onGetSignFatherAction);
             Utils.RegisterFunc(L, Utils.SETTER_IDX, "onDeadAction", _s_set_onDeadAction);
             Utils.RegisterFunc(L, Utils.SETTER_IDX, "onAddBuffEffectAction", _s_set_onAddBuffEffectAction);
+            Utils.RegisterFunc(L, Utils.SETTER_IDX, "onMouseDownAction", _s_set_onMouseDownAction);
             
 			
 			Utils.EndObjectRegister(type, L, translator, null, null,
@@ -330,6 +333,33 @@ namespace XLua.CSObjectWrap
                     App.Game.Generic.BaseObject.BaseBuffEffect _buffEffect = (App.Game.Generic.BaseObject.BaseBuffEffect)translator.GetObject(L, 2, typeof(App.Game.Generic.BaseObject.BaseBuffEffect));
                     
                     gen_to_be_invoked.AddBuffEffect( _buffEffect );
+                    
+                    
+                    
+                    return 0;
+                }
+                
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _m_OnMouseDown(RealStatePtr L)
+        {
+		    try {
+            
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+            
+            
+                App.Game.Object.Monster.LuaMonster gen_to_be_invoked = (App.Game.Object.Monster.LuaMonster)translator.FastGetCSObj(L, 1);
+            
+            
+                
+                {
+                    
+                    gen_to_be_invoked.OnMouseDown(  );
                     
                     
                     
@@ -639,6 +669,20 @@ namespace XLua.CSObjectWrap
             return 1;
         }
         
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _g_get_onMouseDownAction(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			
+                App.Game.Object.Monster.LuaMonster gen_to_be_invoked = (App.Game.Object.Monster.LuaMonster)translator.FastGetCSObj(L, 1);
+                translator.Push(L, gen_to_be_invoked.onMouseDownAction);
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 1;
+        }
+        
         
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -919,6 +963,21 @@ namespace XLua.CSObjectWrap
 			
                 App.Game.Object.Monster.LuaMonster gen_to_be_invoked = (App.Game.Object.Monster.LuaMonster)translator.FastGetCSObj(L, 1);
                 gen_to_be_invoked.onAddBuffEffectAction = translator.GetDelegate<UnityEngine.Events.UnityAction<App.Game.Generic.BaseObject.BaseBuffEffect>>(L, 2);
+            
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 0;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _s_set_onMouseDownAction(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			
+                App.Game.Object.Monster.LuaMonster gen_to_be_invoked = (App.Game.Object.Monster.LuaMonster)translator.FastGetCSObj(L, 1);
+                gen_to_be_invoked.onMouseDownAction = translator.GetDelegate<UnityEngine.Events.UnityAction>(L, 2);
             
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);

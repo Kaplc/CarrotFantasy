@@ -100,6 +100,9 @@ function BossGameManager:InitCsAction()
     self.cs.onUpdateMoneyAction = function(v)
         self:UpdateMoney(v)
     end
+    self.cs.onExitSceneAction = function ()
+        self:ExitScene()
+    end
 end
 
 function BossGameManager:InitGame(levelID)
@@ -113,12 +116,12 @@ function BossGameManager:InitGame(levelID)
     -- 初始化
     if self.map == nil then
         self.map = Map:New()
-        self.map:InitLua(self.mapData)
+        self.map:Init(self.mapData)
     end
 
     if self.spawner == nil then
         self.spawner = Spawner:New()
-        self.spawner:InitLua(self.mapData)
+        self.spawner:Init(self.mapData)
     end
     
     self.money = self.mapData.money
@@ -186,11 +189,17 @@ end
 function BossGameManager:IsStop()
     return self.isStop
 end
+function BossGameManager:GetMoney()
+    return self.money
+end
+
+function BossGameManager:GetSpawner()
+    return self.spawner.cs
+end
 function BossGameManager:SetSpwaner(spawner)
     self.cs.Spawner = spawner
     self.spawner = spawner
 end
-
 function BossGameManager:SetSceneDataManager(manager)
     self.sceneDataManager = manager
 end
@@ -199,12 +208,13 @@ function BossGameManager:GetSceneDataManager()
     return self.sceneDataManager
 end
 
-function BossGameManager:GetMoney()
-    return self.money
+-- 集火
+function BossGameManager:SetFireTarget(target)
+    self.spawner:SetCollectingFires(target)
 end
 
-function BossGameManager:GetSpawner()
-    return self.spawner.cs
+function BossGameManager:CancelFire()
+    self.spawner:CancelCollectingFiresTarget()
 end
 
 -- 更新数据
@@ -216,5 +226,9 @@ function BossGameManager:UpdateMoney(v)
     self.money = self.money + v
     -- 通知面板更新数据
     UIManager:GetPanel('BossGamePanel'):UpdateMoney(self.money)
+end
+
+function BossGameManager:ExitScene()
+    
 end
 

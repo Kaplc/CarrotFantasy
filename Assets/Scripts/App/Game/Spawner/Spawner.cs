@@ -123,7 +123,20 @@ namespace App.Game.Spawner
         }
 
         #region 集火相关
+        public virtual void SetCollectingFires(IMonster monster)
+        {
+            for (int i = 0; i < towers.Count; i++)
+            {
+                towers[i].SetCollectingFiresTarget(monster);
+            }
 
+            // 设置集火标志
+            collectingFiresTarget = monster;
+            signTrans.gameObject.SetActive(true);
+            signTrans.SetParent(monster.GetSignFather());
+            signTrans.localPosition = Vector3.zero;
+            signTrans.localScale = Vector3.one;
+        }
         public virtual IMonster GetCollectingFiresTarget()
         {
             return collectingFiresTarget;
@@ -278,20 +291,7 @@ namespace App.Game.Spawner
 
         #region 创建对象
 
-        public virtual void SetCollectingFires(IMonster monster)
-        {
-            for (int i = 0; i < towers.Count; i++)
-            {
-                towers[i].SetCollectingFiresTarget(monster);
-            }
 
-            // 设置集火标志
-            collectingFiresTarget = monster;
-            signTrans.gameObject.SetActive(true);
-            signTrans.SetParent(monster.GetSignFather());
-            signTrans.localPosition = Vector3.zero;
-            signTrans.localScale = Vector3.one;
-        }
 
         /// <summary>
         /// 根据保存的地图数据生成障碍物

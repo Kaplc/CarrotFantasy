@@ -45,9 +45,11 @@ function Spawner:Construct()
     self.spawnedMonsterList = CS.System.Collections.Generic.List(IMonster)()
     self.spawnedTowerList = CS.System.Collections.Generic.List(ITower)()
     self.spawnedObstacleList = CS.System.Collections.Generic.List(IObstacle)()
+
+    self.signTrf = self.mono.transform:Find('CollectingFiresSign')
 end
 
-function Spawner.InitLua(self, mapData)
+function Spawner:Init(mapData)
     self.cs:Init(mapData)
 end
 
@@ -137,6 +139,9 @@ function Spawner:Update()
             self:HandleMonsterSpawning()
         end
     end
+
+    -- 射线检测
+    
 end
 
 function Spawner:Init(mapData)
@@ -311,6 +316,10 @@ end
 -- 集火
 function Spawner:SetCollectingFires(monster)
     self.fireTarget = monster
+    self.signTrf.gameObject:SetActive(true)
+    self.signTrf:SetParent(monster:GetSignFather())
+    self.signTrf.localPosition = Vector3.zero
+    self.signTrf.localScale = Vector3.one
 end
 function Spawner:GetCollectingFiresTarget()
     return self.fireTarget
@@ -318,6 +327,8 @@ end
 
 function Spawner:CancelCollectingFiresTarget()
     self.fireTarget = nil
+    self.signTrf.gameObject:SetActive(false)
+    self.signTrf:SetParent(self.mono.transform)
 end
 
 -- 缓存池

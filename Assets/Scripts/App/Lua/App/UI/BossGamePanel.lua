@@ -52,6 +52,8 @@ function BossGamePanel.Init(self)
 
     -- 默认金牌
     self:UpdatePrize('Gold')
+    -- 默认满血
+    self:UpdateHP(1)
     -- 显示倒计时面板
     local countDownPanel = UIManager:ShowPanel('CountDownPanel', EUILayers.Bottom)
     countDownPanel.panelObj:GetComponent('CountDownPanel'):StartCountDown()

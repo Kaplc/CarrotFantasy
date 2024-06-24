@@ -101,6 +101,9 @@ function Monster:InitCsAction()
     self.cs.onAddBuffEffectAction = function(buffEffct)
         self:AddBuffEffect(buffEffct)
     end
+    self.cs.onMouseDownAction = function()
+        self:OnMouseDown()
+    end
 
     -- unity 回调
     self.mono.onUpdateAction = function()
@@ -117,6 +120,23 @@ function Monster:Update()
     if Time.time - self.lastWoundTime > 2 or self.isDead == true then
         self.hpBg.gameObject:SetActive(false)
     end
+end
+
+function Monster:OnMouseDown()
+    if self.isDead == true then
+        return
+    end
+
+    local gr = self.gameManager.uiManager.canvas:GetComponent('GraphicRaycaster')
+    local eventData = CS.UnityEngine.EventSystems.PointerEventData(CS.UnityEngine.EventSystems.EventSystem.current)
+    eventData.position = Input.mousePosition
+    local results = CS.System.Collections.Generic.List(CS.UnityEngine.EventSystems.RaycastResult)()
+    gr:Raycast(eventData, results)
+    if results.Count > 0 and results[0].gameObject.name ~= 'ImageAttackRange' then
+        return
+    end
+
+    self.gameManager.sceneManager:SetFireTarget(self.cs)
 end
 
 -- 移动

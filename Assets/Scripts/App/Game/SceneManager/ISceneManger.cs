@@ -54,5 +54,7 @@ namespace App.Game.SceneManager
         void UpdateMoney(int v);
 
         #endregion
+
+        void ExitScene();
     }
 }

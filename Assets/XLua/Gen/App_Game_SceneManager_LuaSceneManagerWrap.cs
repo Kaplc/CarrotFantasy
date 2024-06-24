@@ -21,7 +21,7 @@ namespace XLua.CSObjectWrap
         {
 			ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
 			System.Type type = typeof(App.Game.SceneManager.LuaSceneManager);
-			Utils.BeginObjectRegister(type, L, translator, 0, 19, 27, 23);
+			Utils.BeginObjectRegister(type, L, translator, 0, 20, 28, 24);
 			
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "SetSpawner", _m_SetSpawner);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "SetSceneDataManager", _m_SetSceneDataManager);
@@ -42,6 +42,7 @@ namespace XLua.CSObjectWrap
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "GetMoney", _m_GetMoney);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "UpdateKillMonsterCount", _m_UpdateKillMonsterCount);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "UpdateMoney", _m_UpdateMoney);
+			Utils.RegisterFunc(L, Utils.METHOD_IDX, "ExitScene", _m_ExitScene);
 			
 			
 			Utils.RegisterFunc(L, Utils.GETTER_IDX, "SceneDataManager", _g_get_SceneDataManager);
@@ -71,6 +72,7 @@ namespace XLua.CSObjectWrap
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "onGetMoneyFunc", _g_get_onGetMoneyFunc);
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "onUpdateKillMonsterCountAction", _g_get_onUpdateKillMonsterCountAction);
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "onUpdateMoneyAction", _g_get_onUpdateMoneyAction);
+            Utils.RegisterFunc(L, Utils.GETTER_IDX, "onExitSceneAction", _g_get_onExitSceneAction);
             
 			Utils.RegisterFunc(L, Utils.SETTER_IDX, "onGetSceneDataManagerAction", _s_set_onGetSceneDataManagerAction);
             Utils.RegisterFunc(L, Utils.SETTER_IDX, "onGetSpawnerAction", _s_set_onGetSpawnerAction);
@@ -95,6 +97,7 @@ namespace XLua.CSObjectWrap
             Utils.RegisterFunc(L, Utils.SETTER_IDX, "onGetMoneyFunc", _s_set_onGetMoneyFunc);
             Utils.RegisterFunc(L, Utils.SETTER_IDX, "onUpdateKillMonsterCountAction", _s_set_onUpdateKillMonsterCountAction);
             Utils.RegisterFunc(L, Utils.SETTER_IDX, "onUpdateMoneyAction", _s_set_onUpdateMoneyAction);
+            Utils.RegisterFunc(L, Utils.SETTER_IDX, "onExitSceneAction", _s_set_onExitSceneAction);
             
 			
 			Utils.EndObjectRegister(type, L, translator, null, null,
@@ -663,6 +666,33 @@ namespace XLua.CSObjectWrap
             
         }
         
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _m_ExitScene(RealStatePtr L)
+        {
+		    try {
+            
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+            
+            
+                App.Game.SceneManager.LuaSceneManager gen_to_be_invoked = (App.Game.SceneManager.LuaSceneManager)translator.FastGetCSObj(L, 1);
+            
+            
+                
+                {
+                    
+                    gen_to_be_invoked.ExitScene(  );
+                    
+                    
+                    
+                    return 0;
+                }
+                
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            
+        }
+        
         
         
         
@@ -1044,6 +1074,20 @@ namespace XLua.CSObjectWrap
             return 1;
         }
         
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _g_get_onExitSceneAction(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			
+                App.Game.SceneManager.LuaSceneManager gen_to_be_invoked = (App.Game.SceneManager.LuaSceneManager)translator.FastGetCSObj(L, 1);
+                translator.Push(L, gen_to_be_invoked.onExitSceneAction);
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 1;
+        }
+        
         
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -1384,6 +1428,21 @@ namespace XLua.CSObjectWrap
 			
                 App.Game.SceneManager.LuaSceneManager gen_to_be_invoked = (App.Game.SceneManager.LuaSceneManager)translator.FastGetCSObj(L, 1);
                 gen_to_be_invoked.onUpdateMoneyAction = translator.GetDelegate<UnityEngine.Events.UnityAction<int>>(L, 2);
+            
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 0;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _s_set_onExitSceneAction(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			
+                App.Game.SceneManager.LuaSceneManager gen_to_be_invoked = (App.Game.SceneManager.LuaSceneManager)translator.FastGetCSObj(L, 1);
+                gen_to_be_invoked.onExitSceneAction = translator.GetDelegate<UnityEngine.Events.UnityAction>(L, 2);
             
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
