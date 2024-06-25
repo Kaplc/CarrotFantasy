@@ -1,5 +1,7 @@
 require('App/Generic/SpawnMonsterData')
 require('App/Object/Monster')
+require('App/Generic/PrizeCell')
+require('App/Generic/ObstaclePrize')
 
 Spawner = Object:SubClass('Spawner')
 
@@ -23,6 +25,9 @@ Spawner.monsterSpawnTimer = 0
 Spawner.pathList = nil
 Spawner.waveDataList = nil
 Spawner.obstacleList = nil
+Spawner.prizeTowerList = nil
+
+Spawner.obstaclePrizeList = nil
 
 Spawner.spawnedMonsterList = nil
 Spawner.spawnedTowerList = nil
@@ -45,6 +50,7 @@ function Spawner:Construct()
     self.spawnedMonsterList = CS.System.Collections.Generic.List(IMonster)()
     self.spawnedTowerList = CS.System.Collections.Generic.List(ITower)()
     self.spawnedObstacleList = CS.System.Collections.Generic.List(IObstacle)()
+    self.obstaclePrizeList = List:New()
 
     self.signTrf = self.mono.transform:Find('CollectingFiresSign')
 end
@@ -138,8 +144,27 @@ function Spawner:Update()
         self.spawnedComplete = true
     end
 
-    -- 射线检测
-    
+    for i = 0, self.obstaclePrizeList.count - 1 do
+        local obstaclePrize = self.obstaclePrizeList:Get(i)
+        if obstaclePrize.obstacle.IsDead == true and obstaclePrize:HasPrize() == true then
+            -- 生成奖励
+            self:CreatePrize(obstaclePrize)
+            self.obstaclePrizeList:DelayRemove(obstaclePrize)
+        end
+    end
+    self.obstaclePrizeList:StartRemove()
+
+end
+
+function Spawner:CreatePrize(obstaclePrize)
+    for i = 0, obstaclePrize.prizeCellList.count - 1 do
+        local prizeCell = obstaclePrize.prizeCellList:Get(i)
+
+        -- 加载towerData
+        local towerDataMap = Resources.Load('Data/Tower/TowerMap')
+        local towerdata = towerDataMap:GetData(prizeCell.prizeTowerType)
+        self:CreateTowerObject(towerdata, CSMap.GetCellCenterPos(prizeCell.cell)) 
+    end
 end
 
 function Spawner:Init(mapData)
@@ -155,6 +180,7 @@ function Spawner:Init(mapData)
     self.pathList = mapData:GetPathList()
     self.waveDataList = mapData:GetWaveData()
     self.obstacleList = mapData:GetObstacle()
+    self.prizeTowerList = mapData.towerList
 
     self:CreateObstacles()
 end
@@ -299,14 +325,62 @@ end
 
 function Spawner:CreateObstacles()
     for i = 0, self.obstacleList.Count - 1 do
-        if self.obstacleList[i].obstacleName ~= 'None' then
+        local name = self.obstacleList[i].obstacleName
+        if name ~= 'None' then
             local cell = self.obstacleList[i]
             local obj = self.gameManager.poolManager:GetObject('Object/Obstacle/' .. cell.obstacleName)
             obj.transform:SetParent(self.cs.transform)
             obj.transform.localScale = Vector3.one
             obj.transform.position = CSMap.GetCellCenterPos(cell)
             cell.obstacle = obj
-            self.spawnedObstacleList:Add(obj:GetComponent(typeof(IMonster)))
+            self.spawnedObstacleList:Add(obj:GetComponent(typeof(IObstacle)))
+            -- 绑定摧毁奖励
+            -- 判断是否有奖励在对应方格中
+            local obstaclePrize = ObstaclePrize:New(obj:GetComponent(typeof(IObstacle)))
+
+            if string.find(name, '1X1') then
+                -- 1X1
+                for i = 0, self.prizeTowerList.Count - 1 do
+                    if self.prizeTowerList[i].x == cell.X and self.prizeTowerList[i].y == cell.Y then
+                        local prizeCell = PrizeCell:New(cell, self.prizeTowerList[i].towerType)
+                        obstaclePrize:AddPrizeCell(prizeCell)
+                    end
+                end
+            elseif string.find(name, '1X2') then
+                -- 1X2
+                for i = 0, self.prizeTowerList.Count - 1 do
+                    if self.prizeTowerList[i].x == cell.X and self.prizeTowerList[i].y == cell.Y then
+                        local prizeCell = PrizeCell:New(cell, self.prizeTowerList[i].towerType)
+                        self.prizeCellList:Add(prizeCell)
+                    end
+                    if self.prizeTowerList[i].x + 1 == cell.X + 1 and self.prizeTowerList[i].y == cell.Y then
+                        local prizeCell = PrizeCell:New(cell, self.prizeTowerList[i].towerType)
+                        self.prizeCellList:Add(prizeCell)
+                    end
+                end
+            elseif string.find(name, '4X4') then
+                -- 4X4
+                for i = 0, self.prizeTowerList.Count - 1 do
+                    if self.prizeTowerList[i].x == cell.X and self.prizeTowerList[i].y == cell.Y then
+                        local prizeCell = PrizeCell:New(cell, self.prizeTowerList[i].towerType)
+                        self.prizeCellList:Add(prizeCell)
+                    end
+                    if self.prizeTowerList[i].x + 1 == cell.X + 1 and self.prizeTowerList[i].y == cell.Y then
+                        local prizeCell = PrizeCell:New(cell, self.prizeTowerList[i].towerType)
+                        self.prizeCellList:Add(prizeCell)
+                    end
+                    if self.prizeTowerList[i].x == cell.X and self.prizeTowerList[i].y + 1 == cell.Y + 1 then
+                        local prizeCell = PrizeCell:New(cell, self.prizeTowerList[i].towerType)
+                        self.prizeCellList:Add(prizeCell)
+                    end
+                    if self.prizeTowerList[i].x + 1 == cell.X + 1 and self.prizeTowerList[i].y + 1 == cell.Y + 1 then
+                        local prizeCell = PrizeCell:New(cell, self.prizeTowerList[i].towerType)
+                        self.prizeCellList:Add(prizeCell)
+                    end
+                end
+            end
+
+            self.obstaclePrizeList:Add(obstaclePrize)
         end
     end
 end
@@ -376,5 +450,4 @@ function Spawner:WinJudge()
     end
 
     return true
-
 end

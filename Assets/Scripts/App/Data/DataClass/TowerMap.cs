@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using App.Data.DataClass.Game.Object;
 using App.Static.Enum;
 using UnityEngine;
+using XLua;
 
 namespace App.Data.DataClass
 {
     [CreateAssetMenu(fileName = "TowerMap", menuName = "TowerMap", order = 0)]
-    public class TowerMap: ScriptableObject
+    [LuaCallCSharp]
+    public class TowerMap : ScriptableObject
     {
         public List<TowerMapItem> towerMapDic = new List<TowerMapItem>();
 
@@ -21,6 +23,32 @@ namespace App.Data.DataClass
                     Debug.LogWarning($"Duplicate towerType found: {item.towerType}");
                 }
             }
+        }
+
+        public TowerData GetData(ETowerType type)
+        {
+            foreach (var item in towerMapDic)
+            {
+                if (item.towerType == type)
+                {
+                    return item.towerData;
+                }
+            }
+
+            return null;
+        }
+
+        public TowerData GetData(string type)
+        {
+            foreach (var item in towerMapDic)
+            {
+                if (item.towerType.ToString() == type)
+                {
+                    return item.towerData;
+                }
+            }
+
+            return null;
         }
     }
 
