@@ -60,7 +60,7 @@ function BossGamePanel.Init(self)
 end
 
 function BossGamePanel:Update()
-    if self.startGame == true then
+    if self.startGame == true and GameManager.Instance.sceneManager:IsPause() == false  then
         self.time = self.time - Time.deltaTime
         if self.time > 0 then
             self:UpdateTime(math.ceil(self.time))
