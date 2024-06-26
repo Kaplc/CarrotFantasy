@@ -3,9 +3,9 @@ ObstaclePrize = Object:SubClass('ObstaclePrize')
 ObstaclePrize.obstacle = nil
 ObstaclePrize.prizeCellList = nil
 
-function ObstaclePrize:Construct(args)
+function ObstaclePrize:Construct(obstacle)
     self.prizeCellList = List:New()
-    self.obstacle = args[1]
+    self.obstacle = obstacle
 end
 
 function ObstaclePrize:AddPrizeCell(cell)

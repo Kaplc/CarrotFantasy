@@ -4,8 +4,8 @@ SpawnMonsterData.monsterType = nil
 SpawnMonsterData.nextSpawnTime = 0
 SpawnMonsterData.hard = 0
 
-function SpawnMonsterData:Construct(args)
-    self.monsterType = args[1]
-    self.nextSpawnTime = args[2]
-    self.hard = args[3]
+function SpawnMonsterData:Construct(type, time, hard)
+    self.monsterType = type
+    self.nextSpawnTime = time
+    self.hard = hard
 end

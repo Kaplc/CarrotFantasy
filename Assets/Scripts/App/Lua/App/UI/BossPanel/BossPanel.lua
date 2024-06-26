@@ -99,22 +99,22 @@ function BossPanel.Init(self)
     end
 end
 
-function BossPanel.Hide(self)
+function BossPanel:Hide()
     self.__base:Hide()
 end
 
-function BossPanel.Update(self)
+function BossPanel:Update()
     self.sr.horizontalNormalizedPosition =
         Mathf.Lerp(self.sr.horizontalNormalizedPosition, (self.index - 1) / (self.totalCount - 1), self.speed)
 end
 
 -- 开始拖动
-function BossPanel.OnBeginDrag(self, eventData)
+function BossPanel:OnBeginDrag(eventData)
     self.offSetMouseX = eventData.position.x
 end
 
 -- 结束拖动
-function BossPanel.OnEndDrag(self, eventData)
+function BossPanel:OnEndDrag(eventData)
     local offSetX = eventData.position.x - self.offSetMouseX
     if offSetX > self.slidingThreshold then
         self:LastPage()
@@ -123,7 +123,7 @@ function BossPanel.OnEndDrag(self, eventData)
     end
 end
 
-function BossPanel.NextPage(self)
+function BossPanel:NextPage()
     self.index = self.index + 1
     if self.index > self.totalCount then
         self.index = self.totalCount
@@ -132,7 +132,7 @@ function BossPanel.NextPage(self)
     self:UpdateInfo()
 end
 
-function BossPanel.LastPage(self)
+function BossPanel:LastPage()
     self.index = self.index - 1
     if self.index < 1 then
         self.index = 1
@@ -141,7 +141,7 @@ function BossPanel.LastPage(self)
     self:UpdateInfo()
 end
 
-function BossPanel.UpdateInfo(self)
+function BossPanel:UpdateInfo()
     -- 更新怪物名字和血量
     for i = 0, self.namesTsf.childCount - 1 do
         self.namesList[i].gameObject:SetActive(false)

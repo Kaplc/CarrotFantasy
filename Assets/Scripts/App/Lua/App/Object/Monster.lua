@@ -1,11 +1,11 @@
 Monster = Object:SubClass('Monster')
 
-Monster.cs = nil
-Monster.mono = nil
-Monster.obj = nil
+Monster.cs = {}
+Monster.mono = {}
+Monster.obj = {}
 Monster.gameManager = nil
 
-Monster.data = nil
+Monster.data = null
 Monster.hp = 0
 Monster.isDead = false
 Monster.growth = 1
@@ -24,10 +24,10 @@ Monster.animator = nil
 Monster.canMove = false
 Monster.buffsList = nil
 
-function Monster:Construct(args)
+function Monster:Construct(monsterObj)
     self.gameManager = GameManager.Instance
     self.buffsList = List:New()
-    self.obj = args[1]
+    self.obj = monsterObj
 
     if self.obj:GetComponent(typeof(LuaMonster)) == nil then
         self.cs = self.obj:AddComponent(typeof(LuaMonster))

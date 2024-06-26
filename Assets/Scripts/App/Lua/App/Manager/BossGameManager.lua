@@ -25,6 +25,7 @@ BossGameManager.isPause = true
 
 BossGameManager.killMonsterCount = 0
 BossGameManager.getAllmoney = 0
+BossGameManager.levelID = 0
 
 function BossGameManager:Init()
     -- 初始化场景管理器
@@ -110,12 +111,13 @@ function BossGameManager:InitGame(levelID)
     self.isPause = true
     self.getAllmoney = 0
     self.killMonsterCount = 0
+    self.levelID = levelID
 
     -- 加载地图数据
-    self.mapData = self.gameDataManager:Load('AB/Data/BossMap' .. levelID)
+    self.mapData = self.gameDataManager:Load('AB/Data/Map/BossMap' .. levelID)
     -- 初始化
     if self.map == nil then
-        self.map = Map:New()
+        self.map = Map()
         self.map:Init(self.mapData)
     end
 

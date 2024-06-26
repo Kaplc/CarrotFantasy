@@ -34,7 +34,7 @@ function UIManager:ShowPanel(panelName, layerType)
 
     -- 加载面板预设体
     if self.panelDic[panelName] == nil then
-        local prefabs = Resources.Load('AB/' .. panelName)
+        local prefabs = Resources.Load('AB/UI/' .. panelName)
         if prefabs == nil then
             prefabs = Resources.Load('UI/' .. panelName)
         end
