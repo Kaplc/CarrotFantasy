@@ -153,7 +153,6 @@ function Spawner:Update()
         end
     end
     self.obstaclePrizeList:StartRemove()
-
 end
 
 function Spawner:CreatePrize(obstaclePrize)
@@ -162,8 +161,16 @@ function Spawner:CreatePrize(obstaclePrize)
 
         -- 加载towerData
         local towerDataMap = Resources.Load('Data/Tower/TowerMap')
-        local towerdata = towerDataMap:GetData(prizeCell.prizeTowerType)
-        self:CreateTowerObject(towerdata, CSMap.GetCellCenterPos(prizeCell.cell)) 
+        local towerData = towerDataMap:GetData(prizeCell.prizeTowerType)
+        local pos = CSMap.GetCellCenterPos(prizeCell.cell)
+        local towerObj = self.gameManager.poolManager:GetObject(towerData.prefabsPath)
+        local tower = towerObj:GetComponent(typeof(ITower))
+        towerObj.transform:SetParent(self.mono.transform)
+        towerObj.transform.localScale = Vector3.one
+        towerObj.transform.position = pos
+
+        CSMap.GetCell(pos).tower = tower
+        self.spawnedTowerList:Add(tower)
     end
 end
 

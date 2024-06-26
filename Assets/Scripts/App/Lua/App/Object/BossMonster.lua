@@ -1,0 +1,2 @@
+BossMonster = Monster:Subclass("BossMonster")
+
