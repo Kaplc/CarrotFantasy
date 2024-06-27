@@ -12,5 +12,9 @@ require('Library/List')
 require("Library/NameSpace")
 require("Library/Null")
 -- 初始化类
+require('App/Manager/GameManager')
 require("App/Manager/UIManager/UIManager")
 require('App/Manager/BossGameManager')
+
+-- 
+GameManager:Init()

@@ -57,9 +57,9 @@ function BossPanel.Init(self)
 
     self.btnStart.onClick:AddListener(
         function()
-            GameManager.Instance.uiManager:Hide('BeginPanel', false)
+            GameManager.cs.uiManager:Hide('BeginPanel', false)
             UIManager:HidePanel('BossPanel', false)
-            GameManager.Instance:LoadGameScene('BossGameScene', self.index)
+            GameManager.cs:LoadGameScene('BossGameScene', self.index)
         end
     )
 

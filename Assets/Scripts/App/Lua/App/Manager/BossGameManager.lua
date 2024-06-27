@@ -12,6 +12,7 @@ require('App/Manager/BossGameDataManager')
 BossGameManager = Object:SubClass('BossGameManager')
 
 BossGameManager.cs = nil
+BossGameManager.mono = nil
 
 BossGameManager.gameDataManager = nil
 BossGameManager.map = nil
@@ -27,21 +28,29 @@ BossGameManager.killMonsterCount = 0
 BossGameManager.getAllmoney = 0
 BossGameManager.levelID = 0
 
-function BossGameManager:Init()
+-- 计时
+BossGameManager.time = 0
+BossGameManager.totalTime = 240
+BossGameManager.gamePanel = nil
+
+BossGameManager.prize = nil
+
+function BossGameManager:Construct()
     -- 初始化场景管理器
-    UIManager:ShowPanel('BossPanel', EUILayers.Middle)
+    self.mono = GameObject():AddComponent(typeof(MonoScript))
+    GameObject.DontDestroyOnLoad(self.mono.gameObject)
+    self:InitMonoAction()
+
     self.cs = LuaSceneManager()
-    GameManager.Instance:SetSceneManager(self.cs)
+    GameManager.cs:SetSceneManager(self.cs)
     self:InitCsAction()
 
-    self.gameDataManager = BossGameDataManager
-    self:SetSceneDataManager(BossGameDataManager.script)
-    
+    self.gameDataManager = BossGameDataManager()
 end
 
 function BossGameManager:InitCsAction()
     -- 添加回调函数
-    self.cs.onGetSpawnerAction = function ()
+    self.cs.onGetSpawnerAction = function()
         return self:GetSpawner()
     end
     self.cs.onSetSpawnerAction = function(spawner)
@@ -101,9 +110,52 @@ function BossGameManager:InitCsAction()
     self.cs.onUpdateMoneyAction = function(v)
         self:UpdateMoney(v)
     end
-    self.cs.onExitSceneAction = function ()
+    self.cs.onExitSceneAction = function()
         self:ExitScene()
     end
+end
+
+function BossGameManager:InitMonoAction()
+    self.mono.onUpdateAction = function()
+        self:Update()
+    end
+end
+
+-- unity回调
+function BossGameManager:Update()
+    if self.isPause == false then
+        self.time = self.time - Time.deltaTime
+        if self.time > 0 then
+            self:UpdateGamePanel(self.time)
+        else
+            self.time = 0
+            self:UpdateGamePanel(0)
+        end
+    end
+end
+
+-- 外部获取变量
+function BossGameManager:GetLevelID()
+    return self.levelID
+end
+
+-- 计时
+function BossGameManager:UpdateGamePanel(time)
+    if self.gamePanel == nil then
+        self.gamePanel = UIManager:GetPanel('BossGamePanel')
+    end
+
+    self.gamePanel:UpdateTime(time)
+
+    local t = time / self.totalTime
+    if t >= 0.30 then
+        self.prize = 'Gold'
+    elseif t >= 0.20 and t < 0.30 then
+        self.prize = 'Sliver'
+    else
+        self.prize = 'Copper'
+    end
+    self.gamePanel:UpdatePrize(self.prize)
 end
 
 function BossGameManager:InitGame(levelID)
@@ -121,22 +173,30 @@ function BossGameManager:InitGame(levelID)
         self.map:Init(self.mapData)
     end
 
+    if levelID == 1 then
+        self.time = 120
+        self.totalTime = self.time
+    end
+
     if self.spawner == nil then
         self.spawner = Spawner:New()
         self.spawner.cs:Init(self.mapData)
     end
-    
+
     self.money = self.mapData.money
-    GameManager.Instance:StopMusic()
+    GameManager.cs:StopMusic()
     -- UI
     local panel = UIManager:ShowPanel('BossGamePanel', EUILayers.Bottom)
-    panel:UpdateTime(240)
+    panel:UpdateTime(self.time)
     self:UpdateMoney(self.money)
     -- 添加事件
-    GameManager.Instance.eventCenter:RemoveEvent('JudgeWin')
-    GameManager.Instance.eventCenter:AddEventListener('JudgeWin', function ()
-        self:JudgeWin()
-    end)
+    GameManager.cs.eventCenter:RemoveEvent('JudgeWin')
+    GameManager.cs.eventCenter:AddEventListener(
+        'JudgeWin',
+        function()
+            self:JudgeWin()
+        end
+    )
 end
 
 function BossGameManager:JudgeWin()
@@ -151,7 +211,6 @@ function BossGameManager:StartGame()
     self.isStop = false
     self.isPause = false
     self.spawner:StartSpawn()
-    UIManager:GetPanel('BossGamePanel'):StartCountDown(240)
 end
 
 function BossGameManager:PauseGame()
@@ -169,24 +228,35 @@ function BossGameManager:RestartGame()
 end
 
 function BossGameManager:EndGame()
-    print('end')
+    -- 回收所有对象
+    self.spawner.cs:OnPushAllGameObject()
+
 end
 
 function BossGameManager:GameOver()
-    print('game over')
+    self.isPause = true
+    self.isStop = true
+    -- 打开失败面板
+    UIManager:ShowPanel('BossGameLosePanel', EUILayers.Top)
 end
 
 function BossGameManager:GameWin()
-    print('game win')
-    -- 回收所有对象
-    self.spawner.cs:OnPushAllGameObject()
-    self.isStop = true
     self.isPause = true
+    self.isStop = true
     -- 打开胜利面板
+    local panel = UIManager:ShowPanel('BossGameWinPanel', EUILayers.Top)
+    panel:UpdateTime(self.time)
+    panel:UpdatePrize(self.prize)
+    panel:UpdateBossName('Boss'..self.levelID)
 end
 
 function BossGameManager:NextLevel()
     print('next level')
+end
+
+function BossGameManager:SelectLevel()
+    -- 重新打开Boss面板
+    
 end
 
 -- 获取和设置变量
@@ -240,6 +310,4 @@ function BossGameManager:UpdateMoney(v)
 end
 
 function BossGameManager:ExitScene()
-    
 end
-

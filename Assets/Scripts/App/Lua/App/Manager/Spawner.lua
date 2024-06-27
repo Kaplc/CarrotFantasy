@@ -38,8 +38,8 @@ Spawner.spawnedBoss = nil
 Spawner.nowWaveSpawnList = nil
 
 function Spawner:Construct()
-    self.gameManager = GameManager.Instance
-    self.sceneManager = GameManager.Instance.sceneManager
+    self.gameManager = GameManager.cs
+    self.sceneManager = GameManager.cs.sceneManager
 
     local obj = Instantiate(Resources.Load('Prefabs/Spawner'))
     Destroy(obj:GetComponent('Spawner'))
@@ -161,7 +161,7 @@ function Spawner:Update()
 end
 
 function Spawner:CreateBossMonster()
-    local bossObj = Instantiate(Resources.Load('AB/Object/Boss/BossMonster' .. BossGameManager.levelID -1))
+    local bossObj = Instantiate(Resources.Load('AB/Object/Boss/BossMonster' .. GameManager.sceneManager:GetLevelID() -1))
     local boss = BossMonster(bossObj)
 
     boss.obj.transform:SetParent(self.cs.transform)
@@ -170,7 +170,7 @@ function Spawner:CreateBossMonster()
     self.spawnedMonsterList:Add(boss.cs)
      self.spawnedBoss = boss
     -- 加载怪物数据
-    local monsterData = Resources.Load('AB/Data/BossMonsterData/Boss' .. BossGameManager.levelID -1)
+    local monsterData = Resources.Load('AB/Data/BossMonsterData/Boss' .. GameManager.sceneManager:GetLevelID() -1)
     boss:Init(self.pathList, 1, monsterData)
 end
 

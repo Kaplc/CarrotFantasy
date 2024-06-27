@@ -1,11 +1,11 @@
 Map = Object:SubClass('Map')
 
-Map.script = nil
+Map.cs = nil
 
 function Map:Construct()
-    self.script = Instantiate(Resources.Load('Prefabs/Map')):GetComponent('Map')
+    self.cs = Instantiate(Resources.Load('Prefabs/Map')):GetComponent('Map')
 end
 
 function Map:Init(mapData)
-    self.script:Init(mapData)
+    self.cs:Init(mapData)
 end

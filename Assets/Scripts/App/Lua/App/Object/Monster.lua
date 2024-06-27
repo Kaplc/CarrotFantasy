@@ -25,7 +25,7 @@ Monster.canMove = false
 Monster.buffsList = nil
 
 function Monster:Construct(monsterObj)
-    self.gameManager = GameManager.Instance
+    self.gameManager = GameManager.cs
     self.buffsList = List:New()
     self.obj = monsterObj
 
@@ -228,7 +228,7 @@ function Monster:Wound(v)
         self.gameManager.sceneManager:UpdateMoney(math.floor(self.data.baseMoney * self.growth))
         -- 加钱ui
         local ui =
-            GameManager.Instance.factoryManager.UIControlFactory:CreateControl('AddMoneyTips'):GetComponent(
+            GameManager.cs.factoryManager.UIControlFactory:CreateControl('AddMoneyTips'):GetComponent(
             'AddMoneyTips'
         )
         ui.textMeshPro.text = '+' .. math.floor(self.data.baseMoney * self.growth)

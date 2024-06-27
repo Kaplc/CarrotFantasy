@@ -56,7 +56,6 @@ namespace App.Game
             // 自定义lua解析路径 
             string path = Application.dataPath + "/Scripts/App/Lua/";
             xLuaManager.AddLuaFilePath(path);
-            xLuaManager.DoFile("Init");
 
             DOTween.Init();
             #endregion

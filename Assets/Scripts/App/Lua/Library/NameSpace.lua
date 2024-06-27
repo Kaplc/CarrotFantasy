@@ -45,7 +45,6 @@ MonoScript = CS.MonoScript
 Mathf = CS.CallMathf
 Cell = CS.App.Game.Generic.Map.Cell
 Point = CS.App.Game.Generic.Map.Point
-GameManager = CS.App.Game.GameManager
 GameFacade = CS.GameFacade
 PointClassToCell = CS.App.Game.Generic.Map.PointClassToCell
 CSMap = CS.App.Game.Object.Map.Map

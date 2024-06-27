@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 0
   speed: 0.8
-  maxHp: 1000
+  maxHp: 100
   atk: 1
   baseMoney: 0
   prefabsPath: 

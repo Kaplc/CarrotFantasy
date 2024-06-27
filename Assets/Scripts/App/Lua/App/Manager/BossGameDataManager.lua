@@ -1,12 +1,12 @@
 BossGameDataManager = Object:SubClass('BossGameDataManager')
 
-BossGameDataManager.script = nil
+BossGameDataManager.cs = nil
 
-function BossGameDataManager.InitLua(self)
-    self.script = LuaSceneDataManager()
-    GameManager.Instance.sceneManager:SetSceneDataManager(self.script)
+function BossGameDataManager:Construct()
+    self.cs = LuaSceneDataManager()
+    GameManager.cs.sceneManager:SetSceneDataManager(self.script)
 end
 
-function BossGameDataManager.Load(self, path)
+function BossGameDataManager:Load(path)
     return Resources.Load(path)
 end
