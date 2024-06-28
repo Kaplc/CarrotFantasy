@@ -1,0 +1,167 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2886ab1245834df0a9fc8f2c6e4cdf6c, type: 3}
+  m_Name: BossMap2
+  m_EditorClassIdentifier: 
+  money: 500
+  mapBgTexture: {fileID: 21300000, guid: 5f8c792af181ac943949c14cf0f5c21a, type: 3}
+  mapFgTexture: {fileID: 6476456048572817467, guid: 331127816a40b7645aaf81f28ee6d0a6,
+    type: 3}
+  pathList:
+  - x: 2
+    y: 5
+  - x: 10
+    y: 5
+  - x: 10
+    y: 3
+  - x: 8
+    y: 3
+  - x: 8
+    y: 1
+  - x: 4
+    y: 1
+  - x: 4
+    y: 3
+  - x: 2
+    y: 3
+  - x: 2
+    y: 4
+  towerPosList:
+  - x: 5
+    y: 4
+  - x: 6
+    y: 4
+  - x: 6
+    y: 3
+  - x: 5
+    y: 3
+  - x: 4
+    y: 4
+  - x: 3
+    y: 4
+  - x: 5
+    y: 2
+  - x: 7
+    y: 2
+  - x: 6
+    y: 2
+  - x: 7
+    y: 3
+  - x: 7
+    y: 4
+  - x: 8
+    y: 4
+  - x: 9
+    y: 4
+  - x: 9
+    y: 2
+  - x: 9
+    y: 1
+  - x: 8
+    y: 0
+  - x: 7
+    y: 0
+  - x: 6
+    y: 0
+  - x: 4
+    y: 0
+  - x: 5
+    y: 0
+  - x: 3
+    y: 1
+  - x: 3
+    y: 2
+  - x: 2
+    y: 2
+  - x: 1
+    y: 2
+  - x: 1
+    y: 3
+  - x: 1
+    y: 4
+  - x: 1
+    y: 5
+  - x: 1
+    y: 6
+  - x: 2
+    y: 6
+  - x: 3
+    y: 6
+  - x: 4
+    y: 6
+  - x: 5
+    y: 6
+  - x: 6
+    y: 6
+  - x: 7
+    y: 6
+  - x: 8
+    y: 6
+  - x: 9
+    y: 6
+  - x: 10
+    y: 6
+  - x: 11
+    y: 6
+  - x: 11
+    y: 5
+  - x: 11
+    y: 4
+  - x: 11
+    y: 3
+  - x: 11
+    y: 2
+  - x: 10
+    y: 2
+  towerTypeList: 0100000002000000
+  obstacleList:
+  - x: 5
+    y: 3
+    obstacleType: 6
+    towerType: 0
+  - x: 8
+    y: 4
+    obstacleType: 11
+    towerType: 0
+  towerList:
+  - x: 6
+    y: 4
+    obstacleType: 0
+    towerType: 2
+  - x: 5
+    y: 4
+    obstacleType: 0
+    towerType: 2
+  - x: 5
+    y: 3
+    obstacleType: 0
+    towerType: 2
+  - x: 6
+    y: 3
+    obstacleType: 0
+    towerType: 2
+  - x: 9
+    y: 4
+    obstacleType: 0
+    towerType: 1
+  - x: 8
+    y: 4
+    obstacleType: 0
+    towerType: 1
+  waveDataList:
+  - waveCount: 1
+    waveDuration: 2
+    eachWaveDataList:
+    - hard: 1
+      monsterType: 0
+      monsterCount: 10
+      monsterDuration: 1

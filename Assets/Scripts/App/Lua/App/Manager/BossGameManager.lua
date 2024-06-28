@@ -174,9 +174,13 @@ function BossGameManager:InitGame(levelID)
     self.spawner:Init(self.mapData)
 
     if levelID == 1 then
-        self.time = 120
-        self.totalTime = self.time
+        self.time = 60
+    elseif levelID == 2 then
+        self.time = 100
+    elseif levelID == 3 then
+        self.time = 110
     end
+    self.totalTime = self.time
 
     self.money = self.mapData.money
     GameManager.cs:StopMusic()
@@ -247,7 +251,7 @@ function BossGameManager:GameWin()
     local panel = UIManager:ShowPanel('BossGameWinPanel', EUILayers.Top)
     panel:UpdateTime(self.time)
     panel:UpdatePrize(self.prize)
-    panel:UpdateBossName('Boss'..self.levelID)
+    panel:UpdateBossName('Boss' .. self.levelID)
 end
 
 function BossGameManager:NextLevel()

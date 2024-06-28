@@ -53,6 +53,7 @@ namespace App.UI.BeginScene.BeginPanel
         public void ShowBossPanel()
         {
             GameManager.Instance.xLuaManager.DoFile("Init");
+            GameManager.Instance.xLuaManager.DoString("Main:Main()");
         }
 
         private void OnDestroy() {

@@ -161,16 +161,17 @@ function Spawner:Update()
 end
 
 function Spawner:CreateBossMonster()
-    local bossObj = Instantiate(Resources.Load('AB/Object/Boss/BossMonster' .. GameManager.sceneManager:GetLevelID() -1))
+    local bossObj =
+        Instantiate(Resources.Load('AB/Object/Boss/BossMonster' .. GameManager.sceneManager:GetLevelID() - 1))
     local boss = BossMonster(bossObj)
 
     boss.obj.transform:SetParent(self.cs.transform)
     boss.obj.transform.localScale = Vector3.one
     -- 添加进列表
     self.spawnedMonsterList:Add(boss.cs)
-     self.spawnedBoss = boss
+    self.spawnedBoss = boss
     -- 加载怪物数据
-    local monsterData = Resources.Load('AB/Data/BossMonsterData/Boss' .. GameManager.sceneManager:GetLevelID() -1)
+    local monsterData = Resources.Load('AB/Data/BossMonsterData/Boss' .. GameManager.sceneManager:GetLevelID() - 1)
     boss:Init(self.pathList, 1, monsterData)
 end
 
@@ -367,41 +368,47 @@ function Spawner:CreateObstacles()
             if string.find(name, '1X1') then
                 -- 1X1
                 for i = 0, self.prizeTowerList.Count - 1 do
-                    if self.prizeTowerList[i].x == cell.X and self.prizeTowerList[i].y == cell.Y then
-                        local prizeCell = PrizeCell(cell, self.prizeTowerList[i].towerType)
+                    local prizeTower = self.prizeTowerList[i]
+
+                    if prizeTower.x == cell.X and prizeTower.y == cell.Y then
+                        local prizeCell = PrizeCell(cell, prizeTower.towerType)
                         obstaclePrize:AddPrizeCell(prizeCell)
                     end
                 end
             elseif string.find(name, '1X2') then
                 -- 1X2
                 for i = 0, self.prizeTowerList.Count - 1 do
-                    if self.prizeTowerList[i].x == cell.X and self.prizeTowerList[i].y == cell.Y then
-                        local prizeCell = PrizeCell(cell, self.prizeTowerList[i].towerType)
-                        self.prizeCellList:Add(prizeCell)
+                    local prizeTower = self.prizeTowerList[i]
+
+                    if prizeTower.x == cell.X and prizeTower.y == cell.Y then
+                        local prizeCell = PrizeCell(cell, prizeTower.towerType)
+                        obstaclePrize:AddPrizeCell(prizeCell)
                     end
-                    if self.prizeTowerList[i].x + 1 == cell.X + 1 and self.prizeTowerList[i].y == cell.Y then
-                        local prizeCell = PrizeCell(cell, self.prizeTowerList[i].towerType)
-                        self.prizeCellList:Add(prizeCell)
+                    if prizeTower.x == cell.X + 1 and prizeTower.y == cell.Y then
+                        local prizeCell = PrizeCell(Cell(Point(cell.X + 1, cell.Y)), prizeTower.towerType)
+                        obstaclePrize:AddPrizeCell(prizeCell)
                     end
                 end
             elseif string.find(name, '4X4') then
                 -- 4X4
                 for i = 0, self.prizeTowerList.Count - 1 do
-                    if self.prizeTowerList[i].x == cell.X and self.prizeTowerList[i].y == cell.Y then
-                        local prizeCell = PrizeCell(cell, self.prizeTowerList[i].towerType)
-                        self.prizeCellList:Add(prizeCell)
+                    local prizeTower = self.prizeTowerList[i]
+
+                    if prizeTower.x == cell.X and prizeTower.y == cell.Y then
+                        local prizeCell = PrizeCell(cell, prizeTower.towerType)
+                        obstaclePrize:AddPrizeCell(prizeCell)
                     end
-                    if self.prizeTowerList[i].x + 1 == cell.X + 1 and self.prizeTowerList[i].y == cell.Y then
-                        local prizeCell = PrizeCell(cell, self.prizeTowerList[i].towerType)
-                        self.prizeCellList:Add(prizeCell)
+                    if prizeTower.x == cell.X + 1 and prizeTower.y == cell.Y then
+                        local prizeCell = PrizeCell(Cell(Point(cell.X + 1, cell.Y)), prizeTower.towerType)
+                        obstaclePrize:AddPrizeCell(prizeCell)
                     end
-                    if self.prizeTowerList[i].x == cell.X and self.prizeTowerList[i].y + 1 == cell.Y + 1 then
-                        local prizeCell = PrizeCell(cell, self.prizeTowerList[i].towerType)
-                        self.prizeCellList:Add(prizeCell)
+                    if prizeTower.x == cell.X and prizeTower.y == cell.Y + 1 then
+                        local prizeCell = PrizeCell(Cell(Point(cell.X, cell.Y + 1)), prizeTower.towerType)
+                        obstaclePrize:AddPrizeCell(prizeCell)
                     end
-                    if self.prizeTowerList[i].x + 1 == cell.X + 1 and self.prizeTowerList[i].y + 1 == cell.Y + 1 then
-                        local prizeCell = PrizeCell(cell, self.prizeTowerList[i].towerType)
-                        self.prizeCellList:Add(prizeCell)
+                    if prizeTower.x == cell.X + 1 and prizeTower.y == cell.Y + 1 then
+                        local prizeCell = PrizeCell(Cell(Point(cell.X + 1, cell.Y + 1)), prizeTower.towerType)
+                        obstaclePrize:AddPrizeCell(prizeCell)
                     end
                 end
             end
@@ -432,7 +439,7 @@ end
 -- 缓存池
 function Spawner:OnPushAllGameObject()
     self.obstaclePrizeList:Clear()
-    
+
     self.signTrf.gameObject:SetActive(false)
     self:OnPushAllMonsters()
     self:OnPushAllObstacles()

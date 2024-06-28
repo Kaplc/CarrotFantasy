@@ -17,4 +17,7 @@ require("App/Manager/UIManager/UIManager")
 require('App/Manager/BossGameManager')
 
 -- 
-GameManager:Init()
+Main = {}
+function Main:Main()
+    GameManager:Init()
+end
