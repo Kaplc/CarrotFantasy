@@ -25,6 +25,7 @@ Input = CS.UnityEngine.Input
 Camera = CS.UnityEngine.Camera
 Destroy = CS.UnityEngine.Object.Destroy
 DestroyImmediate = CS.UnityEngine.Object.DestroyImmediate
+Application = CS.UnityEngine.Application
 
 -- UI
 Canvas = CS.UnityEngine.Canvas

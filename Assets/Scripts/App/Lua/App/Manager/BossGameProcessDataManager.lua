@@ -1,1 +1,0 @@
-BossGameProcessDataManager = Object:SubClass('BossGameProcessDataManager')

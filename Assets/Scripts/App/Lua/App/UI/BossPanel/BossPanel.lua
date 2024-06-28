@@ -9,6 +9,7 @@ BossPanel = BasePanel:SubClass('BossPanel')
 BossPanel.btnHome = nil
 BossPanel.btnHelp = nil
 BossPanel.btnStart = nil
+BossPanel.imgLock = nil
 
 BossPanel.namesTsf = nil -- 用于显示怪物名字 Transform
 BossPanel.hpsTsf = nil -- 用于显示怪物血量 Transform
@@ -16,6 +17,10 @@ BossPanel.limitTimeTsf = nil -- 用于显示限时 Transform
 BossPanel.namesList = {} -- 怪物名字列表
 BossPanel.hpsList = {} -- 怪物血量列表
 BossPanel.limitTimeList = {} -- 限时列表
+
+-- 关卡
+BossPanel.levelList = nil
+BossPanel.processData = nil
 
 -- 翻页效果相关
 BossPanel.sr = nil
@@ -27,18 +32,27 @@ BossPanel.totalCount = 3
 BossPanel.speed = 0.1
 
 -- Unity回调相关
-BossPanel.monoScripts = nil
+BossPanel.mono = nil
 BossPanel.mouseInterfaceClass = nil
 
 function BossPanel.Init(self)
     -- 查找控件
+    self.imgLock = self.panelObj.transform:Find('Buttons/ImageLock'):GetComponent('Image')
     self.btnHome = self.panelObj.transform:Find('ButtonHome'):GetComponent('Button')
     self.btnHelp = self.panelObj.transform:Find('ButtonHelp'):GetComponent('Button')
-    self.btnStart = self.panelObj.transform:Find('ButtonStart'):GetComponent('Button')
+    self.btnStart = self.panelObj.transform:Find('Buttons/ButtonStart'):GetComponent('Button')
     self.namesTsf = self.panelObj.transform:Find('MonstersName')
     self.hpsTsf = self.panelObj.transform:Find('ImageHp'):Find('HpNums')
     self.limitTimeTsf = self.panelObj.transform:Find('LimitTime')
     self.sr = self.panelObj.transform:Find('Monsters'):Find('Scroll View'):GetComponent(typeof(ScrollRect))
+
+    local level1 = self.panelObj.transform:Find('Monsters/Scroll View/Viewport/Content/ImageMonster')
+    local level2 = self.panelObj.transform:Find('Monsters/Scroll View/Viewport/Content/ImageMonster1')
+    local level3 = self.panelObj.transform:Find('Monsters/Scroll View/Viewport/Content/ImageMonster2')
+    self.levelList = List()
+    self.levelList:Add(level1)
+    self.levelList:Add(level2)
+    self.levelList:Add(level3)
 
     -- 监听函数
     self.btnHome.onClick:AddListener(
@@ -93,10 +107,16 @@ function BossPanel.Init(self)
         self:OnEndDrag(eventData)
     end
     -- 添加Mono脚本
-    self.monoScripts = self.panelObj:AddComponent(typeof(MonoScript))
-    self.monoScripts.onUpdateAction = function()
+    self.mono = self.panelObj:AddComponent(typeof(MonoScript))
+    self.mono.onUpdateAction = function()
         self:Update()
     end
+
+    -- 加载关卡数据
+    self.processData = GameManager.sceneManager.gameDataManager:GetProcessData()
+    self:UpdateLevelData(self.processData)
+
+    self:UpdateInfo()
 end
 
 function BossPanel:Hide()
@@ -106,6 +126,34 @@ end
 function BossPanel:Update()
     self.sr.horizontalNormalizedPosition =
         Mathf.Lerp(self.sr.horizontalNormalizedPosition, (self.index - 1) / (self.totalCount - 1), self.speed)
+end
+
+-- 根据读取的进度数据
+function BossPanel:UpdateLevelData(processData)
+    -- 默认无奖杯
+    for i = 0, self.levelList.count - 1 do
+        local level = self.levelList:Get(i)
+        level:Find('ImagePrize').gameObject:SetActive(false)
+    end
+
+    -- 根据数据更新
+    for k, v in pairs(processData) do
+        -- 
+        local id = v.id
+        local prize = v.prize
+
+        -- 更新奖杯
+        local imgPrize = self.levelList:Get(id - 1):Find('ImagePrize'):GetComponent('Image')
+
+        if prize == 'None' then
+            imgPrize.gameObject:SetActive(false)
+        else
+            local s = Resources.Load('AB/Art/Prize/WinPanel/' .. prize, typeof(CS.UnityEngine.Sprite))
+            imgPrize.sprite = s
+            imgPrize:SetNativeSize()
+            imgPrize.gameObject:SetActive(true)
+        end
+    end
 end
 
 -- 开始拖动
@@ -158,4 +206,13 @@ function BossPanel:UpdateInfo()
     self.namesList[self.index - 1].gameObject:SetActive(true)
     self.hpsList[self.index - 1].gameObject:SetActive(true)
     self.limitTimeList[self.index - 1].gameObject:SetActive(true)
+
+    -- 更新是否锁定
+    for k, v in pairs(self.processData) do
+        if self.index == v.id then
+            self.imgLock.gameObject:SetActive(false)
+        else
+            self.imgLock.gameObject:SetActive(true)
+        end
+    end
 end

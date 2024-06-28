@@ -2,7 +2,6 @@ GameManager = Object:SubClass('GameManager')
 
 GameManager.cs = nil
 GameManager.sceneManager = nil
-GameManager.sceneDataManager = nil
 
 function GameManager:Init()
     if self.cs == nil then
