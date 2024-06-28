@@ -24,7 +24,7 @@ namespace App.Game.SceneManager
         void PauseGame();
         void ResumeGame();
         void RestartGame();
-        void EndGame();
+        void SelectLevel();
         void GameOver();
         void GameWin();
         void NextLevel();

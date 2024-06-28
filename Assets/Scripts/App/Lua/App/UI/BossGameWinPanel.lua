@@ -28,7 +28,6 @@ end
 
 function BossGameWinPanel:OnClickSelectLevel()
     UIManager:HidePanel('BossGameWinPanel')
-    UIManager:HidePanel('BossGamePanel')
     GameManager.sceneManager:SelectLevel()
 end
 

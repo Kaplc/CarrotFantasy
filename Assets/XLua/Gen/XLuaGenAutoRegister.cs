@@ -124,6 +124,9 @@ namespace XLua.CSObjectWrap
             translator.DelayWrapLoader(typeof(UnityEngine.SceneManagement.SceneManager), UnityEngineSceneManagementSceneManagerWrap.__Register);
         
         
+            translator.DelayWrapLoader(typeof(App.Data.DataClass.TowerMap), AppDataDataClassTowerMapWrap.__Register);
+        
+        
             translator.DelayWrapLoader(typeof(App.Data.DataClass.Map.SpawnMonsterData), AppDataDataClassMapSpawnMonsterDataWrap.__Register);
         
         

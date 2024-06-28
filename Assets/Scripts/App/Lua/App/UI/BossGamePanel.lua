@@ -50,8 +50,14 @@ function BossGamePanel.Init(self)
     countDownPanel.panelObj:GetComponent('CountDownPanel'):StartCountDown()
 end
 
+function BossGamePanel:Hide()
+    -- 销毁倒计时面板
+    UIManager:HidePanel('CountDownPanel')
+end
+
 function BossGamePanel:ButtonMenuOnCliCk()
-    GameManager.Instance.uiManager:Show('UI/', 'MenuPanel', false)
+    GameManager.cs.uiManager:Show('UI/', 'MenuPanel', false)
+    GameFacade.Instance:SendNotification('PAUSE_GAME')
 end
 
 function BossGamePanel:ButtonPauseOnClick()

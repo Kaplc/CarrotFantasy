@@ -211,7 +211,7 @@ namespace App.Game.SceneManager.NormalGame
             gameManager.SaveStatisticalData(data);
         }
 
-        public void EndGame()
+        public void SelectLevel()
         {
             // 速度恢复
             SetSpeedUp(false);

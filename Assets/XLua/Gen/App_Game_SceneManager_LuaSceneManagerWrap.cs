@@ -30,7 +30,7 @@ namespace XLua.CSObjectWrap
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "PauseGame", _m_PauseGame);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "ResumeGame", _m_ResumeGame);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "RestartGame", _m_RestartGame);
-			Utils.RegisterFunc(L, Utils.METHOD_IDX, "EndGame", _m_EndGame);
+			Utils.RegisterFunc(L, Utils.METHOD_IDX, "SelectLevel", _m_SelectLevel);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "GameOver", _m_GameOver);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "GameWin", _m_GameWin);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "NextLevel", _m_NextLevel);
@@ -59,7 +59,7 @@ namespace XLua.CSObjectWrap
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "onPauseGameAction", _g_get_onPauseGameAction);
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "onResumeGameAction", _g_get_onResumeGameAction);
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "onRestartGameAction", _g_get_onRestartGameAction);
-            Utils.RegisterFunc(L, Utils.GETTER_IDX, "onEndGameAction", _g_get_onEndGameAction);
+            Utils.RegisterFunc(L, Utils.GETTER_IDX, "onSelectLevelAction", _g_get_onSelectLevelAction);
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "onGameOverAction", _g_get_onGameOverAction);
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "onGameWinAction", _g_get_onGameWinAction);
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "onNextLevelAction", _g_get_onNextLevelAction);
@@ -84,7 +84,7 @@ namespace XLua.CSObjectWrap
             Utils.RegisterFunc(L, Utils.SETTER_IDX, "onPauseGameAction", _s_set_onPauseGameAction);
             Utils.RegisterFunc(L, Utils.SETTER_IDX, "onResumeGameAction", _s_set_onResumeGameAction);
             Utils.RegisterFunc(L, Utils.SETTER_IDX, "onRestartGameAction", _s_set_onRestartGameAction);
-            Utils.RegisterFunc(L, Utils.SETTER_IDX, "onEndGameAction", _s_set_onEndGameAction);
+            Utils.RegisterFunc(L, Utils.SETTER_IDX, "onSelectLevelAction", _s_set_onSelectLevelAction);
             Utils.RegisterFunc(L, Utils.SETTER_IDX, "onGameOverAction", _s_set_onGameOverAction);
             Utils.RegisterFunc(L, Utils.SETTER_IDX, "onGameWinAction", _s_set_onGameWinAction);
             Utils.RegisterFunc(L, Utils.SETTER_IDX, "onNextLevelAction", _s_set_onNextLevelAction);
@@ -336,7 +336,7 @@ namespace XLua.CSObjectWrap
         }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _m_EndGame(RealStatePtr L)
+        static int _m_SelectLevel(RealStatePtr L)
         {
 		    try {
             
@@ -349,7 +349,7 @@ namespace XLua.CSObjectWrap
                 
                 {
                     
-                    gen_to_be_invoked.EndGame(  );
+                    gen_to_be_invoked.SelectLevel(  );
                     
                     
                     
@@ -893,13 +893,13 @@ namespace XLua.CSObjectWrap
         }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _g_get_onEndGameAction(RealStatePtr L)
+        static int _g_get_onSelectLevelAction(RealStatePtr L)
         {
 		    try {
                 ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
 			
                 App.Game.SceneManager.LuaSceneManager gen_to_be_invoked = (App.Game.SceneManager.LuaSceneManager)translator.FastGetCSObj(L, 1);
-                translator.Push(L, gen_to_be_invoked.onEndGameAction);
+                translator.Push(L, gen_to_be_invoked.onSelectLevelAction);
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
             }
@@ -1241,13 +1241,13 @@ namespace XLua.CSObjectWrap
         }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _s_set_onEndGameAction(RealStatePtr L)
+        static int _s_set_onSelectLevelAction(RealStatePtr L)
         {
 		    try {
                 ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
 			
                 App.Game.SceneManager.LuaSceneManager gen_to_be_invoked = (App.Game.SceneManager.LuaSceneManager)translator.FastGetCSObj(L, 1);
-                gen_to_be_invoked.onEndGameAction = translator.GetDelegate<UnityEngine.Events.UnityAction>(L, 2);
+                gen_to_be_invoked.onSelectLevelAction = translator.GetDelegate<UnityEngine.Events.UnityAction>(L, 2);
             
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);

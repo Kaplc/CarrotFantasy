@@ -20,7 +20,7 @@ namespace App.Game.SceneManager
         public UnityAction onPauseGameAction;
         public UnityAction onResumeGameAction;
         public UnityAction onRestartGameAction;
-        public UnityAction onEndGameAction;
+        public UnityAction onSelectLevelAction;
         public UnityAction onGameOverAction;
         public UnityAction onGameWinAction;
         public UnityAction onNextLevelAction;
@@ -63,7 +63,7 @@ namespace App.Game.SceneManager
         public void PauseGame() => onPauseGameAction?.Invoke();
         public void ResumeGame() => onResumeGameAction?.Invoke();
         public void RestartGame() => onRestartGameAction?.Invoke();
-        public void EndGame() => onEndGameAction?.Invoke();
+        public void SelectLevel() => onSelectLevelAction?.Invoke();
         public void GameOver() => onGameOverAction?.Invoke();
         public void GameWin() => onGameWinAction?.Invoke();
         public void NextLevel() => onNextLevelAction?.Invoke();

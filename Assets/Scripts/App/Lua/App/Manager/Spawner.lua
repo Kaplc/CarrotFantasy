@@ -431,6 +431,8 @@ end
 
 -- 缓存池
 function Spawner:OnPushAllGameObject()
+    self.obstaclePrizeList:Clear()
+    
     self.signTrf.gameObject:SetActive(false)
     self:OnPushAllMonsters()
     self:OnPushAllObstacles()
@@ -439,9 +441,7 @@ end
 
 function Spawner:OnPushAllMonsters()
     for i = 0, self.spawnedMonsterList.Count - 1 do
-        if self.spawnedMonsterList[i].IsDead == true then
-            self.gameManager.poolManager:PushObject(self.spawnedMonsterList[i].Transform.gameObject)
-        end
+        self.gameManager.poolManager:PushObject(self.spawnedMonsterList[i].Transform.gameObject)
     end
     self.spawnedMonsterList:Clear()
 end

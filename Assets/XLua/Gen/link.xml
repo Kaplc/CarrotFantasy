@@ -36,6 +36,7 @@
 		<type fullname="App.Game.Generic.Map.Cell" preserve="all"/>
 		<type fullname="App.Game.Generic.Map.Point" preserve="all"/>
 		<type fullname="App.Game.Generic.Map.PointClassToCell" preserve="all"/>
+		<type fullname="App.Data.DataClass.TowerMap" preserve="all"/>
 		<type fullname="App.Data.DataClass.Map.SpawnMonsterData" preserve="all"/>
 		<type fullname="App.Data.DataClass.Game.Object.MonsterData" preserve="all"/>
 		<type fullname="App.Data.DataClass.Game.Object.TowerData" preserve="all"/>

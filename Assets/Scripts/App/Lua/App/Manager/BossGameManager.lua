@@ -74,8 +74,8 @@ function BossGameManager:InitCsAction()
     self.cs.onRestartGameAction = function()
         self:RestartGame()
     end
-    self.cs.onEndGameAction = function()
-        self:EndGame()
+    self.cs.onSelectLevelAction = function()
+        self:SelectLevel()
     end
     self.cs.onGameOverAction = function()
         self:GameOver()
@@ -168,19 +168,14 @@ function BossGameManager:InitGame(levelID)
     -- 加载地图数据
     self.mapData = self.gameDataManager:Load('AB/Data/Map/BossMap' .. levelID)
     -- 初始化
-    if self.map == nil then
-        self.map = Map()
-        self.map:Init(self.mapData)
-    end
+    self.map = Map()
+    self.map:Init(self.mapData)
+    self.spawner = Spawner:New()
+    self.spawner:Init(self.mapData)
 
     if levelID == 1 then
         self.time = 120
         self.totalTime = self.time
-    end
-
-    if self.spawner == nil then
-        self.spawner = Spawner:New()
-        self.spawner.cs:Init(self.mapData)
     end
 
     self.money = self.mapData.money
@@ -224,13 +219,18 @@ function BossGameManager:ResumeGame()
 end
 
 function BossGameManager:RestartGame()
-    print('restart')
+    UIManager:HidePanel('BossGamePanel')
+    self:EndGame()
+    self:InitGame(self.levelID)
 end
 
 function BossGameManager:EndGame()
     -- 回收所有对象
     self.spawner.cs:OnPushAllGameObject()
-
+    -- 销毁map
+    Destroy(self.map.cs.gameObject)
+    -- 销毁spawner
+    Destroy(self.spawner.cs.gameObject)
 end
 
 function BossGameManager:GameOver()
@@ -255,8 +255,10 @@ function BossGameManager:NextLevel()
 end
 
 function BossGameManager:SelectLevel()
+    self:EndGame()
+    UIManager:HidePanel('BossGamePanel')
     -- 重新打开Boss面板
-    
+    UIManager:ShowPanel('BossPanel', EUILayers.Bottom)
 end
 
 -- 获取和设置变量
@@ -310,4 +312,5 @@ function BossGameManager:UpdateMoney(v)
 end
 
 function BossGameManager:ExitScene()
+    Destroy(self.mono.gameObject)
 end
