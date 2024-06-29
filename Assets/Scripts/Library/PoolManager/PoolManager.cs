@@ -49,6 +49,8 @@ namespace Library
 
         public void Push(GameObject gameObject)
         {
+            if (objectList.Contains(gameObject)) return;
+
             objectList.Add(gameObject);
             // 设置为list的子对象
             gameObject.transform.SetParent(father.transform);

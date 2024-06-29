@@ -215,6 +215,10 @@ function Monster:GetTransfrom()
 end
 
 function Monster:Wound(v)
+    if self.isDead == true then
+        return
+    end
+
     self.hp = self.hp - v
     -- 更新血条
     self.hpBg.gameObject:SetActive(true)
@@ -270,6 +274,7 @@ end
 
 function Monster:OnGet()
     self.pathIndex = 0
+    self.isDead = false
 end
 
 function Monster:SetSpeed(v)

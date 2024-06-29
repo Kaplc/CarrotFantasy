@@ -130,6 +130,7 @@ function BossGameManager:Update()
         else
             self.time = 0
             self:UpdateGamePanel(0)
+            self:GameOver()
         end
     end
 end
@@ -241,7 +242,8 @@ function BossGameManager:GameOver()
     self.isPause = true
     self.isStop = true
     -- 打开失败面板
-    UIManager:ShowPanel('BossGameLosePanel', EUILayers.Top)
+    local panel = UIManager:ShowPanel('BossGameLosePanel', EUILayers.Top)
+    panel:UpdateBossName('Boss' .. self.levelID)
 end
 
 function BossGameManager:GameWin()
@@ -255,11 +257,24 @@ function BossGameManager:GameWin()
 end
 
 function BossGameManager:NextLevel()
-    print('next level')
+    UIManager:HidePanel('BossGameWinPanel')
+
+    self.levelID = self.levelID + 1
+    if self.levelID <= 3 then
+        self:EndGame()
+        UIManager:HidePanel('BossGamePanel')
+        self:InitGame(self.levelID)
+        return
+    end
+
+    -- 返回主界面
+    self:SelectLevel()
 end
 
 function BossGameManager:SelectLevel()
     self:EndGame()
+    -- 清空缓存池
+    GameManager.cs.poolManager:Clear()
     UIManager:HidePanel('BossGamePanel')
     -- 重新打开Boss面板
     UIManager:ShowPanel('BossPanel', EUILayers.Bottom)

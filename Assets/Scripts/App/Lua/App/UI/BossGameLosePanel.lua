@@ -23,9 +23,11 @@ function BossGameLosePanel:UpdateBossName(name)
 end
 
 function BossGameLosePanel:OnClickRestart()
+    UIManager:HidePanel('BossGameLosePanel')
     GameManager.sceneManager:RestartGame()
 end
 
 function BossGameLosePanel:OnClickSelectLevel()
+    UIManager:HidePanel('BossGameLosePanel')
     GameManager.sceneManager:SelectLevel()
 end
