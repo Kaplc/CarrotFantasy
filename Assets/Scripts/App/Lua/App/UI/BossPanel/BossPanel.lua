@@ -58,14 +58,20 @@ function BossPanel.Init(self)
     self.btnHome.onClick:AddListener(
         function()
             UIManager:HidePanel('BossPanel')
-            CS.GameFacade.Instance:SendNotification('ShowBeginPanel')
+            GameFacade.Instance:SendNotification('LoadScne.BeginScene', function ()
+                -- GameFacade.Instance:SendNotification('SHOW_HELP_PANEL', false)
+            end)
+            -- CS.GameFacade.Instance:SendNotification('ShowBeginPanel')
         end
     )
 
     self.btnHelp.onClick:AddListener(
         function()
             UIManager:HidePanel('BossPanel')
-            CS.GameFacade.Instance:SendNotification('ShowHelpPanel', false)
+            GameManager.cs.loadSceneManager:LoadSceneAsync('2.BeginScene', function()
+                GameFacade.Instance:SendNotification('SHOW_BEGIN_PANEL')
+                GameFacade.Instance:SendNotification('SHOW_HELP_PANEL', true)
+            end)
         end
     )
 
@@ -211,8 +217,10 @@ function BossPanel:UpdateInfo()
     for k, v in pairs(self.processData) do
         if self.index == v.id then
             self.imgLock.gameObject:SetActive(false)
+            goto continue
         else
             self.imgLock.gameObject:SetActive(true)
         end
     end
+    ::continue::
 end

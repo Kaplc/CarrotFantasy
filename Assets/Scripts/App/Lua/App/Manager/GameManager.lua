@@ -12,9 +12,8 @@ function GameManager:Init()
 end
 
 function GameManager:StartBossGame()
-    if self.sceneManager == nil then
-        self.sceneManager = BossGameManager()
-    end
-
+    self.sceneManager = BossGameManager()
+    self.cs:SetSceneManager(self.sceneManager.cs)
+    
     UIManager:ShowPanel('BossPanel', EUILayers.Middle)
 end

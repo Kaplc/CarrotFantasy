@@ -21,7 +21,7 @@ namespace XLua.CSObjectWrap
         {
 			ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
 			System.Type type = typeof(App.Game.GameManager);
-			Utils.BeginObjectRegister(type, L, translator, 0, 7, 11, 11);
+			Utils.BeginObjectRegister(type, L, translator, 0, 7, 12, 12);
 			
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "SetSceneManager", _m_SetSceneManager);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "LoadGameScene", _m_LoadGameScene);
@@ -41,6 +41,7 @@ namespace XLua.CSObjectWrap
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "uiManager", _g_get_uiManager);
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "eventCenter", _g_get_eventCenter);
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "sdkManager", _g_get_sdkManager);
+            Utils.RegisterFunc(L, Utils.GETTER_IDX, "loadSceneManager", _g_get_loadSceneManager);
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "sceneManager", _g_get_sceneManager);
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "dataManager", _g_get_dataManager);
             
@@ -53,6 +54,7 @@ namespace XLua.CSObjectWrap
             Utils.RegisterFunc(L, Utils.SETTER_IDX, "uiManager", _s_set_uiManager);
             Utils.RegisterFunc(L, Utils.SETTER_IDX, "eventCenter", _s_set_eventCenter);
             Utils.RegisterFunc(L, Utils.SETTER_IDX, "sdkManager", _s_set_sdkManager);
+            Utils.RegisterFunc(L, Utils.SETTER_IDX, "loadSceneManager", _s_set_loadSceneManager);
             Utils.RegisterFunc(L, Utils.SETTER_IDX, "sceneManager", _s_set_sceneManager);
             Utils.RegisterFunc(L, Utils.SETTER_IDX, "dataManager", _s_set_dataManager);
             
@@ -428,6 +430,20 @@ namespace XLua.CSObjectWrap
         }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _g_get_loadSceneManager(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			
+                App.Game.GameManager gen_to_be_invoked = (App.Game.GameManager)translator.FastGetCSObj(L, 1);
+                translator.Push(L, gen_to_be_invoked.loadSceneManager);
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 1;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static int _g_get_sceneManager(RealStatePtr L)
         {
 		    try {
@@ -585,6 +601,21 @@ namespace XLua.CSObjectWrap
 			
                 App.Game.GameManager gen_to_be_invoked = (App.Game.GameManager)translator.FastGetCSObj(L, 1);
                 gen_to_be_invoked.sdkManager = (App.Game.SDK.SDKManager)translator.GetObject(L, 2, typeof(App.Game.SDK.SDKManager));
+            
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 0;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _s_set_loadSceneManager(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			
+                App.Game.GameManager gen_to_be_invoked = (App.Game.GameManager)translator.FastGetCSObj(L, 1);
+                gen_to_be_invoked.loadSceneManager = (Library.ZFrameWorkSceneManager)translator.GetObject(L, 2, typeof(Library.ZFrameWorkSceneManager));
             
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);

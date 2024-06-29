@@ -9,7 +9,6 @@ BossGameDataManager.processData = nil
 
 function BossGameDataManager:Construct()
     self.cs = LuaSceneDataManager()
-    GameManager.cs.sceneManager:SetSceneDataManager(self.script)
 
     self.path = Application.persistentDataPath .. '/ProcessData.json'
 
@@ -47,8 +46,10 @@ function BossGameDataManager:LoadProcessData()
     end
 end
 
-function BossGameDataManager:SaveProcessData()
-    local str = jsonutility:encode(self.processData, { indent = true })
+function BossGameDataManager:SaveProcessData(levelID, prize)
+    self.processData[levelID] = {id = levelID, prize = prize}
+
+    local str = jsonutility.encode(self.processData, { indent = true })
 
     local file = io.open(self.path, 'w')
 

@@ -37,12 +37,11 @@ BossGameManager.prize = nil
 
 function BossGameManager:Construct()
     -- 初始化场景管理器
-    self.mono = GameObject():AddComponent(typeof(MonoScript))
+    self.mono = GameObject('BossGameManager'):AddComponent(typeof(MonoScript))
     GameObject.DontDestroyOnLoad(self.mono.gameObject)
     self:InitMonoAction()
 
     self.cs = LuaSceneManager()
-    GameManager.cs:SetSceneManager(self.cs)
     self:InitCsAction()
 
     self.gameDataManager = BossGameDataManager()
@@ -254,6 +253,13 @@ function BossGameManager:GameWin()
     panel:UpdateTime(self.time)
     panel:UpdatePrize(self.prize)
     panel:UpdateBossName('Boss' .. self.levelID)
+
+    -- 保存数据
+    self.gameDataManager:SaveProcessData(self.levelID, self.prize)
+    if self.levelID + 1 <= 3 then
+        -- 解锁下一关
+        self.gameDataManager:SaveProcessData(self.levelID + 1, 'None')
+    end
 end
 
 function BossGameManager:NextLevel()

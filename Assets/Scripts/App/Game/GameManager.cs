@@ -28,6 +28,8 @@ namespace App.Game
         public EventCenter eventCenter;
         public SDKManager sdkManager;
 
+        public ZFrameWorkSceneManager loadSceneManager;
+
         #endregion
 
         public ISceneManger sceneManager;
@@ -48,6 +50,7 @@ namespace App.Game
             xLuaManager = XLuaManager.Instance;
             uiManager = UIManager.Instance;
             eventCenter = EventCenter.Instance;
+            loadSceneManager = ZFrameWorkSceneManager.Instance;
 
             // 初始化Sdk
             GameObject sdkManagerObj = new GameObject(name: "SDKManager");
