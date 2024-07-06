@@ -63,7 +63,6 @@ namespace App.Game
             DOTween.Init();
             #endregion
 
-
             DontDestroyOnLoad(gameObject);
 
             // 初始化数据

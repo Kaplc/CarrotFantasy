@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: BossData
+  m_EditorClassIdentifier: 
+  m_GroupName: BossData
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 5910a115a4511b548a2eb8d291e534c4
+  m_SerializeEntries:
+  - m_GUID: da2af12e75d4f7e4e94f782c4bf97a43
+    m_Address: Boss0
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - BossData
+  - m_GUID: 54b30ec2b1727fe4b85726425f83520d
+    m_Address: Boss1
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - BossData
+  - m_GUID: 4fc4cc90f5e467441b8203f824ca9c5b
+    m_Address: Boss2
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - BossData
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 136f90097b63d3242a5e680f3516fffa, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: f7db91a0fbf69f24a91b3e6b6a21e65d, type: 2}
+    - {fileID: 11400000, guid: e1fe05c9bf3eef84eabec9bdf27260c4, type: 2}

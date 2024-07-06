@@ -1,10 +1,9 @@
-namespace Editor.MapEditor
+namespace Editor.Map
 {
-    public enum EDrawType
+    public enum ENormalMapDrawType
     {
         DrawPath,
         DrawTowerPos,
         DrawObstacle,
-        DrawTower
     }
 }

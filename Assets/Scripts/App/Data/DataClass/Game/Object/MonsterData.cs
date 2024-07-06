@@ -3,7 +3,7 @@ using XLua;
 
 namespace App.Data.DataClass.Game.Object
 {
-    [CreateAssetMenu][LuaCallCSharp]
+    [CreateAssetMenu]
     public class MonsterData: ScriptableObject
     {
         public int id;

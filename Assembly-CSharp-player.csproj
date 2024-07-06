@@ -84,6 +84,7 @@
      <Compile Include="Assets\Scripts\App\Data\DataClass\Map\MapData.cs" />
      <Compile Include="Assets\Scripts\App\Data\DataClass\Map\SpawnMonsterData.cs" />
      <Compile Include="Assets\Scripts\App\Data\DataClass\Map\WaveData.cs" />
+     <Compile Include="Assets\Scripts\App\Data\DataClass\MonsterDataMap.cs" />
      <Compile Include="Assets\Scripts\App\Data\DataClass\Player\MusicSettingData.cs" />
      <Compile Include="Assets\Scripts\App\Data\DataClass\Player\PassedLevelData.cs" />
      <Compile Include="Assets\Scripts\App\Data\DataClass\Player\PlayerData.cs" />
@@ -104,6 +105,7 @@
      <Compile Include="Assets\Scripts\App\Game\GameManager.cs" />
      <Compile Include="Assets\Scripts\App\Game\Generic\LuaCallCsharp\AddType.cs" />
      <Compile Include="Assets\Scripts\App\Game\Generic\LuaCallCsharp\CallMathf.cs" />
+     <Compile Include="Assets\Scripts\App\Game\Generic\LuaCallCsharp\LuaNewList.cs" />
      <Compile Include="Assets\Scripts\App\Game\Generic\LuaCallCsharp\MonoScript.cs" />
      <Compile Include="Assets\Scripts\App\Game\Generic\LuaCallCsharp\UIInterfaceClass.cs" />
      <Compile Include="Assets\Scripts\App\Game\Generic\Map\Cell.cs" />
@@ -269,7 +271,7 @@
      <Compile Include="Assets\Scripts\Library\UIManager\BasePanel.cs" />
      <Compile Include="Assets\Scripts\Library\UIManager\UIManager.cs" />
      <Compile Include="Assets\Scripts\Library\XLuaManager\XLuaManager.cs" />
-     <Compile Include="Assets\Scripts\MapEditor\MapEditor.cs" />
+     <Compile Include="Assets\Scripts\MapEditor\EditorMap.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
@@ -304,6 +306,51 @@
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
+     <Compile Include="Assets\XLua\Gen\App_Data_DataClass_Game_Object_MonsterDataWrap.cs" />
+     <Compile Include="Assets\XLua\Gen\App_Data_DataClass_Game_Object_TowerDataWrap.cs" />
+     <Compile Include="Assets\XLua\Gen\App_Data_DataClass_Map_SpawnMonsterDataWrap.cs" />
+     <Compile Include="Assets\XLua\Gen\App_Data_DataClass_TowerMapWrap.cs" />
+     <Compile Include="Assets\XLua\Gen\App_Game_GameManagerWrap.cs" />
+     <Compile Include="Assets\XLua\Gen\App_Game_Generic_BaseObject_IRoleBridge.cs" />
+     <Compile Include="Assets\XLua\Gen\App_Game_Generic_BaseObject_IRoleWrap.cs" />
+     <Compile Include="Assets\XLua\Gen\App_Game_Generic_Map_CellWrap.cs" />
+     <Compile Include="Assets\XLua\Gen\App_Game_Generic_Map_PointClassToCellWrap.cs" />
+     <Compile Include="Assets\XLua\Gen\App_Game_Generic_Map_PointWrap.cs" />
+     <Compile Include="Assets\XLua\Gen\App_Game_LuaCommandWrap.cs" />
+     <Compile Include="Assets\XLua\Gen\App_Game_LuaMediatorWrap.cs" />
+     <Compile Include="Assets\XLua\Gen\App_Game_LuaProxyWrap.cs" />
+     <Compile Include="Assets\XLua\Gen\App_Game_Object_Map_MapWrap.cs" />
+     <Compile Include="Assets\XLua\Gen\App_Game_Object_Monster_IMonsterBridge.cs" />
+     <Compile Include="Assets\XLua\Gen\App_Game_Object_Monster_IMonsterWrap.cs" />
+     <Compile Include="Assets\XLua\Gen\App_Game_Object_Monster_LuaMonsterWrap.cs" />
+     <Compile Include="Assets\XLua\Gen\App_Game_Object_Obstacle_IObstacleWrap.cs" />
+     <Compile Include="Assets\XLua\Gen\App_Game_Object_Obstacle_LuaObstacleWrap.cs" />
+     <Compile Include="Assets\XLua\Gen\App_Game_Object_Obstacle_ObstacleWrap.cs" />
+     <Compile Include="Assets\XLua\Gen\App_Game_Object_Tower_ITowerWrap.cs" />
+     <Compile Include="Assets\XLua\Gen\App_Game_Object_Tower_LuaTowerWrap.cs" />
+     <Compile Include="Assets\XLua\Gen\App_Game_SceneManager_LuaSceneDataManagerWrap.cs" />
+     <Compile Include="Assets\XLua\Gen\App_Game_SceneManager_LuaSceneManagerWrap.cs" />
+     <Compile Include="Assets\XLua\Gen\App_Game_Spawner_LuaSpawnerWrap.cs" />
+     <Compile Include="Assets\XLua\Gen\App_UI_BaseControl_BasePageFlippingWrap.cs" />
+     <Compile Include="Assets\XLua\Gen\App_UI_GameScene_Panel_GamePanel_CountDownPanelWrap.cs" />
+     <Compile Include="Assets\XLua\Gen\CallMathfWrap.cs" />
+     <Compile Include="Assets\XLua\Gen\DelegatesGensBridge.cs" />
+     <Compile Include="Assets\XLua\Gen\EnumWrap.cs" />
+     <Compile Include="Assets\XLua\Gen\GameFacadeWrap.cs" />
+     <Compile Include="Assets\XLua\Gen\Library_BasePanelWrap.cs" />
+     <Compile Include="Assets\XLua\Gen\LuaNewListWrap.cs" />
+     <Compile Include="Assets\XLua\Gen\MonoScriptWrap.cs" />
+     <Compile Include="Assets\XLua\Gen\PackUnpack.cs" />
+     <Compile Include="Assets\XLua\Gen\Tutorial_BaseClassWrap.cs" />
+     <Compile Include="Assets\XLua\Gen\Tutorial_CSCallLua_ItfDBridge.cs" />
+     <Compile Include="Assets\XLua\Gen\Tutorial_DerivedClassExtensionsWrap.cs" />
+     <Compile Include="Assets\XLua\Gen\Tutorial_DerivedClassWrap.cs" />
+     <Compile Include="Assets\XLua\Gen\Tutorial_ICalcWrap.cs" />
+     <Compile Include="Assets\XLua\Gen\UIInterfaceClassWrap.cs" />
+     <Compile Include="Assets\XLua\Gen\UIManagerWrap.cs" />
+     <Compile Include="Assets\XLua\Gen\UnityEngine_SceneManagement_SceneManagerWrap.cs" />
+     <Compile Include="Assets\XLua\Gen\WrapPusher.cs" />
+     <Compile Include="Assets\XLua\Gen\XLuaGenAutoRegister.cs" />
      <Compile Include="Assets\XLua\Tutorial\CSharpCallLua\CSCallLua.cs" />
      <Compile Include="Assets\XLua\Tutorial\LoadLuaScript\ByFile\ByFile.cs" />
      <Compile Include="Assets\XLua\Tutorial\LoadLuaScript\ByString\ByString.cs" />
@@ -371,6 +418,15 @@
  </Reference>
  <Reference Include="com.unity.multiplayer-hlapi.Runtime">
  <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/com.unity.multiplayer-hlapi.Runtime.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.ResourceManager">
+ <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/Unity.ResourceManager.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Addressables">
+ <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/Unity.Addressables.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.ScriptableBuildPipeline">
+ <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/Unity.ScriptableBuildPipeline.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine">
  <HintPath>E:/Develop/Unity/2019.4.40f1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/mono/Managed/UnityEngine.dll</HintPath>
@@ -632,6 +688,15 @@
  </Reference>
  <Reference Include="UnityEditor.UI">
  <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.CacheServer">
+ <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/UnityEditor.CacheServer.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.ScriptableBuildPipeline.Editor">
+ <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/Unity.ScriptableBuildPipeline.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Addressables.Editor">
+ <HintPath>E:/Project/Unity/CarrotFantasy/Library/ScriptAssemblies/Unity.Addressables.Editor.dll</HintPath>
  </Reference>
  <Reference Include="DOTween">
  <HintPath>E:/Project/Unity/CarrotFantasy/Assets/DOTween/DOTween.dll</HintPath>

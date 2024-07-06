@@ -28,7 +28,7 @@ namespace App.Game.SceneManager.NormalGame
                 
                 return newData;
             }
-
+            
             return null;
         }
 

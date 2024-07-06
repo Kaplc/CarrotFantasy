@@ -20,7 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/5.GameScene.unity
     guid: 2c3d2c296df9b9142a5e000d9e0b1fad
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/BossGameScene.unity
     guid: fe11f3e714b6e2d449dce6b7f3b3d995
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 9a6e114390a9e4243b99f6024f3202cd,
+      type: 2}
