@@ -29,7 +29,7 @@ namespace Editor.Map
 
         #endregion
 
-        public MapData mapData;
+        private MapData mapData;
 
         #region 初始金币和允许的塔
 
@@ -40,8 +40,8 @@ namespace Editor.Map
 
         #region 图片信息
 
-        public Sprite bgTexture;
-        public Sprite fgTexture;
+        private Sprite bgTexture;
+        private Sprite fgTexture;
 
         #endregion
 

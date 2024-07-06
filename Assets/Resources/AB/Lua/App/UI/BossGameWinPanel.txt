@@ -1,0 +1,46 @@
+BossGameWinPanel = BasePanel:SubClass('BossGameWinPanel')
+
+BossGameWinPanel.txTmpTime = nil
+BossGameWinPanel.txBossName = nil
+BossGameWinPanel.btnNextLevel = nil
+BossGameWinPanel.btnSelectLevel = nil
+BossGameWinPanel.imgPrize = nil
+
+function BossGameWinPanel:Init()
+    self.txBossName = self.panelObj.transform:Find('TextBossName'):GetComponent('Text')
+    self.txTmpTime = self.panelObj.transform:Find('Text (TMP)Time'):GetComponent('TMP_Text')
+    self.btnNextLevel = self.panelObj.transform:Find('ButtonNextLevel'):GetComponent('Button')
+    self.btnSelectLevel = self.panelObj.transform:Find('ButtonSelectLevel'):GetComponent('Button')
+    self.imgPrize = self.panelObj.transform:Find('ImagePrize'):GetComponent('Image')
+
+    self.btnNextLevel.onClick:AddListener(function()
+        self:OnClickNextLevel()
+    end)
+
+    self.btnSelectLevel.onClick:AddListener(function ()
+        self:OnClickSelectLevel()
+    end)
+end
+
+function BossGameWinPanel:OnClickNextLevel()
+    GameManager.sceneManager:NextLevel()
+end
+
+function BossGameWinPanel:OnClickSelectLevel()
+    UIManager:HidePanel('BossGameWinPanel')
+    GameManager.sceneManager:SelectLevel()
+end
+
+function BossGameWinPanel:UpdateTime(time)
+    self.txTmpTime.text = math.ceil(time)
+end
+
+function BossGameWinPanel:UpdatePrize(prize)
+    local s = Resources.Load('AB/Art/Prize/WinPanel/' .. prize, typeof(CS.UnityEngine.Sprite))
+    self.imgPrize.sprite = s
+    self.imgPrize:SetNativeSize()
+end
+
+function BossGameWinPanel:UpdateBossName(name)
+    self.txBossName.text = name
+end
