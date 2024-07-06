@@ -26,6 +26,9 @@ Camera = CS.UnityEngine.Camera
 Destroy = CS.UnityEngine.Object.Destroy
 DestroyImmediate = CS.UnityEngine.Object.DestroyImmediate
 Application = CS.UnityEngine.Application
+Addressable = CS.UnityEngine.AddressableAssets.Addressables
+TextAsset = CS.UnityEngine.TextAsset
+Sprite = CS.UnityEngine.Sprite
 
 -- UI
 Canvas = CS.UnityEngine.Canvas

@@ -130,9 +130,6 @@ namespace XLua.CSObjectWrap
             translator.DelayWrapLoader(typeof(App.Data.DataClass.Map.SpawnMonsterData), AppDataDataClassMapSpawnMonsterDataWrap.__Register);
         
         
-            translator.DelayWrapLoader(typeof(App.Data.DataClass.Game.Object.MonsterData), AppDataDataClassGameObjectMonsterDataWrap.__Register);
-        
-        
             translator.DelayWrapLoader(typeof(App.Data.DataClass.Game.Object.TowerData), AppDataDataClassGameObjectTowerDataWrap.__Register);
         
         

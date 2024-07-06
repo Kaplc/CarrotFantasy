@@ -30,6 +30,8 @@ namespace App.Game
 
         public ZFrameWorkSceneManager loadSceneManager;
 
+        public AddressablesesManager addressablesesManager;
+
         #endregion
 
         public ISceneManger sceneManager;
@@ -51,6 +53,7 @@ namespace App.Game
             uiManager = UIManager.Instance;
             eventCenter = EventCenter.Instance;
             loadSceneManager = ZFrameWorkSceneManager.Instance;
+            addressablesesManager = new AddressablesesManager();
 
             // 初始化Sdk
             GameObject sdkManagerObj = new GameObject(name: "SDKManager");

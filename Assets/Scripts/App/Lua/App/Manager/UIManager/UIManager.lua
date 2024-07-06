@@ -19,7 +19,7 @@ UIManager = Object:SubClass('UIManager')
 
 UIManager.panelDic = {}
 
-function UIManager:ShowPanel(panelName, layerType)
+function UIManager:ShowPanel(panelName, layerType, callBack)
     local panel
     local layer
     if layerType == EUILayers.Bottom then
@@ -36,29 +36,40 @@ function UIManager:ShowPanel(panelName, layerType)
 
     -- 加载面板预设体
     if self.panelDic[panelName] == nil then
-        local prefabs = Resources.Load('AB/UI/' .. panelName)
-        if prefabs == nil then
-            prefabs = Resources.Load('UI/' .. panelName)
-        end
+        local prefabs = nil
+        GameManager.cs.addressablesesManager:LoadAssetAsync('BossPanel', typeof(GameObject), function (obj)
+            if obj == nil then
+                prefabs = Resources.Load('UI/' .. panelName)
+            else
+                prefabs = obj
+            end
+          
+            if prefabs == nil then
+                print('UI prefabs is nil')
+                return
+            end
 
-        if prefabs == nil then
-            print('UI prefabs is nil')
-            return nil
+            local panelObj = GameObject.Instantiate(prefabs, layer)
+            -- 设置
+            panelObj.transform.localScale = Vector3.one
+            -- 绑定到lua脚本
+            panel = _G[panelName]
+            panel.panelObj = panelObj
+            -- 保存到字典
+            self.panelDic[panelName] = panel
+            -- 调用Show方法
+            panel:Show()
+            
+            if callBack ~= nil then
+                callBack(panel)
+            end
         end
-
-        local panelObj = GameObject.Instantiate(prefabs, layer)
-        -- 设置
-        panelObj.transform.localScale = Vector3.one
-        -- 绑定到lua脚本
-        panel = _G[panelName]
-        panel.panelObj = panelObj
-        -- 保存到字典
-        self.panelDic[panelName] = panel
-        -- 调用Show方法
-        panel:Show()
+    )
+    else
+        if callBack ~= nil then
+            callBack(self.panelDic[panelName])  
+        end
     end
-
-    return self.panelDic[panelName]
 end
 
 function UIManager:HidePanel(panelName)

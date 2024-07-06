@@ -43,6 +43,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f43b5e82babda6742b6c0e1f572352fb, type: 2}
   - {fileID: 11400000, guid: 01a208506bacf3c4da1ee6e8e650e8a8, type: 2}
   - {fileID: 11400000, guid: 3d203c7d482543541b24083f14c75efd, type: 2}
+  - {fileID: 11400000, guid: 24cbca1f221507842a42e0c1ab94158a, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -89,6 +90,7 @@ MonoBehaviour:
     - UI
     - WinPanel
     - BossGamePanel
+    - Lua
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: d6032a0a94e161b4cb43bcc5f2b676f4, type: 2}
