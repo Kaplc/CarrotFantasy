@@ -13,15 +13,7 @@ public class CustomAsyncOperationHandle
     private int count; // 被引用次数
 
     public int Count => count;
-
-    public AsyncOperationHandle Handle
-    {
-        get
-        {
-            count++;
-            return handle;
-        }
-    }
+    public AsyncOperationHandle Handle => handle;
 
     public CustomAsyncOperationHandle(AsyncOperationHandle h)
     {
@@ -33,86 +25,151 @@ public class CustomAsyncOperationHandle
     {
         count--;
     }
+
+    public void Use()
+    {
+        count++;
+    }
 }
 
+/// <summary>
+/// 多资源加载处理器
+/// </summary>
+public class PreloadAssetInfoHandle
+{
+    public int count; // 总共要加载的资源数量
+    public Action<bool> callBack; // 全部资源加载完成回调
 
-public class AddressablesesManager : IAddressablesManager
+    public PreloadAssetInfoHandle(int count, Action<bool> callBack)
+    {
+        this.count = count;
+        this.callBack = callBack;
+    }
+
+    public void Done()
+    {
+        count--;
+        if (count == 0)
+        {
+            callBack?.Invoke(true);
+        }
+    }
+}
+
+/// <summary>
+/// 单资源加载信息
+/// </summary> 
+public class PreloadAssetInfo
+{
+    public Type type;
+    public Action<bool> callBack;
+    public string[] keys;
+
+    public PreloadAssetInfo(Type type, Action<bool> callBack = null, params string[] keys)
+    {
+        this.type = type;
+        this.callBack = callBack;
+        this.keys = keys;
+    }
+
+    public PreloadAssetInfo(Type type, params string[] keys)
+    {
+        this.type = type;
+        this.callBack = null;
+        this.keys = keys;
+    }
+}
+
+public class PreloadAssetInfo<T> : PreloadAssetInfo where T : class
+{
+    public PreloadAssetInfo(Action<bool> callBack = null, params string[] keys) : base(typeof(T), callBack, keys)
+    {
+    }
+
+    public PreloadAssetInfo(params string[] keys) : base(typeof(T), null, keys)
+    {
+    }
+}
+
+public class AddressablesManager : IAddressablesManager
 {
     private Dictionary<string, CustomAsyncOperationHandle> handlesDic;
-    
-    private MethodInfo loadAssetAsyncSingle;
-    private MethodInfo loadAssetAsyncMultiple;
+
+    private List<PreloadAssetInfoHandle> preloadAssetInfoHandles;
+
+    private MethodInfo loadAssetAsyncGeneric;
     private MethodInfo loadAssetsAsyncGeneric;
 
-    public AddressablesesManager()
+    public AddressablesManager()
     {
+        PreloadAssetInfo<GameObject> preloadAssetInfo = new PreloadAssetInfo<GameObject>("Prefabs/Player");
         handlesDic = new Dictionary<string, CustomAsyncOperationHandle>();
-        
+        preloadAssetInfoHandles = new List<PreloadAssetInfoHandle>();
+
         // 反射获取私有方法
-        loadAssetAsyncSingle = typeof(AddressablesesManager).GetMethod("LoadAssetAsyncSingle", BindingFlags.NonPublic | BindingFlags.Instance);
-        loadAssetAsyncMultiple= typeof(AddressablesesManager).GetMethod("LoadAssetAsyncMultiple", BindingFlags.NonPublic | BindingFlags.Instance);
-        loadAssetsAsyncGeneric = typeof(AddressablesesManager).GetMethod("LoadAssetsAsyncGeneric", BindingFlags.NonPublic | BindingFlags.Instance);
+        loadAssetAsyncGeneric = typeof(AddressablesManager).GetMethod(nameof(LoadAssetAsyncGeneric), BindingFlags.NonPublic | BindingFlags.Instance);
+        loadAssetsAsyncGeneric = typeof(AddressablesManager).GetMethod(nameof(LoadAssetsAsyncGeneric), BindingFlags.NonPublic | BindingFlags.Instance);
     }
 
-    /// <summary>
-    /// 单个名称或标签加载
-    /// </summary>
-    /// <param name="name"></param>
-    /// <param name="callBack"></param>
-    /// <typeparam name="T"></typeparam>
-    public void LoadAssetAsync<T>(string name, Action<T> callBack) where T : class
-    {
-        string key = $"{name}-{typeof(T).Name}";
+    // /// <summary>
+    // /// 单个名称或标签加载
+    // /// </summary>
+    // /// <param name="name"></param>
+    // /// <param name="callBack"></param>
+    // /// <typeparam name="T"></typeparam>
+    // public void LoadAssetAsync<T>(string name, Action<T> callBack) where T : class
+    // {
+    //     string key = $"{name}-{typeof(T).Name}";
 
-        if (handlesDic.TryGetValue(key, out var value))
-        {
-            AsyncOperationHandle<T> h = value.Handle.Convert<T>();
+    //     if (handlesDic.TryGetValue(key, out var value))
+    //     {
+    //         AsyncOperationHandle<T> h = value.Handle.Convert<T>();
 
-            if (h.IsDone)
-            {
-                // 加载完成直接执行回调
-                callBack?.Invoke(h.Result);
-            }
-            else
-            {
-                // 添加进完成回调
-                h.Completed += operationHandle =>
-                {
-                    if (operationHandle.Status == AsyncOperationStatus.Succeeded)
-                    {
-                        // 将加载成功的资源返回
-                        callBack?.Invoke(operationHandle.Result);
-                    }
-                    else
-                    {
-                        Debug.LogWarning($"加载失败{key}");
-                        // 加载失败返回null
-                        callBack?.Invoke(null);
-                    }
-                };
-            }
+    //         if (h.IsDone)
+    //         {
+    //             // 加载完成直接执行回调
+    //             callBack?.Invoke(h.Result);
+    //         }
+    //         else
+    //         {
+    //             // 添加进完成回调
+    //             h.Completed += operationHandle =>
+    //             {
+    //                 if (operationHandle.Status == AsyncOperationStatus.Succeeded)
+    //                 {
+    //                     // 将加载成功的资源返回
+    //                     callBack?.Invoke(operationHandle.Result);
+    //                 }
+    //                 else
+    //                 {
+    //                     Debug.LogWarning($"加载失败{key}");
+    //                     // 加载失败返回null
+    //                     callBack?.Invoke(null);
+    //                 }
+    //             };
+    //         }
 
-            return;
-        }
+    //         return;
+    //     }
 
-        AsyncOperationHandle handle = Addressables.LoadAssetAsync<T>(name);
-        handle.Completed += operationHandle =>
-        {
-            if (operationHandle.Status == AsyncOperationStatus.Succeeded)
-            {
-                // 将加载成功的资源返回
-                callBack?.Invoke(handlesDic[key].Handle.Convert<T>().Result);
-            }
-            else
-            {
-                Debug.LogWarning($"加载失败{key}");
-                // 加载失败返回null
-                callBack?.Invoke(null);
-            }
-        };
-        // 将操作句柄保存
-        handlesDic.Add(key, new CustomAsyncOperationHandle(handle));
-    }
+    //     AsyncOperationHandle handle = Addressables.LoadAssetAsync<T>(name);
+    //     handle.Completed += operationHandle =>
+    //     {
+    //         if (operationHandle.Status == AsyncOperationStatus.Succeeded)
+    //         {
+    //             // 将加载成功的资源返回
+    //             callBack?.Invoke(handlesDic[key].Handle.Convert<T>().Result);
+    //         }
+    //         else
+    //         {
+    //             Debug.LogWarning($"加载失败{key}");
+    //             // 加载失败返回null
+    //             callBack?.Invoke(null);
+    //         }
+    //     };
+    //     // 将操作句柄保存
+    //     handlesDic.Add(key, new CustomAsyncOperationHandle(handle));
+    // }
 
     /// <summary>
     /// 多名称和标签条件加载
@@ -120,11 +177,10 @@ public class AddressablesesManager : IAddressablesManager
     /// <param name="callBack">回调</param>
     /// <param name="keys">筛选条件</param>
     /// <typeparam name="T"></typeparam>
-    public void LoadAssetAsync<T>(Action<T> callBack, params string[] keys)
-        where T : class
+    public void LoadAssetAsync<T>(Action<T> callBack, params string[] keys) where T : class
     {
         List<string> keysList = keys.ToList();
-        // 拼接存入dic的key
+        // 拼接存入 dic的 key
         string key = "";
         for (int i = 0; i < keysList.Count; i++)
         {
@@ -136,12 +192,13 @@ public class AddressablesesManager : IAddressablesManager
         if (handlesDic.TryGetValue(key, out var value))
         {
             AsyncOperationHandle<IList<T>> h = value.Handle.Convert<IList<T>>();
+            value.Use();
 
             if (h.IsDone)
             {
                 if (h.Result.Count > 1)
                 {
-                    Debug.LogWarning("获取到多个资源默认返回第一个");
+                    Debug.LogWarning(key + "获取到多个资源默认返回第一个");
                 }
 
                 // 加载完成直接执行回调
@@ -156,7 +213,7 @@ public class AddressablesesManager : IAddressablesManager
                     {
                         if (h.Result.Count > 1)
                         {
-                            Debug.LogWarning("获取到多个资源默认返回第一个");
+                            Debug.LogWarning(key + "获取到多个资源默认返回第一个");
                         }
 
                         // 将加载成功的资源返回
@@ -181,10 +238,12 @@ public class AddressablesesManager : IAddressablesManager
             if (operationHandle.Status == AsyncOperationStatus.Succeeded)
             {
                 AsyncOperationHandle<IList<T>> h = handlesDic[key].Handle.Convert<IList<T>>();
+                handlesDic[key].Use();
+
                 // 加载成功回调
                 if (h.Result.Count > 1)
                 {
-                    Debug.LogWarning("获取到多个资源默认返回第一个");
+                    Debug.LogWarning(key + "获取到多个资源默认返回第一个");
                 }
 
                 // 将加载成功的资源返回
@@ -225,6 +284,7 @@ public class AddressablesesManager : IAddressablesManager
         if (handlesDic.TryGetValue(key, out var value))
         {
             AsyncOperationHandle<IList<T>> h = value.Handle.Convert<IList<T>>();
+            value.Use();
 
             if (h.IsDone)
             {
@@ -261,7 +321,8 @@ public class AddressablesesManager : IAddressablesManager
             {
                 // 加载成功回调
                 handlesDic.Add(key, new CustomAsyncOperationHandle(operationHandle));
-                callBack?.Invoke(handlesDic[key].Handle.Convert<IList<T>>().Result);
+                handlesDic[key].Use();
+                callBack?.Invoke(handlesDic[key].Handle.Convert<IList<T>>().Result); 
             }
             else
             {
@@ -335,38 +396,22 @@ public class AddressablesesManager : IAddressablesManager
 
     #region 非泛型方法
 
-    public void LoadAssetAsync(string name, Type type, Action<object> callBack)
+    public void LoadAssetAsync(Type type, Action<object> callBack, params string[] keys)
     {
         // 使用反射调用泛型方法
-        if (loadAssetAsyncSingle != null)
+        if (loadAssetAsyncGeneric != null)
         {
-            MethodInfo genericMethod = loadAssetAsyncSingle.MakeGenericMethod(type);
-            genericMethod.Invoke(this, new object[] { name, callBack });
-        }
-
-    }
-
-    private void LoadAssetAsyncSingle<T>(string name, Action<T> callBack) where T : class
-    {
-        LoadAssetAsync(name, callBack);
-    }
-
-    public void LoadAssetAsync(Action<object> callBack, Type type, params string[] keys)
-    {
-        // 使用反射调用泛型方法
-        if (loadAssetAsyncMultiple != null)
-        {
-            MethodInfo genericMethod = loadAssetAsyncMultiple.MakeGenericMethod(type);
+            MethodInfo genericMethod = loadAssetAsyncGeneric.MakeGenericMethod(type);
             genericMethod.Invoke(this, new object[] { callBack, keys });
         }
     }
 
-    private void LoadAssetAsyncMultiple<T>(Action<IList<T>> callBack, params string[] keys) where T : class
+    private void LoadAssetAsyncGeneric<T>(Action<object> callBack, params string[] keys) where T : class
     {
-        LoadAssetsAsync(Addressables.MergeMode.Intersection, callBack, keys);
+        LoadAssetAsync<T>(callBack, keys);
     }
 
-    public void LoadAssetsAsync(Addressables.MergeMode mode, Action<IList<object>> callBack, Type type, params string[] keys)
+    public void LoadAssetsAsync(Type type, Addressables.MergeMode mode, Action<IList<object>> callBack, params string[] keys)
     {
         // 使用反射调用泛型方法
         if (loadAssetsAsyncGeneric != null)
@@ -375,7 +420,7 @@ public class AddressablesesManager : IAddressablesManager
             genericMethod.Invoke(this, new object[] { mode, callBack, keys });
         }
     }
-    
+
     private void LoadAssetsAsyncGeneric<T>(Addressables.MergeMode mode, Action<IList<T>> callBack, params string[] keys) where T : class
     {
         LoadAssetsAsync(mode, callBack, keys);
@@ -432,4 +477,124 @@ public class AddressablesesManager : IAddressablesManager
 
     #endregion
 
+    #region 预加载
+
+    /// <summary>
+    /// 预加载单个资源
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public void PreloadAssets<T>(Action<bool> callBack, params string[] keys) where T : class
+    {
+        List<string> keysList = keys.ToList();
+        // 拼接存入dic的key
+        string key = "";
+        for (int i = 0; i < keysList.Count; i++)
+        {
+            key += keysList[i] + "-";
+        }
+
+        key += typeof(T).Name;
+
+        if (handlesDic.ContainsKey(key))
+        {
+            return;
+        }
+
+        Action<T> action = obj =>
+        {
+            callBack?.Invoke(obj != null);
+        };
+
+        LoadAssetAsync<T>(action, keys);
+    }
+
+    /// <summary>
+    /// 预加载单个资源非泛型
+    /// </summary>
+    /// <param name="type">Type</param>
+    /// <param name="callBack">是否加载完成回调</param>
+    /// <param name="keys">条件</param>
+    public void PreloadAssetAsync(Type type, Action<bool> callBack, params string[] keys)
+    {
+        string key = "";
+        for (int i = 0; i < keys.Length; i++)
+        {
+            key += keys[i] + "-";
+        }
+
+        key += type.Name;
+
+        if (handlesDic.ContainsKey(key))
+        {
+            if(handlesDic[key].Handle.IsDone)
+            {
+                callBack?.Invoke(true);
+            }
+            else
+            {
+                handlesDic[key].Handle.Completed += operationHandle =>
+                {
+                    callBack?.Invoke(true);
+                };
+            }
+            return;
+        }
+
+        if (loadAssetAsyncGeneric != null)
+        {
+            Action<object> action = obj =>
+            {
+                callBack?.Invoke(obj != null);
+            };
+
+            MethodInfo genericMethod = loadAssetAsyncGeneric.MakeGenericMethod(type);
+            genericMethod.Invoke(this, new object[] { action, keys });
+        }
+    }
+
+    /// <summary>
+    /// 一次性加载预多个资源
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="callBack">全部加载完成回调</param>
+    /// </summary>
+    public void PreloadAssetsAsync(Action<bool> callBack, params PreloadAssetInfo[] assetInfos)
+    {
+        // 全部加载完成移除
+        callBack += isDone =>
+        {
+            for (int i = 0; i < preloadAssetInfoHandles.Count; i++)
+            {
+                PreloadAssetInfoHandle h = preloadAssetInfoHandles[i];
+                if (h.count == 0)
+                {
+                    preloadAssetInfoHandles.Remove(h);
+                }
+            }
+        };
+        PreloadAssetInfoHandle handle = new PreloadAssetInfoHandle(assetInfos.Length, callBack);
+        preloadAssetInfoHandles.Add(handle);
+        for (int i = 0; i < assetInfos.Length; i++)
+        {
+            PreloadAssetInfo info = assetInfos[i];
+            if (info == null)
+            {
+                info.callBack = isDone =>
+                {
+                    handle.Done();
+                };
+            }
+            else
+            {
+                info.callBack += isDone =>
+                {
+                    handle.Done();
+                };
+            }
+
+            PreloadAssetAsync(info.type, info.callBack, info.keys);
+        }
+    }
+
+    #endregion
 }

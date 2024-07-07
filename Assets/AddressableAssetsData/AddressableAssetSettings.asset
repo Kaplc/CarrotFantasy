@@ -91,6 +91,7 @@ MonoBehaviour:
     - WinPanel
     - BossGamePanel
     - Lua
+    - BossPanel
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: d6032a0a94e161b4cb43bcc5f2b676f4, type: 2}

@@ -37,37 +37,40 @@ function UIManager:ShowPanel(panelName, layerType, callBack)
     -- 加载面板预设体
     if self.panelDic[panelName] == nil then
         local prefabs = nil
-        GameManager.cs.addressablesesManager:LoadAssetAsync('BossPanel', typeof(GameObject), function (obj)
-            if obj == nil then
-                prefabs = Resources.Load('UI/' .. panelName)
-            else
-                prefabs = obj
-            end
-          
-            if prefabs == nil then
-                print('UI prefabs is nil')
-                return
-            end
+        GameManager.addressablesManager:LoadAssetAsync(
+            typeof(GameObject),
+            function(obj)
+                if obj == nil then
+                    prefabs = Resources.Load('UI/' .. panelName)
+                else
+                    prefabs = obj
+                end
 
-            local panelObj = GameObject.Instantiate(prefabs, layer)
-            -- 设置
-            panelObj.transform.localScale = Vector3.one
-            -- 绑定到lua脚本
-            panel = _G[panelName]
-            panel.panelObj = panelObj
-            -- 保存到字典
-            self.panelDic[panelName] = panel
-            -- 调用Show方法
-            panel:Show()
-            
-            if callBack ~= nil then
-                callBack(panel)
-            end
-        end
-    )
+                if prefabs == nil then
+                    print('UI prefabs is nil')
+                    return
+                end
+
+                local panelObj = GameObject.Instantiate(prefabs, layer)
+                -- 设置
+                panelObj.transform.localScale = Vector3.one
+                -- 绑定到lua脚本
+                panel = _G[panelName]
+                panel.panelObj = panelObj
+                -- 保存到字典
+                self.panelDic[panelName] = panel
+                -- 调用Show方法
+                panel:Show()
+
+                if callBack ~= nil then
+                    callBack(panel)
+                end
+            end,
+            'BossPanel'
+        )
     else
         if callBack ~= nil then
-            callBack(self.panelDic[panelName])  
+            callBack(self.panelDic[panelName])
         end
     end
 end

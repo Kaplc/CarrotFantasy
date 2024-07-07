@@ -68,6 +68,9 @@ namespace App.Game.Generic.LuaCallCsharp
             typeof(DG.Tweening.TweenExtensions),
             typeof(DG.Tweening.TweenSettingsExtensions),
             typeof(DG.Tweening.ShortcutExtensions),
+
+            // Custom
+            typeof(PreloadAssetInfo),
         };
 
         [LuaCallCSharp]

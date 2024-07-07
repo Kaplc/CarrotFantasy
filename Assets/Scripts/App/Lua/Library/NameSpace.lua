@@ -61,3 +61,6 @@ LuaMonster = CS.App.Game.Object.Monster.LuaMonster
 ITower = CS.App.Game.Object.Tower.ITower
 IMonster = CS.App.Game.Object.Monster.IMonster
 IObstacle = CS.App.Game.Object.Obstacle.IObstacle
+
+-- 资源加载
+LuaPreloadAssetInfo = CS.LuaPreloadAssetInfo

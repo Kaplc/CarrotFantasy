@@ -58,9 +58,12 @@ function BossPanel.Init(self)
     self.btnHome.onClick:AddListener(
         function()
             UIManager:HidePanel('BossPanel')
-            GameFacade.Instance:SendNotification('LoadScne.BeginScene', function ()
-                -- GameFacade.Instance:SendNotification('SHOW_HELP_PANEL', false)
-            end)
+            GameFacade.Instance:SendNotification(
+                'LoadScne.BeginScene',
+                function()
+                    -- GameFacade.Instance:SendNotification('SHOW_HELP_PANEL', false)
+                end
+            )
             -- CS.GameFacade.Instance:SendNotification('ShowBeginPanel')
         end
     )
@@ -68,10 +71,13 @@ function BossPanel.Init(self)
     self.btnHelp.onClick:AddListener(
         function()
             UIManager:HidePanel('BossPanel')
-            GameManager.cs.loadSceneManager:LoadSceneAsync('2.BeginScene', function()
-                GameFacade.Instance:SendNotification('SHOW_BEGIN_PANEL')
-                GameFacade.Instance:SendNotification('SHOW_HELP_PANEL', true)
-            end)
+            GameManager.cs.loadSceneManager:LoadSceneAsync(
+                '2.BeginScene',
+                function()
+                    GameFacade.Instance:SendNotification('SHOW_BEGIN_PANEL')
+                    GameFacade.Instance:SendNotification('SHOW_HELP_PANEL', true)
+                end
+            )
         end
     )
 
@@ -144,7 +150,7 @@ function BossPanel:UpdateLevelData(processData)
 
     -- 根据数据更新
     for k, v in pairs(processData) do
-        -- 
+        --
         local id = v.id
         local prize = v.prize
 
@@ -154,10 +160,15 @@ function BossPanel:UpdateLevelData(processData)
         if prize == 'None' then
             imgPrize.gameObject:SetActive(false)
         else
-            local s = Resources.Load('AB/Art/Prize/WinPanel/' .. prize, typeof(CS.UnityEngine.Sprite))
-            imgPrize.sprite = s
-            imgPrize:SetNativeSize()
-            imgPrize.gameObject:SetActive(true)
+            GameManager.cs.addressablesManager:LoadAssetAsync(
+                typeof(Sprite),
+                function(sprite)
+                    imgPrize.sprite = sprite
+                    imgPrize:SetNativeSize()
+                    imgPrize.gameObject:SetActive(true)
+                end,
+                'BossPanel', prize
+            )
         end
     end
 end

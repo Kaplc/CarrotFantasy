@@ -42,7 +42,7 @@ namespace XLua.CSObjectWrap
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "eventCenter", _g_get_eventCenter);
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "sdkManager", _g_get_sdkManager);
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "loadSceneManager", _g_get_loadSceneManager);
-            Utils.RegisterFunc(L, Utils.GETTER_IDX, "addressablesesManager", _g_get_addressablesesManager);
+            Utils.RegisterFunc(L, Utils.GETTER_IDX, "addressablesManager", _g_get_addressablesManager);
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "sceneManager", _g_get_sceneManager);
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "dataManager", _g_get_dataManager);
             
@@ -56,7 +56,7 @@ namespace XLua.CSObjectWrap
             Utils.RegisterFunc(L, Utils.SETTER_IDX, "eventCenter", _s_set_eventCenter);
             Utils.RegisterFunc(L, Utils.SETTER_IDX, "sdkManager", _s_set_sdkManager);
             Utils.RegisterFunc(L, Utils.SETTER_IDX, "loadSceneManager", _s_set_loadSceneManager);
-            Utils.RegisterFunc(L, Utils.SETTER_IDX, "addressablesesManager", _s_set_addressablesesManager);
+            Utils.RegisterFunc(L, Utils.SETTER_IDX, "addressablesManager", _s_set_addressablesManager);
             Utils.RegisterFunc(L, Utils.SETTER_IDX, "sceneManager", _s_set_sceneManager);
             Utils.RegisterFunc(L, Utils.SETTER_IDX, "dataManager", _s_set_dataManager);
             
@@ -446,13 +446,13 @@ namespace XLua.CSObjectWrap
         }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _g_get_addressablesesManager(RealStatePtr L)
+        static int _g_get_addressablesManager(RealStatePtr L)
         {
 		    try {
                 ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
 			
                 App.Game.GameManager gen_to_be_invoked = (App.Game.GameManager)translator.FastGetCSObj(L, 1);
-                translator.Push(L, gen_to_be_invoked.addressablesesManager);
+                translator.Push(L, gen_to_be_invoked.addressablesManager);
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
             }
@@ -640,13 +640,13 @@ namespace XLua.CSObjectWrap
         }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _s_set_addressablesesManager(RealStatePtr L)
+        static int _s_set_addressablesManager(RealStatePtr L)
         {
 		    try {
                 ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
 			
                 App.Game.GameManager gen_to_be_invoked = (App.Game.GameManager)translator.FastGetCSObj(L, 1);
-                gen_to_be_invoked.addressablesesManager = (AddressablesesManager)translator.GetObject(L, 2, typeof(AddressablesesManager));
+                gen_to_be_invoked.addressablesManager = (AddressablesManager)translator.GetObject(L, 2, typeof(AddressablesManager));
             
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);

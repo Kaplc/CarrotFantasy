@@ -37,6 +37,9 @@ namespace XLua.CSObjectWrap
             translator.DelayWrapLoader(typeof(GameFacade), GameFacadeWrap.__Register);
         
         
+            translator.DelayWrapLoader(typeof(LuaPreloadAssetInfo), LuaPreloadAssetInfoWrap.__Register);
+        
+        
             translator.DelayWrapLoader(typeof(UIManager), UIManagerWrap.__Register);
         
         

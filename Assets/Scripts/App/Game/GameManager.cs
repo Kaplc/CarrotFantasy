@@ -8,6 +8,7 @@ using App.Static;
 using DG.Tweening;
 using Library;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Events;
 using XLua;
 
@@ -30,7 +31,7 @@ namespace App.Game
 
         public ZFrameWorkSceneManager loadSceneManager;
 
-        public AddressablesesManager addressablesesManager;
+        public AddressablesManager addressablesManager;
 
         #endregion
 
@@ -53,7 +54,7 @@ namespace App.Game
             uiManager = UIManager.Instance;
             eventCenter = EventCenter.Instance;
             loadSceneManager = ZFrameWorkSceneManager.Instance;
-            addressablesesManager = new AddressablesesManager();
+            addressablesManager = new AddressablesManager();
 
             // 初始化Sdk
             GameObject sdkManagerObj = new GameObject(name: "SDKManager");
