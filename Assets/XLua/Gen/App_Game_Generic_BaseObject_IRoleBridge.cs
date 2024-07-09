@@ -64,7 +64,7 @@ namespace XLua.CSObjectWrap
 #endif
 		}
         
-		void Library.IPoolObject.OnGet()
+		void GameFramework.IPoolObject.OnGet()
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -101,7 +101,7 @@ namespace XLua.CSObjectWrap
 #endif
 		}
         
-		void Library.IPoolObject.OnPush()
+		void GameFramework.IPoolObject.OnPush()
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)

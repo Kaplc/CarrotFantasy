@@ -216,45 +216,7 @@ namespace XLua.CSObjectWrap
 #endif
 		}
         
-		void App.Game.Generic.BaseObject.IRole.Wound(int woundHp)
-		{
-#if THREAD_SAFE || HOTFIX_ENABLE
-            lock (luaEnv.luaEnvLock)
-            {
-#endif
-				RealStatePtr L = luaEnv.L;
-				int err_func = LuaAPI.load_error_func(L, luaEnv.errorFuncRef);
-				
-				
-				LuaAPI.lua_getref(L, luaReference);
-				LuaAPI.xlua_pushasciistring(L, "Wound");
-				if (0 != LuaAPI.xlua_pgettable(L, -2))
-				{
-					luaEnv.ThrowExceptionFromError(err_func - 1);
-				}
-				if(!LuaAPI.lua_isfunction(L, -1))
-				{
-					LuaAPI.xlua_pushasciistring(L, "no such function Wound");
-					luaEnv.ThrowExceptionFromError(err_func - 1);
-				}
-				LuaAPI.lua_pushvalue(L, -2);
-				LuaAPI.lua_remove(L, -3);
-				LuaAPI.xlua_pushinteger(L, woundHp);
-				
-				int __gen_error = LuaAPI.lua_pcall(L, 2, 0, err_func);
-				if (__gen_error != 0)
-					luaEnv.ThrowExceptionFromError(err_func - 1);
-				
-				
-				
-				LuaAPI.lua_settop(L, err_func - 1);
-				
-#if THREAD_SAFE || HOTFIX_ENABLE
-            }
-#endif
-		}
-        
-		void Library.IPoolObject.OnGet()
+		void GameFramework.IPoolObject.OnGet()
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -291,7 +253,7 @@ namespace XLua.CSObjectWrap
 #endif
 		}
         
-		void Library.IPoolObject.OnPush()
+		void GameFramework.IPoolObject.OnPush()
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -316,6 +278,44 @@ namespace XLua.CSObjectWrap
 				LuaAPI.lua_remove(L, -3);
 				
 				int __gen_error = LuaAPI.lua_pcall(L, 1, 0, err_func);
+				if (__gen_error != 0)
+					luaEnv.ThrowExceptionFromError(err_func - 1);
+				
+				
+				
+				LuaAPI.lua_settop(L, err_func - 1);
+				
+#if THREAD_SAFE || HOTFIX_ENABLE
+            }
+#endif
+		}
+        
+		void App.Game.Generic.BaseObject.IRole.Wound(int woundHp)
+		{
+#if THREAD_SAFE || HOTFIX_ENABLE
+            lock (luaEnv.luaEnvLock)
+            {
+#endif
+				RealStatePtr L = luaEnv.L;
+				int err_func = LuaAPI.load_error_func(L, luaEnv.errorFuncRef);
+				
+				
+				LuaAPI.lua_getref(L, luaReference);
+				LuaAPI.xlua_pushasciistring(L, "Wound");
+				if (0 != LuaAPI.xlua_pgettable(L, -2))
+				{
+					luaEnv.ThrowExceptionFromError(err_func - 1);
+				}
+				if(!LuaAPI.lua_isfunction(L, -1))
+				{
+					LuaAPI.xlua_pushasciistring(L, "no such function Wound");
+					luaEnv.ThrowExceptionFromError(err_func - 1);
+				}
+				LuaAPI.lua_pushvalue(L, -2);
+				LuaAPI.lua_remove(L, -3);
+				LuaAPI.xlua_pushinteger(L, woundHp);
+				
+				int __gen_error = LuaAPI.lua_pcall(L, 2, 0, err_func);
 				if (__gen_error != 0)
 					luaEnv.ThrowExceptionFromError(err_func - 1);
 				

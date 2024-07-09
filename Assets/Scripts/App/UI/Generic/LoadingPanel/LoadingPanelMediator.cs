@@ -1,4 +1,5 @@
 using App.Static;
+using GameFramework;
 using PureMVC.Interfaces;
 using PureMVC.Patterns.Mediator;
 
@@ -6,30 +7,29 @@ namespace App.UI.Generic.LoadingPanel
 {
     public class LoadingPanelMediator : Mediator
     {
-        public static new string NAME = "LoadingPanelMediator";
+        public new static string NAME = "LoadingPanelMediator";
+
+        public LoadingPanelMediator() : base(NAME)
+        {
+        }
 
         public LoadingPanel Panel
         {
-            get=>ViewComponent as LoadingPanel;
+            get => ViewComponent as LoadingPanel;
             set
             {
                 ViewComponent = value;
                 (ViewComponent as LoadingPanel)?.BindMediator(this);
             }
         }
-    
-        public LoadingPanelMediator() : base(NAME)
-        {
-        }
 
         public override string[] ListNotificationInterests()
         {
-            return new string[]
+            return new[]
             {
                 NotificationName.UI.SHOW_LOADING_PANEL,
                 NotificationName.UI.HIDE_LOADING_PANEL
             };
-
         }
 
         public override void HandleNotification(INotification notification)
@@ -45,7 +45,6 @@ namespace App.UI.Generic.LoadingPanel
                     UIManager.Instance.Hide<LoadingPanel>(false);
                     break;
             }
-        
         }
     }
 }

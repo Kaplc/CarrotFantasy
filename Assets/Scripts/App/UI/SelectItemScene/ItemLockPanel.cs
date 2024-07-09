@@ -4,7 +4,7 @@ using UnityEngine.UI;
 namespace App.UI.SelectItemScene
 {
     /// <summary>
-    /// 作为主题选择的子面板
+    ///     作为主题选择的子面板
     /// </summary>
     public class ItemLockPanel : MonoBehaviour
     {
@@ -20,7 +20,7 @@ namespace App.UI.SelectItemScene
                 imgItem1.gameObject.SetActive(!value);
             }
         }
-    
+
         public bool ShowItem1
         {
             set
@@ -32,10 +32,7 @@ namespace App.UI.SelectItemScene
 
         private void Start()
         {
-            btnSure.onClick.AddListener(() =>
-            {
-                gameObject.SetActive(false);
-            });
+            btnSure.onClick.AddListener(() => { gameObject.SetActive(false); });
         }
     }
 }

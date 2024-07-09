@@ -5,7 +5,7 @@ using PureMVC.Patterns.Command;
 namespace App.UI.GameScene.Panel.GamePanel
 {
     /// <summary>
-    /// 两倍速
+    ///     两倍速
     /// </summary>
     public class SetSpeedUpCommand : SimpleCommand
     {

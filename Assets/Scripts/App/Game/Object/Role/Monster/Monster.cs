@@ -2,7 +2,6 @@
 using App.Data.DataClass.Game.Object;
 using App.Game.Generic.BaseObject;
 using App.Game.Generic.Map;
-using App.Static;
 using App.UI.GameScene.Control;
 using DG.Tweening;
 using UnityEngine;
@@ -13,81 +12,25 @@ namespace App.Game.Object.Monster
 {
     public class Monster : BaseRole, IMonster
     {
-        private GameManager gameManager;
-        private GameFacade facade;
-
         public MonsterData data;
 
         public float hp;
-        private int pathIndex;
-        protected float lastWoundTime; // 上次扣血时间
-        private float growth = 1.0f; // 成长系数
         public float speed;
-
-        private Cell nextCell;
         public Animator animator;
         public Transform hpImageBg; // 血条背景图片
         public Transform hpImageFg; // 血条前景图片
         public Transform signFather; // 集火标记父对象
 
+        private readonly List<BaseBuffEffect> buffEffects = new List<BaseBuffEffect>();
+        private GameFacade facade;
+        private GameManager gameManager;
+        private float growth = 1.0f; // 成长系数
+        protected float lastWoundTime; // 上次扣血时间
+
+        private Cell nextCell;
+        private int pathIndex;
+
         private List<Cell> pathList;
-
-        private List<BaseBuffEffect> buffEffects = new List<BaseBuffEffect>();
-
-        #region 属性
-
-        public float Hp
-        {
-            get => hp;
-            set
-            {
-                hp = value;
-                if (hp <= 0)
-                {
-                    hp = 0;
-                    IsDead = true;
-                    // 加钱
-                    gameManager.sceneManager.UpdateMoney(+(int)(data.baseMoney * growth));
-                    // 生成加钱UI
-                    AddMoneyTips addMoneyTips =
-                        gameManager.factoryManager.UIControlFactory.CreateControl("AddMoneyTips").GetComponent<AddMoneyTips>();
-                    addMoneyTips.textMeshPro.text = "+" + (int)(data.baseMoney * growth);
-                    addMoneyTips.transform.position = transform.position;
-                    addMoneyTips.transform.DOMoveY(addMoneyTips.transform.position.y + 2f, 0.5f); // 上移动画
-                    // 移除所有Buff
-                    ClearAllBuffs();
-                    // 如果集火的是自己取消集火标志
-                    if ((Monster)gameManager.sceneManager.Spawner.GetCollectingFiresTarget() == this)
-                    {
-                        gameManager.sceneManager.CancelFire();
-                    }
-
-                    // 播放死亡动画
-                    animator.SetBool("Dead", true);
-                }
-
-                // 更新血条图片
-                hpImageBg.gameObject.SetActive(true);
-                hpImageFg.localScale = new Vector3(hp / (data.maxHp * (growth == 0 ? 1 : growth)), 1, 1);
-                // 记录显示血条的时间
-                lastWoundTime = Time.time;
-            }
-        }
-
-        public float Growth
-        {
-            get => growth;
-            set
-            {
-                growth = value;
-                // 修改成长系数时自动修改属性值
-                hp *= growth;
-            }
-        }
-
-        public MonsterData Data => data;
-
-        #endregion
 
         protected virtual void Awake()
         {
@@ -127,10 +70,25 @@ namespace App.Game.Object.Monster
             }
 
             // 超过2秒没受到伤害或怪物死亡隐藏血条
-            if (Time.time - lastWoundTime > 2 || IsDead)
-            {
-                hpImageBg.gameObject.SetActive(false);
-            }
+            if (Time.time - lastWoundTime > 2 || IsDead) hpImageBg.gameObject.SetActive(false);
+        }
+
+        /// <summary>
+        ///     点击触发集火
+        /// </summary>
+        private void OnMouseDown()
+        {
+            if (IsDead) return;
+
+            // 射线检测判断是否被UI遮挡
+            var gr = gameManager.uiManager.canvas.GetComponent<GraphicRaycaster>();
+            var eventData = new PointerEventData(EventSystem.current) { position = Input.mousePosition };
+            var results = new List<RaycastResult>();
+            gr.Raycast(eventData, results);
+            // 被显示范围的Ui遮挡除外
+            if (results.Count > 0 && results[0].gameObject.name != "ImageAttackRange") return;
+            // 将自己的位置信息传出
+            gameManager.sceneManager.SetFireTarget(this);
         }
 
         public virtual void Init(List<Cell> list, float hard, MonsterData data)
@@ -144,59 +102,18 @@ namespace App.Game.Object.Monster
             nextCell = pathList[0];
         }
 
-        private void ClearAllBuffs()
-        {
-            // 移除身上所有Buff
-            for (int i = 0; i < buffEffects.Count; i++)
-            {
-                gameManager.poolManager.PushObject(buffEffects[i].gameObject);
-            }
-
-            gameManager.buffManager.RemoveAllBuffs(this);
-        }
-
         public void AddBuffEffect(BaseBuffEffect buffEffect)
         {
             buffEffects.Add(buffEffect);
-        }
-
-        /// <summary>
-        /// 点击触发集火
-        /// </summary>
-        private void OnMouseDown()
-        {
-            if (IsDead) return;
-
-            // 射线检测判断是否被UI遮挡
-            GraphicRaycaster gr = gameManager.uiManager.canvas.GetComponent<GraphicRaycaster>();
-            PointerEventData eventData = new PointerEventData(EventSystem.current) { position = Input.mousePosition };
-            List<RaycastResult> results = new List<RaycastResult>();
-            gr.Raycast(eventData, results);
-            // 被显示范围的Ui遮挡除外
-            if (results.Count > 0 && results[0].gameObject.name != "ImageAttackRange") return;
-            // 将自己的位置信息传出
-            gameManager.sceneManager.SetFireTarget(this);
-        }
-
-        private void Move()
-        {
-            if (gameManager.sceneManager.IsPause() || IsDead) return;
-
-            Vector3 dir = Map.Map.GetCellCenterPos(nextCell) - transform.position;
-            dir.Normalize();
-            // 移动
-            transform.Translate(dir * (Time.deltaTime * speed));
         }
 
         public override void Wound(int woundHp)
         {
             Hp -= woundHp;
             if (Hp <= 0)
-            {
                 // 播放死亡音效
                 // 播放死亡音效
                 gameManager.PlaySound("Music/MonsterDead", 1, false);
-            }
         }
 
         public virtual void SetSpeed(float v)
@@ -207,23 +124,6 @@ namespace App.Game.Object.Monster
         public virtual Transform GetSignFather()
         {
             return signFather;
-        }
-
-        /// <summary>
-        /// 终点死亡
-        /// </summary>
-        private void EndDead()
-        {
-            hp = 0;
-            IsDead = true;
-            // 触发怪物到达终点事件
-            gameManager.sceneManager.Spawner.Carrot.Wound((int)data.atk);
-            // 移除所有Buff
-            ClearAllBuffs();
-            // 播放死亡动画
-            animator.SetBool("Dead", true);
-            // 播放死亡音效
-            gameManager.PlaySound("Music/MonsterDead", 1, false);
         }
 
         public override void Dead()
@@ -239,13 +139,13 @@ namespace App.Game.Object.Monster
         public override void OnPush()
         {
             // 清空数据
-            nextCell = null;                                                 
+            nextCell = null;
             // 还原动画
             animator.SetBool("Dead", false);
         }
 
         /// <summary>
-        /// 每次从缓存池取出初始化数据
+        ///     每次从缓存池取出初始化数据
         /// </summary>
         public override void OnGet()
         {
@@ -255,5 +155,92 @@ namespace App.Game.Object.Monster
             speed = data.speed;
             IsDead = false;
         }
+
+        private void ClearAllBuffs()
+        {
+            // 移除身上所有Buff
+            for (var i = 0; i < buffEffects.Count; i++) gameManager.poolManager.PushObject(buffEffects[i].gameObject);
+
+            gameManager.buffManager.RemoveAllBuffs(this);
+        }
+
+        private void Move()
+        {
+            if (gameManager.sceneManager.IsPause() || IsDead) return;
+
+            var dir = Map.Map.GetCellCenterPos(nextCell) - transform.position;
+            dir.Normalize();
+            // 移动
+            transform.Translate(dir * (Time.deltaTime * speed));
+        }
+
+        /// <summary>
+        ///     终点死亡
+        /// </summary>
+        private void EndDead()
+        {
+            hp = 0;
+            IsDead = true;
+            // 触发怪物到达终点事件
+            gameManager.sceneManager.Spawner.Carrot.Wound((int)data.atk);
+            // 移除所有Buff
+            ClearAllBuffs();
+            // 播放死亡动画
+            animator.SetBool("Dead", true);
+            // 播放死亡音效
+            gameManager.PlaySound("Music/MonsterDead", 1, false);
+        }
+
+        #region 属性
+
+        public float Hp
+        {
+            get => hp;
+            set
+            {
+                hp = value;
+                if (hp <= 0)
+                {
+                    hp = 0;
+                    IsDead = true;
+                    // 加钱
+                    gameManager.sceneManager.UpdateMoney(+(int)(data.baseMoney * growth));
+                    // 生成加钱UI
+                    var addMoneyTips =
+                        gameManager.factoryManager.UIControlFactory.CreateControl("AddMoneyTips").GetComponent<AddMoneyTips>();
+                    addMoneyTips.textMeshPro.text = "+" + (int)(data.baseMoney * growth);
+                    addMoneyTips.transform.position = transform.position;
+                    addMoneyTips.transform.DOMoveY(addMoneyTips.transform.position.y + 2f, 0.5f); // 上移动画
+                    // 移除所有Buff
+                    ClearAllBuffs();
+                    // 如果集火的是自己取消集火标志
+                    if ((Monster)gameManager.sceneManager.Spawner.GetCollectingFiresTarget() == this) gameManager.sceneManager.CancelFire();
+
+                    // 播放死亡动画
+                    animator.SetBool("Dead", true);
+                }
+
+                // 更新血条图片
+                hpImageBg.gameObject.SetActive(true);
+                hpImageFg.localScale = new Vector3(hp / (data.maxHp * (growth == 0 ? 1 : growth)), 1, 1);
+                // 记录显示血条的时间
+                lastWoundTime = Time.time;
+            }
+        }
+
+        public float Growth
+        {
+            get => growth;
+            set
+            {
+                growth = value;
+                // 修改成长系数时自动修改属性值
+                hp *= growth;
+            }
+        }
+
+        public MonsterData Data => data;
+
+        #endregion
     }
 }

@@ -1,6 +1,6 @@
-using System.Collections.Generic;
 using App.Data.DataClass.Player;
 using App.Static;
+using GameFramework;
 using PureMVC.Interfaces;
 using PureMVC.Patterns.Mediator;
 
@@ -9,6 +9,10 @@ namespace App.UI.SelectItemScene
     public class SelectItemPanelMediator : Mediator
     {
         public new static string NAME = "SelectItemPanelMediator";
+
+        public SelectItemPanelMediator() : base(NAME)
+        {
+        }
 
         public SelectItemPanel Panel
         {
@@ -20,13 +24,9 @@ namespace App.UI.SelectItemScene
             }
         }
 
-        public SelectItemPanelMediator() : base(NAME)
-        {
-        }
-
         public override string[] ListNotificationInterests()
         {
-            return new string[]
+            return new[]
             {
                 NotificationName.UI.SHOW_SELECT_ITEM_PANEL,
                 NotificationName.UI.ITEM_DATA_UPDATED
@@ -44,10 +44,7 @@ namespace App.UI.SelectItemScene
                     SendNotification(NotificationName.Data.REQUEST_UPDATE_ITEM_PROCESS_DATA);
                     break;
                 case NotificationName.UI.ITEM_DATA_UPDATED:
-                    if (Panel)
-                    {
-                        Panel.UpdateItem(notification.Body as ProcessData);
-                    }
+                    if (Panel) Panel.UpdateItem(notification.Body as ProcessData);
                     break;
             }
         }

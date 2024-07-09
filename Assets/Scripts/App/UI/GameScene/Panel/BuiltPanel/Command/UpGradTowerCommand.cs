@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace App.UI.GameScene.Panel.BuiltPanel.Command
 {
-    public class UpGradTowerCommand: SimpleCommand
+    public class UpGradTowerCommand : SimpleCommand
     {
         public override void Execute(INotification notification)
         {

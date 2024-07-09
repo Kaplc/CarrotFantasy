@@ -1,6 +1,5 @@
 using App.Game.Generic.BaseObject;
 using App.Game.Object.Monster;
-using App.Static;
 using PureMVC.Interfaces;
 using PureMVC.Patterns.Command;
 

@@ -2,7 +2,6 @@
 using App.Data.DataClass;
 using App.Data.DataClass.Game.Object;
 using App.Data.DataClass.Map;
-using App.Game.Generic.BaseObject;
 using App.Game.Generic.Map;
 using App.Game.Object.Carrot;
 using App.Game.Object.Map;
@@ -17,67 +16,39 @@ using UnityEngine;
 namespace App.Game.Spawner
 {
     /// <summary>
-    /// 对象生成器
+    ///     对象生成器
     /// </summary>
     public class Spawner : MonoBehaviour, ISpawner
     {
         public Carrot carrot; // 萝卜
         public Transform startPoint; // 开始路牌位置
-        private List<IMonster> monsters = new List<IMonster>(); // 已经出生的怪物
-        private List<ITower> towers = new List<ITower>(); // 已创建的塔
-        private List<IObstacle> obstaclesList = new List<IObstacle>(); // 已创建的障碍物
+        public Transform signTrans; // 集火标志
+        private readonly List<IMonster> monsters = new List<IMonster>(); // 已经出生的怪物
+        private readonly List<IObstacle> obstaclesList = new List<IObstacle>(); // 已创建的障碍物
+        private readonly List<ITower> towers = new List<ITower>(); // 已创建的塔
 
         private IMonster collectingFiresTarget; // 集火目标
-        public Transform signTrans; // 集火标志
-
-        private List<Cell> pathList;
         private List<Cell> obstacleList;
 
-        #region 出怪
-
-        public bool spawnedComplete; // 完成出怪
-        private bool isWaveInProgress;
-        private bool isStarted;
-        private bool isPaused;
-        private int currentWaveIndex;
-        private int currentWaveMonsterIndex;
-        private float waveTimer;
-        private float monsterSpawnTimer;
-        public List<WaveData> waveDataList = new List<WaveData>();
-        private List<SpawnMonsterData> nowWaveSpawnList = new List<SpawnMonsterData>();
-
-        #endregion
+        private List<Cell> pathList;
 
         private INormalSceneManager sceneManger;
 
-        public virtual Carrot Carrot
-        {
-            get => carrot;
-        }
-
         protected virtual void Update()
         {
-            if (!isStarted || isPaused)
-            {
-                return;
-            }
+            if (!isStarted || isPaused) return;
 
             if (currentWaveIndex < waveDataList.Count)
             {
                 if (!isWaveInProgress && waveTimer >= waveDataList[currentWaveIndex].waveDuration)
-                {
                     // 开始新一波
                     StartNewWave();
-                }
 
                 if (currentWaveMonsterIndex >= nowWaveSpawnList.Count)
                 {
                     waveTimer += Time.deltaTime;
                     // 当前波次怪物全部出完
-                    if (isWaveInProgress)
-                    {
-                        EndCurrentWave();
-                    }
+                    if (isWaveInProgress) EndCurrentWave();
                 }
                 else
                 {
@@ -90,6 +61,8 @@ namespace App.Game.Spawner
                 spawnedComplete = true;
             }
         }
+
+        public virtual Carrot Carrot => carrot;
 
         public virtual List<IMonster> GetAllMonsters()
         {
@@ -122,13 +95,56 @@ namespace App.Game.Spawner
             monsters.Clear();
         }
 
+        #region 外部调用
+
+        public virtual int GetNowWaveCount()
+        {
+            return currentWaveIndex;
+        }
+
+        #endregion
+
+        #region 判断胜利
+
+        public virtual bool WinJudge()
+        {
+            // 1.出怪完成
+            if (!spawnedComplete) return false;
+
+            // 2.萝卜没死
+            if (carrot.IsDead) return false;
+
+            // 3.怪物全部死亡
+            for (var i = 0; i < monsters.Count; i++)
+                // 有一个没死亡都无效
+                if (monsters[i].IsDead == false)
+                    return false;
+
+            return true;
+        }
+
+        #endregion
+
+        #region 出怪
+
+        public bool spawnedComplete; // 完成出怪
+        private bool isWaveInProgress;
+        private bool isStarted;
+        private bool isPaused;
+        private int currentWaveIndex;
+        private int currentWaveMonsterIndex;
+        private float waveTimer;
+        private float monsterSpawnTimer;
+        public List<WaveData> waveDataList = new List<WaveData>();
+        private readonly List<SpawnMonsterData> nowWaveSpawnList = new List<SpawnMonsterData>();
+
+        #endregion
+
         #region 集火相关
+
         public virtual void SetCollectingFires(IMonster monster)
         {
-            for (int i = 0; i < towers.Count; i++)
-            {
-                towers[i].SetCollectingFiresTarget(monster);
-            }
+            for (var i = 0; i < towers.Count; i++) towers[i].SetCollectingFiresTarget(monster);
 
             // 设置集火标志
             collectingFiresTarget = monster;
@@ -137,6 +153,7 @@ namespace App.Game.Spawner
             signTrans.localPosition = Vector3.zero;
             signTrans.localScale = Vector3.one;
         }
+
         public virtual IMonster GetCollectingFiresTarget()
         {
             return collectingFiresTarget;
@@ -185,18 +202,14 @@ namespace App.Game.Spawner
 
             // 生成出怪数据结构list
             nowWaveSpawnList.Clear();
-            foreach (EachWaveData eachWaveData in waveDataList[currentWaveIndex].eachWaveDataList)
-            {
-                for (int i = 0; i < eachWaveData.monsterCount; i++)
-                {
-                    nowWaveSpawnList.Add(new SpawnMonsterData()
+            foreach (var eachWaveData in waveDataList[currentWaveIndex].eachWaveDataList)
+                for (var i = 0; i < eachWaveData.monsterCount; i++)
+                    nowWaveSpawnList.Add(new SpawnMonsterData
                     {
                         monsterType = eachWaveData.monsterType,
                         nextSpawnTime = eachWaveData.monsterDuration,
                         hard = eachWaveData.hard
                     });
-                }
-            }
 
             // 更新面板波数显示
             GameFacade.Instance.SendNotification(NotificationName.UI.WAVES_COUNT_UPDATED, (currentWaveIndex + 1, waveDataList.Count));
@@ -231,10 +244,10 @@ namespace App.Game.Spawner
 
         private void SpawnMonster(EMonsterType type, float hard)
         {
-            Monster monster = GameManager.Instance.poolManager.GetObject("Object/Monster/" + type).GetComponent<Monster>();
+            var monster = GameManager.Instance.poolManager.GetObject("Object/Monster/" + type).GetComponent<Monster>();
             monster.transform.SetParent(transform);
             monster.transform.localScale = Vector3.one;
-            MonsterDataMap map = Resources.Load<MonsterDataMap>("Data/Monster/MonsterDataMap");
+            var map = Resources.Load<MonsterDataMap>("Data/Monster/MonsterDataMap");
             monster.Init(pathList, hard, map.GetData(type));
             monsters.Add(monster);
         }
@@ -244,11 +257,11 @@ namespace App.Game.Spawner
         #region 升级、出售
 
         /// <summary>
-        /// 升级塔
+        ///     升级塔
         /// </summary>
         public virtual void UpGradeTower(Vector3 cellWorldPos)
         {
-            ITower tower = Map.GetCell(cellWorldPos).tower as ITower;
+            var tower = Map.GetCell(cellWorldPos).tower as ITower;
             if (tower == null) return;
             var level = tower.GetLevel();
             var data = tower.GetData();
@@ -266,12 +279,12 @@ namespace App.Game.Spawner
         }
 
         /// <summary>
-        /// 出售塔
+        ///     出售塔
         /// </summary>
         public virtual void SellTower(Vector3 cellWorldPos)
         {
-            Cell cell = Map.GetCell(cellWorldPos);
-            ITower tower = cell.tower as ITower;
+            var cell = Map.GetCell(cellWorldPos);
+            var tower = cell.tower as ITower;
             if (tower == null) return;
             var level = tower.GetLevel();
             var data = tower.GetData();
@@ -291,23 +304,18 @@ namespace App.Game.Spawner
 
         #region 创建对象
 
-
-
         /// <summary>
-        /// 根据保存的地图数据生成障碍物
+        ///     根据保存的地图数据生成障碍物
         /// </summary>
         private void CreateObstacles()
         {
-            for (int i = 0; i < obstacleList.Count; i++)
+            for (var i = 0; i < obstacleList.Count; i++)
             {
-                if (obstacleList[i].obstacleName == "None")
-                {
-                    continue;
-                }
+                if (obstacleList[i].obstacleName == "None") continue;
 
-                Cell cell = obstacleList[i];
+                var cell = obstacleList[i];
                 // 创建实例
-                Obstacle obstacle = GameManager.Instance.poolManager.GetObject($"Object/Obstacle/{cell.obstacleName}").GetComponent<Obstacle>();
+                var obstacle = GameManager.Instance.poolManager.GetObject($"Object/Obstacle/{cell.obstacleName}").GetComponent<Obstacle>();
                 obstacle.transform.SetParent(transform);
                 obstacle.transform.localScale = Vector3.one;
                 obstacle.transform.position = Map.GetCellCenterPos(cell);
@@ -317,7 +325,7 @@ namespace App.Game.Spawner
         }
 
         /// <summary>
-        /// 创建塔对象
+        ///     创建塔对象
         /// </summary>
         /// <param name="towerData"></param>
         /// <param name="cellWorldPos">创建的位置世界坐标</param>
@@ -326,7 +334,7 @@ namespace App.Game.Spawner
             // 够钱才创建
             if (GameManager.Instance.sceneManager.GetMoney() >= towerData.prices[0])
             {
-                ITower tower = GameManager.Instance.poolManager.GetObject(towerData.prefabsPath).GetComponent<ITower>();
+                var tower = GameManager.Instance.poolManager.GetObject(towerData.prefabsPath).GetComponent<ITower>();
                 tower.Transform.SetParent(transform);
                 tower.Transform.localScale = Vector3.one;
                 tower.Transform.position = cellWorldPos;
@@ -337,15 +345,12 @@ namespace App.Game.Spawner
                 // 关闭建造面板
                 GameFacade.Instance.SendNotification(NotificationName.UI.HIDE_BUILT_PANEL);
                 // 添加进列表
-                if (!towers.Contains(tower))
-                {
-                    towers.Add(tower);
-                }
+                if (!towers.Contains(tower)) towers.Add(tower);
             }
         }
 
         /// <summary>
-        /// 创建萝卜
+        ///     创建萝卜
         /// </summary>
         private void CreateCarrot()
         {
@@ -353,12 +358,12 @@ namespace App.Game.Spawner
             carrot.transform.SetParent(transform);
             carrot.transform.localScale = Vector3.one;
             // 设置萝卜位置
-            Cell lastPathCell = pathList[pathList.Count - 1];
+            var lastPathCell = pathList[pathList.Count - 1];
             carrot.transform.position = Map.GetCellCenterPos(lastPathCell);
         }
 
         /// <summary>
-        /// 创建开始路牌
+        ///     创建开始路牌
         /// </summary>
         private void CreateStartBrand()
         {
@@ -366,7 +371,7 @@ namespace App.Game.Spawner
             startPoint.SetParent(transform);
             startPoint.localScale = Vector3.one;
             // 设置开始路牌位置
-            Cell firstPathCell = pathList[0];
+            var firstPathCell = pathList[0];
             startPoint.position = Map.GetCellCenterPos(firstPathCell);
         }
 
@@ -375,7 +380,7 @@ namespace App.Game.Spawner
         #region 缓存池相关
 
         /// <summary>
-        /// 回收所有游戏対象
+        ///     回收所有游戏対象
         /// </summary>
         public virtual void OnPushAllGameObject()
         {
@@ -389,83 +394,33 @@ namespace App.Game.Spawner
         }
 
         /// <summary>
-        /// 回收未死亡的怪物
+        ///     回收未死亡的怪物
         /// </summary>
         private void OnPushAllMonsters()
         {
-            for (int i = 0; i < monsters.Count; i++)
-            {
+            for (var i = 0; i < monsters.Count; i++)
                 if (!monsters[i].IsDead)
-                {
                     GameManager.Instance.poolManager.PushObject(monsters[i].Transform.gameObject);
-                }
-            }
 
             monsters.Clear();
         }
 
         private void OnPushAllTowers()
         {
-            for (int i = 0; i < towers.Count; i++)
-            {
-                GameManager.Instance.poolManager.PushObject(((MonoBehaviour)towers[i]).gameObject);
-            }
+            for (var i = 0; i < towers.Count; i++) GameManager.Instance.poolManager.PushObject(((MonoBehaviour)towers[i]).gameObject);
 
             towers.Clear();
         }
 
         private void OnPushAllObstacles()
         {
-            for (int i = 0; i < obstaclesList.Count; i++)
+            for (var i = 0; i < obstaclesList.Count; i++)
             {
-                Obstacle o = (Obstacle)obstaclesList[i];
-                if (!o.IsDead)
-                {
-                    GameManager.Instance.poolManager.PushObject(o.gameObject);
-                }
+                var o = (Obstacle)obstaclesList[i];
+                if (!o.IsDead) GameManager.Instance.poolManager.PushObject(o.gameObject);
             }
 
             obstaclesList.Clear();
-        }
-
-        #endregion
-
-        #region 外部调用
-
-        public virtual int GetNowWaveCount()
-        {
-            return currentWaveIndex;
-        }
-
-        #endregion
-
-        #region 判断胜利
-
-        public virtual bool WinJudge()
-        {
-            // 1.出怪完成
-            if (!spawnedComplete)
-            {
-                return false;
-            }
-
-            // 2.萝卜没死
-            if (carrot.IsDead)
-            {
-                return false;
-            }
-
-            // 3.怪物全部死亡
-            for (int i = 0; i < monsters.Count; i++)
-            {
-                // 有一个没死亡都无效
-                if (monsters[i].IsDead == false)
-                {
-                    return false;
-                }
-            }
-
-            return true;
         }
 
         #endregion

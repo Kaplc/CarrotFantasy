@@ -4,7 +4,7 @@ using PureMVC.Patterns.Command;
 
 namespace App.UI.GameScene.Panel.WinPanel
 {
-    public class NextLevelCommand: SimpleCommand
+    public class NextLevelCommand : SimpleCommand
     {
         public override void Execute(INotification notification)
         {

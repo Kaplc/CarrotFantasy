@@ -4,7 +4,6 @@ using App.UI.BeginScene.BeginPanel;
 using App.UI.InitScene;
 using App.UI.SelectItemScene;
 using App.UI.SelectLevelScene;
-using Library;
 using PureMVC.Interfaces;
 using PureMVC.Patterns.Command;
 using UnityEngine.Events;
@@ -18,8 +17,8 @@ namespace App.Game.Commands
         public override void Execute(INotification notification)
         {
             GameFacade.Instance.RegisterMediator(new BeginPanelMediator());
-        
-            ZFrameWorkSceneManager.Instance.LoadSceneAsync("2.BeginScene", () =>
+
+            GameManager.Instance.loadSceneManager.LoadSceneAsync("2.BeginScene", success =>
             {
                 SendNotification(NotificationName.UI.SHOW_BEGIN_PANEL);
                 // 执行回调
@@ -33,10 +32,8 @@ namespace App.Game.Commands
         public override void Execute(INotification notification)
         {
             GameFacade.Instance.RegisterMediator(new SelectItemPanelMediator());
-            ZFrameWorkSceneManager.Instance.LoadSceneAsync("3.SelectItemScene", () =>
-            {
-                SendNotification(NotificationName.UI.SHOW_SELECT_ITEM_PANEL);
-            });
+            GameManager.Instance.loadSceneManager.LoadSceneAsync("3.SelectItemScene",
+                success => { SendNotification(NotificationName.UI.SHOW_SELECT_ITEM_PANEL); });
         }
     }
 
@@ -45,7 +42,7 @@ namespace App.Game.Commands
         public override void Execute(INotification notification)
         {
             GameFacade.Instance.RegisterMediator(new SelectLevelPanelMediator());
-            ZFrameWorkSceneManager.Instance.LoadSceneAsync("4.SelectLevelScene", () =>
+            GameManager.Instance.loadSceneManager.LoadSceneAsync("4.SelectLevelScene", success =>
             {
                 // 根据记录的ID打开对应主题
                 SendNotification(NotificationName.UI.SHOW_SELECT_LEVEL_PANEL, ((INormalSceneManager)GameManager.Instance.sceneManager).NowItemID);
@@ -60,8 +57,8 @@ namespace App.Game.Commands
             SendNotification(NotificationName.UI.SHOW_LOADING_PANEL);
             // 停止背景音乐
             GameFacade.Instance.SendNotification(NotificationName.Game.STOP_MUSIC);
-        
-            ZFrameWorkSceneManager.Instance.LoadSceneAsync("5.GameScene", () =>
+
+            GameManager.Instance.loadSceneManager.LoadSceneAsync("5.GameScene", success =>
             {
                 // 传递LevelID
                 GameFacade.Instance.SendNotification(NotificationName.Game.LOAD_GAME, (int)notification.Body);
@@ -75,7 +72,7 @@ namespace App.Game.Commands
     #region 场景跳转
 
     /// <summary>
-    /// 初始化 - 开始
+    ///     初始化 - 开始
     /// </summary>
     public class LoadSceneInitToBeginCommand : SimpleCommand
     {
@@ -88,7 +85,7 @@ namespace App.Game.Commands
     }
 
     /// <summary>
-    /// 开始 - 选择主题
+    ///     开始 - 选择主题
     /// </summary>
     public class LoadSceneBeginToSelectItemCommand : SimpleCommand
     {
@@ -102,7 +99,7 @@ namespace App.Game.Commands
     #region 选择主题场景
 
     /// <summary>
-    /// 选择主题 - 开始
+    ///     选择主题 - 开始
     /// </summary>
     public class LoadSceneSelectItemToBeginCommand : SimpleCommand
     {
@@ -114,20 +111,20 @@ namespace App.Game.Commands
     }
 
     /// <summary>
-    /// 选择主题 - 选择关卡
+    ///     选择主题 - 选择关卡
     /// </summary>
     public class LoadSceneSelectItemToSelectLevelCommand : SimpleCommand
     {
         public override void Execute(INotification notification)
         {
             GameFacade.Instance.RemoveMediator(nameof(SelectItemPanelMediator));
-        
+
             SendNotification(NotificationName.LoadScene.LOADSCENE_SELECTLEVEL);
         }
     }
 
     /// <summary>
-    /// 选择主题 - 帮助
+    ///     选择主题 - 帮助
     /// </summary>
     public class LoadSceneSelectItemToHelpPanelCommand : SimpleCommand
     {
@@ -140,7 +137,6 @@ namespace App.Game.Commands
                 SendNotification(NotificationName.UI.SHOW_HELP_PANEL, false);
             };
             SendNotification(NotificationName.LoadScene.LOADSCENE_BEGIN, ac);
-        
         }
     }
 
@@ -149,7 +145,7 @@ namespace App.Game.Commands
     #region 选择关卡场景
 
     /// <summary>
-    /// 选择关卡 - 游戏场景
+    ///     选择关卡 - 游戏场景
     /// </summary>
     public class LoadSceneSelectLevelToGameCommand : SimpleCommand
     {
@@ -161,24 +157,21 @@ namespace App.Game.Commands
     }
 
     /// <summary>
-    /// 选择关卡 - 帮助
+    ///     选择关卡 - 帮助
     /// </summary>
     public class LoadSceneSelectLevelToHelpPanelCommand : SimpleCommand
     {
         public override void Execute(INotification notification)
         {
             GameFacade.Instance.RemoveMediator(nameof(SelectLevelPanelMediator));
-            UnityAction action = () =>
-            {
-                SendNotification(NotificationName.UI.SHOW_HELP_PANEL, false);
-            };
+            UnityAction action = () => { SendNotification(NotificationName.UI.SHOW_HELP_PANEL, false); };
 
             SendNotification(NotificationName.LoadScene.LOADSCENE_BEGIN, action);
         }
     }
 
     /// <summary>
-    /// 选择关卡 - 选择主题
+    ///     选择关卡 - 选择主题
     /// </summary>
     public class LoadSceneSelectLevelToSelectItemCommand : SimpleCommand
     {
@@ -194,7 +187,7 @@ namespace App.Game.Commands
     #region 游戏场景
 
     /// <summary>
-    /// 游戏 - 选择关卡
+    ///     游戏 - 选择关卡
     /// </summary>
     public class LoadSceneGameToSelectLevelCommand : SimpleCommand
     {
@@ -202,13 +195,13 @@ namespace App.Game.Commands
         {
             // 开启背景音乐
             SendNotification(NotificationName.Game.PLAY_MUSIC);
-        
+
             SendNotification(NotificationName.LoadScene.LOADSCENE_SELECTLEVEL);
         }
     }
 
     /// <summary>
-    /// 游戏 - 游戏 重新开始或下一关
+    ///     游戏 - 游戏 重新开始或下一关
     /// </summary>
     public class LoadSceneGameToGameCommand : SimpleCommand
     {
@@ -219,7 +212,7 @@ namespace App.Game.Commands
     }
 
     /// <summary>
-    /// 游戏 - 结束
+    ///     游戏 - 结束
     /// </summary>
     public class LoadSceneGameToEndCommand : SimpleCommand
     {

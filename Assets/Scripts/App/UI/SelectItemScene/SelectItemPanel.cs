@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using App.Data.DataClass.Player;
+﻿using App.Data.DataClass.Player;
 using App.Game;
 using App.Game.SceneManager.NormalGame.interf;
 using App.Static;
 using App.UI.BaseControl;
 using App.UI.SelectItemScene.Control;
-using Library;
+using GameFramework;
 using UnityEngine.UI;
 
 namespace App.UI.SelectItemScene
@@ -15,15 +14,15 @@ namespace App.UI.SelectItemScene
         public Button btnBigLevel0;
         public Button btnBigLevel1;
         public Button btnBigLevel2;
+        public Button btnHelp;
 
         public Button btnHome;
-        public Button btnHelp;
 
         public Button btnLeft;
         public Button btnRight;
+        public ItemLockPanel itemLockPanel; // 提示主题锁定子面板
 
         public BasePageFlipping pageFlipping; // 翻页效果脚本
-        public ItemLockPanel itemLockPanel; // 提示主题锁定子面板
 
         private INormalSceneManager sceneManger => GameManager.Instance.sceneManager as INormalSceneManager;
 
@@ -89,7 +88,7 @@ namespace App.UI.SelectItemScene
                 GameFacade.Instance.SendNotification(NotificationName.LoadScene.LOADSCENE_SELECTITEM_TO_SELECTLEVEL);
                 UIManager.Instance.Hide<SelectItemPanel>(false);
             });
-            
+
             btnBigLevel1.onClick.AddListener(() =>
             {
                 // 判断是否解锁
@@ -100,7 +99,7 @@ namespace App.UI.SelectItemScene
                     itemLockPanel.ShowItem0 = true;
                     return;
                 }
-            
+
                 sceneManger.NowItemID = 1;
                 GameFacade.Instance.SendNotification(NotificationName.LoadScene.LOADSCENE_SELECTITEM_TO_SELECTLEVEL);
                 UIManager.Instance.Hide<SelectItemPanel>(false);
@@ -114,28 +113,22 @@ namespace App.UI.SelectItemScene
                     itemLockPanel.ShowItem1 = true;
                     return;
                 }
-            
+
                 sceneManger.NowItemID = 2;
                 GameFacade.Instance.SendNotification(NotificationName.LoadScene.LOADSCENE_SELECTITEM_TO_SELECTLEVEL);
                 UIManager.Instance.Hide<SelectItemPanel>(false);
             });
             // 获取关卡解锁数据
             if (processData.passedItemsDic.TryGetValue(0, out var value))
-            {
                 btnBigLevel0.GetComponent<ItemButton>().UpdateUnlockMapCount(value.passedLevelCount);
-            }
 
             if (processData.passedItemsDic.TryGetValue(1, out var value1))
-            {
                 btnBigLevel1.GetComponent<ItemButton>().UpdateUnlockMapCount(value1.passedLevelCount);
-            }
 
             if (processData.passedItemsDic.TryGetValue(2, out var value2))
-            {
                 btnBigLevel2.GetComponent<ItemButton>().UpdateUnlockMapCount(value2.passedLevelCount);
-            }
         }
-        
+
         #region 接受ScrollView的消息
 
         public void FirstPage()
@@ -160,4 +153,3 @@ namespace App.UI.SelectItemScene
         #endregion
     }
 }
-

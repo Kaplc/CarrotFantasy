@@ -5,7 +5,7 @@ using PureMVC.Patterns.Command;
 namespace App.UI.GameScene.Panel.GamePanel
 {
     /// <summary>
-    /// 重新开始游戏命令
+    ///     重新开始游戏命令
     /// </summary>
     public class RestartGameCommand : SimpleCommand
     {

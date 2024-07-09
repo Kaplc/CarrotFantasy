@@ -11,74 +11,19 @@ namespace App.Game.SceneManager.NormalGame
 {
     public class NormalSceneManager : MonoBehaviour, INormalSceneManager
     {
-        private int money;
+        private GameFacade facade;
+        private GameManager gameManager;
         private bool isSpeedUp;
-        private bool pause;
-        private bool stop;
-
-        private int nowLevelID;
-        private int nowItemID;
 
         private Map map;
         private MapData mapData;
-        private ISpawner spawner;
+        private int money;
 
-        private GameFacade facade;
-        private GameManager gameManager;
-
-        #region 游戏缓存变量
-
-        private int getAllMoney;
-        private int killMonsterCount;
-
-        #endregion
-
-        public int NowItemID
-        {
-            get => nowItemID;
-            set => nowItemID = value;
-        }
-
-        public int NowLevelID
-        {
-            get => nowLevelID;
-            set => nowLevelID = value;
-        }
-
-
-        public bool IsSpeedUp
-        {
-            get => isSpeedUp;
-            set
-            {
-                if (value)
-                {
-                    Time.timeScale = 2;
-                }
-                else
-                {
-                    Time.timeScale = 1;
-                }
-
-                isSpeedUp = value;
-            }
-        }
+        private bool pause;
+        private bool stop;
 
 
         public INormalSceneDataManager NormalSceneDataManager => SceneDataManager as INormalSceneDataManager;
-
-        public ISceneDataManager SceneDataManager { get; private set; }
-
-        public ISpawner Spawner
-        {
-            get => spawner;
-            set => spawner = value;
-        }
-
-        public IMapData MapData
-        {
-            get => mapData;
-        }
 
         protected void Awake()
         {
@@ -89,6 +34,61 @@ namespace App.Game.SceneManager.NormalGame
             DontDestroyOnLoad(this);
         }
 
+        public int NowItemID { get; set; }
+
+        public int NowLevelID { get; set; }
+
+
+        public bool IsSpeedUp
+        {
+            get => isSpeedUp;
+            set
+            {
+                if (value)
+                    Time.timeScale = 2;
+                else
+                    Time.timeScale = 1;
+
+                isSpeedUp = value;
+            }
+        }
+
+        public ISceneDataManager SceneDataManager { get; private set; }
+
+        public ISpawner Spawner { get; set; }
+
+        public IMapData MapData => mapData;
+
+        public void ExitScene()
+        {
+            Destroy(gameObject);
+        }
+
+        #region 游戏事件
+
+        private void JudgeWin()
+        {
+            if (Spawner.WinJudge())
+            {
+                GameWin();
+            }
+            else
+            {
+                if (Spawner.Carrot.Hp <= 0)
+                    // 
+                    GameOver();
+            }
+        }
+
+        #endregion
+
+        #region 游戏缓存变量
+
+        private int getAllMoney;
+        private int killMonsterCount;
+
+        #endregion
+
         #region 游戏进程相关
 
         public void InitGame(int levelID)
@@ -97,26 +97,20 @@ namespace App.Game.SceneManager.NormalGame
             pause = true;
             getAllMoney = 0;
             killMonsterCount = 0;
-            nowLevelID = levelID;
+            NowLevelID = levelID;
             // 显示游戏面板
             facade.SendNotification(NotificationName.UI.SHOW_GAME_PANEL);
             // 加载地图数据
             mapData = NormalSceneDataManager.LevelDataManager.GetLevelData(levelID).mapData;
             // 创建地图
-            if (!map)
-            {
-                map = Instantiate(Resources.Load<GameObject>("Prefabs/Map")).GetComponent<Map>();
-            }
+            if (!map) map = Instantiate(Resources.Load<GameObject>("Prefabs/Map")).GetComponent<Map>();
 
             // 地图初始化
             map.Init(mapData);
             // 创建出怪器
-            if (spawner is null)
-            {
-                spawner = Instantiate(Resources.Load<GameObject>("Prefabs/Spawner")).GetComponent<Spawner.Spawner>();
-            }
+            if (Spawner is null) Spawner = Instantiate(Resources.Load<GameObject>("Prefabs/Spawner")).GetComponent<Spawner.Spawner>();
 
-            spawner.Init(mapData);
+            Spawner.Init(mapData);
             // 刷新钱
             money = mapData.money;
             facade.SendNotification(NotificationName.UI.UPDATE_MONEY, money);
@@ -128,26 +122,26 @@ namespace App.Game.SceneManager.NormalGame
         }
 
         /// <summary>
-        /// 读秒结束真正开始游戏
+        ///     读秒结束真正开始游戏
         /// </summary>
         public void StartGame()
         {
             stop = false;
             pause = false;
             // 开始出怪
-            spawner.StartSpawn();
+            Spawner.StartSpawn();
         }
 
         public void PauseGame()
         {
             pause = true;
-            spawner.PauseSpawn();
+            Spawner.PauseSpawn();
         }
 
         public void ResumeGame()
         {
             pause = false;
-            spawner.ResumeSpawn();
+            Spawner.ResumeSpawn();
         }
 
         public void RestartGame()
@@ -159,13 +153,13 @@ namespace App.Game.SceneManager.NormalGame
             // 移除怪物所有Buff
             gameManager.buffManager.ClearAllBuffs();
             // 回收所有对象
-            spawner.OnPushAllGameObject();
+            Spawner.OnPushAllGameObject();
             // 关闭相关面板
             facade.SendNotification(NotificationName.UI.HIDE_BUILT_PANEL);
             facade.SendNotification(NotificationName.UI.HIDE_MENU_PANEL);
             facade.SendNotification(NotificationName.UI.HIDE_GAME_PANEL);
             // 重新初始化
-            InitGame(nowLevelID);
+            InitGame(NowLevelID);
         }
 
         public void NextLevel()
@@ -175,11 +169,11 @@ namespace App.Game.SceneManager.NormalGame
             // 移除怪物所有Buff
             gameManager.buffManager.ClearAllBuffs();
             // 回收所有对象
-            spawner.OnPushAllGameObject();
+            Spawner.OnPushAllGameObject();
             // 清空对象池
             gameManager.poolManager.Clear();
             // 持久化统计
-            StatisticalData data = new StatisticalData()
+            var data = new StatisticalData
             {
                 killMonsterCount = killMonsterCount,
                 money = getAllMoney
@@ -188,12 +182,12 @@ namespace App.Game.SceneManager.NormalGame
             // 移除事件监听
             gameManager.eventCenter.RemoveAllListener("JudgeWin");
             // 下一关ID增加后进行初始化
-            nowLevelID++;
+            NowLevelID++;
             // 关闭相关面板
             facade.SendNotification(NotificationName.UI.HIDE_BUILT_PANEL);
             facade.SendNotification(NotificationName.UI.HIDE_MENU_PANEL);
             facade.SendNotification(NotificationName.UI.HIDE_GAME_PANEL);
-            InitGame(nowLevelID);
+            InitGame(NowLevelID);
         }
 
         public void GameOver()
@@ -201,9 +195,9 @@ namespace App.Game.SceneManager.NormalGame
             // 停止出怪
             PauseGame();
             // 显示失败面板
-            facade.SendNotification(NotificationName.UI.SHOW_LOSE_PANEL, (spawner.GetNowWaveCount(), mapData.GetWaveCount(), nowLevelID));
+            facade.SendNotification(NotificationName.UI.SHOW_LOSE_PANEL, (Spawner.GetNowWaveCount(), mapData.GetWaveCount(), NowLevelID));
             // 持久化统计
-            StatisticalData data = new StatisticalData()
+            var data = new StatisticalData
             {
                 killMonsterCount = killMonsterCount,
                 money = getAllMoney
@@ -218,7 +212,7 @@ namespace App.Game.SceneManager.NormalGame
             // 移除怪物所有Buff
             gameManager.buffManager.ClearAllBuffs();
             // 回收所有对象
-            spawner.OnPushAllGameObject();
+            Spawner.OnPushAllGameObject();
             // 清空对象池
             gameManager.poolManager.Clear();
             // 关闭相关面板
@@ -226,7 +220,7 @@ namespace App.Game.SceneManager.NormalGame
             facade.SendNotification(NotificationName.UI.HIDE_MENU_PANEL);
             facade.SendNotification(NotificationName.UI.HIDE_GAME_PANEL);
             // 持久化统计
-            StatisticalData data = new StatisticalData()
+            var data = new StatisticalData
             {
                 killMonsterCount = killMonsterCount,
                 money = getAllMoney
@@ -235,46 +229,40 @@ namespace App.Game.SceneManager.NormalGame
             // 移除事件监听
             gameManager.eventCenter.RemoveAllListener("JudgeWin");
 
-            spawner = null;
+            Spawner = null;
             map = null;
             facade.SendNotification(NotificationName.LoadScene.LOADSCENE_GAME_TO_SELECTLEVEL);
         }
 
         public void GameWin()
         {
-            float hp = spawner.Carrot.Hp;
+            var hp = Spawner.Carrot.Hp;
             // 结算通关等级
             EPassedGrade grade;
             if (1 <= hp && hp <= 3)
-            {
                 // 铜
                 grade = EPassedGrade.Copper;
-            }
             else if (4 <= hp && hp <= 6)
-            {
                 // 银
                 grade = EPassedGrade.Sliver;
-            }
             else
-            {
                 // 金
                 grade = EPassedGrade.Gold;
-            }
 
             // 显示胜利面板
             facade.SendNotification(NotificationName.UI.SHOW_WIN_PANEL,
                 (
-                    spawner.GetNowWaveCount(),
+                    Spawner.GetNowWaveCount(),
                     mapData.GetWaveCount(),
-                    nowLevelID,
+                    NowLevelID,
                     grade
                 )
             );
 
             // 保存游戏进度
-            NormalSceneDataManager.ProcessDataManager.SaveProcessData(nowItemID, nowLevelID, grade);
+            NormalSceneDataManager.ProcessDataManager.SaveProcessData(NowItemID, NowLevelID, grade);
             // 通知保存统计数据
-            StatisticalData data = new StatisticalData()
+            var data = new StatisticalData
             {
                 killMonsterCount = killMonsterCount,
                 money = getAllMoney
@@ -304,13 +292,13 @@ namespace App.Game.SceneManager.NormalGame
 
         public void SetFireTarget(IMonster monster)
         {
-            spawner.SetCollectingFires(monster);
+            Spawner.SetCollectingFires(monster);
         }
 
 
         public void SetSpawner(ISpawner s)
         {
-            spawner = s;
+            Spawner = s;
         }
 
         public int GetMoney()
@@ -344,34 +332,9 @@ namespace App.Game.SceneManager.NormalGame
 
         public void CancelFire()
         {
-            spawner.CancelCollectingFiresTarget();
+            Spawner.CancelCollectingFiresTarget();
         }
 
         #endregion
-
-        #region 游戏事件
-
-        private void JudgeWin()
-        {
-            if (Spawner.WinJudge())
-            {
-                GameWin();
-            }
-            else
-            {
-                if (Spawner.Carrot.Hp <= 0)
-                {
-                    // 
-                    GameOver();
-                }
-            }
-        }
-
-        #endregion
-
-        public void ExitScene()
-        {
-            Destroy(gameObject);
-        }
     }
 }

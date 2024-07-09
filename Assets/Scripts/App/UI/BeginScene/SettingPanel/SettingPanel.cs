@@ -1,7 +1,6 @@
 ﻿using App.Data.DataClass.Player;
-using App.Game;
 using App.Static;
-using Library;
+using GameFramework;
 using UnityEngine.UI;
 
 namespace App.UI.BeginScene.SettingPanel
@@ -56,11 +55,11 @@ namespace App.UI.BeginScene.SettingPanel
                 GameFacade.Instance.SendNotification(NotificationName.UI.SHOW_BEGIN_PANEL);
             });
 
-            tgSelect.onValueChanged.AddListener((isOn) => { ShowSelectPage = isOn; });
+            tgSelect.onValueChanged.AddListener(isOn => { ShowSelectPage = isOn; });
 
-            tgData.onValueChanged.AddListener((isOn) => { ShowDataPage = isOn; });
+            tgData.onValueChanged.AddListener(isOn => { ShowDataPage = isOn; });
 
-            tgMaker.onValueChanged.AddListener((isOn) => { ShowMakerPage = isOn; });
+            tgMaker.onValueChanged.AddListener(isOn => { ShowMakerPage = isOn; });
 
             // 默认是选择界面
             ShowSelectPage = true;

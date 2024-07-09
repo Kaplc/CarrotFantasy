@@ -1,5 +1,5 @@
 ﻿using App.Game;
-using Library;
+using GameFramework;
 using TMPro;
 using UnityEngine;
 
@@ -10,11 +10,6 @@ namespace App.UI.GameScene.Control
         public Animator animator;
         public TextMeshPro textMeshPro;
 
-        public void PushSelf()
-        {
-            GameManager.Instance.factoryManager.UIControlFactory.PushControl(gameObject);
-        }
-    
         public void OnGet()
         {
             animator.enabled = true;
@@ -23,6 +18,11 @@ namespace App.UI.GameScene.Control
         public void OnPush()
         {
             animator.enabled = false;
+        }
+
+        public void PushSelf()
+        {
+            GameManager.Instance.factoryManager.UIControlFactory.PushControl(gameObject);
         }
     }
 }

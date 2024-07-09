@@ -5,7 +5,7 @@ namespace App.UI.SelectLevelScene
 {
     public class LevelDataUpdatedArgs
     {
-        public ProcessData processData;
         public ItemData itemData;
+        public ProcessData processData;
     }
 }

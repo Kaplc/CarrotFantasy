@@ -1,4 +1,5 @@
 using App.Static;
+using GameFramework;
 using PureMVC.Interfaces;
 using PureMVC.Patterns.Mediator;
 
@@ -7,6 +8,10 @@ namespace App.UI.InitScene
     public class InitPanelMediator : Mediator
     {
         public new static string NAME = "InitPanelMediator";
+
+        public InitPanelMediator() : base(NAME)
+        {
+        }
 
         public InitPanel Panel
         {
@@ -18,13 +23,9 @@ namespace App.UI.InitScene
             }
         }
 
-        public InitPanelMediator() : base(NAME)
-        {
-        }
-
         public override string[] ListNotificationInterests()
         {
-            return new string[]
+            return new[]
             {
                 NotificationName.UI.SHOW_INIT_PANEL,
                 NotificationName.UI.HIDE_INIT_PANEL

@@ -4,6 +4,5 @@ namespace App.Game.Object.Bullet
 {
     public class BottleTowerBullet : BaseBullet
     {
-    
     }
 }

@@ -7,10 +7,10 @@ using UnityEngine;
 namespace App.Data.DataClass.Map
 {
     [CreateAssetMenu(fileName = "MapData", menuName = "MapData", order = 0)]
-    public class MapData: ScriptableObject, IMapData
+    public class MapData : ScriptableObject, IMapData
     {
-        [Header("地图数据")] 
-        public int money;
+        [Header("地图数据")] public int money;
+
         public Sprite mapBgTexture;
         public Sprite mapFgTexture;
         public List<PointClass> pathList = new List<PointClass>();
@@ -19,26 +19,21 @@ namespace App.Data.DataClass.Map
         public List<ObjectPointClass> obstacleList = new List<ObjectPointClass>();
         public List<ObjectPointClass> towerList = new List<ObjectPointClass>();
 
-        [Header("出怪数据")]
-        public List<WaveData> waveDataList = new List<WaveData>();
+        [Header("出怪数据")] public List<WaveData> waveDataList = new List<WaveData>();
 
         public int GetWaveCount()
         {
             return waveDataList.Count;
         }
-        
+
         public TowerData GetTowerData(int index)
         {
             // 从TowerMap获取
-            TowerMap towerMap = Resources.Load<TowerMap>("Data/Tower/TowerMap");
+            var towerMap = Resources.Load<TowerMap>("Data/Tower/TowerMap");
 
             foreach (var item in towerMap.towerMapDic)
-            {
                 if (item.towerType == towerTypeList[index])
-                {
                     return item.towerData;
-                }
-            }
 
             return null;
         }

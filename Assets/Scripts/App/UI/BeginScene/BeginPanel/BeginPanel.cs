@@ -1,6 +1,6 @@
 ﻿using App.Game;
 using App.Static;
-using Library;
+using GameFramework;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,13 +15,19 @@ namespace App.UI.BeginScene.BeginPanel
         public Button btnHelp;
 
         public Button btnPositioning;
-    
+
         public Animator animator;
+
         // 作为子面板
         public SettingPanel.SettingPanel settingPanel;
 
         private AndroidJavaClass javaClass;
         private AndroidJavaObject javaObject;
+
+        private void OnDestroy()
+        {
+            GameManager.Instance.sdkManager.Dispose();
+        }
 
         protected override void Init()
         {
@@ -32,33 +38,22 @@ namespace App.UI.BeginScene.BeginPanel
                 // 隐藏自己
                 UIManager.Instance.Hide<BeginPanel>(false);
             });
-            btnBoss.onClick.AddListener(() => { 
+            btnBoss.onClick.AddListener(() =>
+            {
                 // 热更新Boss模式
                 ShowBossPanel();
             });
             btnMonster.onClick.AddListener(() => { });
-            btnSetting.onClick.AddListener(() =>
-            {
-                PanelMediator.SendNotification(NotificationName.UI.SHOW_SETTING_PANEL);
-            
-            });
+            btnSetting.onClick.AddListener(() => { PanelMediator.SendNotification(NotificationName.UI.SHOW_SETTING_PANEL); });
             btnHelp.onClick.AddListener(() => { PanelMediator.SendNotification(NotificationName.UI.SHOW_HELP_PANEL, true); });
 
-            btnPositioning.onClick.AddListener(() =>
-            {
-                GameManager.Instance.sdkManager.StartPositioning();
-            });
+            btnPositioning.onClick.AddListener(() => { GameManager.Instance.sdkManager.StartPositioning(); });
         }
-    
+
         public void ShowBossPanel()
         {
             GameManager.Instance.xLuaManager.DoFile("Init");
             GameManager.Instance.xLuaManager.DoString("Main:Main()");
         }
-
-        private void OnDestroy() {
-            GameManager.Instance.sdkManager.Dispose();
-        }
     }
 }
-

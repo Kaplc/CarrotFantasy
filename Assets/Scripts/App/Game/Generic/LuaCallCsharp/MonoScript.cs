@@ -2,21 +2,15 @@ using UnityEngine;
 using UnityEngine.Events;
 using XLua;
 
-
 [LuaCallCSharp]
 public class MonoScript : MonoBehaviour
 {
-    public UnityAction onEnableAction;
     public UnityAction onAwakeAction;
+    public UnityAction onDestroyAction;
+    public UnityAction onDisableAction;
+    public UnityAction onEnableAction;
     public UnityAction onStartAction;
     public UnityAction onUpdateAction;
-    public UnityAction onDisableAction;
-    public UnityAction onDestroyAction;
-
-    private void OnEnable()
-    {
-        onEnableAction?.Invoke();
-    }
 
     private void Awake()
     {
@@ -31,6 +25,11 @@ public class MonoScript : MonoBehaviour
     private void Update()
     {
         onUpdateAction?.Invoke();
+    }
+
+    private void OnEnable()
+    {
+        onEnableAction?.Invoke();
     }
 
     private void OnDisable()

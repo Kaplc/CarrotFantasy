@@ -20,7 +20,8 @@ MonoBehaviour:
   - m_GUID: fe11f3e714b6e2d449dce6b7f3b3d995
     m_Address: BossGameScene
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Scene
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 136f90097b63d3242a5e680f3516fffa, type: 2}
   m_SchemaSet:

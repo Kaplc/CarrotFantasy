@@ -4,7 +4,7 @@ using App.Data.DataClass.Game.Object;
 namespace App.Data.DataClass.Game.Level
 {
     /// <summary>
-    /// 一波怪中的每组相同类型的怪
+    ///     一波怪中的每组相同类型的怪
     /// </summary>
     [Serializable]
     public class GroupData

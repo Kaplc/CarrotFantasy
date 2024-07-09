@@ -119,7 +119,7 @@ public class XLuaTool : EditorWindow
             // 每次清空旧文件
             if (Directory.Exists(directoryPath))
             {
-                string[] oldFilesPath = Directory.GetFiles(directoryPath, "*.txt");
+                string[] oldFilesPath = Directory.GetFiles(directoryPath, "*.lua.txt", SearchOption.AllDirectories);
                 for (int i = 0; i < oldFilesPath.Length; i++)
                 {
                     File.Delete(oldFilesPath[i]);
@@ -137,7 +137,7 @@ public class XLuaTool : EditorWindow
                     newPath += "/" + res[j];
                     if (j == res.Length - 1)
                     {
-                        newPath = newPath.Replace(".lua", ".txt");
+                        newPath = newPath.Replace(".lua", ".lua.txt");
                     }
                     else
                     {

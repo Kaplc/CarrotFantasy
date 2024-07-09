@@ -5,7 +5,7 @@ using PureMVC.Patterns.Command;
 namespace App.UI.GameScene.Panel.GamePanel
 {
     /// <summary>
-    /// 继续游戏
+    ///     继续游戏
     /// </summary>
     public class ResumeGameCommand : SimpleCommand
     {

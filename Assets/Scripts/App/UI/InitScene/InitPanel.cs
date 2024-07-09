@@ -1,4 +1,4 @@
-﻿using Library;
+﻿using GameFramework;
 
 namespace App.UI.InitScene
 {
@@ -6,8 +6,6 @@ namespace App.UI.InitScene
     {
         protected override void Init()
         {
-        
         }
     }
 }
-

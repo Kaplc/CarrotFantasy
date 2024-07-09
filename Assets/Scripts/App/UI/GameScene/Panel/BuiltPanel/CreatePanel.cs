@@ -14,7 +14,7 @@ namespace App.UI.GameScene.Panel.BuiltPanel
         public RectTransform iconsRect;
 
         /// <summary>
-        /// 根据UI坐标显示建造面板
+        ///     根据UI坐标显示建造面板
         /// </summary>
         /// <param name="iconsDic">icons字典</param>
         /// <param name="towersDataDic"></param>
@@ -25,18 +25,18 @@ namespace App.UI.GameScene.Panel.BuiltPanel
         {
             // 设置面板中心位置为格子中心
             ((RectTransform)transform).anchoredPosition = uiPos;
-        
+
             // 创建遍历计数器
-            int count = 0;
+            var count = 0;
             // 创建按钮
-            foreach (KeyValuePair<TowerData, Sprite> item in towersDataDic)
+            foreach (var item in towersDataDic)
             {
-                Button button =GameManager.Instance.factoryManager.UIControlFactory.CreateControl("ButtonCreateTower").GetComponent<Button>();
+                var button = GameManager.Instance.factoryManager.UIControlFactory.CreateControl("ButtonCreateTower").GetComponent<Button>();
                 // 设置信息
                 button.GetComponent<Image>().sprite = item.Value;
 
                 // 设置位置
-                RectTransform buttonRect = button.transform as RectTransform;
+                var buttonRect = button.transform as RectTransform;
                 buttonRect.SetParent(iconsRect);
                 buttonRect.localScale = Vector3.one;
                 switch (showDir)
@@ -54,11 +54,11 @@ namespace App.UI.GameScene.Panel.BuiltPanel
                 }
 
                 count++;
-            
+
                 // 监听点击事件
                 button.onClick.AddListener(() =>
                 {
-                    GameFacade.Instance.SendNotification(NotificationName.UI.CREATE_TOWER, new CreateTowerArgs()
+                    GameFacade.Instance.SendNotification(NotificationName.UI.CREATE_TOWER, new CreateTowerArgs
                     {
                         towerData = item.Key,
                         cellWorldPos = cellWorldPos

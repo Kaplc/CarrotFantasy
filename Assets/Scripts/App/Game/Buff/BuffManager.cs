@@ -1,25 +1,22 @@
 ﻿using System.Collections.Generic;
 using App.Game.Generic.BaseObject;
 using App.Game.Object.Monster;
-using Library;
+using GameFramework;
 
 namespace App.Game.Buff
 {
     public class BuffManager : BaseSingleton<BuffManager>
     {
-        private Dictionary<IMonster, List<BaseBuff>> buffDictionary = new Dictionary<IMonster, List<BaseBuff>>();
+        private readonly Dictionary<IMonster, List<BaseBuff>> buffDictionary = new Dictionary<IMonster, List<BaseBuff>>();
 
         /// <summary>
-        /// 怪物添加Buff
+        ///     怪物添加Buff
         /// </summary>
         /// <param name="monster"></param>
         /// <param name="buff"></param>
         public void ApplyBuff(IMonster monster, BaseBuff buff)
         {
-            if (!buffDictionary.ContainsKey(monster))
-            {
-                buffDictionary[monster] = new List<BaseBuff>();
-            }
+            if (!buffDictionary.ContainsKey(monster)) buffDictionary[monster] = new List<BaseBuff>();
 
             // Buff添加进怪物的BuffList
             buffDictionary[monster].Add(buff);
@@ -28,7 +25,7 @@ namespace App.Game.Buff
         }
 
         /// <summary>
-        /// 移除单个Buff
+        ///     移除单个Buff
         /// </summary>
         /// <param name="monster"></param>
         /// <param name="buff"></param>
@@ -45,30 +42,24 @@ namespace App.Game.Buff
         }
 
         /// <summary>
-        /// 移除怪物上所有Buff
+        ///     移除怪物上所有Buff
         /// </summary>
         /// <param name="monster"></param>
         public void RemoveAllBuffs(IMonster monster)
         {
             if (!buffDictionary.ContainsKey(monster)) return;
 
-            for (int i = 0; i < buffDictionary[monster].Count; i++)
-            {
-                buffDictionary[monster][i].RemoveBuff(monster);
-            }
+            for (var i = 0; i < buffDictionary[monster].Count; i++) buffDictionary[monster][i].RemoveBuff(monster);
 
             buffDictionary[monster].Clear();
         }
 
         /// <summary>
-        /// 清空所有怪物所有Buff
+        ///     清空所有怪物所有Buff
         /// </summary>
         public void ClearAllBuffs()
         {
-            foreach (var item in buffDictionary)
-            {
-                RemoveAllBuffs(item.Key);
-            }
+            foreach (var item in buffDictionary) RemoveAllBuffs(item.Key);
         }
     }
 }

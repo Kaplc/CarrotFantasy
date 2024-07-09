@@ -4,8 +4,7 @@ using XLua;
 namespace App.Game.Object.Obstacle
 {
     [LuaCallCSharp]
-    public interface IObstacle: IMonster
+    public interface IObstacle : IMonster
     {
-        
     }
 }

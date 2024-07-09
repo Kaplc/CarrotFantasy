@@ -1,4 +1,4 @@
-﻿using Library;
+﻿using GameFramework;
 
 namespace App.UI.Generic.LoadingPanel
 {
@@ -6,8 +6,6 @@ namespace App.UI.Generic.LoadingPanel
     {
         protected override void Init()
         {
-        
         }
     }
 }
-

@@ -1,4 +1,5 @@
 using App.Static;
+using GameFramework;
 using PureMVC.Interfaces;
 using PureMVC.Patterns.Mediator;
 
@@ -6,7 +7,11 @@ namespace App.UI.GameScene.Panel.LosePanel
 {
     public class LosePanelMediator : Mediator
     {
-        public static new string NAME = "LosePanelMediator";
+        public new static string NAME = "LosePanelMediator";
+
+        public LosePanelMediator() : base(NAME)
+        {
+        }
 
         public LosePanel Panel
         {
@@ -18,13 +23,9 @@ namespace App.UI.GameScene.Panel.LosePanel
             }
         }
 
-        public LosePanelMediator() : base(NAME)
-        {
-        }
-
         public override string[] ListNotificationInterests()
         {
-            return new string[]
+            return new[]
             {
                 NotificationName.UI.SHOW_LOSE_PANEL
             };
@@ -42,11 +43,11 @@ namespace App.UI.GameScene.Panel.LosePanel
                     // 停止游戏
                     SendNotification(NotificationName.Game.STOP_GAME);
                     Panel = UIManager.Instance.Show<LosePanel>(false);
-                
+
                     // 更新数据
                     (int wavesCount, int totalWavesCount, int levelID) data = ((int, int, int))notification.Body;
                     Panel.UpdatePanelData(data.wavesCount, data.totalWavesCount, data.levelID);
-                
+
                     break;
             }
         }

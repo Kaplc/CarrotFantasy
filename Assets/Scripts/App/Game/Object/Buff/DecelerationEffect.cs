@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using App.Game.Generic.BaseObject;
 using App.Game.Object.Monster;
-using App.Static;
 using UnityEngine;
 
 namespace App.Game.Object.Buff
@@ -9,9 +8,9 @@ namespace App.Game.Object.Buff
     public class DecelerationEffect : BaseBuffEffect
     {
         private Coroutine coroutine;
-    
+
         /// <summary>
-        /// 开启定时回收协程
+        ///     开启定时回收协程
         /// </summary>
         /// <param name="monster">减速怪物対象</param>
         /// <param name="duration">持续时间</param>
@@ -22,7 +21,7 @@ namespace App.Game.Object.Buff
         }
 
         /// <summary>
-        /// 定时回收
+        ///     定时回收
         /// </summary>
         /// <param name="monster"></param>
         /// <param name="duration">持续时间</param>
@@ -33,10 +32,7 @@ namespace App.Game.Object.Buff
             while (true)
             {
                 yield return new WaitForSeconds(duration);
-                if (!GameManager.Instance.sceneManager.IsPause())
-                {
-                    break;
-                }
+                if (!GameManager.Instance.sceneManager.IsPause()) break;
             }
 
             GameManager.Instance.buffManager.RemoveBuff(monster, buff);
@@ -49,10 +45,7 @@ namespace App.Game.Object.Buff
 
         public override void OnPush()
         {
-            if (coroutine != null)
-            {
-                StopCoroutine(coroutine);
-            }
+            if (coroutine != null) StopCoroutine(coroutine);
         }
     }
 }

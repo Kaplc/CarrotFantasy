@@ -4,6 +4,5 @@ namespace App.UI.SelectItemScene.Control
 {
     public class SelectItemPanelPageFlipping : BasePageFlipping
     {
-    
     }
 }

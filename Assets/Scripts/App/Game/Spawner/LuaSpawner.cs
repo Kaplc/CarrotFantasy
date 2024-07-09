@@ -10,43 +10,95 @@ using XLua;
 
 namespace App.Game.Spawner
 {
-    [LuaCallCSharp()]
+    [LuaCallCSharp]
     public class LuaSpawner : ISpawner
     {
-        public Func<Carrot> onGetCarrotAction;
-        public UnityAction onPushAllGameObjectAction;
-        public Func<bool> onWinJudgeAction;
-        public UnityAction onPauseWavesAction;
-        public UnityAction onResumeWavesAction;
-        public UnityAction onStartSpawnAction;
-        public Func<List<IMonster>> onGetAllMonstersAction;
-        public Func<IMonster> onGetCollectingFiresTargetAction;
-        public UnityAction<IMonster> onSetCollectingFiresAction;
         public UnityAction onCancelCollectingFiresTargetAction;
-        public UnityAction<IMapData> onInitAction;
         public UnityAction<TowerData, Vector3> onCreateTowerObjectAction;
-        public UnityAction<Vector3> onUpGradeTowerAction;
-        public UnityAction<Vector3> onSellTowerAction;
+        public Func<List<IMonster>> onGetAllMonstersAction;
+        public Func<Carrot> onGetCarrotAction;
+        public Func<IMonster> onGetCollectingFiresTargetAction;
         public Func<int> onGetNowWaveCountAction;
+        public UnityAction<IMapData> onInitAction;
+        public UnityAction onPauseWavesAction;
+        public UnityAction onPushAllGameObjectAction;
+        public UnityAction onResumeWavesAction;
+        public UnityAction<Vector3> onSellTowerAction;
+        public UnityAction<IMonster> onSetCollectingFiresAction;
+        public UnityAction onStartSpawnAction;
+        public UnityAction<Vector3> onUpGradeTowerAction;
+        public Func<bool> onWinJudgeAction;
 
-        public Carrot Carrot
+        public Carrot Carrot => onGetCarrotAction?.Invoke();
+
+        public IMonster GetCollectingFiresTarget()
         {
-            get => onGetCarrotAction?.Invoke();
+            return onGetCollectingFiresTargetAction?.Invoke();
         }
 
-        public IMonster GetCollectingFiresTarget() => onGetCollectingFiresTargetAction?.Invoke();
-        public List<IMonster> GetAllMonsters() => onGetAllMonstersAction?.Invoke();
-        public int GetNowWaveCount() => (int)onGetNowWaveCountAction?.Invoke();
-        public void Init(IMapData mapData) => onInitAction?.Invoke(mapData);
-        public void SetCollectingFires(IMonster monster) => onSetCollectingFiresAction?.Invoke(monster);
-        public void CancelCollectingFiresTarget() => onCancelCollectingFiresTargetAction?.Invoke();
-        public void StartSpawn() => onStartSpawnAction?.Invoke();
-        public void PauseSpawn() => onPauseWavesAction?.Invoke();
-        public void ResumeSpawn() => onResumeWavesAction?.Invoke();
-        public void CreateTowerObject(TowerData towerData, Vector3 cellWorldPos) => onCreateTowerObjectAction?.Invoke(towerData, cellWorldPos);
-        public void UpGradeTower(Vector3 cellWorldPos) => onUpGradeTowerAction?.Invoke(cellWorldPos);
-        public void SellTower(Vector3 cellWorldPos) => onSellTowerAction?.Invoke(cellWorldPos);
-        public void OnPushAllGameObject() => onPushAllGameObjectAction?.Invoke();
-        public bool WinJudge() => (bool)onWinJudgeAction?.Invoke();
+        public List<IMonster> GetAllMonsters()
+        {
+            return onGetAllMonstersAction?.Invoke();
+        }
+
+        public int GetNowWaveCount()
+        {
+            return (int)onGetNowWaveCountAction?.Invoke();
+        }
+
+        public void Init(IMapData mapData)
+        {
+            onInitAction?.Invoke(mapData);
+        }
+
+        public void SetCollectingFires(IMonster monster)
+        {
+            onSetCollectingFiresAction?.Invoke(monster);
+        }
+
+        public void CancelCollectingFiresTarget()
+        {
+            onCancelCollectingFiresTargetAction?.Invoke();
+        }
+
+        public void StartSpawn()
+        {
+            onStartSpawnAction?.Invoke();
+        }
+
+        public void PauseSpawn()
+        {
+            onPauseWavesAction?.Invoke();
+        }
+
+        public void ResumeSpawn()
+        {
+            onResumeWavesAction?.Invoke();
+        }
+
+        public void CreateTowerObject(TowerData towerData, Vector3 cellWorldPos)
+        {
+            onCreateTowerObjectAction?.Invoke(towerData, cellWorldPos);
+        }
+
+        public void UpGradeTower(Vector3 cellWorldPos)
+        {
+            onUpGradeTowerAction?.Invoke(cellWorldPos);
+        }
+
+        public void SellTower(Vector3 cellWorldPos)
+        {
+            onSellTowerAction?.Invoke(cellWorldPos);
+        }
+
+        public void OnPushAllGameObject()
+        {
+            onPushAllGameObjectAction?.Invoke();
+        }
+
+        public bool WinJudge()
+        {
+            return (bool)onWinJudgeAction?.Invoke();
+        }
     }
 }

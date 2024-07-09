@@ -1,17 +1,18 @@
 ﻿using System.Text.RegularExpressions;
 using App.Static;
+using GameFramework;
 using UnityEngine;
 
 namespace App.Game.SDK
 {
-    public class SDKManager : MonoBehaviour
+    public class SDKManager : BaseMonoAutoSingleton<SDKManager>
     {
-        AndroidJavaClass javaClass;
+        private AndroidJavaClass javaClass;
 
-        AndroidJavaObject javaObject;
+        private AndroidJavaObject javaObject;
 
         // Start is called before the first frame update
-        void Start()
+        private void Start()
         {
         }
 
@@ -32,23 +33,23 @@ namespace App.Game.SDK
             // 解析信息
 
             // 正则表达式模式，匹配以 "address:" 开头和以 "$" 结尾的部分
-            string address = @"address:(.*?)\$";
-            string radius = @"radius:(.*?)\$";
-            string code = @"code:(.*?)\$";
+            var address = @"address:(.*?)\$";
+            var radius = @"radius:(.*?)\$";
+            var code = @"code:(.*?)\$";
 
             // 使用正则表达式进行匹配
-            Match addressMatch = Regex.Match(message, address);
-            Match radiusMatch = Regex.Match(message, radius);
-            Match codeMatch = Regex.Match(message, code);
+            var addressMatch = Regex.Match(message, address);
+            var radiusMatch = Regex.Match(message, radius);
+            var codeMatch = Regex.Match(message, code);
 
             // 输出匹配到的内容
             if (addressMatch.Success && radiusMatch.Success)
             {
-                string addressResult = addressMatch.Groups[1].Value;
-                string radiusResult = radiusMatch.Groups[1].Value;
-                string codeResult = codeMatch.Groups[1].Value;
+                var addressResult = addressMatch.Groups[1].Value;
+                var radiusResult = radiusMatch.Groups[1].Value;
+                var codeResult = codeMatch.Groups[1].Value;
 
-                string res = $"{addressResult}\n定位精度:{radiusResult}m";
+                var res = $"{addressResult}\n定位精度:{radiusResult}m";
 
                 Debug.Log(res);
 

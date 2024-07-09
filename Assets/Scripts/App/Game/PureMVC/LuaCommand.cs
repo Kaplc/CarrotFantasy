@@ -5,8 +5,8 @@ using XLua;
 
 namespace App.Game
 {
-    [LuaCallCSharp()]
-    public class LuaCommand: SimpleCommand
+    [LuaCallCSharp]
+    public class LuaCommand : SimpleCommand
     {
         public UnityAction<INotification> action;
 

@@ -25,13 +25,13 @@ namespace XLua.CSObjectWrap
 			
 			
 			
-			Utils.RegisterFunc(L, Utils.GETTER_IDX, "monsterType", _g_get_monsterType);
+			Utils.RegisterFunc(L, Utils.GETTER_IDX, "hard", _g_get_hard);
+            Utils.RegisterFunc(L, Utils.GETTER_IDX, "monsterType", _g_get_monsterType);
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "nextSpawnTime", _g_get_nextSpawnTime);
-            Utils.RegisterFunc(L, Utils.GETTER_IDX, "hard", _g_get_hard);
             
-			Utils.RegisterFunc(L, Utils.SETTER_IDX, "monsterType", _s_set_monsterType);
+			Utils.RegisterFunc(L, Utils.SETTER_IDX, "hard", _s_set_hard);
+            Utils.RegisterFunc(L, Utils.SETTER_IDX, "monsterType", _s_set_monsterType);
             Utils.RegisterFunc(L, Utils.SETTER_IDX, "nextSpawnTime", _s_set_nextSpawnTime);
-            Utils.RegisterFunc(L, Utils.SETTER_IDX, "hard", _s_set_hard);
             
 			
 			Utils.EndObjectRegister(type, L, translator, null, null,
@@ -81,6 +81,20 @@ namespace XLua.CSObjectWrap
         
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _g_get_hard(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			
+                App.Data.DataClass.Map.SpawnMonsterData gen_to_be_invoked = (App.Data.DataClass.Map.SpawnMonsterData)translator.FastGetCSObj(L, 1);
+                LuaAPI.lua_pushnumber(L, gen_to_be_invoked.hard);
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 1;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static int _g_get_monsterType(RealStatePtr L)
         {
 		    try {
@@ -108,21 +122,22 @@ namespace XLua.CSObjectWrap
             return 1;
         }
         
+        
+        
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _g_get_hard(RealStatePtr L)
+        static int _s_set_hard(RealStatePtr L)
         {
 		    try {
                 ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
 			
                 App.Data.DataClass.Map.SpawnMonsterData gen_to_be_invoked = (App.Data.DataClass.Map.SpawnMonsterData)translator.FastGetCSObj(L, 1);
-                LuaAPI.lua_pushnumber(L, gen_to_be_invoked.hard);
+                gen_to_be_invoked.hard = (float)LuaAPI.lua_tonumber(L, 2);
+            
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
             }
-            return 1;
+            return 0;
         }
-        
-        
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static int _s_set_monsterType(RealStatePtr L)
@@ -148,21 +163,6 @@ namespace XLua.CSObjectWrap
 			
                 App.Data.DataClass.Map.SpawnMonsterData gen_to_be_invoked = (App.Data.DataClass.Map.SpawnMonsterData)translator.FastGetCSObj(L, 1);
                 gen_to_be_invoked.nextSpawnTime = (float)LuaAPI.lua_tonumber(L, 2);
-            
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 0;
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _s_set_hard(RealStatePtr L)
-        {
-		    try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			
-                App.Data.DataClass.Map.SpawnMonsterData gen_to_be_invoked = (App.Data.DataClass.Map.SpawnMonsterData)translator.FastGetCSObj(L, 1);
-                gen_to_be_invoked.hard = (float)LuaAPI.lua_tonumber(L, 2);
             
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);

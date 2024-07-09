@@ -20,7 +20,7 @@ namespace App.UI.BeginScene.HelpPanel
         }
 
         /// <summary>
-        /// 实现滑动
+        ///     实现滑动
         /// </summary>
         protected override void SlideContent()
         {

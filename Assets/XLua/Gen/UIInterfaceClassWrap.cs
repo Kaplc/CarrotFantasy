@@ -29,12 +29,12 @@ namespace XLua.CSObjectWrap
 			
 			
 			Utils.RegisterFunc(L, Utils.GETTER_IDX, "onBeginDragAction", _g_get_onBeginDragAction);
-            Utils.RegisterFunc(L, Utils.GETTER_IDX, "onEndDragAction", _g_get_onEndDragAction);
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "onDragAction", _g_get_onDragAction);
+            Utils.RegisterFunc(L, Utils.GETTER_IDX, "onEndDragAction", _g_get_onEndDragAction);
             
 			Utils.RegisterFunc(L, Utils.SETTER_IDX, "onBeginDragAction", _s_set_onBeginDragAction);
-            Utils.RegisterFunc(L, Utils.SETTER_IDX, "onEndDragAction", _s_set_onEndDragAction);
             Utils.RegisterFunc(L, Utils.SETTER_IDX, "onDragAction", _s_set_onDragAction);
+            Utils.RegisterFunc(L, Utils.SETTER_IDX, "onEndDragAction", _s_set_onEndDragAction);
             
 			
 			Utils.EndObjectRegister(type, L, translator, null, null,
@@ -182,20 +182,6 @@ namespace XLua.CSObjectWrap
         }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _g_get_onEndDragAction(RealStatePtr L)
-        {
-		    try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			
-                UIInterfaceClass gen_to_be_invoked = (UIInterfaceClass)translator.FastGetCSObj(L, 1);
-                translator.Push(L, gen_to_be_invoked.onEndDragAction);
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 1;
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static int _g_get_onDragAction(RealStatePtr L)
         {
 		    try {
@@ -203,6 +189,20 @@ namespace XLua.CSObjectWrap
 			
                 UIInterfaceClass gen_to_be_invoked = (UIInterfaceClass)translator.FastGetCSObj(L, 1);
                 translator.Push(L, gen_to_be_invoked.onDragAction);
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 1;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _g_get_onEndDragAction(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			
+                UIInterfaceClass gen_to_be_invoked = (UIInterfaceClass)translator.FastGetCSObj(L, 1);
+                translator.Push(L, gen_to_be_invoked.onEndDragAction);
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
             }
@@ -227,13 +227,13 @@ namespace XLua.CSObjectWrap
         }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _s_set_onEndDragAction(RealStatePtr L)
+        static int _s_set_onDragAction(RealStatePtr L)
         {
 		    try {
                 ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
 			
                 UIInterfaceClass gen_to_be_invoked = (UIInterfaceClass)translator.FastGetCSObj(L, 1);
-                gen_to_be_invoked.onEndDragAction = translator.GetDelegate<UnityEngine.Events.UnityAction<UnityEngine.EventSystems.PointerEventData>>(L, 2);
+                gen_to_be_invoked.onDragAction = translator.GetDelegate<UnityEngine.Events.UnityAction<UnityEngine.EventSystems.PointerEventData>>(L, 2);
             
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
@@ -242,13 +242,13 @@ namespace XLua.CSObjectWrap
         }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _s_set_onDragAction(RealStatePtr L)
+        static int _s_set_onEndDragAction(RealStatePtr L)
         {
 		    try {
                 ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
 			
                 UIInterfaceClass gen_to_be_invoked = (UIInterfaceClass)translator.FastGetCSObj(L, 1);
-                gen_to_be_invoked.onDragAction = translator.GetDelegate<UnityEngine.Events.UnityAction<UnityEngine.EventSystems.PointerEventData>>(L, 2);
+                gen_to_be_invoked.onEndDragAction = translator.GetDelegate<UnityEngine.Events.UnityAction<UnityEngine.EventSystems.PointerEventData>>(L, 2);
             
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);

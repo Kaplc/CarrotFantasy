@@ -1,34 +1,31 @@
 ﻿using System.Collections.Generic;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using App.Data.DataClass.Player;
 using App.Game.SceneManager.NormalGame.interf;
-using Library;
-using UnityEngine;
+using GameFramework;
 
 namespace App.Game.SceneManager.NormalGame
 {
-    public class ProcessDataManager :IProcessDataManager
+    public class ProcessDataManager : IProcessDataManager
     {
         private ProcessData processData;
-        
+
         public ProcessDataManager()
         {
             LoadProcessData();
         }
-        
+
         public ProcessData GetProcessData()
         {
             if (processData != null)
             {
-                ProcessData newData = new ProcessData()
+                var newData = new ProcessData
                 {
                     passedItemsDic = new Dictionary<int, PassedLevelData>(processData.passedItemsDic)
                 };
-                
+
                 return newData;
             }
-            
+
             return null;
         }
 
@@ -72,47 +69,19 @@ namespace App.Game.SceneManager.NormalGame
             CalPassedLevelCount();
         }
 
-        /// <summary>
-        /// 计算通关关卡数
-        /// </summary>
-        private void CalPassedLevelCount()
-        {
-            // 遍历每个主题
-            foreach (var passedBigLevelItem in processData.passedItemsDic)
-            {
-                // 计数
-                int count = 0;
-                // 遍历每个主题下的小关卡
-                foreach (var passedLevelItem in passedBigLevelItem.Value.passedLevelDic)
-                {
-                    if (passedLevelItem.Value != EPassedGrade.None)
-                    {
-                        count++;
-                    }
-                }
-
-                passedBigLevelItem.Value.passedLevelCount = count;
-            }
-        }
-
         public void SaveProcessData(int itemID, int levelID, EPassedGrade garde)
         {
             // 缓存的通关数据
-            PassedLevelData passedLevelData = processData.passedItemsDic[itemID];
+            var passedLevelData = processData.passedItemsDic[itemID];
             // 存在已经解锁的关卡更新通关等级
-            EPassedGrade grade = passedLevelData.passedLevelDic[levelID];
+            var grade = passedLevelData.passedLevelDic[levelID];
             // 仅刷新最高记录
-            if ((int)garde > (int)grade)
-            {
-                passedLevelData.passedLevelDic[levelID] = garde;
-            }
+            if ((int)garde > (int)grade) passedLevelData.passedLevelDic[levelID] = garde;
 
             // 判断下一关是否解锁
             if (!passedLevelData.passedLevelDic.ContainsKey(levelID + 1))
-            {
                 // 未解锁下一关则解锁
                 passedLevelData.passedLevelDic[levelID + 1] = EPassedGrade.None;
-            }
 
             CalPassedLevelCount();
 
@@ -129,6 +98,25 @@ namespace App.Game.SceneManager.NormalGame
                 fs.Close();
             }
 #endif
+        }
+
+        /// <summary>
+        ///     计算通关关卡数
+        /// </summary>
+        private void CalPassedLevelCount()
+        {
+            // 遍历每个主题
+            foreach (var passedBigLevelItem in processData.passedItemsDic)
+            {
+                // 计数
+                var count = 0;
+                // 遍历每个主题下的小关卡
+                foreach (var passedLevelItem in passedBigLevelItem.Value.passedLevelDic)
+                    if (passedLevelItem.Value != EPassedGrade.None)
+                        count++;
+
+                passedBigLevelItem.Value.passedLevelCount = count;
+            }
         }
     }
 }

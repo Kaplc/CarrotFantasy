@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using App.Data.DataClass.Player;
 using App.Static;
-using Library;
+using GameFramework;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,14 +9,14 @@ namespace App.UI.GameScene.Panel.WinPanel
 {
     public class WinPanel : BasePanel
     {
-        public Text txWavesCount;
-        public Text txTotalWavesCount;
-        public Text txLevel;
-        public Button btnSelect;
         public Button btnContinue;
-        public Image imgGrade;
+        public Button btnSelect;
 
         public List<Sprite> gradeSprites;
+        public Image imgGrade;
+        public Text txLevel;
+        public Text txTotalWavesCount;
+        public Text txWavesCount;
 
         protected override void Init()
         {
@@ -56,4 +56,3 @@ namespace App.UI.GameScene.Panel.WinPanel
         }
     }
 }
-

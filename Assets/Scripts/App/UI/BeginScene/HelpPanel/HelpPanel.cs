@@ -1,21 +1,15 @@
-﻿using App.Game;
-using App.Static;
-using Library;
+﻿using App.Static;
+using GameFramework;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace App.UI.BeginScene.HelpPanel
 {
     /// <summary>
-    /// BeginPanel的子Panel
+    ///     BeginPanel的子Panel
     /// </summary>
     public class HelpPanel : BasePanel
     {
-        private bool showHelpPage;
-        private bool showMonsterPage;
-        private bool showTowerPage;
-        private float oldValue;
-    
         public Button btnHome;
         public Toggle tgHelp;
         public Toggle tgMonster;
@@ -25,7 +19,29 @@ namespace App.UI.BeginScene.HelpPanel
         public Transform towerPage;
         public Transform monsterPage;
         public Transform bottomImage;
-    
+        private float oldValue;
+        private bool showHelpPage;
+        private bool showMonsterPage;
+        private bool showTowerPage;
+
+        protected override void Init()
+        {
+            btnHome.onClick.AddListener(() =>
+            {
+                // 通过MVC管理器发送显示BeginPanel的消息
+                GameFacade.Instance.SendNotification(NotificationName.UI.SHOW_BEGIN_PANEL);
+            });
+
+            tgTower.onValueChanged.AddListener(isOn => { ShowTowerPage = true; });
+
+            tgMonster.onValueChanged.AddListener(isOn => { ShowMonsterPage = true; });
+
+            tgHelp.onValueChanged.AddListener(isOn => { ShowHelpPage = true; });
+
+            // 初始显示HelpPage
+            ShowHelpPage = true;
+        }
+
         #region 页面属性
 
         // 显示HelpPage
@@ -76,34 +92,5 @@ namespace App.UI.BeginScene.HelpPanel
         }
 
         #endregion
-
-        protected override void Init()
-        {
-            btnHome.onClick.AddListener(() =>
-            {
-                // 通过MVC管理器发送显示BeginPanel的消息
-                GameFacade.Instance.SendNotification(NotificationName.UI.SHOW_BEGIN_PANEL);
-            });
-        
-            tgTower.onValueChanged.AddListener((isOn) =>
-            {
-                ShowTowerPage = true;
-            });
-        
-            tgMonster.onValueChanged.AddListener((isOn) =>
-            {
-                ShowMonsterPage = true;
-            });
-        
-            tgHelp.onValueChanged.AddListener((isOn) =>
-            {
-                ShowHelpPage = true;
-            });
-
-            // 初始显示HelpPage
-            ShowHelpPage = true;
-
-        
-        }
     }
 }

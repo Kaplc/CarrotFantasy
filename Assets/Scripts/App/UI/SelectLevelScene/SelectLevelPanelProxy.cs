@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using App.Data.DataClass.Game.Level;
 using App.Data.DataClass.Player;
 using App.Game;
@@ -10,8 +9,6 @@ namespace App.UI.SelectLevelScene
 {
     public class SelectLevelPanelProxy : Proxy
     {
-        private NormalSceneDataManager SceneDataManager => GameManager.Instance.sceneManager.SceneDataManager as NormalSceneDataManager;
-        private NormalSceneManager SceneManger =>GameManager.Instance.sceneManager as NormalSceneManager;
         private ItemData itemData;
         private ProcessData processData;
 
@@ -19,12 +16,15 @@ namespace App.UI.SelectLevelScene
         {
         }
 
+        private NormalSceneDataManager SceneDataManager => GameManager.Instance.sceneManager.SceneDataManager as NormalSceneDataManager;
+        private NormalSceneManager SceneManger => GameManager.Instance.sceneManager as NormalSceneManager;
+
         public void UpdateLevelData()
         {
             itemData = SceneDataManager?.LevelDataManager.GetItemLevelData(SceneManger.NowItemID);
             processData = SceneDataManager?.ProcessDataManager.GetProcessData();
-            
-            SendNotification(NotificationName.UI.LEVEL_DATA_UPDATED, new LevelDataUpdatedArgs()
+
+            SendNotification(NotificationName.UI.LEVEL_DATA_UPDATED, new LevelDataUpdatedArgs
             {
                 itemData = itemData,
                 processData = processData

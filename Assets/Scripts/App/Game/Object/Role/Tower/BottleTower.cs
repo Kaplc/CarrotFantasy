@@ -9,11 +9,11 @@ namespace App.Game.Object.Tower
     {
         private Transform weapon;
         private bool Pause => GameManager.Instance.sceneManager.IsPause();
-        
+
         protected override void Awake()
         {
             base.Awake();
-            
+
             animator = GetComponent<Animator>();
             weapon = transform.Find("Weapon");
             firePos = transform.Find("Weapon/FirePos");
@@ -22,7 +22,7 @@ namespace App.Game.Object.Tower
         protected override void Update()
         {
             base.Update();
-        
+
             if (Pause)
             {
                 // 游戏暂停停止炮塔动画
@@ -31,18 +31,16 @@ namespace App.Game.Object.Tower
             }
 
             if (target != null)
-            {
                 // 看向目标
                 LookAtTarget();
-            }
         }
 
         private void LookAtTarget()
         {
             // 向量
-            Vector3 dir = target.Transform.position - weapon.position;
+            var dir = target.Transform.position - weapon.position;
             // 计算x轴的角度
-            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
             // 
             weapon.rotation = Quaternion.Slerp(weapon.rotation, Quaternion.Euler(0f, 0f, angle), Time.deltaTime * data.rotaSpeed);
         }
@@ -55,7 +53,7 @@ namespace App.Game.Object.Tower
             if (target != null && attacking)
             {
                 // 创建子弹预设体并设置目标
-                BottleTowerBullet bullet = GameManager.Instance.poolManager.GetObject(data.bulletsPrefabsPath[level]).GetComponent<BottleTowerBullet>();
+                var bullet = GameManager.Instance.poolManager.GetObject(data.bulletsPrefabsPath[level]).GetComponent<BottleTowerBullet>();
                 bullet.transform.position = firePos.position;
                 bullet.target = target;
                 bullet.atk = Atk;
@@ -67,6 +65,5 @@ namespace App.Game.Object.Tower
                 GameFacade.Instance.SendNotification(NotificationName.Game.PLAY_SOUND, soundData);
             }
         }
-    
     }
 }

@@ -6,8 +6,8 @@ using XLua;
 
 namespace App.Game
 {
-    [LuaCallCSharp()]
-    public class LuaMediator: Mediator
+    [LuaCallCSharp]
+    public class LuaMediator : Mediator
     {
         public UnityAction<INotification> handleAction;
         public Func<string[]> listenInterestsFunc;

@@ -38,7 +38,29 @@ namespace XLua
 #endif
 		}
         
-		public void __Gen_Delegate_Imp1(UnityEngine.SceneManagement.Scene p0, UnityEngine.SceneManagement.LoadSceneMode p1)
+		public void __Gen_Delegate_Imp1(bool p0)
+		{
+#if THREAD_SAFE || HOTFIX_ENABLE
+            lock (luaEnv.luaEnvLock)
+            {
+#endif
+                RealStatePtr L = luaEnv.L;
+                int errFunc = LuaAPI.pcall_prepare(L, errorFuncRef, luaReference);
+                
+                LuaAPI.lua_pushboolean(L, p0);
+                
+                PCall(L, 1, 0, errFunc);
+                
+                
+                
+                LuaAPI.lua_settop(L, errFunc - 1);
+                
+#if THREAD_SAFE || HOTFIX_ENABLE
+            }
+#endif
+		}
+        
+		public void __Gen_Delegate_Imp2(UnityEngine.SceneManagement.Scene p0, UnityEngine.SceneManagement.LoadSceneMode p1)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -61,7 +83,7 @@ namespace XLua
 #endif
 		}
         
-		public void __Gen_Delegate_Imp2(App.Data.DataClass.Game.Object.TowerData p0, UnityEngine.Vector3 p1)
+		public void __Gen_Delegate_Imp3(App.Data.DataClass.Game.Object.TowerData p0, UnityEngine.Vector3 p1)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -84,7 +106,7 @@ namespace XLua
 #endif
 		}
         
-		public void __Gen_Delegate_Imp3(int p0)
+		public void __Gen_Delegate_Imp4(int p0)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -94,28 +116,6 @@ namespace XLua
                 int errFunc = LuaAPI.pcall_prepare(L, errorFuncRef, luaReference);
                 
                 LuaAPI.xlua_pushinteger(L, p0);
-                
-                PCall(L, 1, 0, errFunc);
-                
-                
-                
-                LuaAPI.lua_settop(L, errFunc - 1);
-                
-#if THREAD_SAFE || HOTFIX_ENABLE
-            }
-#endif
-		}
-        
-		public void __Gen_Delegate_Imp4(bool p0)
-		{
-#if THREAD_SAFE || HOTFIX_ENABLE
-            lock (luaEnv.luaEnvLock)
-            {
-#endif
-                RealStatePtr L = luaEnv.L;
-                int errFunc = LuaAPI.pcall_prepare(L, errorFuncRef, luaReference);
-                
-                LuaAPI.lua_pushboolean(L, p0);
                 
                 PCall(L, 1, 0, errFunc);
                 
@@ -474,24 +474,29 @@ namespace XLua
 			    return new DG.Tweening.TweenCallback(__Gen_Delegate_Imp0);
 			}
 		
-		    if (type == typeof(UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene, UnityEngine.SceneManagement.LoadSceneMode>))
+		    if (type == typeof(System.Action<bool>))
 			{
-			    return new UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene, UnityEngine.SceneManagement.LoadSceneMode>(__Gen_Delegate_Imp1);
-			}
-		
-		    if (type == typeof(UnityEngine.Events.UnityAction<App.Data.DataClass.Game.Object.TowerData, UnityEngine.Vector3>))
-			{
-			    return new UnityEngine.Events.UnityAction<App.Data.DataClass.Game.Object.TowerData, UnityEngine.Vector3>(__Gen_Delegate_Imp2);
-			}
-		
-		    if (type == typeof(UnityEngine.Events.UnityAction<int>))
-			{
-			    return new UnityEngine.Events.UnityAction<int>(__Gen_Delegate_Imp3);
+			    return new System.Action<bool>(__Gen_Delegate_Imp1);
 			}
 		
 		    if (type == typeof(UnityEngine.Events.UnityAction<bool>))
 			{
-			    return new UnityEngine.Events.UnityAction<bool>(__Gen_Delegate_Imp4);
+			    return new UnityEngine.Events.UnityAction<bool>(__Gen_Delegate_Imp1);
+			}
+		
+		    if (type == typeof(UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene, UnityEngine.SceneManagement.LoadSceneMode>))
+			{
+			    return new UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene, UnityEngine.SceneManagement.LoadSceneMode>(__Gen_Delegate_Imp2);
+			}
+		
+		    if (type == typeof(UnityEngine.Events.UnityAction<App.Data.DataClass.Game.Object.TowerData, UnityEngine.Vector3>))
+			{
+			    return new UnityEngine.Events.UnityAction<App.Data.DataClass.Game.Object.TowerData, UnityEngine.Vector3>(__Gen_Delegate_Imp3);
+			}
+		
+		    if (type == typeof(UnityEngine.Events.UnityAction<int>))
+			{
+			    return new UnityEngine.Events.UnityAction<int>(__Gen_Delegate_Imp4);
 			}
 		
 		    if (type == typeof(UnityEngine.Events.UnityAction<float>))

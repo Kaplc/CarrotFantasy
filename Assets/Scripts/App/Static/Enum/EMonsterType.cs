@@ -4,6 +4,6 @@ namespace App.Static.Enum
     {
         Monster0,
         Monster1,
-        Monster2,
+        Monster2
     }
 }

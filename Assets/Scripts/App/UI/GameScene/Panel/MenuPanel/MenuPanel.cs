@@ -1,5 +1,5 @@
 ﻿using App.Static;
-using Library;
+using GameFramework;
 using UnityEngine.UI;
 
 namespace App.UI.GameScene.Panel.MenuPanel
@@ -17,13 +17,13 @@ namespace App.UI.GameScene.Panel.MenuPanel
                 UIManager.Instance.Hide<MenuPanel>(false);
                 GameFacade.Instance.SendNotification(NotificationName.Game.RESUME_GAME);
             });
-        
+
             btnReStart.onClick.AddListener(() =>
             {
                 UIManager.Instance.Hide<MenuPanel>(false);
                 GameFacade.Instance.SendNotification(NotificationName.Game.RESTART_GAME);
             });
-        
+
             btnSelect.onClick.AddListener(() =>
             {
                 UIManager.Instance.Hide<MenuPanel>(false);
@@ -31,7 +31,5 @@ namespace App.UI.GameScene.Panel.MenuPanel
                 GameFacade.Instance.SendNotification(NotificationName.UI.SELECT_LEVEL);
             });
         }
-    
     }
 }
-

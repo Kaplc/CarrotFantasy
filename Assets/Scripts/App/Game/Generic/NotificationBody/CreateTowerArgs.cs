@@ -5,7 +5,7 @@ namespace App.Game.Generic.NotificationBody
 {
     public class CreateTowerArgs
     {
-        public TowerData towerData;
         public Vector3 cellWorldPos;
+        public TowerData towerData;
     }
 }

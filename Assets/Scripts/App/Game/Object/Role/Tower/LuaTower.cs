@@ -10,15 +10,15 @@ namespace App.Game.Object.Tower
     [LuaCallCSharp]
     public class LuaTower : MonoBehaviour, ITower
     {
-        public UnityAction onPushAction;
-        public UnityAction onGetAction;
         public UnityAction onAttackAction;
-        public UnityAction onUpGradeAction;
-        public UnityAction<IMonster> onSetCollectingFiresTargetAction;
+        public UnityAction onGetAction;
         public Func<TowerData> onGetDataAction;
-        public Func<int> onGetLevelAction;
         public Func<bool> onGetIsDeadAction;
+        public Func<int> onGetLevelAction;
+        public UnityAction onPushAction;
+        public UnityAction<IMonster> onSetCollectingFiresTargetAction;
         public UnityAction<bool> onSetIsDeadAction;
+        public UnityAction onUpGradeAction;
 
         public bool IsDead
         {
@@ -32,18 +32,39 @@ namespace App.Game.Object.Tower
         {
         }
 
-        public void OnGet() => onGetAction?.Invoke();
+        public void OnGet()
+        {
+            onGetAction?.Invoke();
+        }
 
-        public void OnPush() => onPushAction?.Invoke();
+        public void OnPush()
+        {
+            onPushAction?.Invoke();
+        }
 
-        public void Attack() => onAttackAction?.Invoke();
+        public void Attack()
+        {
+            onAttackAction?.Invoke();
+        }
 
-        public void UpGrade() => onUpGradeAction?.Invoke();
+        public void UpGrade()
+        {
+            onUpGradeAction?.Invoke();
+        }
 
-        public void SetCollectingFiresTarget(IMonster monster) => onSetCollectingFiresTargetAction?.Invoke(monster);
+        public void SetCollectingFiresTarget(IMonster monster)
+        {
+            onSetCollectingFiresTargetAction?.Invoke(monster);
+        }
 
-        public TowerData GetData() => onGetDataAction?.Invoke();
+        public TowerData GetData()
+        {
+            return onGetDataAction?.Invoke();
+        }
 
-        public int GetLevel() => (int)onGetLevelAction?.Invoke();
+        public int GetLevel()
+        {
+            return (int)onGetLevelAction?.Invoke();
+        }
     }
 }

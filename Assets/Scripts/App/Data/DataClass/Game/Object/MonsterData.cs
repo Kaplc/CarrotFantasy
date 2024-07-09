@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
-using XLua;
 
 namespace App.Data.DataClass.Game.Object
 {
     [CreateAssetMenu]
-    public class MonsterData: ScriptableObject
+    public class MonsterData : ScriptableObject
     {
         public int id;
         public float speed;

@@ -6,7 +6,7 @@ namespace App.Data
     {
         bool MusicOpen { get; } // bool musicOpen
         bool SoundOpen { get; } // bool soundOpen
-        
+
         void Save(MusicSettingData data);
     }
 }

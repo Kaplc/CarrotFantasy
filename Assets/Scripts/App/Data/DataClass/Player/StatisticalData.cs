@@ -6,8 +6,8 @@ namespace App.Data.DataClass.Player
     public class StatisticalData
     {
         public int adventureMapCount = 5;
-        public int hideMapCount = 0;
-        public int bossMapCount = 0;
+        public int hideMapCount;
+        public int bossMapCount;
         public int money;
         public int killMonsterCount;
         public int killBossCount;

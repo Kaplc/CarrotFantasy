@@ -1,4 +1,4 @@
-﻿using Library;
+﻿using GameFramework;
 using UnityEngine;
 
 namespace App.Game.Generic.BaseObject
@@ -7,12 +7,10 @@ namespace App.Game.Generic.BaseObject
     {
         public virtual void OnGet()
         {
-        
         }
 
         public virtual void OnPush()
         {
-        
         }
     }
 }

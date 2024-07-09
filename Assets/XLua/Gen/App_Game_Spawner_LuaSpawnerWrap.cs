@@ -40,37 +40,37 @@ namespace XLua.CSObjectWrap
 			
 			
 			Utils.RegisterFunc(L, Utils.GETTER_IDX, "Carrot", _g_get_Carrot);
-            Utils.RegisterFunc(L, Utils.GETTER_IDX, "onGetCarrotAction", _g_get_onGetCarrotAction);
-            Utils.RegisterFunc(L, Utils.GETTER_IDX, "onPushAllGameObjectAction", _g_get_onPushAllGameObjectAction);
-            Utils.RegisterFunc(L, Utils.GETTER_IDX, "onWinJudgeAction", _g_get_onWinJudgeAction);
-            Utils.RegisterFunc(L, Utils.GETTER_IDX, "onPauseWavesAction", _g_get_onPauseWavesAction);
-            Utils.RegisterFunc(L, Utils.GETTER_IDX, "onResumeWavesAction", _g_get_onResumeWavesAction);
-            Utils.RegisterFunc(L, Utils.GETTER_IDX, "onStartSpawnAction", _g_get_onStartSpawnAction);
-            Utils.RegisterFunc(L, Utils.GETTER_IDX, "onGetAllMonstersAction", _g_get_onGetAllMonstersAction);
-            Utils.RegisterFunc(L, Utils.GETTER_IDX, "onGetCollectingFiresTargetAction", _g_get_onGetCollectingFiresTargetAction);
-            Utils.RegisterFunc(L, Utils.GETTER_IDX, "onSetCollectingFiresAction", _g_get_onSetCollectingFiresAction);
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "onCancelCollectingFiresTargetAction", _g_get_onCancelCollectingFiresTargetAction);
-            Utils.RegisterFunc(L, Utils.GETTER_IDX, "onInitAction", _g_get_onInitAction);
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "onCreateTowerObjectAction", _g_get_onCreateTowerObjectAction);
-            Utils.RegisterFunc(L, Utils.GETTER_IDX, "onUpGradeTowerAction", _g_get_onUpGradeTowerAction);
-            Utils.RegisterFunc(L, Utils.GETTER_IDX, "onSellTowerAction", _g_get_onSellTowerAction);
+            Utils.RegisterFunc(L, Utils.GETTER_IDX, "onGetAllMonstersAction", _g_get_onGetAllMonstersAction);
+            Utils.RegisterFunc(L, Utils.GETTER_IDX, "onGetCarrotAction", _g_get_onGetCarrotAction);
+            Utils.RegisterFunc(L, Utils.GETTER_IDX, "onGetCollectingFiresTargetAction", _g_get_onGetCollectingFiresTargetAction);
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "onGetNowWaveCountAction", _g_get_onGetNowWaveCountAction);
+            Utils.RegisterFunc(L, Utils.GETTER_IDX, "onInitAction", _g_get_onInitAction);
+            Utils.RegisterFunc(L, Utils.GETTER_IDX, "onPauseWavesAction", _g_get_onPauseWavesAction);
+            Utils.RegisterFunc(L, Utils.GETTER_IDX, "onPushAllGameObjectAction", _g_get_onPushAllGameObjectAction);
+            Utils.RegisterFunc(L, Utils.GETTER_IDX, "onResumeWavesAction", _g_get_onResumeWavesAction);
+            Utils.RegisterFunc(L, Utils.GETTER_IDX, "onSellTowerAction", _g_get_onSellTowerAction);
+            Utils.RegisterFunc(L, Utils.GETTER_IDX, "onSetCollectingFiresAction", _g_get_onSetCollectingFiresAction);
+            Utils.RegisterFunc(L, Utils.GETTER_IDX, "onStartSpawnAction", _g_get_onStartSpawnAction);
+            Utils.RegisterFunc(L, Utils.GETTER_IDX, "onUpGradeTowerAction", _g_get_onUpGradeTowerAction);
+            Utils.RegisterFunc(L, Utils.GETTER_IDX, "onWinJudgeAction", _g_get_onWinJudgeAction);
             
-			Utils.RegisterFunc(L, Utils.SETTER_IDX, "onGetCarrotAction", _s_set_onGetCarrotAction);
-            Utils.RegisterFunc(L, Utils.SETTER_IDX, "onPushAllGameObjectAction", _s_set_onPushAllGameObjectAction);
-            Utils.RegisterFunc(L, Utils.SETTER_IDX, "onWinJudgeAction", _s_set_onWinJudgeAction);
-            Utils.RegisterFunc(L, Utils.SETTER_IDX, "onPauseWavesAction", _s_set_onPauseWavesAction);
-            Utils.RegisterFunc(L, Utils.SETTER_IDX, "onResumeWavesAction", _s_set_onResumeWavesAction);
-            Utils.RegisterFunc(L, Utils.SETTER_IDX, "onStartSpawnAction", _s_set_onStartSpawnAction);
-            Utils.RegisterFunc(L, Utils.SETTER_IDX, "onGetAllMonstersAction", _s_set_onGetAllMonstersAction);
-            Utils.RegisterFunc(L, Utils.SETTER_IDX, "onGetCollectingFiresTargetAction", _s_set_onGetCollectingFiresTargetAction);
-            Utils.RegisterFunc(L, Utils.SETTER_IDX, "onSetCollectingFiresAction", _s_set_onSetCollectingFiresAction);
-            Utils.RegisterFunc(L, Utils.SETTER_IDX, "onCancelCollectingFiresTargetAction", _s_set_onCancelCollectingFiresTargetAction);
-            Utils.RegisterFunc(L, Utils.SETTER_IDX, "onInitAction", _s_set_onInitAction);
+			Utils.RegisterFunc(L, Utils.SETTER_IDX, "onCancelCollectingFiresTargetAction", _s_set_onCancelCollectingFiresTargetAction);
             Utils.RegisterFunc(L, Utils.SETTER_IDX, "onCreateTowerObjectAction", _s_set_onCreateTowerObjectAction);
-            Utils.RegisterFunc(L, Utils.SETTER_IDX, "onUpGradeTowerAction", _s_set_onUpGradeTowerAction);
-            Utils.RegisterFunc(L, Utils.SETTER_IDX, "onSellTowerAction", _s_set_onSellTowerAction);
+            Utils.RegisterFunc(L, Utils.SETTER_IDX, "onGetAllMonstersAction", _s_set_onGetAllMonstersAction);
+            Utils.RegisterFunc(L, Utils.SETTER_IDX, "onGetCarrotAction", _s_set_onGetCarrotAction);
+            Utils.RegisterFunc(L, Utils.SETTER_IDX, "onGetCollectingFiresTargetAction", _s_set_onGetCollectingFiresTargetAction);
             Utils.RegisterFunc(L, Utils.SETTER_IDX, "onGetNowWaveCountAction", _s_set_onGetNowWaveCountAction);
+            Utils.RegisterFunc(L, Utils.SETTER_IDX, "onInitAction", _s_set_onInitAction);
+            Utils.RegisterFunc(L, Utils.SETTER_IDX, "onPauseWavesAction", _s_set_onPauseWavesAction);
+            Utils.RegisterFunc(L, Utils.SETTER_IDX, "onPushAllGameObjectAction", _s_set_onPushAllGameObjectAction);
+            Utils.RegisterFunc(L, Utils.SETTER_IDX, "onResumeWavesAction", _s_set_onResumeWavesAction);
+            Utils.RegisterFunc(L, Utils.SETTER_IDX, "onSellTowerAction", _s_set_onSellTowerAction);
+            Utils.RegisterFunc(L, Utils.SETTER_IDX, "onSetCollectingFiresAction", _s_set_onSetCollectingFiresAction);
+            Utils.RegisterFunc(L, Utils.SETTER_IDX, "onStartSpawnAction", _s_set_onStartSpawnAction);
+            Utils.RegisterFunc(L, Utils.SETTER_IDX, "onUpGradeTowerAction", _s_set_onUpGradeTowerAction);
+            Utils.RegisterFunc(L, Utils.SETTER_IDX, "onWinJudgeAction", _s_set_onWinJudgeAction);
             
 			
 			Utils.EndObjectRegister(type, L, translator, null, null,
@@ -522,132 +522,6 @@ namespace XLua.CSObjectWrap
         }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _g_get_onGetCarrotAction(RealStatePtr L)
-        {
-		    try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			
-                App.Game.Spawner.LuaSpawner gen_to_be_invoked = (App.Game.Spawner.LuaSpawner)translator.FastGetCSObj(L, 1);
-                translator.Push(L, gen_to_be_invoked.onGetCarrotAction);
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 1;
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _g_get_onPushAllGameObjectAction(RealStatePtr L)
-        {
-		    try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			
-                App.Game.Spawner.LuaSpawner gen_to_be_invoked = (App.Game.Spawner.LuaSpawner)translator.FastGetCSObj(L, 1);
-                translator.Push(L, gen_to_be_invoked.onPushAllGameObjectAction);
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 1;
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _g_get_onWinJudgeAction(RealStatePtr L)
-        {
-		    try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			
-                App.Game.Spawner.LuaSpawner gen_to_be_invoked = (App.Game.Spawner.LuaSpawner)translator.FastGetCSObj(L, 1);
-                translator.Push(L, gen_to_be_invoked.onWinJudgeAction);
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 1;
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _g_get_onPauseWavesAction(RealStatePtr L)
-        {
-		    try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			
-                App.Game.Spawner.LuaSpawner gen_to_be_invoked = (App.Game.Spawner.LuaSpawner)translator.FastGetCSObj(L, 1);
-                translator.Push(L, gen_to_be_invoked.onPauseWavesAction);
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 1;
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _g_get_onResumeWavesAction(RealStatePtr L)
-        {
-		    try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			
-                App.Game.Spawner.LuaSpawner gen_to_be_invoked = (App.Game.Spawner.LuaSpawner)translator.FastGetCSObj(L, 1);
-                translator.Push(L, gen_to_be_invoked.onResumeWavesAction);
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 1;
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _g_get_onStartSpawnAction(RealStatePtr L)
-        {
-		    try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			
-                App.Game.Spawner.LuaSpawner gen_to_be_invoked = (App.Game.Spawner.LuaSpawner)translator.FastGetCSObj(L, 1);
-                translator.Push(L, gen_to_be_invoked.onStartSpawnAction);
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 1;
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _g_get_onGetAllMonstersAction(RealStatePtr L)
-        {
-		    try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			
-                App.Game.Spawner.LuaSpawner gen_to_be_invoked = (App.Game.Spawner.LuaSpawner)translator.FastGetCSObj(L, 1);
-                translator.Push(L, gen_to_be_invoked.onGetAllMonstersAction);
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 1;
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _g_get_onGetCollectingFiresTargetAction(RealStatePtr L)
-        {
-		    try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			
-                App.Game.Spawner.LuaSpawner gen_to_be_invoked = (App.Game.Spawner.LuaSpawner)translator.FastGetCSObj(L, 1);
-                translator.Push(L, gen_to_be_invoked.onGetCollectingFiresTargetAction);
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 1;
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _g_get_onSetCollectingFiresAction(RealStatePtr L)
-        {
-		    try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			
-                App.Game.Spawner.LuaSpawner gen_to_be_invoked = (App.Game.Spawner.LuaSpawner)translator.FastGetCSObj(L, 1);
-                translator.Push(L, gen_to_be_invoked.onSetCollectingFiresAction);
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 1;
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static int _g_get_onCancelCollectingFiresTargetAction(RealStatePtr L)
         {
 		    try {
@@ -655,20 +529,6 @@ namespace XLua.CSObjectWrap
 			
                 App.Game.Spawner.LuaSpawner gen_to_be_invoked = (App.Game.Spawner.LuaSpawner)translator.FastGetCSObj(L, 1);
                 translator.Push(L, gen_to_be_invoked.onCancelCollectingFiresTargetAction);
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 1;
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _g_get_onInitAction(RealStatePtr L)
-        {
-		    try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			
-                App.Game.Spawner.LuaSpawner gen_to_be_invoked = (App.Game.Spawner.LuaSpawner)translator.FastGetCSObj(L, 1);
-                translator.Push(L, gen_to_be_invoked.onInitAction);
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
             }
@@ -690,13 +550,111 @@ namespace XLua.CSObjectWrap
         }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _g_get_onUpGradeTowerAction(RealStatePtr L)
+        static int _g_get_onGetAllMonstersAction(RealStatePtr L)
         {
 		    try {
                 ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
 			
                 App.Game.Spawner.LuaSpawner gen_to_be_invoked = (App.Game.Spawner.LuaSpawner)translator.FastGetCSObj(L, 1);
-                translator.Push(L, gen_to_be_invoked.onUpGradeTowerAction);
+                translator.Push(L, gen_to_be_invoked.onGetAllMonstersAction);
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 1;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _g_get_onGetCarrotAction(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			
+                App.Game.Spawner.LuaSpawner gen_to_be_invoked = (App.Game.Spawner.LuaSpawner)translator.FastGetCSObj(L, 1);
+                translator.Push(L, gen_to_be_invoked.onGetCarrotAction);
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 1;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _g_get_onGetCollectingFiresTargetAction(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			
+                App.Game.Spawner.LuaSpawner gen_to_be_invoked = (App.Game.Spawner.LuaSpawner)translator.FastGetCSObj(L, 1);
+                translator.Push(L, gen_to_be_invoked.onGetCollectingFiresTargetAction);
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 1;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _g_get_onGetNowWaveCountAction(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			
+                App.Game.Spawner.LuaSpawner gen_to_be_invoked = (App.Game.Spawner.LuaSpawner)translator.FastGetCSObj(L, 1);
+                translator.Push(L, gen_to_be_invoked.onGetNowWaveCountAction);
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 1;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _g_get_onInitAction(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			
+                App.Game.Spawner.LuaSpawner gen_to_be_invoked = (App.Game.Spawner.LuaSpawner)translator.FastGetCSObj(L, 1);
+                translator.Push(L, gen_to_be_invoked.onInitAction);
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 1;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _g_get_onPauseWavesAction(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			
+                App.Game.Spawner.LuaSpawner gen_to_be_invoked = (App.Game.Spawner.LuaSpawner)translator.FastGetCSObj(L, 1);
+                translator.Push(L, gen_to_be_invoked.onPauseWavesAction);
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 1;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _g_get_onPushAllGameObjectAction(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			
+                App.Game.Spawner.LuaSpawner gen_to_be_invoked = (App.Game.Spawner.LuaSpawner)translator.FastGetCSObj(L, 1);
+                translator.Push(L, gen_to_be_invoked.onPushAllGameObjectAction);
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 1;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _g_get_onResumeWavesAction(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			
+                App.Game.Spawner.LuaSpawner gen_to_be_invoked = (App.Game.Spawner.LuaSpawner)translator.FastGetCSObj(L, 1);
+                translator.Push(L, gen_to_be_invoked.onResumeWavesAction);
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
             }
@@ -718,13 +676,55 @@ namespace XLua.CSObjectWrap
         }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _g_get_onGetNowWaveCountAction(RealStatePtr L)
+        static int _g_get_onSetCollectingFiresAction(RealStatePtr L)
         {
 		    try {
                 ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
 			
                 App.Game.Spawner.LuaSpawner gen_to_be_invoked = (App.Game.Spawner.LuaSpawner)translator.FastGetCSObj(L, 1);
-                translator.Push(L, gen_to_be_invoked.onGetNowWaveCountAction);
+                translator.Push(L, gen_to_be_invoked.onSetCollectingFiresAction);
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 1;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _g_get_onStartSpawnAction(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			
+                App.Game.Spawner.LuaSpawner gen_to_be_invoked = (App.Game.Spawner.LuaSpawner)translator.FastGetCSObj(L, 1);
+                translator.Push(L, gen_to_be_invoked.onStartSpawnAction);
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 1;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _g_get_onUpGradeTowerAction(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			
+                App.Game.Spawner.LuaSpawner gen_to_be_invoked = (App.Game.Spawner.LuaSpawner)translator.FastGetCSObj(L, 1);
+                translator.Push(L, gen_to_be_invoked.onUpGradeTowerAction);
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 1;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _g_get_onWinJudgeAction(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			
+                App.Game.Spawner.LuaSpawner gen_to_be_invoked = (App.Game.Spawner.LuaSpawner)translator.FastGetCSObj(L, 1);
+                translator.Push(L, gen_to_be_invoked.onWinJudgeAction);
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
             }
@@ -734,141 +734,6 @@ namespace XLua.CSObjectWrap
         
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _s_set_onGetCarrotAction(RealStatePtr L)
-        {
-		    try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			
-                App.Game.Spawner.LuaSpawner gen_to_be_invoked = (App.Game.Spawner.LuaSpawner)translator.FastGetCSObj(L, 1);
-                gen_to_be_invoked.onGetCarrotAction = translator.GetDelegate<System.Func<App.Game.Object.Carrot.Carrot>>(L, 2);
-            
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 0;
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _s_set_onPushAllGameObjectAction(RealStatePtr L)
-        {
-		    try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			
-                App.Game.Spawner.LuaSpawner gen_to_be_invoked = (App.Game.Spawner.LuaSpawner)translator.FastGetCSObj(L, 1);
-                gen_to_be_invoked.onPushAllGameObjectAction = translator.GetDelegate<UnityEngine.Events.UnityAction>(L, 2);
-            
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 0;
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _s_set_onWinJudgeAction(RealStatePtr L)
-        {
-		    try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			
-                App.Game.Spawner.LuaSpawner gen_to_be_invoked = (App.Game.Spawner.LuaSpawner)translator.FastGetCSObj(L, 1);
-                gen_to_be_invoked.onWinJudgeAction = translator.GetDelegate<System.Func<bool>>(L, 2);
-            
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 0;
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _s_set_onPauseWavesAction(RealStatePtr L)
-        {
-		    try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			
-                App.Game.Spawner.LuaSpawner gen_to_be_invoked = (App.Game.Spawner.LuaSpawner)translator.FastGetCSObj(L, 1);
-                gen_to_be_invoked.onPauseWavesAction = translator.GetDelegate<UnityEngine.Events.UnityAction>(L, 2);
-            
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 0;
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _s_set_onResumeWavesAction(RealStatePtr L)
-        {
-		    try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			
-                App.Game.Spawner.LuaSpawner gen_to_be_invoked = (App.Game.Spawner.LuaSpawner)translator.FastGetCSObj(L, 1);
-                gen_to_be_invoked.onResumeWavesAction = translator.GetDelegate<UnityEngine.Events.UnityAction>(L, 2);
-            
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 0;
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _s_set_onStartSpawnAction(RealStatePtr L)
-        {
-		    try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			
-                App.Game.Spawner.LuaSpawner gen_to_be_invoked = (App.Game.Spawner.LuaSpawner)translator.FastGetCSObj(L, 1);
-                gen_to_be_invoked.onStartSpawnAction = translator.GetDelegate<UnityEngine.Events.UnityAction>(L, 2);
-            
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 0;
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _s_set_onGetAllMonstersAction(RealStatePtr L)
-        {
-		    try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			
-                App.Game.Spawner.LuaSpawner gen_to_be_invoked = (App.Game.Spawner.LuaSpawner)translator.FastGetCSObj(L, 1);
-                gen_to_be_invoked.onGetAllMonstersAction = translator.GetDelegate<System.Func<System.Collections.Generic.List<App.Game.Object.Monster.IMonster>>>(L, 2);
-            
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 0;
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _s_set_onGetCollectingFiresTargetAction(RealStatePtr L)
-        {
-		    try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			
-                App.Game.Spawner.LuaSpawner gen_to_be_invoked = (App.Game.Spawner.LuaSpawner)translator.FastGetCSObj(L, 1);
-                gen_to_be_invoked.onGetCollectingFiresTargetAction = translator.GetDelegate<System.Func<App.Game.Object.Monster.IMonster>>(L, 2);
-            
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 0;
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _s_set_onSetCollectingFiresAction(RealStatePtr L)
-        {
-		    try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			
-                App.Game.Spawner.LuaSpawner gen_to_be_invoked = (App.Game.Spawner.LuaSpawner)translator.FastGetCSObj(L, 1);
-                gen_to_be_invoked.onSetCollectingFiresAction = translator.GetDelegate<UnityEngine.Events.UnityAction<App.Game.Object.Monster.IMonster>>(L, 2);
-            
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 0;
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static int _s_set_onCancelCollectingFiresTargetAction(RealStatePtr L)
         {
 		    try {
@@ -876,21 +741,6 @@ namespace XLua.CSObjectWrap
 			
                 App.Game.Spawner.LuaSpawner gen_to_be_invoked = (App.Game.Spawner.LuaSpawner)translator.FastGetCSObj(L, 1);
                 gen_to_be_invoked.onCancelCollectingFiresTargetAction = translator.GetDelegate<UnityEngine.Events.UnityAction>(L, 2);
-            
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 0;
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _s_set_onInitAction(RealStatePtr L)
-        {
-		    try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			
-                App.Game.Spawner.LuaSpawner gen_to_be_invoked = (App.Game.Spawner.LuaSpawner)translator.FastGetCSObj(L, 1);
-                gen_to_be_invoked.onInitAction = translator.GetDelegate<UnityEngine.Events.UnityAction<App.Data.DataClass.Map.IMapData>>(L, 2);
             
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
@@ -914,13 +764,118 @@ namespace XLua.CSObjectWrap
         }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _s_set_onUpGradeTowerAction(RealStatePtr L)
+        static int _s_set_onGetAllMonstersAction(RealStatePtr L)
         {
 		    try {
                 ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
 			
                 App.Game.Spawner.LuaSpawner gen_to_be_invoked = (App.Game.Spawner.LuaSpawner)translator.FastGetCSObj(L, 1);
-                gen_to_be_invoked.onUpGradeTowerAction = translator.GetDelegate<UnityEngine.Events.UnityAction<UnityEngine.Vector3>>(L, 2);
+                gen_to_be_invoked.onGetAllMonstersAction = translator.GetDelegate<System.Func<System.Collections.Generic.List<App.Game.Object.Monster.IMonster>>>(L, 2);
+            
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 0;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _s_set_onGetCarrotAction(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			
+                App.Game.Spawner.LuaSpawner gen_to_be_invoked = (App.Game.Spawner.LuaSpawner)translator.FastGetCSObj(L, 1);
+                gen_to_be_invoked.onGetCarrotAction = translator.GetDelegate<System.Func<App.Game.Object.Carrot.Carrot>>(L, 2);
+            
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 0;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _s_set_onGetCollectingFiresTargetAction(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			
+                App.Game.Spawner.LuaSpawner gen_to_be_invoked = (App.Game.Spawner.LuaSpawner)translator.FastGetCSObj(L, 1);
+                gen_to_be_invoked.onGetCollectingFiresTargetAction = translator.GetDelegate<System.Func<App.Game.Object.Monster.IMonster>>(L, 2);
+            
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 0;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _s_set_onGetNowWaveCountAction(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			
+                App.Game.Spawner.LuaSpawner gen_to_be_invoked = (App.Game.Spawner.LuaSpawner)translator.FastGetCSObj(L, 1);
+                gen_to_be_invoked.onGetNowWaveCountAction = translator.GetDelegate<System.Func<int>>(L, 2);
+            
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 0;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _s_set_onInitAction(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			
+                App.Game.Spawner.LuaSpawner gen_to_be_invoked = (App.Game.Spawner.LuaSpawner)translator.FastGetCSObj(L, 1);
+                gen_to_be_invoked.onInitAction = translator.GetDelegate<UnityEngine.Events.UnityAction<App.Data.DataClass.Map.IMapData>>(L, 2);
+            
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 0;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _s_set_onPauseWavesAction(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			
+                App.Game.Spawner.LuaSpawner gen_to_be_invoked = (App.Game.Spawner.LuaSpawner)translator.FastGetCSObj(L, 1);
+                gen_to_be_invoked.onPauseWavesAction = translator.GetDelegate<UnityEngine.Events.UnityAction>(L, 2);
+            
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 0;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _s_set_onPushAllGameObjectAction(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			
+                App.Game.Spawner.LuaSpawner gen_to_be_invoked = (App.Game.Spawner.LuaSpawner)translator.FastGetCSObj(L, 1);
+                gen_to_be_invoked.onPushAllGameObjectAction = translator.GetDelegate<UnityEngine.Events.UnityAction>(L, 2);
+            
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 0;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _s_set_onResumeWavesAction(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			
+                App.Game.Spawner.LuaSpawner gen_to_be_invoked = (App.Game.Spawner.LuaSpawner)translator.FastGetCSObj(L, 1);
+                gen_to_be_invoked.onResumeWavesAction = translator.GetDelegate<UnityEngine.Events.UnityAction>(L, 2);
             
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
@@ -944,13 +899,58 @@ namespace XLua.CSObjectWrap
         }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _s_set_onGetNowWaveCountAction(RealStatePtr L)
+        static int _s_set_onSetCollectingFiresAction(RealStatePtr L)
         {
 		    try {
                 ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
 			
                 App.Game.Spawner.LuaSpawner gen_to_be_invoked = (App.Game.Spawner.LuaSpawner)translator.FastGetCSObj(L, 1);
-                gen_to_be_invoked.onGetNowWaveCountAction = translator.GetDelegate<System.Func<int>>(L, 2);
+                gen_to_be_invoked.onSetCollectingFiresAction = translator.GetDelegate<UnityEngine.Events.UnityAction<App.Game.Object.Monster.IMonster>>(L, 2);
+            
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 0;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _s_set_onStartSpawnAction(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			
+                App.Game.Spawner.LuaSpawner gen_to_be_invoked = (App.Game.Spawner.LuaSpawner)translator.FastGetCSObj(L, 1);
+                gen_to_be_invoked.onStartSpawnAction = translator.GetDelegate<UnityEngine.Events.UnityAction>(L, 2);
+            
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 0;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _s_set_onUpGradeTowerAction(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			
+                App.Game.Spawner.LuaSpawner gen_to_be_invoked = (App.Game.Spawner.LuaSpawner)translator.FastGetCSObj(L, 1);
+                gen_to_be_invoked.onUpGradeTowerAction = translator.GetDelegate<UnityEngine.Events.UnityAction<UnityEngine.Vector3>>(L, 2);
+            
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 0;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _s_set_onWinJudgeAction(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			
+                App.Game.Spawner.LuaSpawner gen_to_be_invoked = (App.Game.Spawner.LuaSpawner)translator.FastGetCSObj(L, 1);
+                gen_to_be_invoked.onWinJudgeAction = translator.GetDelegate<System.Func<bool>>(L, 2);
             
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);

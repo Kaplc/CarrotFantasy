@@ -16,16 +16,16 @@ namespace App.UI.GameScene.Panel.GamePanel
         public List<Sprite> countDownImage;
         private int index;
 
+        // Update is called once per frame
+        private void Update()
+        {
+            imgFire.Rotate(Vector3.forward, Time.deltaTime * speed);
+        }
+
         public void StartCountDown()
         {
             index = countDownImage.Count - 1;
             StartCoroutine(CountDownCoroutine());
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-            imgFire.Rotate(Vector3.forward, Time.deltaTime * speed);
         }
 
         private IEnumerator CountDownCoroutine()
@@ -37,6 +37,7 @@ namespace App.UI.GameScene.Panel.GamePanel
                 yield return new WaitForSeconds(1f);
                 index--;
             }
+
             gameObject.SetActive(false);
             // 开始游戏
             GameFacade.Instance.SendNotification(NotificationName.Game.START_GAME);

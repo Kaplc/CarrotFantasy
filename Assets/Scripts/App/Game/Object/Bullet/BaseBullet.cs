@@ -1,6 +1,6 @@
 ﻿using App.Data.DataClass.Game.Object;
 using App.Game.Object.Monster;
-using Library;
+using GameFramework;
 using UnityEngine;
 
 namespace App.Game.Generic.BaseObject
@@ -9,10 +9,10 @@ namespace App.Game.Generic.BaseObject
     {
         public int atk;
         public bool active;
-    
+
         public BulletData data;
-        public IMonster target;
         private Animator animator;
+        public IMonster target;
 
         private void Awake()
         {
@@ -24,7 +24,6 @@ namespace App.Game.Generic.BaseObject
             Flying();
 
             if (target != null)
-            {
                 // 根据距离判断是否击中
                 if (Vector3.Distance(transform.position, target.Transform.position) < 0.3f && active)
                 {
@@ -36,51 +35,11 @@ namespace App.Game.Generic.BaseObject
                     // 怪物扣血
                     target.Wound(atk + data.baseAtk);
                 }
-            }
 
             // 目标死亡立刻回收
-            if (target == null || target.IsDead)
-            {
-                GameManager.Instance.poolManager.PushObject(gameObject);
-            }
-        }
-    
-        /// <summary>
-        /// 子弹击中回调
-        /// </summary>
-        protected virtual void Hit()
-        {
-        
+            if (target == null || target.IsDead) GameManager.Instance.poolManager.PushObject(gameObject);
         }
 
-        protected virtual void Flying()
-        {
-            if (target != null && !target.IsDead)
-            {
-                transform.LookAt(target.Transform);
-                if (!GameManager.Instance.sceneManager.IsPause())
-                {
-                    transform.Translate(transform.forward * (Time.deltaTime * data.speed), Space.World);
-                }
-
-                // 目标死亡立刻回收
-                if (target.IsDead || !target.Transform.gameObject.activeSelf)
-                {
-                    GameManager.Instance.poolManager.PushObject(gameObject);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// 爆炸动画完毕回调
-        /// </summary>
-        protected virtual void Explode()
-        {
-            // 回收子弹
-            DontDestroyOnLoad(gameObject);
-            GameManager.Instance.poolManager.PushObject(gameObject);
-        }
-    
         public virtual void OnPush()
         {
             target = null;
@@ -92,6 +51,35 @@ namespace App.Game.Generic.BaseObject
             animator.Play("Flying");
             // 重置
             active = true;
+        }
+
+        /// <summary>
+        ///     子弹击中回调
+        /// </summary>
+        protected virtual void Hit()
+        {
+        }
+
+        protected virtual void Flying()
+        {
+            if (target != null && !target.IsDead)
+            {
+                transform.LookAt(target.Transform);
+                if (!GameManager.Instance.sceneManager.IsPause()) transform.Translate(transform.forward * (Time.deltaTime * data.speed), Space.World);
+
+                // 目标死亡立刻回收
+                if (target.IsDead || !target.Transform.gameObject.activeSelf) GameManager.Instance.poolManager.PushObject(gameObject);
+            }
+        }
+
+        /// <summary>
+        ///     爆炸动画完毕回调
+        /// </summary>
+        protected virtual void Explode()
+        {
+            // 回收子弹
+            DontDestroyOnLoad(gameObject);
+            GameManager.Instance.poolManager.PushObject(gameObject);
         }
     }
 }

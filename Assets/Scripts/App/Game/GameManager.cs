@@ -1,4 +1,5 @@
-﻿using App.Data;
+﻿using System;
+using App.Data;
 using App.Data.DataClass.Player;
 using App.Game.Buff;
 using App.Game.Factory;
@@ -6,10 +7,8 @@ using App.Game.SceneManager;
 using App.Game.SDK;
 using App.Static;
 using DG.Tweening;
-using Library;
+using GameFramework;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.Events;
 using XLua;
 
 namespace App.Game
@@ -17,26 +16,9 @@ namespace App.Game
     [LuaCallCSharp]
     public class GameManager : BaseMonoSingleton<GameManager>
     {
-        #region 底层框架
-
-        public PoolManager poolManager;
-        public BinaryManager binaryManager;
-        public FactoryManager factoryManager;
-        public MusicManger musicManger;
-        public BuffManager buffManager;
-        public XLuaManager xLuaManager;
-        public UIManager uiManager;
-        public EventCenter eventCenter;
-        public SDKManager sdkManager;
-
-        public ZFrameWorkSceneManager loadSceneManager;
-
-        public AddressablesManager addressablesManager;
-
-        #endregion
+        public IDataManager dataManager;
 
         public ISceneManger sceneManager;
-        public IDataManager dataManager;
 
         protected override void Awake()
         {
@@ -53,26 +35,19 @@ namespace App.Game
             xLuaManager = XLuaManager.Instance;
             uiManager = UIManager.Instance;
             eventCenter = EventCenter.Instance;
-            loadSceneManager = ZFrameWorkSceneManager.Instance;
-            addressablesManager = new AddressablesManager();
-
-            // 初始化Sdk
-            GameObject sdkManagerObj = new GameObject(name: "SDKManager");
-            sdkManager = sdkManagerObj.AddComponent<SDKManager>();
-            DontDestroyOnLoad(sdkManagerObj);
-            // 自定义lua解析路径 
-            string path = Application.dataPath + "/Scripts/App/Lua/";
-            xLuaManager.AddLuaFilePath(path);
-
+            loadSceneManager = GameFramework.SceneManager.Instance;
+            addressablesManager = AddressablesManager.Instance;
+            sdkManager = SDKManager.Instance;
+            dataManager = new DataManager();
             DOTween.Init();
+
             #endregion
 
             DontDestroyOnLoad(gameObject);
+            InitLua();
 
-            // 初始化数据
-            dataManager = new DataManager();
             // 初始化完成跳转开始场景
-            LoadScene("2.BeginScene", () =>
+            LoadScene("2.BeginScene", success =>
             {
                 GameFacade.Instance.SendNotification(NotificationName.UI.HIDE_INIT_PANEL);
                 GameFacade.Instance.SendNotification(NotificationName.UI.SHOW_BEGIN_PANEL);
@@ -81,33 +56,71 @@ namespace App.Game
             });
         }
 
+        #region lua相关
+
+        private void InitLua()
+        {
+            // 自定义lua解析路径 
+            // string path = Application.dataPath + "/Scripts/App/Lua/";
+            // xLuaManager.AddLuaFilePath(path);
+
+            // addressables提前加载lua文件
+            addressablesManager.PreloadAssetsAsync<TextAsset>(isDone =>
+            {
+                if (isDone) Debug.Log("Lua文件加载完成");
+            }, "Lua");
+        }
+
+        #endregion
+
+        #region 底层框架
+
+        public PoolManager poolManager;
+        public BinaryManager binaryManager;
+        public FactoryManager factoryManager;
+        public MusicManger musicManger;
+        public BuffManager buffManager;
+        public XLuaManager xLuaManager;
+        public UIManager uiManager;
+        public EventCenter eventCenter;
+        public SDKManager sdkManager;
+
+        public GameFramework.SceneManager loadSceneManager;
+
+        public AddressablesManager addressablesManager;
+
+        #endregion
+
         #region 游戏相关
 
         /// <summary>
-        /// 初始化游戏场景管理器
+        ///     初始化游戏场景管理器
         /// </summary>
         public void SetSceneManager(ISceneManger manger)
         {
-            if (sceneManager != null)
-            {
-                sceneManager.ExitScene();
-            }
+            if (sceneManager != null) sceneManager.ExitScene();
             sceneManager = manger;
         }
 
         public void LoadGameScene(string sceneName, int levelID)
         {
             // 加载场景
-            ZFrameWorkSceneManager.Instance.LoadSceneAsync(sceneName, () =>
+            loadSceneManager.LoadSceneAsync(sceneName, success =>
             {
+                if (!success)
+                {
+                    Debug.LogError("场景加载失败");
+                    return;
+                }
+
                 // 初始化场景
                 sceneManager.InitGame(levelID);
             });
         }
 
-        public void LoadScene(string sceneName, UnityAction callBack)
+        public void LoadScene(string sceneName, Action<bool> callBack)
         {
-            ZFrameWorkSceneManager.Instance.LoadSceneAsync(sceneName, callBack);
+            loadSceneManager.LoadSceneAsync(sceneName, callBack);
         }
 
         public void SaveStatisticalData(StatisticalData data)
@@ -133,13 +146,9 @@ namespace App.Game
         public void PlaySound(string path, float volume, bool loop)
         {
             if (dataManager.MusicDataManager.SoundOpen)
-            {
                 musicManger.PlaySound(path, 1, loop);
-            }
             else
-            {
                 musicManger.PlaySound(path, 0, loop);
-            }
         }
 
         #endregion

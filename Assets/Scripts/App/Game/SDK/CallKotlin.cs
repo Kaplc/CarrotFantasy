@@ -6,9 +6,9 @@ namespace App.Game.SDK
     {
         private void Start()
         {
-            using (AndroidJavaClass javaClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
+            using (var javaClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
             {
-                using (AndroidJavaObject javaObject = javaClass.GetStatic<AndroidJavaObject>("currentActivity"))
+                using (var javaObject = javaClass.GetStatic<AndroidJavaObject>("currentActivity"))
                 {
                     // 静态变量
                     // int ktStaticInt = javaObject.GetStatic<int>("ktStaticInt");
@@ -46,13 +46,12 @@ namespace App.Game.SDK
                     // Debug.Log(javaObject.Get<int>("a"));
                     // Debug.Log(javaObject.Call<string>("Fun"));
                     // Debug.Log(javaObject.GetStatic<int>("staticInt"));
-                    AndroidJavaObject companion = javaObject.GetStatic<AndroidJavaObject>("Companion");
+                    var companion = javaObject.GetStatic<AndroidJavaObject>("Companion");
                     companion.Call<string>("StaticFun");
                 }
             }
         }
-        
-        
+
 
         public void KotlinCallUnity(string args)
         {

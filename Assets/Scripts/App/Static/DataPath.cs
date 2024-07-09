@@ -1,7 +1,7 @@
 ﻿namespace App.Static
 {
     /// <summary>
-    /// 路径信息静态类
+    ///     路径信息静态类
     /// </summary>
     public static class DataPath
     {

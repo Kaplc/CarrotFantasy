@@ -23,12 +23,12 @@ namespace XLua.CSObjectWrap
 			System.Type type = typeof(App.UI.BaseControl.BasePageFlipping);
 			Utils.BeginObjectRegister(type, L, translator, 0, 6, 5, 5);
 			
+			Utils.RegisterFunc(L, Utils.METHOD_IDX, "OnBeginDrag", _m_OnBeginDrag);
+			Utils.RegisterFunc(L, Utils.METHOD_IDX, "OnDrag", _m_OnDrag);
+			Utils.RegisterFunc(L, Utils.METHOD_IDX, "OnEndDrag", _m_OnEndDrag);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "ToPage", _m_ToPage);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "NextPage", _m_NextPage);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "LastPage", _m_LastPage);
-			Utils.RegisterFunc(L, Utils.METHOD_IDX, "OnBeginDrag", _m_OnBeginDrag);
-			Utils.RegisterFunc(L, Utils.METHOD_IDX, "OnEndDrag", _m_OnEndDrag);
-			Utils.RegisterFunc(L, Utils.METHOD_IDX, "OnDrag", _m_OnDrag);
 			
 			
 			Utils.RegisterFunc(L, Utils.GETTER_IDX, "slidingThreshold", _g_get_slidingThreshold);
@@ -86,6 +86,90 @@ namespace XLua.CSObjectWrap
         
         
         
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _m_OnBeginDrag(RealStatePtr L)
+        {
+		    try {
+            
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+            
+            
+                App.UI.BaseControl.BasePageFlipping gen_to_be_invoked = (App.UI.BaseControl.BasePageFlipping)translator.FastGetCSObj(L, 1);
+            
+            
+                
+                {
+                    UnityEngine.EventSystems.PointerEventData _eventData = (UnityEngine.EventSystems.PointerEventData)translator.GetObject(L, 2, typeof(UnityEngine.EventSystems.PointerEventData));
+                    
+                    gen_to_be_invoked.OnBeginDrag( _eventData );
+                    
+                    
+                    
+                    return 0;
+                }
+                
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _m_OnDrag(RealStatePtr L)
+        {
+		    try {
+            
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+            
+            
+                App.UI.BaseControl.BasePageFlipping gen_to_be_invoked = (App.UI.BaseControl.BasePageFlipping)translator.FastGetCSObj(L, 1);
+            
+            
+                
+                {
+                    UnityEngine.EventSystems.PointerEventData _eventData = (UnityEngine.EventSystems.PointerEventData)translator.GetObject(L, 2, typeof(UnityEngine.EventSystems.PointerEventData));
+                    
+                    gen_to_be_invoked.OnDrag( _eventData );
+                    
+                    
+                    
+                    return 0;
+                }
+                
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _m_OnEndDrag(RealStatePtr L)
+        {
+		    try {
+            
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+            
+            
+                App.UI.BaseControl.BasePageFlipping gen_to_be_invoked = (App.UI.BaseControl.BasePageFlipping)translator.FastGetCSObj(L, 1);
+            
+            
+                
+                {
+                    UnityEngine.EventSystems.PointerEventData _eventData = (UnityEngine.EventSystems.PointerEventData)translator.GetObject(L, 2, typeof(UnityEngine.EventSystems.PointerEventData));
+                    
+                    gen_to_be_invoked.OnEndDrag( _eventData );
+                    
+                    
+                    
+                    return 0;
+                }
+                
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            
+        }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static int _m_ToPage(RealStatePtr L)
@@ -157,90 +241,6 @@ namespace XLua.CSObjectWrap
                 {
                     
                     gen_to_be_invoked.LastPage(  );
-                    
-                    
-                    
-                    return 0;
-                }
-                
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _m_OnBeginDrag(RealStatePtr L)
-        {
-		    try {
-            
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-            
-            
-                App.UI.BaseControl.BasePageFlipping gen_to_be_invoked = (App.UI.BaseControl.BasePageFlipping)translator.FastGetCSObj(L, 1);
-            
-            
-                
-                {
-                    UnityEngine.EventSystems.PointerEventData _eventData = (UnityEngine.EventSystems.PointerEventData)translator.GetObject(L, 2, typeof(UnityEngine.EventSystems.PointerEventData));
-                    
-                    gen_to_be_invoked.OnBeginDrag( _eventData );
-                    
-                    
-                    
-                    return 0;
-                }
-                
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _m_OnEndDrag(RealStatePtr L)
-        {
-		    try {
-            
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-            
-            
-                App.UI.BaseControl.BasePageFlipping gen_to_be_invoked = (App.UI.BaseControl.BasePageFlipping)translator.FastGetCSObj(L, 1);
-            
-            
-                
-                {
-                    UnityEngine.EventSystems.PointerEventData _eventData = (UnityEngine.EventSystems.PointerEventData)translator.GetObject(L, 2, typeof(UnityEngine.EventSystems.PointerEventData));
-                    
-                    gen_to_be_invoked.OnEndDrag( _eventData );
-                    
-                    
-                    
-                    return 0;
-                }
-                
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _m_OnDrag(RealStatePtr L)
-        {
-		    try {
-            
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-            
-            
-                App.UI.BaseControl.BasePageFlipping gen_to_be_invoked = (App.UI.BaseControl.BasePageFlipping)translator.FastGetCSObj(L, 1);
-            
-            
-                
-                {
-                    UnityEngine.EventSystems.PointerEventData _eventData = (UnityEngine.EventSystems.PointerEventData)translator.GetObject(L, 2, typeof(UnityEngine.EventSystems.PointerEventData));
-                    
-                    gen_to_be_invoked.OnDrag( _eventData );
                     
                     
                     

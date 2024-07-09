@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using App.Data.DataClass.Game.Object;
 using App.Data.DataClass.Map;
 using App.Game.Generic.BaseObject;
@@ -6,8 +7,13 @@ using App.Game.Generic.Map;
 using App.Game.Object.Monster;
 using App.Game.SceneManager;
 using App.Game.Spawner;
+using DG.Tweening;
+using DG.Tweening.Core;
+using DG.Tweening.Plugins.Options;
+using GameFramework;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using XLua;
 
@@ -16,10 +22,10 @@ namespace App.Game.Generic.LuaCallCsharp
     [CSharpCallLua]
     public static class AddType
     {
-        [CSharpCallLua]
-        public static List<System.Type> CSharpCallLua = new List<System.Type>()
+        [CSharpCallLua] public static List<Type> CSharpCallLua = new List<Type>
         {
-            typeof(System.Action),
+            typeof(Action),
+            typeof(Action<bool>),
             typeof(UnityAction),
             typeof(UnityAction<Scene, LoadSceneMode>),
             typeof(UnityAction<TowerData, Vector3>),
@@ -33,50 +39,49 @@ namespace App.Game.Generic.LuaCallCsharp
             typeof(UnityAction<List<Cell>, float, MonsterData>),
             typeof(UnityAction<BaseBuffEffect>),
 
-            typeof(System.Func<bool>),
-            typeof(System.Func<float>),
-            typeof(System.Func<int>),
-            typeof(System.Func<ISceneDataManager>),
-            typeof(System.Func<ISpawner>),
-            typeof(System.Func<IMapData>),
-            typeof(UnityEngine.EventSystems.PointerEventData),
+            typeof(Func<bool>),
+            typeof(Func<float>),
+            typeof(Func<int>),
+            typeof(Func<ISceneDataManager>),
+            typeof(Func<ISpawner>),
+            typeof(Func<IMapData>),
+            typeof(PointerEventData),
             // Dotween
-            typeof(DG.Tweening.AutoPlay),
-            typeof(DG.Tweening.AxisConstraint),
-            typeof(DG.Tweening.Ease),
-            typeof(DG.Tweening.LogBehaviour),
-            typeof(DG.Tweening.LoopType),
-            typeof(DG.Tweening.PathMode),
-            typeof(DG.Tweening.PathType),
-            typeof(DG.Tweening.RotateMode),
-            typeof(DG.Tweening.ScrambleMode),
-            typeof(DG.Tweening.TweenType),
-            typeof(DG.Tweening.UpdateType),
-    
-            typeof(DG.Tweening.DOTween),
-            typeof(DG.Tweening.DOVirtual),
-            typeof(DG.Tweening.EaseFactory),
-            typeof(DG.Tweening.Tweener),
-            typeof(DG.Tweening.Tween),
-            typeof(DG.Tweening.Sequence),
-            typeof(DG.Tweening.TweenParams),
-            typeof(DG.Tweening.Core.ABSSequentiable),
-    
-            typeof(DG.Tweening.Core.TweenerCore<Vector3, Vector3, DG.Tweening.Plugins.Options.VectorOptions>),
-    
-            typeof(DG.Tweening.TweenCallback),
-            typeof(DG.Tweening.TweenExtensions),
-            typeof(DG.Tweening.TweenSettingsExtensions),
-            typeof(DG.Tweening.ShortcutExtensions),
+            typeof(AutoPlay),
+            typeof(AxisConstraint),
+            typeof(Ease),
+            typeof(LogBehaviour),
+            typeof(LoopType),
+            typeof(PathMode),
+            typeof(PathType),
+            typeof(RotateMode),
+            typeof(ScrambleMode),
+            typeof(TweenType),
+            typeof(UpdateType),
+
+            typeof(DOTween),
+            typeof(DOVirtual),
+            typeof(EaseFactory),
+            typeof(Tweener),
+            typeof(Tween),
+            typeof(Sequence),
+            typeof(TweenParams),
+            typeof(ABSSequentiable),
+
+            typeof(TweenerCore<Vector3, Vector3, VectorOptions>),
+
+            typeof(TweenCallback),
+            typeof(TweenExtensions),
+            typeof(TweenSettingsExtensions),
+            typeof(ShortcutExtensions),
 
             // Custom
-            typeof(PreloadAssetInfo),
+            typeof(PreloadAssetInfo)
         };
 
-        [LuaCallCSharp]
-        public static List<System.Type> LuaCallCSharp = new List<System.Type>()
+        [LuaCallCSharp] public static List<Type> LuaCallCSharp = new List<Type>
         {
-            typeof(UnityEngine.SceneManagement.SceneManager),
+            typeof(UnityEngine.SceneManagement.SceneManager)
         };
     }
 }

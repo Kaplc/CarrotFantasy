@@ -12,54 +12,95 @@ namespace App.Game.Object.Monster
     [LuaCallCSharp]
     public class LuaMonster : BaseRole, IMonster
     {
-        public Func<float> onGetHpAction;
-        public UnityAction<float> onSetHpAction;
-        
-        public Func<float> onGetGrowthAction;
-        public UnityAction<float> onSetGrowthAction;
-        
-        public Func<bool> onGetIsDeadAction;
-        public UnityAction<bool> onSetIsDeadAction;
-        
-        public Func<MonsterData> onGetDataAction;
-        
-        public Func<Transform> onGetTransformAction;
-        
-        public UnityAction<int> onWoundAction;
-        public UnityAction onPushAction;
-        public UnityAction onGetAction;
-        public UnityAction<List<Cell>, float, MonsterData> onInitAction;
-        public UnityAction<float> onSetSpeedAction;
-        public Func<Transform> onGetSignFatherAction;
-
-        public UnityAction onDeadAction;
-
         public UnityAction<BaseBuffEffect> onAddBuffEffectAction;
 
+        public UnityAction onDeadAction;
+        public UnityAction onGetAction;
+
+        public Func<MonsterData> onGetDataAction;
+
+        public Func<float> onGetGrowthAction;
+        public Func<float> onGetHpAction;
+
+        public Func<bool> onGetIsDeadAction;
+        public Func<Transform> onGetSignFatherAction;
+
+        public Func<Transform> onGetTransformAction;
+        public UnityAction<List<Cell>, float, MonsterData> onInitAction;
+
         public UnityAction onMouseDownAction;
-        
-        public float Hp { get => (float)onGetHpAction?.Invoke(); set => onSetHpAction?.Invoke(value); }
-        public float Growth { get => (float)onGetGrowthAction?.Invoke(); set => onSetGrowthAction?.Invoke(value); }
-        public new bool IsDead { get => (bool)onGetIsDeadAction?.Invoke(); set => onSetIsDeadAction?.Invoke(value); }
+        public UnityAction onPushAction;
+        public UnityAction<float> onSetGrowthAction;
+        public UnityAction<float> onSetHpAction;
+        public UnityAction<bool> onSetIsDeadAction;
+        public UnityAction<float> onSetSpeedAction;
+
+        public UnityAction<int> onWoundAction;
+
+        public void OnMouseDown()
+        {
+            onMouseDownAction?.Invoke();
+        }
+
+        public float Hp
+        {
+            get => (float)onGetHpAction?.Invoke();
+            set => onSetHpAction?.Invoke(value);
+        }
+
+        public float Growth
+        {
+            get => (float)onGetGrowthAction?.Invoke();
+            set => onSetGrowthAction?.Invoke(value);
+        }
+
+        public new bool IsDead
+        {
+            get => (bool)onGetIsDeadAction?.Invoke();
+            set => onSetIsDeadAction?.Invoke(value);
+        }
+
         public MonsterData Data => onGetDataAction?.Invoke();
         public new Transform Transform => onGetTransformAction?.Invoke();
 
-        public override void OnGet() => onGetAction?.Invoke();
+        public override void OnGet()
+        {
+            onGetAction?.Invoke();
+        }
 
-        public override void OnPush() => onPushAction?.Invoke();
+        public override void OnPush()
+        {
+            onPushAction?.Invoke();
+        }
 
-        public override void Wound(int woundHp) => onWoundAction?.Invoke(woundHp);
-        
-        public void Init(List<Cell> list, float hard, MonsterData data) => onInitAction?.Invoke(list, hard, data);
+        public override void Wound(int woundHp)
+        {
+            onWoundAction?.Invoke(woundHp);
+        }
 
-        public void SetSpeed(float v) =>  onSetSpeedAction?.Invoke(v);
+        public void Init(List<Cell> list, float hard, MonsterData data)
+        {
+            onInitAction?.Invoke(list, hard, data);
+        }
 
-        public Transform GetSignFather() => onGetSignFatherAction?.Invoke();
+        public void SetSpeed(float v)
+        {
+            onSetSpeedAction?.Invoke(v);
+        }
 
-        public override void Dead() => onDeadAction?.Invoke();
+        public Transform GetSignFather()
+        {
+            return onGetSignFatherAction?.Invoke();
+        }
 
-        public void AddBuffEffect(BaseBuffEffect buffEffect) => onAddBuffEffectAction?.Invoke(buffEffect);
+        public override void Dead()
+        {
+            onDeadAction?.Invoke();
+        }
 
-        public void OnMouseDown() => onMouseDownAction?.Invoke();
+        public void AddBuffEffect(BaseBuffEffect buffEffect)
+        {
+            onAddBuffEffectAction?.Invoke(buffEffect);
+        }
     }
 }

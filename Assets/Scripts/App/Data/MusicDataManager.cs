@@ -1,8 +1,5 @@
-﻿using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
-using App.Data.DataClass.Player;
-using Library;
-using UnityEngine;
+﻿using App.Data.DataClass.Player;
+using GameFramework;
 
 namespace App.Data
 {
@@ -10,16 +7,35 @@ namespace App.Data
     {
         public MusicSettingData musicSettingData;
 
-        public bool MusicOpen { get=>musicSettingData.musicOpen; }
-        public bool SoundOpen { get=>musicSettingData.soundOpen; }
-
         public MusicDataManager()
         {
             Load();
         }
-        
+
+        public bool MusicOpen => musicSettingData.musicOpen;
+        public bool SoundOpen => musicSettingData.soundOpen;
+
+        public void Save(MusicSettingData data)
+        {
+            musicSettingData.musicOpen = data.musicOpen;
+            musicSettingData.soundOpen = data.soundOpen;
+            // 持久化
+#if UNITY_EDITOR_WIN
+            BinaryManager.Instance.Save("MusicSettingData.zy", musicSettingData);
+#endif
+#if UNITY_ANDROID
+            using (FileStream fileStream = File.Open(Application.persistentDataPath + "/MusicSettingData.zy", FileMode.Open, FileAccess.Write))
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(fileStream, musicSettingData);
+                fileStream.Flush();
+                fileStream.Close();
+            }
+#endif
+        }
+
         /// <summary>
-        /// 加载音乐设置数据
+        ///     加载音乐设置数据
         /// </summary>
         private void Load()
         {
@@ -51,25 +67,6 @@ namespace App.Data
                     File.Create(path);
                     musicSettingData = new MusicSettingData();
                 }
-            }
-#endif
-        }
-
-        public void Save(MusicSettingData data)
-        {
-            musicSettingData.musicOpen = data.musicOpen;
-            musicSettingData.soundOpen = data.soundOpen;
-            // 持久化
-#if UNITY_EDITOR_WIN
-            BinaryManager.Instance.Save("MusicSettingData.zy", musicSettingData);
-#endif
-#if UNITY_ANDROID
-            using (FileStream fileStream = File.Open(Application.persistentDataPath + "/MusicSettingData.zy", FileMode.Open, FileAccess.Write))
-            {
-                BinaryFormatter formatter = new BinaryFormatter();
-                formatter.Serialize(fileStream, musicSettingData);
-                fileStream.Flush();
-                fileStream.Close();
             }
 #endif
         }

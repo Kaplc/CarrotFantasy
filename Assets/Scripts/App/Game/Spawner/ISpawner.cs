@@ -12,13 +12,28 @@ namespace App.Game.Spawner
         Carrot Carrot { get; }
 
         List<IMonster> GetAllMonsters();
+
         int GetNowWaveCount();
+
         // 初始化
         void Init(IMapData mapData);
+
         // 集火
         IMonster GetCollectingFiresTarget();
         void SetCollectingFires(IMonster monster);
         void CancelCollectingFiresTarget();
+
+        #region 缓存池
+
+        void OnPushAllGameObject();
+
+        #endregion
+
+        #region 条件判断
+
+        bool WinJudge();
+
+        #endregion
 
         #region 出怪
 
@@ -33,18 +48,6 @@ namespace App.Game.Spawner
         void CreateTowerObject(TowerData towerData, Vector3 cellWorldPos);
         void UpGradeTower(Vector3 cellWorldPos);
         void SellTower(Vector3 cellWorldPos);
-
-        #endregion
-
-        #region 缓存池
-
-        void OnPushAllGameObject();
-
-        #endregion
-
-        #region 条件判断
-
-        bool WinJudge();
 
         #endregion
     }

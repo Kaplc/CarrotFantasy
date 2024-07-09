@@ -9,25 +9,32 @@
             public const string PAUSE_GAME = "PAUSE_GAME"; // 暂停游戏
             public const string RESTART_GAME = "RESTART_GAME"; // 重新开始
             public const string RESUME_GAME = "RESUME_GAME"; // 继续游戏
-            
+
             public const string STOP_GAME = "StopGame";
             public const string REACH_ENDPOINT = "ReachEndPoint"; // 怪物到达终点
             public const string CARROT_DEAD = "CarrotDead"; // 萝卜死亡
             public const string UPDATE_MONEY = "UpdateMoney"; // 更新钱
+
             public const string SET_SPEED_UP = "TwoSpeed"; // 两倍速
+
             // 声音相关
             public const string PLAY_MUSIC = "PlayMusic";
             public const string MUTE_MUSIC = "MuteMusic";
             public const string STOP_MUSIC = "StopMusic";
             public const string PLAY_SOUND = "PlaySound";
+
             public const string MUTE_SOUND = "MuteSound";
             // Buff
         }
-    
+
         public static class UI
         {
             public const string SHOW_INIT_PANEL = "SHOW_INIT_PANEL"; // 初始化界面
             public const string HIDE_INIT_PANEL = "HIDE_INIT_PANEL";
+
+            public const string HIDE_LOADING_PANEL = "HIDE_LOADING_PANEL"; // 隐藏加载面板
+            public const string SHOW_END_PANEL = "SHOW_END_PANEL"; // 显示通关面板
+            public const string SHOW_TIPS_PANEL = "SHOW_TIPS_PANEL"; // 显示提示面板
 
             #region 选择界面
 
@@ -36,9 +43,9 @@
             public const string SHOW_SELECT_LEVEL_PANEL = "SHOW_SELECT_LEVEL_PANEL"; // 选择小关卡
             public const string LEVEL_DATA_UPDATED = "LEVEL_DATA_UPDATED";
             public const string START_NORMAL_GAME = "START_NORMAL_GAME"; // 开始普通模式
-            
+
             #endregion
-            
+
             #region 开始界面
 
             public const string SHOW_BEGIN_PANEL = "SHOW_BEGIN_PANEL"; // 开始面板
@@ -60,6 +67,7 @@
             public const string CREATE_TOWER = "CREATE_TOWER"; // 创建塔
             public const string SELL_TOWER = "SELL_TOWER"; // 出售塔
             public const string UPGRADE_TOWER = "UPGRADE_TOWER"; // 升级塔
+
             #endregion
 
             #region 设置面板
@@ -87,27 +95,28 @@
             public const string HIDE_BUILT_PANEL = "HIDE_BUILT_PANEL"; // 隐藏所有建造面板
 
             #endregion
-    
-            public const string HIDE_LOADING_PANEL = "HIDE_LOADING_PANEL"; // 隐藏加载面板
-            public const string SHOW_END_PANEL = "SHOW_END_PANEL"; // 显示通关面板
-            public const string SHOW_TIPS_PANEL = "SHOW_TIPS_PANEL"; // 显示提示面板
         }
 
         public static class Data
         {
             // 音乐设置
             public const string LOAD_MUSIC_SETTING_DATA = "LoadMusciSettingData";
+
             public const string SAVE_MUSIC_SETTING_DATA = "SaveMusicSettingData";
+
             // 游戏进程数据
             public const string REQUEST_UPDATE_ITEM_PROCESS_DATA = "REQUEST_UPDATE_ITEM_DATA";
+
             public const string REQUEST_UPDATE_LEVEL_PROCESS_DATA = "REQUEST_UPDATE_LEVEL_DATA";
+
             // 统计数据
             public const string LOAD_STATISTICAL_DATA = "LoadStatisticalData";
             public const string SAVE_STATISTICAL_DATA = "SAVE_STATISTICALDATA";
             public const string CHANGE_DESTROYOBSTACLE_COUNT = "CHANGE_DESTROYOBSTACLE_COUNT";
         }
-    
+
         #region 场景状态相关
+
         public static class LoadScene
         {
             // 加载场景

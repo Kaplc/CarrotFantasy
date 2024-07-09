@@ -3,13 +3,12 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using XLua;
 
-
 [LuaCallCSharp]
 public class UIInterfaceClass : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     public UnityAction<PointerEventData> onBeginDragAction;
-    public UnityAction<PointerEventData> onEndDragAction;
     public UnityAction<PointerEventData> onDragAction;
+    public UnityAction<PointerEventData> onEndDragAction;
 
     public void OnBeginDrag(PointerEventData eventData)
     {

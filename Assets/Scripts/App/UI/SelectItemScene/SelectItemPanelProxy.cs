@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using App.Data.DataClass.Player;
 using App.Game;
 using App.Game.SceneManager.NormalGame.interf;
@@ -7,14 +6,15 @@ using PureMVC.Patterns.Proxy;
 
 namespace App.UI.SelectItemScene
 {
-    public class SelectItemPanelProxy: Proxy
+    public class SelectItemPanelProxy : Proxy
     {
-        private INormalSceneDataManager SceneDataManager => GameManager.Instance.sceneManager.SceneDataManager as INormalSceneDataManager;
         private ProcessData processData;
-        
+
         public SelectItemPanelProxy() : base(nameof(SelectItemPanelProxy))
         {
         }
+
+        private INormalSceneDataManager SceneDataManager => GameManager.Instance.sceneManager.SceneDataManager as INormalSceneDataManager;
 
         public void UpdateItemData()
         {

@@ -1,12 +1,10 @@
 using App.Data.DataClass.Player;
-using App.Game;
-using App.Static;
-using Library;
+using GameFramework;
 using UnityEngine.UI;
 
 namespace App.UI.BeginScene.SettingPanel
 {
-    public class SelectPage: MonoManager
+    public class SelectPage : MonoManager
     {
         public Toggle tgMusic;
         public Toggle tgSound;
@@ -16,6 +14,5 @@ namespace App.UI.BeginScene.SettingPanel
             tgMusic.isOn = data.musicOpen;
             tgSound.isOn = data.soundOpen;
         }
-    
     }
 }

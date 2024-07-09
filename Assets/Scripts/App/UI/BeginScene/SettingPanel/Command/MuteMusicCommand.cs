@@ -5,7 +5,7 @@ using PureMVC.Patterns.Command;
 namespace App.UI.BeginScene.SettingPanel
 {
     /// <summary>
-    /// 静音背景音乐
+    ///     静音背景音乐
     /// </summary>
     public class MuteMusicCommand : SimpleCommand
     {

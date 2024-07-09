@@ -12,7 +12,7 @@ namespace App.Data.DataClass.Player
         public ProcessData()
         {
             // 默认解锁的关卡
-            PassedLevelData passedLevelData = new PassedLevelData();
+            var passedLevelData = new PassedLevelData();
             passedLevelData.passedLevelDic.Add(0, EPassedGrade.None);
             passedItemsDic.Add(0, passedLevelData);
         }

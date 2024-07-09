@@ -8,7 +8,7 @@ namespace App.UI.SelectItemScene.Control
         public Image imgLock;
         public Image imgUnlockMapCount;
         public Text txUnlockMapCount;
-    
+
         private bool IsLock
         {
             set

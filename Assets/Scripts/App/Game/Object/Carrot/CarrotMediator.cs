@@ -8,8 +8,8 @@ namespace App.Game.Object.Carrot
     {
         public new static string NAME = nameof(CarrotMediator);
 
-        private Carrot carrot;
-    
+        private readonly Carrot carrot;
+
         public CarrotMediator(Carrot carrot) : base(NAME)
         {
             this.carrot = carrot;
@@ -17,7 +17,7 @@ namespace App.Game.Object.Carrot
 
         public override string[] ListNotificationInterests()
         {
-            return new string[]
+            return new[]
             {
                 NotificationName.Game.REACH_ENDPOINT
             };

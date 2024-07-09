@@ -10,20 +10,33 @@ namespace App.UI.BaseControl
     public class BasePageFlipping : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
     {
         public float slidingThreshold = 150; // 滑动像素阈值
-        private float offSetMouseX; // 鼠标拖动的水平位移
         public int pageIndex = 1; // 当前页码
         public int totalPageIndex = 1; // 总共页码
         public float speed = 0.2f; // 动画速度
         public ScrollRect scrollRect;
+        private float offSetMouseX; // 鼠标拖动的水平位移
 
         private void Awake()
         {
-            if (!scrollRect)
-            {
-                scrollRect = GetComponent<ScrollRect>();
-            }
+            if (!scrollRect) scrollRect = GetComponent<ScrollRect>();
 
             pageIndex = 1;
+        }
+
+        public void OnBeginDrag(PointerEventData eventData)
+        {
+            offSetMouseX = Input.mousePosition.x;
+        }
+
+        public void OnDrag(PointerEventData eventData)
+        {
+            // print(Input.mousePosition.x - offSetMouseX);
+        }
+
+        public void OnEndDrag(PointerEventData eventData)
+        {
+            offSetMouseX = Input.mousePosition.x - offSetMouseX;
+            SlideContent();
         }
 
         public void ToPage(int index)
@@ -31,7 +44,7 @@ namespace App.UI.BaseControl
             // 直接跳转
             if (index > totalPageIndex || index < 1) return;
             pageIndex = index;
-            float newHorizontalNormalizedPosition = 1f / (totalPageIndex - 1) * (pageIndex - 1);
+            var newHorizontalNormalizedPosition = 1f / (totalPageIndex - 1) * (pageIndex - 1);
             SlideTween(newHorizontalNormalizedPosition);
         }
 
@@ -40,7 +53,7 @@ namespace App.UI.BaseControl
             // 右滑
             pageIndex++;
             pageIndex = Mathf.Clamp(pageIndex, 1, totalPageIndex);
-            float newHorizontalNormalizedPosition = 1f / (totalPageIndex - 1) * (pageIndex - 1);
+            var newHorizontalNormalizedPosition = 1f / (totalPageIndex - 1) * (pageIndex - 1);
             SlideTween(newHorizontalNormalizedPosition);
         }
 
@@ -49,40 +62,34 @@ namespace App.UI.BaseControl
             // 左滑
             pageIndex--;
             pageIndex = Mathf.Clamp(pageIndex, 1, totalPageIndex);
-            float newHorizontalNormalizedPosition = 1f / (totalPageIndex - 1) * (pageIndex - 1);
+            var newHorizontalNormalizedPosition = 1f / (totalPageIndex - 1) * (pageIndex - 1);
             SlideTween(newHorizontalNormalizedPosition);
         }
 
         private void StayNowPage()
         {
             pageIndex = Mathf.Clamp(pageIndex, 1, totalPageIndex);
-            float newHorizontalNormalizedPosition = 1f / (totalPageIndex - 1) * (pageIndex - 1);
+            var newHorizontalNormalizedPosition = 1f / (totalPageIndex - 1) * (pageIndex - 1);
             SlideTween(newHorizontalNormalizedPosition);
         }
 
         /// <summary>
-        /// 实现滑动
+        ///     实现滑动
         /// </summary>
         protected virtual void SlideContent()
         {
             // 到达滑动阈值视为滑向下一页或上一页
             if (offSetMouseX <= -slidingThreshold)
-            {
                 NextPage();
-            }
             else if (offSetMouseX > slidingThreshold)
-            {
                 LastPage();
-            }
             else
-            {
                 // 不够滑动阈值回弹
                 StayNowPage();
-            }
         }
 
         /// <summary>
-        /// 滑动动画
+        ///     滑动动画
         /// </summary>
         protected virtual void SlideTween(float targetValue)
         {
@@ -96,34 +103,12 @@ namespace App.UI.BaseControl
             tween.onComplete = () => { SendMessageUpwards("PageFlippingCompleted", SendMessageOptions.DontRequireReceiver); };
 
             if (pageIndex == 1)
-            {
                 // 告诉父对象现在是第一页
                 SendMessageUpwards("FirstPage", SendMessageOptions.DontRequireReceiver);
-            }
             else if (pageIndex == totalPageIndex)
-            {
                 SendMessageUpwards("FinallyPage", SendMessageOptions.DontRequireReceiver);
-            }
             else
-            {
                 SendMessageUpwards("NormalPage", SendMessageOptions.DontRequireReceiver);
-            }
-        }
-
-        public void OnBeginDrag(PointerEventData eventData)
-        {
-            offSetMouseX = Input.mousePosition.x;
-        }
-
-        public void OnEndDrag(PointerEventData eventData)
-        {
-            offSetMouseX = Input.mousePosition.x - offSetMouseX;
-            SlideContent();
-        }
-
-        public void OnDrag(PointerEventData eventData)
-        {
-            // print(Input.mousePosition.x - offSetMouseX);
         }
     }
 }

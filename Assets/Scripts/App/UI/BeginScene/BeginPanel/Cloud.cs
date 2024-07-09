@@ -7,7 +7,7 @@ namespace App.UI.BeginScene.BeginPanel
     {
         public float time;
         private Tween tween;
-    
+
         private void Start()
         {
             tween = transform.DOLocalMoveX(((RectTransform)transform).anchoredPosition.x + 1920f, time);

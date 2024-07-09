@@ -37,12 +37,6 @@ namespace XLua.CSObjectWrap
             translator.DelayWrapLoader(typeof(GameFacade), GameFacadeWrap.__Register);
         
         
-            translator.DelayWrapLoader(typeof(LuaPreloadAssetInfo), LuaPreloadAssetInfoWrap.__Register);
-        
-        
-            translator.DelayWrapLoader(typeof(UIManager), UIManagerWrap.__Register);
-        
-        
             translator.DelayWrapLoader(typeof(Tutorial.BaseClass), TutorialBaseClassWrap.__Register);
         
         
@@ -58,7 +52,10 @@ namespace XLua.CSObjectWrap
             translator.DelayWrapLoader(typeof(Tutorial.DerivedClassExtensions), TutorialDerivedClassExtensionsWrap.__Register);
         
         
-            translator.DelayWrapLoader(typeof(Library.BasePanel), LibraryBasePanelWrap.__Register);
+            translator.DelayWrapLoader(typeof(LuaBridge.LuaPreloadAssetInfo), LuaBridgeLuaPreloadAssetInfoWrap.__Register);
+        
+        
+            translator.DelayWrapLoader(typeof(GameFramework.UIManager), GameFrameworkUIManagerWrap.__Register);
         
         
             translator.DelayWrapLoader(typeof(App.UI.GameScene.Panel.GamePanel.CountDownPanel), AppUIGameScenePanelGamePanelCountDownPanelWrap.__Register);

@@ -17,18 +17,14 @@ using PureMVC.Patterns.Facade;
 using PureMVC.Patterns.Proxy;
 using XLua;
 
-
-[LuaCallCSharp()]
+[LuaCallCSharp]
 public class GameFacade : Facade
 {
     public static GameFacade Instance
     {
         get
         {
-            if (instance == null)
-            {
-                instance = new GameFacade();
-            }
+            if (instance == null) instance = new GameFacade();
 
             return instance as GameFacade;
         }

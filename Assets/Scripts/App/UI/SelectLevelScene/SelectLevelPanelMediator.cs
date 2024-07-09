@@ -1,5 +1,5 @@
-using App.Data.DataClass.Game.Level;
 using App.Static;
+using GameFramework;
 using PureMVC.Interfaces;
 using PureMVC.Patterns.Mediator;
 
@@ -7,7 +7,11 @@ namespace App.UI.SelectLevelScene
 {
     public class SelectLevelPanelMediator : Mediator
     {
-        public static new string NAME = "SelectLevelPanelMediator";
+        public new static string NAME = "SelectLevelPanelMediator";
+
+        public SelectLevelPanelMediator() : base(NAME)
+        {
+        }
 
         public SelectLevelPanel Panel
         {
@@ -19,16 +23,12 @@ namespace App.UI.SelectLevelScene
             }
         }
 
-        public SelectLevelPanelMediator() : base(NAME)
-        {
-        }
-
         public override string[] ListNotificationInterests()
         {
-            return new string[]
+            return new[]
             {
                 NotificationName.UI.SHOW_SELECT_LEVEL_PANEL,
-                NotificationName.UI.LEVEL_DATA_UPDATED,
+                NotificationName.UI.LEVEL_DATA_UPDATED
             };
         }
 
@@ -44,7 +44,7 @@ namespace App.UI.SelectLevelScene
                     SendNotification(NotificationName.Data.REQUEST_UPDATE_LEVEL_PROCESS_DATA);
                     break;
                 case NotificationName.UI.LEVEL_DATA_UPDATED:
-                    LevelDataUpdatedArgs args = notification.Body as LevelDataUpdatedArgs;
+                    var args = notification.Body as LevelDataUpdatedArgs;
                     Panel.CreateLevelButton(args.itemData, args.processData);
                     break;
             }

@@ -1,5 +1,6 @@
 using App.Data.DataClass.Player;
 using App.Static;
+using GameFramework;
 using PureMVC.Interfaces;
 using PureMVC.Patterns.Mediator;
 
@@ -7,7 +8,11 @@ namespace App.UI.GameScene.Panel.WinPanel
 {
     public class WinPanelMediator : Mediator
     {
-        public static new string NAME = "WinPanelMediator";
+        public new static string NAME = "WinPanelMediator";
+
+        public WinPanelMediator() : base(NAME)
+        {
+        }
 
         public WinPanel Panel
         {
@@ -19,15 +24,11 @@ namespace App.UI.GameScene.Panel.WinPanel
             }
         }
 
-        public WinPanelMediator() : base(NAME)
-        {
-        }
-
         public override string[] ListNotificationInterests()
         {
-            return new string[]
+            return new[]
             {
-                NotificationName.UI.SHOW_WIN_PANEL,
+                NotificationName.UI.SHOW_WIN_PANEL
             };
         }
 

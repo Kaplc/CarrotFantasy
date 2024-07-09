@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using XLua;
 
-
 [LuaCallCSharp]
 public static class CallMathf
 {
@@ -110,4 +109,3 @@ public static class CallMathf
         return Mathf.Lerp(a, b, t);
     }
 }
-

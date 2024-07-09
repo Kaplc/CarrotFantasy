@@ -8,7 +8,7 @@ namespace App.Game.Object.Tower
     public class ShitTower : BaseTower
     {
         private ISceneManger SceneManager => GameManager.Instance.sceneManager;
-        
+
         protected override void Awake()
         {
             base.Awake();
@@ -18,19 +18,17 @@ namespace App.Game.Object.Tower
         protected override void Update()
         {
             base.Update();
-        
+
             if (SceneManager.IsPause())
-            {
                 // 游戏暂停停止炮塔动画
                 animator.SetBool("Attack", false);
-            }
         }
 
         public override void Attack()
         {
             if (target is null) return;
             // 创建子弹预设体并设置目标
-            ShitTowerBullet bullet = GameManager.Instance.poolManager.GetObject(data.bulletsPrefabsPath[level]).GetComponent<ShitTowerBullet>();
+            var bullet = GameManager.Instance.poolManager.GetObject(data.bulletsPrefabsPath[level]).GetComponent<ShitTowerBullet>();
             bullet.transform.position = firePos.position;
             bullet.target = target;
             bullet.atk = Atk;

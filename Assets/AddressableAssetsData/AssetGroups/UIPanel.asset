@@ -20,23 +20,28 @@ MonoBehaviour:
   - m_GUID: 29d0358818779a04897e1032c05d0da5
     m_Address: BossGameLosePanel
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - UI
   - m_GUID: ab80470e5b17b8b4da56f4d7269cacf1
     m_Address: BossGamePanel
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - UI
   - m_GUID: 84786662852f3a04f8b82da797a54bf7
     m_Address: BossGameWinPanel
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - UI
   - m_GUID: fc37b9e708cc07a4f87dbac317116d04
     m_Address: BossPanel
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - UI
   - m_GUID: ed73f5638980d364cb7a5fe243df69bc
     m_Address: CountDownPanel
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - UI
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 136f90097b63d3242a5e680f3516fffa, type: 2}
   m_SchemaSet:

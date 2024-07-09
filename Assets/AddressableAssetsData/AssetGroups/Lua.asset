@@ -17,18 +17,18 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 20dcd05af7be314449fb5320ca99bdf4
   m_SerializeEntries:
-  - m_GUID: b34328df215d18d46b5b5f3fab2bc35b
-    m_Address: Init
+  - m_GUID: ebaa45ccb8515524eb6dcf2f65949449
+    m_Address: Init.lua.txt
     m_ReadOnly: 0
     m_SerializedLabels:
     - Lua
-  - m_GUID: 6cc7ea00f301079498de857dc71da30c
-    m_Address: App
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Lua
-  - m_GUID: af679c9aac8a06d4a8658b485106ef0c
+  - m_GUID: 8b11e2723c258d24e9ea09aa3deb60f9
     m_Address: Library
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Lua
+  - m_GUID: c271dd8dfbf67624dbd02ef377506633
+    m_Address: App
     m_ReadOnly: 0
     m_SerializedLabels:
     - Lua

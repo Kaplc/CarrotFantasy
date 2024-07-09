@@ -4,14 +4,12 @@ using App.Game.Object.Monster;
 namespace App.Game.Object.Buff
 {
     /// <summary>
-    /// 便便塔减速Buff
+    ///     便便塔减速Buff
     /// </summary>
     public class DecelerationBuff : BaseBuff
     {
-
         public DecelerationBuff(float duration) : base(duration)
         {
-        
         }
 
         protected override void OnApplyBuff(IMonster monster)

@@ -1,14 +1,16 @@
-﻿using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
-using App.Data.DataClass.Player;
-using Library;
-using UnityEngine;
+﻿using App.Data.DataClass.Player;
+using GameFramework;
 
 namespace App.Data
 {
     public class StatisticalDataManager : IStatisticalDataManager
     {
         private StatisticalData statisticalData;
+
+        public StatisticalDataManager()
+        {
+            LoadStatisticalData();
+        }
 
         public int BossMapCount
         {
@@ -45,20 +47,12 @@ namespace App.Data
             set => statisticalData.money = value;
         }
 
-        public StatisticalDataManager()
-        {
-            LoadStatisticalData();
-        }
-
         public StatisticalData GetStatisticalData()
         {
-            if (statisticalData == null)
-            {
-                LoadStatisticalData();
-            }
+            if (statisticalData == null) LoadStatisticalData();
 
             // 复制数据
-            StatisticalData newData = new StatisticalData()
+            var newData = new StatisticalData
             {
                 bossMapCount = statisticalData.bossMapCount,
                 adventureMapCount = statisticalData.adventureMapCount,
@@ -70,6 +64,25 @@ namespace App.Data
             };
 
             return newData;
+        }
+
+        public void SaveStatisticalData(StatisticalData data)
+        {
+            statisticalData.killMonsterCount += data.killMonsterCount;
+            statisticalData.money += data.money;
+
+#if UNITY_EDITOR_WIN
+            BinaryManager.Instance.Save("StatisticalData.zy", statisticalData);
+#endif
+#if UNITY_ANDROID
+            using (FileStream fileStream = File.Open(Application.persistentDataPath + "/StatisticalData.zy", FileMode.Open, FileAccess.Write))
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(fileStream, statisticalData);
+                fileStream.Flush();
+                fileStream.Close();
+            }
+#endif
         }
 
         private void LoadStatisticalData()
@@ -104,25 +117,6 @@ namespace App.Data
                     File.Create(path);
                     statisticalData = new StatisticalData();
                 }
-            }
-#endif
-        }
-
-        public void SaveStatisticalData(StatisticalData data)
-        {
-            statisticalData.killMonsterCount += data.killMonsterCount;
-            statisticalData.money += data.money;
-            
-#if UNITY_EDITOR_WIN
-            BinaryManager.Instance.Save("StatisticalData.zy", statisticalData);
-#endif
-#if UNITY_ANDROID
-            using (FileStream fileStream = File.Open(Application.persistentDataPath + "/StatisticalData.zy", FileMode.Open, FileAccess.Write))
-            {
-                BinaryFormatter formatter = new BinaryFormatter();
-                formatter.Serialize(fileStream, statisticalData);
-                fileStream.Flush();
-                fileStream.Close();
             }
 #endif
         }

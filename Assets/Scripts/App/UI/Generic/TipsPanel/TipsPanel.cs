@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-using Library;
+using GameFramework;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,14 +7,13 @@ namespace App.UI.Generic.TipsPanel
 {
     public class TipsPanel : BasePanel
     {
-        public Text text;
         public Button button;
+        public Text text;
 
         protected override void Init()
         {
             button.onClick.AddListener(() =>
             {
-
                 // GameManager.Instance.sdkManager.Dispose();
             });
         }

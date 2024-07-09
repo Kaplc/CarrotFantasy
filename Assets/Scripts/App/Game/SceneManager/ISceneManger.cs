@@ -10,6 +10,8 @@ namespace App.Game.SceneManager
         ISpawner Spawner { get; }
         IMapData MapData { get; }
 
+        void ExitScene();
+
         #region 设置
 
         void SetSpawner(ISpawner s);
@@ -54,7 +56,5 @@ namespace App.Game.SceneManager
         void UpdateMoney(int v);
 
         #endregion
-
-        void ExitScene();
     }
 }

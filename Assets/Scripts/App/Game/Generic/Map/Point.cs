@@ -4,21 +4,20 @@ using XLua;
 namespace App.Game.Generic.Map
 {
     /// <summary>
-    /// 地图格子索引
+    ///     地图格子索引
     /// </summary>
-    [Serializable][LuaCallCSharp]
+    [Serializable]
+    [LuaCallCSharp]
     public struct Point
     {
-        private int x;
-        private int y;
-
-        public int X => x;
-        public int Y => y;
-
         public Point(int x, int y)
         {
-            this.x = x;
-            this.y = y;
+            X = x;
+            Y = y;
         }
+
+        public int X { get; }
+
+        public int Y { get; }
     }
 }

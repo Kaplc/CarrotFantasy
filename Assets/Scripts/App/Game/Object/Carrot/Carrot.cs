@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using App.Data.DataClass.Game.Object;
 using App.Game.Generic.BaseObject;
 using App.Static;
-using Library;
+using GameFramework;
 using TMPro;
 using UnityEngine;
 
@@ -11,14 +11,13 @@ namespace App.Game.Object.Carrot
 {
     public class Carrot : BaseRole, IPoolObject
     {
-        private float hp;
-
         public CarrotData data;
         public List<Sprite> sprites; // 各血量萝卜Sprite
         public SpriteRenderer spriteRenderer;
         public Animator animator;
-        private Coroutine idleAnimaCoroutine; // 待机动画协程
         public TextMeshPro textMeshPro;
+        private float hp;
+        private Coroutine idleAnimaCoroutine; // 待机动画协程
 
         public float Hp
         {
@@ -32,25 +31,28 @@ namespace App.Game.Object.Carrot
                     IsDead = true;
                     Dead();
                 }
-            
+
                 // 关闭animator
-                if (animator.enabled && hp != data.maxHp)
-                {
-                    animator.enabled = false;
-                }
+                if (animator.enabled && hp != data.maxHp) animator.enabled = false;
                 // 更改萝卜图片
                 spriteRenderer.sprite = sprites[(int)hp];
                 // 更改血量数值
                 textMeshPro.text = hp.ToString();
             }
         }
-    
+
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                spriteRenderer.sprite = sprites[3];
-            }
+            if (Input.GetKeyDown(KeyCode.Space)) spriteRenderer.sprite = sprites[3];
+        }
+
+        /// <summary>
+        ///     被点击回调
+        /// </summary>
+        public void OnMouseDown()
+        {
+            // 播放Idle动画
+            animator.SetTrigger("Idle");
         }
 
         public override void Wound(int woundHp)
@@ -65,14 +67,20 @@ namespace App.Game.Object.Carrot
             // 萝卜死亡触发游戏结束
             GameFacade.Instance.SendNotification(NotificationName.Game.CARROT_DEAD);
         }
-    
+
         /// <summary>
-        /// 被点击回调
+        ///     定时播放Idle动画协程
         /// </summary>
-        public void OnMouseDown()
+        /// <returns></returns>
+        private IEnumerator IdleAnimaCoroutine()
         {
-            // 播放Idle动画
-            animator.SetTrigger("Idle");
+            // 满血才播放动画
+            while (true)
+            {
+                yield return new WaitForSeconds(5f);
+
+                if (Hp == data.maxHp) animator.SetTrigger("Idle");
+            }
         }
 
         #region 缓存池回收回调
@@ -102,24 +110,5 @@ namespace App.Game.Object.Carrot
         }
 
         #endregion
-    
-        /// <summary>
-        /// 定时播放Idle动画协程
-        /// </summary>
-        /// <returns></returns>
-        private IEnumerator IdleAnimaCoroutine()
-        {
-            // 满血才播放动画
-            while (true)
-            {
-                yield return new WaitForSeconds(5f);
-            
-                if (Hp == data.maxHp)
-                {
-                    animator.SetTrigger("Idle");
-                }
-            }
-        }
     }
 }
-

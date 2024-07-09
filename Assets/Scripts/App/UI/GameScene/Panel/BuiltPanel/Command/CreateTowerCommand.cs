@@ -5,11 +5,11 @@ using PureMVC.Patterns.Command;
 
 namespace App.UI.GameScene.Panel.BuiltPanel.Command
 {
-    public class CreateTowerCommand: SimpleCommand
+    public class CreateTowerCommand : SimpleCommand
     {
         public override void Execute(INotification notification)
         {
-            CreateTowerArgs args = notification.Body as CreateTowerArgs;
+            var args = notification.Body as CreateTowerArgs;
             var s = GameManager.Instance.sceneManager.Spawner;
             GameManager.Instance.sceneManager.Spawner.CreateTowerObject(args.towerData, args.cellWorldPos);
         }

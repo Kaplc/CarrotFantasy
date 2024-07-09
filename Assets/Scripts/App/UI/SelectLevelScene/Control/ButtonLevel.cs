@@ -9,11 +9,11 @@ namespace App.UI.SelectLevelScene.Control
     {
         public int levelID;
         public EPassedGrade passedGrade;
-        private bool isLock = true; // 默认锁定
         public Image imgLock;
         public Image imgMap;
         public Image imgGarde;
         public List<Sprite> gardeSprites; // 通关等级图片
+        private bool isLock = true; // 默认锁定
 
         public bool IsLock
         {

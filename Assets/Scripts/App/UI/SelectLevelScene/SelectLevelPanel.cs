@@ -5,7 +5,7 @@ using App.Game;
 using App.Game.SceneManager.NormalGame.interf;
 using App.Static;
 using App.UI.SelectLevelScene.Control;
-using Library;
+using GameFramework;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,23 +13,22 @@ namespace App.UI.SelectLevelScene
 {
     public class SelectLevelPanel : BasePanel
     {
-        public int pageIndex; // 当前选择的页码
-
+        private readonly List<Button> btnsLevel = new List<Button>();
+        private readonly List<Image> towerIcons = new List<Image>();
         public Button btnBack;
         public Button btnHelp;
         public Button btnStart;
+        private ItemData itemData;
+        public LevelLockPanel levelLockPanel; // 提示关卡锁定的子面板
         private Button nowCenterButton; // 当前在中间的关卡按钮
-        public ScrollRect scrollRect;
-        public Text teWavesCount;
-        public Transform transformCreateTowerIcon;
-        private List<Image> towerIcons = new List<Image>();
-        private List<Button> btnsLevel = new List<Button>();
 
         private LevelData nowCenterLevelData; // 当前中间的关卡数据
         public SelectLevelPanelPageFlipping pageFlipping;
-        private ItemData itemData;
-        public LevelLockPanel levelLockPanel; // 提示关卡锁定的子面板
-        
+        public int pageIndex; // 当前选择的页码
+        public ScrollRect scrollRect;
+        public Text teWavesCount;
+        public Transform transformCreateTowerIcon;
+
         private INormalSceneManager normalSceneManager => GameManager.Instance.sceneManager as INormalSceneManager;
 
         protected override void Init()
@@ -59,8 +58,7 @@ namespace App.UI.SelectLevelScene
 
         private void ToPage()
         {
-            for (int i = 0; i < itemData.levels.Count; i++)
-            {
+            for (var i = 0; i < itemData.levels.Count; i++)
                 if (normalSceneManager.NowLevelID == itemData.levels[i].levelID)
                 {
                     pageFlipping.ToPage(i + 1);
@@ -68,31 +66,30 @@ namespace App.UI.SelectLevelScene
                     normalSceneManager.NowLevelID = 0;
                     return;
                 }
-            }
         }
 
         /// <summary>
-        /// 创建关卡按钮
+        ///     创建关卡按钮
         /// </summary>
         public void CreateLevelButton(ItemData data, ProcessData processData)
         {
-            RectTransform content = scrollRect.content;
+            var content = scrollRect.content;
             // 设置滑动容器大小
             content.sizeDelta = new Vector2(534 * (data.levels.Count - 1) + 960, content.sizeDelta.y);
 
-            for (int i = 0; i < data.levels.Count; i++)
+            for (var i = 0; i < data.levels.Count; i++)
             {
-                Button button = GameManager.Instance.factoryManager.UIControlFactory.CreateControl("ButtonLevel").GetComponent<Button>();
+                var button = GameManager.Instance.factoryManager.UIControlFactory.CreateControl("ButtonLevel").GetComponent<Button>();
                 button.transform.SetParent(content, false);
                 btnsLevel.Add(button);
                 // 获取脚本
-                ButtonLevel buttonLevel = button.GetComponent<ButtonLevel>();
+                var buttonLevel = button.GetComponent<ButtonLevel>();
                 // 设置信息
                 buttonLevel.levelID = data.levels[i].levelID;
                 // 修改图片
                 buttonLevel.imgMap.sprite = data.levels[i].image;
                 // 添加事件
-                LevelData levelData = data.levels[i];
+                var levelData = data.levels[i];
                 button.onClick.AddListener(() =>
                 {
                     // 如果点击时并不是在中间选中状态，则自动滑动到中间
@@ -115,11 +112,11 @@ namespace App.UI.SelectLevelScene
             }
 
             // 显隐锁定图标和更新通关等级体图片
-            PassedLevelData passedLevelData = processData.passedItemsDic[normalSceneManager.NowItemID];
-            for (int i = 0; i < btnsLevel.Count; i++)
+            var passedLevelData = processData.passedItemsDic[normalSceneManager.NowItemID];
+            for (var i = 0; i < btnsLevel.Count; i++)
             {
-                int levelID = btnsLevel[i].GetComponent<ButtonLevel>().levelID;
-            
+                var levelID = btnsLevel[i].GetComponent<ButtonLevel>().levelID;
+
                 if (passedLevelData.passedLevelDic.TryGetValue(levelID, out var value))
                 {
                     // 设置通关等级
@@ -137,21 +134,18 @@ namespace App.UI.SelectLevelScene
         }
 
         /// <summary>
-        /// 更新选中关卡的可使用塔的图标
+        ///     更新选中关卡的可使用塔的图标
         /// </summary>
         public void UpdateTowerIcon(Sprite[] icons)
         {
-            for (int i = 0; i < towerIcons.Count; i++)
-            {
-                Destroy(towerIcons[i].gameObject);
-            }
+            for (var i = 0; i < towerIcons.Count; i++) Destroy(towerIcons[i].gameObject);
 
             towerIcons.Clear();
 
-            for (int i = 0; i < icons.Length; i++)
+            for (var i = 0; i < icons.Length; i++)
             {
                 // Image icon = Instantiate(Resources.Load<GameObject>("UI/Image/ImageTowerIcon"), transformCreateTowerIcon).GetComponent<Image>();
-                Image icon = GameManager.Instance.factoryManager.UIControlFactory.CreateControl("ImageTowerIcon").GetComponent<Image>();
+                var icon = GameManager.Instance.factoryManager.UIControlFactory.CreateControl("ImageTowerIcon").GetComponent<Image>();
                 icon.transform.SetParent(transformCreateTowerIcon, false);
                 icon.sprite = icons[i];
                 towerIcons.Add(icon);
@@ -159,7 +153,7 @@ namespace App.UI.SelectLevelScene
         }
 
         /// <summary>
-        /// 更新选中关卡的怪物波数
+        ///     更新选中关卡的怪物波数
         /// </summary>
         private void UpdateWavesCount(int count)
         {
@@ -167,7 +161,7 @@ namespace App.UI.SelectLevelScene
         }
 
         /// <summary>
-        /// 翻页完成的回调
+        ///     翻页完成的回调
         /// </summary>
         public void PageFlippingCompleted()
         {
@@ -177,30 +171,28 @@ namespace App.UI.SelectLevelScene
             nowCenterLevelData = itemData.levels[pageFlipping.pageIndex - 1];
 
             // 设置黑色遮罩
-            for (int i = 0; i < btnsLevel.Count; i++)
+            for (var i = 0; i < btnsLevel.Count; i++)
             {
-                ButtonLevel buttonLevel = btnsLevel[i].GetComponent<ButtonLevel>();
+                var buttonLevel = btnsLevel[i].GetComponent<ButtonLevel>();
                 // 未选中的按钮设置黑色遮罩
-                Color imgMapColor = buttonLevel.imgMap.color;
+                var imgMapColor = buttonLevel.imgMap.color;
                 buttonLevel.imgMap.color = new Color(100 / 255f, 100 / 255f, 100 / 255f, imgMapColor.a);
-                Color imgGardeColor = buttonLevel.imgMap.color;
+                var imgGardeColor = buttonLevel.imgMap.color;
                 buttonLevel.imgGarde.color = new Color(100 / 255f, 100 / 255f, 100 / 255f, imgGardeColor.a);
-                Color imgLockColor = buttonLevel.imgMap.color;
+                var imgLockColor = buttonLevel.imgMap.color;
                 buttonLevel.imgLock.color = new Color(100 / 255f, 100 / 255f, 100 / 255f, imgLockColor.a);
             }
 
             // 选中按钮为正常颜色
-            ButtonLevel nowCenterButtonLevel = nowCenterButton.GetComponent<ButtonLevel>();
+            var nowCenterButtonLevel = nowCenterButton.GetComponent<ButtonLevel>();
             nowCenterButtonLevel.imgMap.color = new Color(1f, 1f, 1f, 1f);
             nowCenterButtonLevel.imgGarde.color = new Color(1f, 1f, 1f, 1f);
             nowCenterButtonLevel.imgLock.color = new Color(1f, 1f, 1f, 1f);
 
             // 获取icons
-            List<Sprite> towerIconSprites = new List<Sprite>();
-            for (int i = 0; i < nowCenterLevelData.mapData.towerTypeList.Count; i++)
-            {
+            var towerIconSprites = new List<Sprite>();
+            for (var i = 0; i < nowCenterLevelData.mapData.towerTypeList.Count; i++)
                 towerIconSprites.Add(nowCenterLevelData.mapData.GetTowerData(i).selectLevelIcon);
-            }
 
             // 更新面板
             UpdateTowerIcon(towerIconSprites.ToArray());
@@ -208,4 +200,3 @@ namespace App.UI.SelectLevelScene
         }
     }
 }
-

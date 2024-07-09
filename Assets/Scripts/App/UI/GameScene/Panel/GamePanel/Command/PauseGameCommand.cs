@@ -5,7 +5,7 @@ using PureMVC.Patterns.Command;
 namespace App.UI.GameScene.Panel.GamePanel
 {
     /// <summary>
-    /// 暂停游戏
+    ///     暂停游戏
     /// </summary>
     public class PauseGameCommand : SimpleCommand
     {

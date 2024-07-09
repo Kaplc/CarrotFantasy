@@ -5,7 +5,9 @@ using XLua;
 
 namespace App.Data.DataClass.Game.Object
 {
-    [CreateAssetMenu][Serializable][LuaCallCSharp]
+    [CreateAssetMenu]
+    [Serializable]
+    [LuaCallCSharp]
     public class TowerData : ScriptableObject
     {
         public int id;

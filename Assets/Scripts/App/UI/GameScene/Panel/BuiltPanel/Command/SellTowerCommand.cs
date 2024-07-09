@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace App.UI.GameScene.Panel.BuiltPanel.Command
 {
-    public class SellTowerCommand: SimpleCommand
+    public class SellTowerCommand : SimpleCommand
     {
         public override void Execute(INotification notification)
         {

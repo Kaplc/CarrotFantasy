@@ -4,7 +4,7 @@ using PureMVC.Patterns.Command;
 
 namespace App.UI.SelectLevelScene
 {
-    public class StartNormalGameCommand: SimpleCommand
+    public class StartNormalGameCommand : SimpleCommand
     {
         public override void Execute(INotification notification)
         {

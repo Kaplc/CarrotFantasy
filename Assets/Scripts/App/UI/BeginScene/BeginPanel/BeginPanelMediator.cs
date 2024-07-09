@@ -1,5 +1,6 @@
 using App.Data.DataClass.Player;
 using App.Static;
+using GameFramework;
 using PureMVC.Interfaces;
 using PureMVC.Patterns.Mediator;
 
@@ -7,7 +8,14 @@ namespace App.UI.BeginScene.BeginPanel
 {
     public class BeginPanelMediator : Mediator
     {
-        public static new string NAME = "BeginPanelMediator";
+        public new static string NAME = "BeginPanelMediator";
+
+        private MusicSettingData musicSettingData;
+
+        // 命名
+        public BeginPanelMediator() : base(NAME)
+        {
+        }
 
         // 相互绑定的Panel
         public BeginPanel Panel
@@ -20,18 +28,11 @@ namespace App.UI.BeginScene.BeginPanel
             }
         }
 
-        private MusicSettingData musicSettingData;
-
-        // 命名
-        public BeginPanelMediator() : base(NAME)
-        {
-        }
-
         // view要监听的事件列表
         public override string[] ListNotificationInterests()
         {
             // 返回事件名数组表示要监听的事件
-            return new string[]
+            return new[]
             {
                 NotificationName.UI.SHOW_BEGIN_PANEL,
                 NotificationName.UI.SHOW_HELP_PANEL,
@@ -87,14 +88,10 @@ namespace App.UI.BeginScene.BeginPanel
         {
             // true为有动画过渡
             if ((bool)notification.Body)
-            {
                 // 播放显示HelpPanel的动画
                 Panel.animator.SetBool("ShowHelpPanel", true);
-            }
             else
-            {
                 Panel.animator.SetBool("RawShowHelpPanel", true);
-            }
         }
 
         private void ShowBeginPanel()
@@ -108,7 +105,7 @@ namespace App.UI.BeginScene.BeginPanel
 
         private void MusicSettingDataUpdated(INotification notification)
         {
-            if (!Panel)return;
+            if (!Panel) return;
             // 刷新音乐设置数据
             musicSettingData = notification.Body as MusicSettingData;
             Panel.settingPanel.UpdateSelectPage(musicSettingData);

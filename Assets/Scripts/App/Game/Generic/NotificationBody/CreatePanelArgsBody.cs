@@ -8,7 +8,7 @@ namespace App.Game.Generic.NotificationBody
     public class CreatePanelArgsBody
     {
         public Vector3 createPos;
-        public Dictionary<TowerData, Sprite> towersDataDic;
         public EBuiltPanelShowDir showDir;
+        public Dictionary<TowerData, Sprite> towersDataDic;
     }
 }

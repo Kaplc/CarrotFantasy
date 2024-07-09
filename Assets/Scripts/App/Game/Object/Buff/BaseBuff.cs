@@ -1,13 +1,12 @@
 ﻿using System.Collections;
 using App.Game.Object.Monster;
-using Library;
+using GameFramework;
 using UnityEngine;
 
 namespace App.Game.Generic.BaseObject
 {
     public abstract class BaseBuff
     {
-        public float Duration { get; private set; } // 持续时间
         private Coroutine delayCoroutine;
 
         public BaseBuff(float duration)
@@ -15,8 +14,10 @@ namespace App.Game.Generic.BaseObject
             Duration = duration;
         }
 
+        public float Duration { get; } // 持续时间
+
         /// <summary>
-        /// 启用Buff
+        ///     启用Buff
         /// </summary>
         /// <param name="monster"></param>
         public void ApplyBuff(IMonster monster)
@@ -25,16 +26,13 @@ namespace App.Game.Generic.BaseObject
 
             // 启动计时器，定时移除 Buff
             // 已经在计时重新计时
-            if (delayCoroutine != null)
-            {
-                MonoManager.Instance.StopCoroutine(delayCoroutine);
-            }
+            if (delayCoroutine != null) MonoManager.Instance.StopCoroutine(delayCoroutine);
 
             delayCoroutine = MonoManager.Instance.StartCoroutine(RemoveBuffAfterDelay(monster));
         }
 
         /// <summary>
-        /// 启用Buff的回调
+        ///     启用Buff的回调
         /// </summary>
         /// <param name="monster"></param>
         protected virtual void OnApplyBuff(IMonster monster)
@@ -49,7 +47,7 @@ namespace App.Game.Generic.BaseObject
         }
 
         /// <summary>
-        /// 移除Buff
+        ///     移除Buff
         /// </summary>
         /// <param name="monster"></param>
         public void RemoveBuff(IMonster monster)
@@ -58,7 +56,7 @@ namespace App.Game.Generic.BaseObject
         }
 
         /// <summary>
-        /// 移除Buff的回调
+        ///     移除Buff的回调
         /// </summary>
         /// <param name="monster"></param>
         protected virtual void OnRemoveBuff(IMonster monster)

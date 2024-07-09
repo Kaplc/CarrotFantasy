@@ -1,15 +1,14 @@
-using App.Data.DataClass.Player;
 using App.Game;
 using PureMVC.Interfaces;
 using PureMVC.Patterns.Command;
 
 namespace App.UI.BeginScene.BeginPanel
 {
-    public class LoadStatisticalDataCommand: SimpleCommand
+    public class LoadStatisticalDataCommand : SimpleCommand
     {
         public override void Execute(INotification notification)
         {
-            StatisticalData data = GameManager.Instance.dataManager.StatisticalDataManager.GetStatisticalData();
+            var data = GameManager.Instance.dataManager.StatisticalDataManager.GetStatisticalData();
 
             var proxy = Facade.RetrieveProxy(nameof(BeginPanelProxy)) as BeginPanelProxy;
             proxy.UpdateStatisticalData(data);
