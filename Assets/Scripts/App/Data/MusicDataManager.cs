@@ -20,10 +20,9 @@ namespace App.Data
             musicSettingData.musicOpen = data.musicOpen;
             musicSettingData.soundOpen = data.soundOpen;
             // 持久化
-#if UNITY_EDITOR_WIN
+#if UNITY_STANDALONE_WIN
             BinaryManager.Instance.Save("MusicSettingData.zy", musicSettingData);
-#endif
-#if UNITY_ANDROID
+#else
             using (FileStream fileStream = File.Open(Application.persistentDataPath + "/MusicSettingData.zy", FileMode.Open, FileAccess.Write))
             {
                 BinaryFormatter formatter = new BinaryFormatter();
@@ -39,7 +38,7 @@ namespace App.Data
         /// </summary>
         private void Load()
         {
-#if UNITY_EDITOR_WIN
+#if UNITY_STANDALONE_WIN
             musicSettingData = BinaryManager.Instance.Load<MusicSettingData>("MusicSettingData.zy");
 #endif
 #if UNITY_ANDROID

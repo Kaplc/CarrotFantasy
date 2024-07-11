@@ -65,6 +65,7 @@ function BossPanel.Init(self)
                         end
                 )
                 -- CS.GameFacade.Instance:SendNotification('ShowBeginPanel')
+                GameManager.cs:PlayMusic()
             end
     )
 
@@ -78,6 +79,7 @@ function BossPanel.Init(self)
                             GameFacade.Instance:SendNotification('SHOW_HELP_PANEL', true)
                         end
                 )
+                GameManager.cs:PlayMusic()
             end
     )
 

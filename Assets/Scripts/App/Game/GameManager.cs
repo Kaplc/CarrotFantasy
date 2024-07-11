@@ -20,6 +20,23 @@ namespace App.Game
 
         public ISceneManger sceneManager;
 
+        #region 底层框架
+
+        public PoolManager poolManager;
+        public BinaryManager binaryManager;
+        public FactoryManager factoryManager;
+        public MusicManger musicManger;
+        public BuffManager buffManager;
+        public XLuaManager xLuaManager;
+        public UIManager uiManager;
+        public EventCenter eventCenter;
+        public SDKManager sdkManager;
+
+        public GameFramework.SceneManager loadSceneManager;
+
+        public AddressablesManager addressablesManager;
+
+        #endregion
         protected override void Awake()
         {
             base.Awake();
@@ -40,6 +57,7 @@ namespace App.Game
             sdkManager = SDKManager.Instance;
             dataManager = new DataManager();
             DOTween.Init();
+            LoggerManager.Init();
 
             #endregion
 
@@ -56,6 +74,20 @@ namespace App.Game
             });
         }
 
+
+        #region Unity回调
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                // 清空addressables缓存
+                Caching.ClearCache();
+            }
+        }
+
+        #endregion
+
         #region lua相关
 
         private void InitLua()
@@ -63,33 +95,10 @@ namespace App.Game
             // 自定义lua解析路径 
             // string path = Application.dataPath + "/Scripts/App/Lua/";
             // xLuaManager.AddLuaFilePath(path);
-
-            // addressables提前加载lua文件
-            addressablesManager.PreloadAssetsAsync<TextAsset>(isDone =>
-            {
-                if (isDone) Debug.Log("Lua文件加载完成");
-            }, "Lua");
         }
 
         #endregion
 
-        #region 底层框架
-
-        public PoolManager poolManager;
-        public BinaryManager binaryManager;
-        public FactoryManager factoryManager;
-        public MusicManger musicManger;
-        public BuffManager buffManager;
-        public XLuaManager xLuaManager;
-        public UIManager uiManager;
-        public EventCenter eventCenter;
-        public SDKManager sdkManager;
-
-        public GameFramework.SceneManager loadSceneManager;
-
-        public AddressablesManager addressablesManager;
-
-        #endregion
 
         #region 游戏相关
 

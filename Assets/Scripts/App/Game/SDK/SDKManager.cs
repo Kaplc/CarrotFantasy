@@ -19,6 +19,9 @@ namespace App.Game.SDK
 
         public void StartPositioning()
         {
+#if UNITY_STANDALONE_WIN
+            return;
+#else
             if (javaClass == null || javaObject == null)
             {
                 javaClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
@@ -26,6 +29,8 @@ namespace App.Game.SDK
             }
 
             javaObject.Call("StartPositioning");
+#endif
+
         }
 
         public void ReceivePositionInfo(string message)

@@ -1,9 +1,11 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.AddressableAssets.ResourceLocators;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceLocations;
 
@@ -96,7 +98,6 @@ namespace GameFramework
         private readonly MethodInfo loadAssetsAsyncGeneric;
 
         private readonly List<PreloadAssetInfoHandle> preloadAssetInfoHandles;
-
         public AddressablesManager()
         {
             handlesDic = new Dictionary<string, CustomAsyncOperationHandle>();
@@ -109,6 +110,7 @@ namespace GameFramework
                 typeof(AddressablesManager).GetMethod(nameof(LoadAssetsAsyncGeneric), BindingFlags.NonPublic | BindingFlags.Instance);
         }
 
+        #region 拼接Key
         private string GetKey<T>(params string[] keys)
         {
             var key = keys[0];
@@ -126,6 +128,7 @@ namespace GameFramework
             key += "-" + type.Name;
             return key;
         }
+        #endregion
 
         #region 异步
 
@@ -313,7 +316,7 @@ namespace GameFramework
                 value.Use();
                 return loadedHandle.Result;
             }
-        
+
             Debug.LogWarning($"{key} 未加载过");
             return null;
         }
@@ -526,6 +529,79 @@ namespace GameFramework
             LoadAssetsAsync<T>(list => { callBack?.Invoke(list != null); }, Addressables.MergeMode.Intersection, false, keys);
         }
 
+        #endregion
+
+        #region 更新
+
+        /// <summary>
+        /// 检查是否有更新并更新目录
+        /// </summary>
+        /// <param name="callBack"></param>
+        public void CheckCatalogs(Action<bool> callBack)
+        {
+            // 检查是否有目录更新
+            AsyncOperationHandle<List<string>> checkHandle = Addressables.CheckForCatalogUpdates();
+            checkHandle.Completed += handle =>
+            {
+                if (handle.Result != null && handle.Result.Count > 0)
+                {
+                    callBack?.Invoke(true);
+                }
+                else
+                {
+                    callBack?.Invoke(false);
+                }
+            };
+
+        }
+
+        public void UpdateCatalogs(Action<float> callBack = null)
+        {
+            MonoManager.Instance.StartCoroutine(UpdateCatalogsAsync(callBack));
+        }
+
+        private IEnumerator UpdateCatalogsAsync(Action<float> callBack)
+        {
+            // 检查是否有目录更新
+            AsyncOperationHandle<List<string>> checkHandle = Addressables.CheckForCatalogUpdates(false);
+
+            yield return checkHandle;
+
+            if (checkHandle.Status == AsyncOperationStatus.Succeeded)
+            {
+                List<string> catalogsToUpdate = checkHandle.Result;
+
+                if (catalogsToUpdate != null && catalogsToUpdate.Count > 0)
+                {
+                    // 应用更新
+                    AsyncOperationHandle<List<IResourceLocator>> updateHandle = Addressables.UpdateCatalogs(catalogsToUpdate, false);
+
+                    yield return updateHandle;
+
+                    if (updateHandle.Status == AsyncOperationStatus.Succeeded)
+                    {
+                        callBack?.Invoke(-2);
+                        Debug.Log("Catalogs updated successfully.");
+                    }
+                    else
+                    {
+                        callBack?.Invoke(-3);
+                        Debug.LogError("Failed to update catalogs.");
+                    }
+                    Addressables.Release(updateHandle);
+                }
+                else
+                {
+                    Debug.Log("No catalogs need updating.");
+                    callBack?.Invoke(-1);
+                }
+            }
+            else
+            {
+                Debug.LogError("Failed to check for catalog updates.");
+            }
+            Addressables.Release(checkHandle);
+        }
         #endregion
     }
 }

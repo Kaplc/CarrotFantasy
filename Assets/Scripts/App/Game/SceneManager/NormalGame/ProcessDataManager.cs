@@ -33,7 +33,7 @@ namespace App.Game.SceneManager.NormalGame
         {
             if (processData != null) return;
 
-#if UNITY_EDITOR_WIN
+#if UNITY_STANDALONE_WIN
             processData = BinaryManager.Instance.Load<ProcessData>("ProcessData.zy");
 #endif
 #if UNITY_ANDROID
@@ -86,7 +86,7 @@ namespace App.Game.SceneManager.NormalGame
             CalPassedLevelCount();
 
             // 数据持久化
-#if UNITY_EDITOR_WIN
+#if UNITY_STANDALONE_WIN
             BinaryManager.Instance.Save("ProcessData.zy", processData);
 #endif
 #if UNITY_ANDROID

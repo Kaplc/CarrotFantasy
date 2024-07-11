@@ -71,7 +71,7 @@ namespace App.Data
             statisticalData.killMonsterCount += data.killMonsterCount;
             statisticalData.money += data.money;
 
-#if UNITY_EDITOR_WIN
+#if UNITY_STANDALONE_WIN
             BinaryManager.Instance.Save("StatisticalData.zy", statisticalData);
 #endif
 #if UNITY_ANDROID
@@ -89,7 +89,7 @@ namespace App.Data
         {
             if (statisticalData != null) return;
 
-#if UNITY_EDITOR_WIN
+#if UNITY_STANDALONE_WIN
             statisticalData = BinaryManager.Instance.Load<StatisticalData>("StatisticalData.zy");
 #endif
 #if UNITY_ANDROID

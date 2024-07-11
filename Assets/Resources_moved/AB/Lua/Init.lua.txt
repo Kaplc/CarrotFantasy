@@ -20,5 +20,6 @@ require('App/Manager/BossGameManager')
 -- 
 Main = {}
 function Main:Main()
+    print('Update3')
     GameManager:Init()
 end
